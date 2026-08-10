@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thailand Reiseplan 2027</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d1117;
+      --card-bg: #161b22;
+      --border: #30363d;
+      --text: #c9d1d9;
+      --text-main: #f0f6fc;
+      --text-muted: #8b949e;
+      --primary: #38bdf8;
+      --primary-rgb: 56, 189, 248;
+      --accent: #f59e0b;
+      --norden: #34d399;
+      --bangkok: #a78bfa;
+      --inseln: #38bdf8;
+      --fullmoon: #f43f5e;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding: 24px 16px;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 28px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 16px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 20px;
+    }
+
+    .title-group h1 {
+      font-size: 1.85rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .title-group p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-top: 4px;
+    }
+
+    .stats-bar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .stat-pill {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      color: var(--text-main);
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .search-input {
+      flex: 1;
+      min-width: 240px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      outline: none;
+    }
+
+    .search-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.2);
+    }
+
+    .filter-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.15s ease;
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+      background: rgba(var(--primary-rgb), 0.12);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .table-wrapper {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow-x: auto;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+
+    th {
+      background: #1c2128;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .day-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: var(--text-main);
+      background: #21262d;
+      border-radius: 6px;
+      padding: 2px 8px;
+      font-size: 0.85rem;
+    }
+
+    .tag-region {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .tag-norden { background: rgba(52, 211, 153, 0.15); color: var(--norden); }
+    .tag-bangkok { background: rgba(167, 139, 250, 0.15); color: var(--bangkok); }
+    .tag-inseln { background: rgba(56, 189, 248, 0.15); color: var(--inseln); }
+    .tag-party { background: rgba(244, 63, 94, 0.15); color: var(--fullmoon); }
+    .tag-default { background: #21262d; color: var(--text-muted); }
+
+    .route-title {
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .sub-note {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+
+    .transport-pill, .hotel-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: #21262d;
+      color: var(--text);
+    }
+
+    .hotel-pill {
+      background: rgba(245, 158, 11, 0.1);
+      color: #fbbf24;
+    }
+
+    .party-row {
+      background: rgba(244, 63, 94, 0.05) !important;
+    }
+
+    @media (max-width: 860px) {
+      .table-wrapper {
+        display: none;
+      }
+
+      .mobile-cards {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .card {
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 16px;
+      }
+
+      .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+      }
+    }
+
+    @media (min-width: 861px) {
+      .mobile-cards {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="title-group">
+        <h1>🇹🇭 Thailand Reiseplan 2027</h1>
+        <p>01.01.2027 – 31.01.2027 • 31 Tage Reisedauer</p>
+      </div>
+      <div class="stats-bar">
+        <div class="stat-pill">📍 31 Tage</div>
+        <div class="stat-pill">✈️ Saudia SV152 / SV846</div>
+        <div class="stat-pill">🌕 Vollmond: 22.01.</div>
+      </div>
+    </header>
+
+    <div class="controls">
+      <input type="text" id="searchInput" class="search-input" placeholder="Nach Ort, Tempel, Aktivität oder Transport suchen..." onkeyup="filterPlan()">
+      <button class="filter-btn active" onclick="setFilter('all', this)">Alle</button>
+      <button class="filter-btn" onclick="setFilter('Isan / Start', this)">Udon Thani</button>
+      <button class="filter-btn" onclick="setFilter('Norden', this)">Norden</button>
+      <button class="filter-btn" onclick="setFilter('Bangkok', this)">Bangkok</button>
+      <button class="filter-btn" onclick="setFilter('Andamanensee', this)">Andamanensee</button>
+      <button class="filter-btn" onclick="setFilter('Samui-Archipel', this)">Samui-Archipel</button>
+    </div>
+
+    <!-- Desktop Ansicht -->
+    <div class="table-wrapper">
+      <table id="planTable">
+        <thead>
+          <tr>
+            <th>Tag / Datum</th>
+            <th>Region</th>
+            <th>Ort & Aktivität</th>
+            <th>Details & Programm</th>
+            <th>Transportmittel</th>
+            <th>Unterkunft</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Tag 1 bis 31 -->
+          <tr data-region="Isan / Start">
+            <td><span class="day-badge">Tag 1</span><div class="sub-note">01.01. (Fr)</div></td>
+            <td><span class="tag-region tag-default">Anreise</span></td>
+            <td><div class="route-title">Start Reise ab Wien</div></td>
+            <td>Flug nach Bangkok um 15:30 Uhr</td>
+            <td><span class="transport-pill">✈️ Flugzeug (Saudia SV152 + SV846)</span></td>
+            <td><span class="hotel-pill">✈️ Im Flugzeug</span></td>
+          </tr>
+          <tr data-region="Isan / Start">
+            <td><span class="day-badge">Tag 2</span><div class="sub-note">02.01. (Sa)</div></td>
+            <td><span class="tag-region tag-default">Isan</span></td>
+            <td><div class="route-title">Bangkok ➔ Udon Thani</div></td>
+            <td>Ankunft ca. 13:40 in Bangkok ➔ Weiterflug nach Udon Thani ➔ Nachmittags bei OW</td>
+            <td><span class="transport-pill">✈️ Flugzeug</span></td>
+            <td><span class="hotel-pill">🏠 Bei OW?</span></td>
+          </tr>
+          <tr data-region="Isan / Start">
+            <td><span class="day-badge">Tag 3</span><div class="sub-note">03.01. (So)</div></td>
+            <td><span class="tag-region tag-default">Isan</span></td>
+            <td><div class="route-title">Udon Thani</div></td>
+            <td>Zeit mit OW – Ganzer Tag (Tipp: Red Lotus Lake)</td>
+            <td><span class="transport-pill">🚗 Mietwagen / Taxi mit OW?</span></td>
+            <td><span class="hotel-pill">🏠 Bei OW?</span></td>
+          </tr>
+          <tr data-region="Isan / Start">
+            <td><span class="day-badge">Tag 4</span><div class="sub-note">04.01. (Mo)</div></td>
+            <td><span class="tag-region tag-default">Isan</span></td>
+            <td><div class="route-title">Udon Thani</div></td>
+            <td>Zeit mit OW – Ganzer Tag</td>
+            <td><span class="transport-pill">🚗 Mietwagen / Taxi mit OW?</span></td>
+            <td><span class="hotel-pill">🏠 Bei OW?</span></td>
+          </tr>
+          <tr data-region="Norden">
+            <td><span class="day-badge">Tag 5</span><div class="sub-note">05.01. (Di)</div></td>
+            <td><span class="tag-region tag-norden">Norden</span></td>
+            <td><div class="route-title">Udon Thani ➔ Chiang Mai</div></td>
+            <td>Ankunft in Chiang Mai, Einchecken, Altstadt & Street Food</td>
+            <td><span class="transport-pill">✈️ Flugzeug</span></td>
+            <td><span class="hotel-pill">🏨 EZ in Chiang Mai</span></td>
+          </tr>
+          <tr data-region="Norden">
+            <td><span class="day-badge">Tag 6</span><div class="sub-note">06.01. (Mi)</div></td>
+            <td><span class="tag-region tag-norden">Norden</span></td>
+            <td><div class="route-title">Chiang Mai / Umland</div></td>
+            <td>Tempel-Tour (Wat Chedi Luang, Wat Phra Singh, Wat Phra That Doi Suthep)</td>
+            <td><span class="transport-pill">🛵 Grab / Roller / Songthaew</span></td>
+            <td><span class="hotel-pill">🏨 EZ in Chiang Mai</span></td>
+          </tr>
+          <tr data-region="Norden">
+            <td><span class="day-badge">Tag 7</span><div class="sub-note">07.01. (Do)</div></td>
+            <td><span class="tag-region tag-norden">Norden</span></td>
+            <td><div class="route-title">Chiang Mai / Umland</div></td>
+            <td>Tagestour in den Doi Inthanon Nationalpark (Wandern & Wasserfälle - 2.565 m)</td>
+            <td><span class="transport-pill">🚐 Ausflug / Mietwagen</span></td>
+            <td><span class="hotel-pill">🏨 EZ in Chiang Mai</span></td>
+          </tr>
+          <tr data-region="Norden">
+            <td><span class="day-badge">Tag 8</span><div class="sub-note">08.01. (Fr)</div></td>
+            <td><span class="tag-region tag-norden">Norden</span></td>
+            <td><div class="route-title">Chiang Mai ➔ Pai</div></td>
+            <td>Reise nach Pai – ca. 3 h Fahrt (762 Kurven)</td>
+            <td><span class="transport-pill">🚐 Minivan (AYA Service) / Roller</span></td>
+            <td><span class="hotel-pill">🏨 EZ in Pai</span></td>
+          </tr>
+          <tr data-region="Norden">
+            <td><span class="day-badge">Tag 9</span><div class="sub-note">09.01. (Sa)</div></td>
+            <td><span class="tag-region tag-norden">Norden</span></td>
+            <td><div class="route-title">Pai / Umland</div></td>
+            <td>Wandern Pai Canyon, Land Split & Night Market</td>
+            <td><span class="transport-pill">🛵 Roller</span></td>
+            <td><span class="hotel-pill">🏨 EZ in Pai</span></td>
+          </tr>
+          <tr data-region="Norden">
+            <td><span class="day-badge">Tag 10</span><div class="sub-note">10.01. (So)</div></td>
+            <td><span class="tag-region tag-norden">Norden</span></td>
+            <td><div class="route-title">Pai / Umland</div></td>
+            <td>Pai genießen: Lod Cave, Bamboo Bridge & Hot Springs</td>
+            <td><span class="transport-pill">🛵 Roller</span></td>
+            <td><span class="hotel-pill">🏨 EZ in Pai</span></td>
+          </tr>
+          <tr data-region="Norden">
+            <td><span class="day-badge">Tag 11</span><div class="sub-note">11.01. (Mo)</div></td>
+            <td><span class="tag-region tag-norden">Norden</span></td>
+            <td><div class="route-title">Pai ➔ Chiang Rai</div></td>
+            <td>Weißer Tempel (Wat Rong Khun) und Umgebung</td>
+            <td><span class="transport-pill">🚐 Bus / Transfer</span></td>
+            <td><span class="hotel-pill">🏨 EZ in Chiang Rai</span></td>
+          </tr>
+          <tr data-region="Bangkok">
+            <td><span class="day-badge">Tag 12</span><div class="sub-note">12.01. (Di)</div></td>
+            <td><span class="tag-region tag-bangkok">Bangkok</span></td>
+            <td><div class="route-title">Chiang Rai ➔ Bangkok</div></td>
+            <td>Flug von Chiang Rai nach Bangkok, Hotel Check-in</td>
+            <td><span class="transport-pill">✈️ Flugzeug</span></td>
+            <td><span class="hotel-pill">🏨 EZ in Bangkok</span></td>
+          </tr>
+          <tr data-region="Bangkok">
+            <td><span class="day-badge">Tag 13</span><div class="sub-note">13.01. (Mi)</div></td>
+            <td><span class="tag-region tag-bangkok">Bangkok</span></td>
+            <td><div class="route-title">Bangkok</div></td>
+            <td>Kultur & Tempel (Grand Palace, Wat Pho, Wat Arun)</td>
+            <td><span class="transport-pill">🚤 MRT / Chao Phraya Express Boot</span></td>
+            <td><span class="hotel-pill">🏨 EZ in Bangkok</span></td>
+          </tr>
+          <tr data-region="Bangkok">
+            <td><span class="day-badge">Tag 14</span><div class="sub-note">14.01. (Do)</div></td>
+            <td><span class="tag-region tag-bangkok">Bangkok</span></td>
+            <td><div class="route-title">Bangkok</div></td>
+            <td>Chinatown (Yaowarat), Sukhumvit, Rooftop-Bar</td>
+            <td><span class="transport-pill">🚆 Skytrain (BTS) / Grab</span></td>
+            <td><span class="hotel-pill">🏨 EZ in Bangkok</span></td>
+          </tr>
+          <tr data-region="Andamanensee">
+            <td><span class="day-badge">Tag 15</span><div class="sub-note">15.01. (Fr)</div></td>
+            <td><span class="tag-region tag-inseln">Andamanen</span></td>
+            <td><div class="route-title">Bangkok ➔ Ko Phi Phi</div></td>
+            <td>Anreise & Ankommen, Sunset Viewpoint</td>
+            <td><span class="transport-pill">✈️ Flug (HKT/KBV) ➔ ⛴️ Fähre</span></td>
+            <td><span class="hotel-pill">🏨 Ko Phi Phi</span></td>
+          </tr>
+          <tr data-region="Andamanensee">
+            <td><span class="day-badge">Tag 16</span><div class="sub-note">16.01. (Sa)</div></td>
+            <td><span class="tag-region tag-inseln">Andamanen</span></td>
+            <td><div class="route-title">Ko Phi Phi</div></td>
+            <td>Ausflug Maya Bay, Pileh Lagoon & Bamboo Island</td>
+            <td><span class="transport-pill">🚤 Longtail-Boot / Tourboat</span></td>
+            <td><span class="hotel-pill">🏨 Ko Phi Phi</span></td>
+          </tr>
+          <tr data-region="Andamanensee">
+            <td><span class="day-badge">Tag 17</span><div class="sub-note">17.01. (So)</div></td>
+            <td><span class="tag-region tag-inseln">Andamanen</span></td>
+            <td><div class="route-title">Ko Phi Phi</div></td>
+            <td>Schnorcheln, Entspannen am Long Beach</td>
+            <td><span class="transport-pill">🚤 Roller / Wassertaxi</span></td>
+            <td><span class="hotel-pill">🏨 Ko Phi Phi</span></td>
+          </tr>
+          <tr data-region="Andamanensee">
+            <td><span class="day-badge">Tag 18</span><div class="sub-note">18.01. (Mo)</div></td>
+            <td><span class="tag-region tag-inseln">Andamanen</span></td>
+            <td><div class="route-title">Ko Phi Phi ➔ Krabi</div></td>
+            <td>Nachmittags Railay Beach & Phra Nang Cave Beach</td>
+            <td><span class="transport-pill">⛴️ Fähre (ca. 1,5 - 2 h)</span></td>
+            <td><span class="hotel-pill">🏨 Krabi / Railay</span></td>
+          </tr>
+          <tr data-region="Andamanensee">
+            <td><span class="day-badge">Tag 19</span><div class="sub-note">19.01. (Di)</div></td>
+            <td><span class="tag-region tag-inseln">Andamanen</span></td>
+            <td><div class="route-title">Krabi</div></td>
+            <td>Tagestrip nach Koh Hong (Lagune & Viewpoint)</td>
+            <td><span class="transport-pill">🚤 Private Longtail-Boot Tour</span></td>
+            <td><span class="hotel-pill">🏨 Krabi</span></td>
+          </tr>
+          <tr data-region="Andamanensee">
+            <td><span class="day-badge">Tag 20</span><div class="sub-note">20.01. (Mi)</div></td>
+            <td><span class="tag-region tag-inseln">Andamanen</span></td>
+            <td><div class="route-title">Krabi</div></td>
+            <td>Tiger Cave Temple (Aussicht) oder Mangroven-Kajaktour</td>
+            <td><span class="transport-pill">🛵 Roller / Samlor / Grab</span></td>
+            <td><span class="hotel-pill">🏨 Krabi</span></td>
+          </tr>
+          <tr data-region="Samui-Archipel">
+            <td><span class="day-badge">Tag 21</span><div class="sub-note">21.01. (Do)</div></td>
+            <td><span class="tag-region tag-inseln">Samui-Archipel</span></td>
+            <td><div class="route-title">Krabi ➔ Koh Tao</div></td>
+            <td>Großer Transfertag. Vor Ort direkt Speedboat-Ticket für 22.01. sichern</td>
+            <td><span class="transport-pill">🚌 Fähre ➔ Bus ➔ Fähre (7-9 h)</span></td>
+            <td><span class="hotel-pill">🏨 EZ auf Koh Tao</span></td>
+          </tr>
+          <tr data-region="Samui-Archipel" class="party-row">
+            <td><span class="day-badge">Tag 22</span><div class="sub-note">22.01. (Fr)</div></td>
+            <td><span class="tag-region tag-party">🌕 Vollmond</span></td>
+            <td><div class="route-title">Koh Tao ➔ Ko Pha-ngan ➔ Koh Tao</div></td>
+            <td><strong>Abends Vollmond Party auf Ko Pha-ngan</strong></td>
+            <td><span class="transport-pill">🚤 Party-Speedboat</span></td>
+            <td><span class="hotel-pill">🏨 EZ auf Koh Tao</span></td>
+          </tr>
+          <tr data-region="Samui-Archipel">
+            <td><span class="day-badge">Tag 23</span><div class="sub-note">23.01. (Sa)</div></td>
+            <td><span class="tag-region tag-inseln">Samui-Archipel</span></td>
+            <td><div class="route-title">Koh Tao</div></td>
+            <td>Ausschlafen, Entspannen, Schnorcheln Tanote Bay</td>
+            <td><span class="transport-pill">🛵 Roller / Wassertaxi</span></td>
+            <td><span class="hotel-pill">🏨 EZ auf Koh Tao</span></td>
+          </tr>
+          <tr data-region="Samui-Archipel">
+            <td><span class="day-badge">Tag 24</span><div class="sub-note">24.01. (So)</div></td>
+            <td><span class="tag-region tag-inseln">Samui-Archipel</span></td>
+            <td><div class="route-title">Koh Tao ➔ Ko Samui</div></td>
+            <td>Vormittags Trip Ko Nang Yuan, nachmittags Überfahrt</td>
+            <td><span class="transport-pill">⛴️ Fähre (ca. 1,5 - 2 h)</span></td>
+            <td><span class="hotel-pill">🏨 Ko Samui</span></td>
+          </tr>
+          <tr data-region="Samui-Archipel">
+            <td><span class="day-badge">Tag 25</span><div class="sub-note">25.01. (Mo)</div></td>
+            <td><span class="tag-region tag-inseln">Samui-Archipel</span></td>
+            <td><div class="route-title">Ko Samui</div></td>
+            <td>Tagestrip Ang Thong Marine Nationalpark</td>
+            <td><span class="transport-pill">🚤 Boot / Kajak-Tour</span></td>
+            <td><span class="hotel-pill">🏨 Ko Samui</span></td>
+          </tr>
+          <tr data-region="Samui-Archipel">
+            <td><span class="day-badge">Tag 26</span><div class="sub-note">26.01. (Di)</div></td>
+            <td><span class="tag-region tag-inseln">Samui-Archipel</span></td>
+            <td><div class="route-title">Ko Samui</div></td>
+            <td>Bophut Fisherman's Village, Tempel & Beach Club</td>
+            <td><span class="transport-pill">🛵 Roller / Songthaew</span></td>
+            <td><span class="hotel-pill">🏨 Ko Samui</span></td>
+          </tr>
+          <tr data-region="Samui-Archipel">
+            <td><span class="day-badge">Tag 27</span><div class="sub-note">27.01. (Mi)</div></td>
+            <td><span class="tag-region tag-inseln">Samui-Archipel</span></td>
+            <td><div class="route-title">Ko Samui ➔ Bangkok</div></td>
+            <td>Transfertag: Rückreise nach Bangkok</td>
+            <td><span class="transport-pill">✈️ Flugzeug (USM ➔ BKK)</span></td>
+            <td><span class="hotel-pill">🏨 Bangkok</span></td>
+          </tr>
+          <tr data-region="Bangkok">
+            <td><span class="day-badge">Tag 28</span><div class="sub-note">28.01. (Do)</div></td>
+            <td><span class="tag-region tag-bangkok">Bangkok</span></td>
+            <td><div class="route-title">Bangkok</div></td>
+            <td>Entspannter Tag: Souvenirs, Thai-Massage & Lieblingsspots</td>
+            <td><span class="transport-pill">🚆 BTS / Grab</span></td>
+            <td><span class="hotel-pill">🏨 EZ in Bangkok</span></td>
+          </tr>
+          <tr data-region="Bangkok">
+            <td><span class="day-badge">Tag 29</span><div class="sub-note">29.01. (Fr)</div></td>
+            <td><span class="tag-region tag-bangkok">Bangkok</span></td>
+            <td><div class="route-title">Bangkok (Puffer-Tag)</div></td>
+            <td>Puffer-Tag in Bangkok, letzte Einkäufe, gemeinsames Abschiedsessen</td>
+            <td><span class="transport-pill">🚆 BTS / MRT</span></td>
+            <td><span class="hotel-pill">🏨 EZ in Bangkok</span></td>
+          </tr>
+          <tr data-region="Bangkok">
+            <td><span class="day-badge">Tag 30</span><div class="sub-note">30.01. (Sa)</div></td>
+            <td><span class="tag-region tag-bangkok">Bangkok</span></td>
+            <td><div class="route-title">Bangkok / Heim- & Weiterflug</div></td>
+            <td>
+              <strong>Stefan:</strong> Check-out, Transfer Flughafen, Heimflug nach München<br>
+              <strong>Ines:</strong> Check-out, Transfer Flughafen, Flug nach Sri Lanka (Treffen mit Anna)
+            </td>
+            <td><span class="transport-pill">🚕 Taxi / Airport Rail Link ➔ ✈️</span></td>
+            <td><span class="hotel-pill">🏨 EZ in Bangkok / Flug</span></td>
+          </tr>
+          <tr data-region="Bangkok">
+            <td><span class="day-badge">Tag 31</span><div class="sub-note">31.01. (So)</div></td>
+            <td><span class="tag-region tag-default">Abschluss</span></td>
+            <td><div class="route-title">Ankunft Heimflug / Sri Lanka</div></td>
+            <td>
+              <strong>Stefan:</strong> Ankunft zu Hause<br>
+              <strong>Ines:</strong> Start 1. Tag mit Anna in Sri Lanka
+            </td>
+            <td><span class="transport-pill">✈️ Flugzeug</span></td>
+            <td><span class="hotel-pill">🏠 Home / Sri Lanka</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Mobile Cards Ansicht (automatisch synchron per CSS) -->
+    <div class="mobile-cards" id="mobileCards"></div>
+  </div>
+
+  <script>
+    let currentRegion = 'all';
+
+    function setFilter(region, btn) {
+      currentRegion = region;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      filterPlan();
+    }
+
+    function filterPlan() {
+      const q = document.getElementById('searchInput').value.toLowerCase();
+      const rows = document.querySelectorAll('#planTable tbody tr');
+
+      rows.forEach(row => {
+        const text = row.innerText.toLowerCase();
+        const region = row.getAttribute('data-region') || '';
+        const matchesSearch = text.includes(q);
+        const matchesRegion = currentRegion === 'all' || region.includes(currentRegion);
+
+        if (matchesSearch && matchesRegion) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+
+      renderMobileCards();
+    }
+
+    function renderMobileCards() {
+      const container = document.getElementById('mobileCards');
+      container.innerHTML = '';
+      const visibleRows = document.querySelectorAll('#planTable tbody tr');
+
+      visibleRows.forEach(row => {
+        if (row.style.display === 'none') return;
+
+        const cells = row.querySelectorAll('td');
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <div class="card-header">
+            <div>${cells[0].innerHTML}</div>
+            <div>${cells[1].innerHTML}</div>
+          </div>
+          <div style="font-size: 1rem; font-weight: 700; color: var(--text-main); margin-bottom: 6px;">
+            ${cells[2].innerText}
+          </div>
+          <div style="font-size: 0.88rem; color: var(--text); margin-bottom: 10px;">
+            ${cells[3].innerHTML}
+          </div>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+            ${cells[4].innerHTML}
+            ${cells[5].innerHTML}
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      renderMobileCards();
+    });
+  </script>
+</body>
+</html>
