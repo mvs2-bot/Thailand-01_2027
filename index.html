@@ -533,7 +533,7 @@
             <td><div class="route-title">Koh Tao ➔ z.B. Ko Samui</div></td>
             <td>Vormittags Trip nach Ko Nang Yuan, nachmittags Überfahrt</td>
             <td><span class="transport-pill">⛴️ Fähre (ca. 1,5 - 2 h)</span></td>
-            <td><span class="hotel-pill">🏨 EZ auf Koh Samui</span></td>
+            <td><span class="hotel-pill">🏨 EZ auf Ko Samui</span></td>
           </tr>
           <tr data-region="Inselgruppe 2">
             <td><span class="day-badge">Tag 25</span><div class="sub-note">25.01. (Mo)</div></td>
@@ -541,7 +541,7 @@
             <td><div class="route-title">z.B. Ko Samui</div></td>
             <td>Tagestrip Ang Thong Marine Nationalpark</td>
             <td><span class="transport-pill">🚤 Boot / Kajak-Tour</span></td>
-            <td><span class="hotel-pill">🏨 EZ auf Koh Samui</span></td>
+            <td><span class="hotel-pill">🏨 EZ auf Ko Samui</span></td>
           </tr>
           <tr data-region="Inselgruppe 2">
             <td><span class="day-badge">Tag 26</span><div class="sub-note">26.01. (Di)</div></td>
@@ -549,7 +549,7 @@
             <td><div class="route-title">z.B. Ko Samui</div></td>
             <td>Bophut Fisherman's Village, Tempel & Beach Club</td>
             <td><span class="transport-pill">🛵 Roller / Songthaew</span></td>
-            <td><span class="hotel-pill">🏨 EZ auf Koh Samui</span></td>
+            <td><span class="hotel-pill">🏨 EZ auf Ko Samui</span></td>
           </tr>
           <tr data-region="Inselgruppe 2">
             <td><span class="day-badge">Tag 27</span><div class="sub-note">27.01. (Mi)</div></td>
@@ -657,7 +657,7 @@
       const waypoints = [
         { 
           name: "Bangkok (Ankunft BKK)", 
-          lat: 13.6900, lng: 100.7501, 
+          lat: 13.6900, lng: 100.7501, // BKK Flughafen
           days: "Tag 2 (02.01.)", 
           activity: "Ankunft BKK (13:40 Uhr) & Weiterflug nach Udon Thani", 
           transport: "✈️ Saudia SV152/846 ➔ Inlandsflug", 
@@ -702,7 +702,7 @@
         },
         { 
           name: "Bangkok (Kultur & City)", 
-          lat: 13.7563, lng: 100.5018, 
+          lat: 13.7563, lng: 100.5018, // Stadtzentrum
           days: "Tage 12 – 14 (12.01. – 14.01.)", 
           activity: "Grand Palace, Wat Pho, Chinatown & Rooftop-Bar", 
           transport: "✈️ Flug / 🚆 BTS / 🚤 Boot", 
@@ -756,7 +756,7 @@
         },
         { 
           name: "Bangkok (Abschluss)", 
-          lat: 13.7, lng: 100.4, 
+          lat: 13.7000, lng: 100.4000, // Leicht versetzt für gute Klickbarkeit
           days: "Tage 27 – 29 (27.01. – 29.01.)", 
           activity: "Souvenirs, Massage, Abschiedsessen & Rückflug", 
           transport: "✈️ USM➔BKK / 🚕 Taxi / Airport Rail Link", 
@@ -866,6 +866,18 @@
         dashArray: '5, 7'
       }).addTo(map);
 
+      // Verbindungslinie: 12. Bangkok-Abschluss-Punkt -> Flughafen Suvarnabhumi
+      const bangkokToAirport = [
+        [13.7000, 100.4000], // 12. Punkt
+        [13.6900, 100.7501]  // Flughafen BKK
+      ];
+      L.polyline(bangkokToAirport, {
+        color: '#a78bfa',
+        weight: 2,
+        opacity: 0.8,
+        dashArray: '3, 6'
+      }).addTo(map);
+
       // 2. INTERNATIONALE PUNKTE PLAZIEREN
       Object.keys(intlPoints).forEach(key => {
         const p = intlPoints[key];
@@ -887,11 +899,11 @@
 
       // 3. FLUGROUTEN ZEICHNEN
       
-      // HINFLUG: Wien ➔ Riad ➔ Bangkok
+      // HINFLUG: Wien ➔ Riad ➔ Bangkok (Flughafen BKK)
       const flightOutbound = [
         [intlPoints.wien.lat, intlPoints.wien.lng],
         [intlPoints.riad.lat, intlPoints.riad.lng],
-        [13.69, 100.7501]
+        [13.6900, 100.7501]
       ];
       L.polyline(flightOutbound, {
         color: '#a78bfa', // Violett
@@ -900,9 +912,9 @@
         dashArray: '4, 8'
       }).addTo(map);
 
-      // RÜCKFLUG STEFAN: Bangkok ➔ München
+      // RÜCKFLUG STEFAN: Bangkok (BKK) ➔ München
       const flightStefan = [
-        [13.7, 100.4],
+        [13.6900, 100.7501], // Startet am Flughafen BKK
         [intlPoints.muenchen.lat, intlPoints.muenchen.lng]
       ];
       L.polyline(flightStefan, {
@@ -912,9 +924,9 @@
         dashArray: '4, 8'
       }).addTo(map);
 
-      // WEITERFLUG INES: Bangkok ➔ Colombo
+      // WEITERFLUG INES: Bangkok (BKK) ➔ Colombo
       const flightInes = [
-        [13.7, 100.4],
+        [13.6900, 100.7501], // Startet am Flughafen BKK
         [intlPoints.colombo.lat, intlPoints.colombo.lng]
       ];
       L.polyline(flightInes, {
