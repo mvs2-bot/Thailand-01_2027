@@ -15,20 +15,25 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
   <style>
+    /* ==========================================================================
+       1. FARBEN & DESIGNEINSTELLUNGEN
+       ========================================================================== */
     :root {
-      --bg: #0d1117;
-      --card-bg: #161b22;
-      --border: #30363d;
-      --text: #c9d1d9;
-      --text-main: #f0f6fc;
-      --text-muted: #8b949e;
-      --primary: #38bdf8;
+      --bg: #0d1117;           /* Haupt-Hintergrundfarbe (Dunkel) */
+      --card-bg: #161b22;      /* Karten & Tabellen-Hintergrund */
+      --border: #30363d;       /* Rahmentöne */
+      --text: #c9d1d9;         /* Standard-Textfarbe */
+      --text-main: #f0f6fc;    /* Überschriften & wichtige Texte */
+      --text-muted: #8b949e;   /* Nebensächlicher Text / Datumsangaben */
+      
+      /* Akzentfarben für Regionen & Marker */
+      --primary: #38bdf8;      /* Primary Blau (z.B. für Inseln) */
       --primary-rgb: 56, 189, 248;
-      --accent: #f59e0b;
-      --norden: #34d399;
-      --bangkok: #a78bfa;
-      --inseln: #38bdf8;
-      --fullmoon: #f43f5e;
+      --accent: #f59e0b;       /* Gelb/Orange (Unterkünfte) */
+      --norden: #34d399;       /* Grün (Norden) */
+      --bangkok: #a78bfa;      /* Violett (Bangkok / Anreise) */
+      --inseln: #38bdf8;       /* Hellblau (Andamanen & Samui) */
+      --fullmoon: #f43f5e;     /* Pink/Rot (Full Moon Party / Ines) */
     }
 
     * {
@@ -91,7 +96,7 @@
       color: var(--text-main);
     }
 
-    /* Styles für die Kartenansicht (oben platziert) */
+    /* Styles für die Kartenansicht oben */
     .map-section {
       margin-top: 0;
       margin-bottom: 24px;
@@ -113,10 +118,21 @@
     }
 
     #map {
-      height: 500px;
+      height: 520px;
       width: 100%;
       border-radius: 8px;
       z-index: 1;
+    }
+
+    .leaflet-control-layers {
+      background: #161b22 !important;
+      color: #f0f6fc !important;
+      border: 1px solid #30363d !important;
+      border-radius: 8px !important;
+      padding: 6px 10px !important;
+    }
+    .leaflet-control-layers-toggle {
+      filter: invert(1);
     }
 
     .controls {
@@ -264,35 +280,19 @@
     }
 
     @media (max-width: 860px) {
-      .table-wrapper {
-        display: none;
-      }
-
-      .mobile-cards {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-      }
-
+      .table-wrapper { display: none; }
+      .mobile-cards { display: flex; flex-direction: column; gap: 12px; }
       .card {
         background: var(--card-bg);
         border: 1px solid var(--border);
         border-radius: 10px;
         padding: 16px;
       }
-
-      .card-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 8px;
-      }
+      .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
     }
 
     @media (min-width: 861px) {
-      .mobile-cards {
-        display: none;
-      }
+      .mobile-cards { display: none; }
     }
   </style>
 </head>
@@ -300,22 +300,24 @@
   <div class="container">
     <header>
       <div class="title-group">
-        <h1>🇹🇭 Thailand Reiseplan 2027</h1>
+        <h1>Thailand Reiseplan - 2027</h1>
         <p>01.01.2027 – 29.01.2027 • 29 Tage Reisedauer</p>
       </div>
       <div class="stats-bar">
         <div class="stat-pill">📍 29 Tage</div>
-        <div class="stat-pill">✈️ Saudia SV152 + SV846</div>
-        <div class="stat-pill">🌕 Vollmondparty: 22.01.</div>
+        <div class="stat-pill">✈️ Saudia SV152 & SV846</div>
+        <div class="stat-pill">✈️ Thai Airways TG926</div>
+        <div class="stat-pill">✈️ SriLankan UL405</div>
       </div>
     </header>
 
-    <!-- Interaktive Kartenansicht oben platziert -->
+    <!-- Karten-Sektion -->
     <div class="map-section">
       <h2>🗺️ Routenkarte</h2>
       <div id="map"></div>
     </div>
 
+    <!-- Suchfeld und Filter-Buttons -->
     <div class="controls">
       <input type="text" id="searchInput" class="search-input" placeholder="Nach Ort, Tempel, Aktivität oder Transport suchen..." onkeyup="filterPlan()">
       <button class="filter-btn active" onclick="setFilter('all', this)">Alle</button>
@@ -326,7 +328,7 @@
       <button class="filter-btn" onclick="setFilter('Inselgruppe 2', this)">Samui-Archipel</button>
     </div>
 
-    <!-- Desktop Ansicht -->
+    <!-- Desktop Ansicht (Tabelle) -->
     <div class="table-wrapper">
       <table id="planTable">
         <thead>
@@ -344,16 +346,16 @@
           <tr data-region="Isan / Start">
             <td><span class="day-badge">Tag 1</span><div class="sub-note">01.01. (Fr)</div></td>
             <td><span class="tag-region tag-default">Anreise</span></td>
-            <td><div class="route-title">Start Reise ab Wien</div></td>
-            <td>Flug nach Bangkok um 15:30 Uhr</td>
-            <td><span class="transport-pill">✈️ Flugzeug - Saudia SV152 + SV846</span></td>
+            <td><div class="route-title">Start Reise ab Wien (VIE)</div></td>
+            <td>Flug nach Bangkok (BKK) um 15:30 Uhr (Ankunft 13:40 +1 Tag, Dauer: 16h 10m)</td>
+            <td><span class="transport-pill">✈️ Saudia (SV152 & SV846) - Stopp in RUH</span></td>
             <td><span class="hotel-pill">✈️ Im Flugzeug</span></td>
           </tr>
           <tr data-region="Isan / Start">
             <td><span class="day-badge">Tag 2</span><div class="sub-note">02.01. (Sa)</div></td>
             <td><span class="tag-region tag-default">Isan</span></td>
             <td><div class="route-title">Ankunft Bangkok ➔ Udon Thani</div></td>
-            <td>Ankunft z.B. 13:40 in Bangkok ➔ Weiterfliegen nach Udon Thani ➔ Nachmittags bei OW</td>
+            <td>Ankunft ca. 13:40 in Bangkok ➔ Weiterfliegen nach Udon Thani ➔ Nachmittags bei OW</td>
             <td><span class="transport-pill">✈️ Flugzeug</span></td>
             <td><span class="hotel-pill">🏠 Bei OW?</span></td>
           </tr>
@@ -568,11 +570,11 @@
           <tr data-region="Bangkok">
             <td><span class="day-badge">Tag 29</span><div class="sub-note">29.01. (Fr)</div></td>
             <td><span class="tag-region tag-default">Abschluss</span></td>
-            <td><div class="route-title">Bangkok / Rückflug & Weiterflug</div></td>
+            <td><div class="route-title">Bangkok (BKK) / Heim- & Weiterflug</div></td>
             <td>
-              Check-out, Transfer Flughafen<br>
-              <strong>München:</strong> Heimflug (13:00 Uhr)<br>
-              <strong>Sri Lanka:</strong> Weiterflug (13:50 Uhr)
+              Check-out, Transfer Flughafen Suvarnabhumi (BKK)<br>
+              <strong>Stefan:</strong> Thai Airways TG926 (13:00 ➔ 18:55 MUC, 11h 55m)<br>
+              <strong>Ines:</strong> SriLankan Airlines UL405 (13:50 ➔ 15:50 CMB, 3h 30m)
             </td>
             <td><span class="transport-pill">🚕 Taxi / Airport Rail Link ➔ ✈️ Flugzeug</span></td>
             <td><span class="hotel-pill">🏠 Etwas in Colombo? / Flug</span></td>
@@ -646,63 +648,286 @@
       });
     }
 
+    /* ==========================================================================
+       2. KARTEN-INITIALISIERUNG & ANPASSUNGEN
+       ========================================================================== */
     function initMap() {
-      // Waypoints gemäß aktuellem Plan (29 Tage)
+      
+      // 📍 ORTE IN THAILAND
       const waypoints = [
-        { name: "Bangkok (Ankunft BKK)", lat: 13.6900, lng: 100.7501, days: "Tag 2 (Ankunft & Transfer)", color: "#a78bfa" },
-        { name: "Udon Thani", lat: 17.4138, lng: 102.7872, days: "Tage 2 - 4", color: "#8b949e" },
-        { name: "Chiang Mai", lat: 18.7883, lng: 98.9853, days: "Tage 5 - 7", color: "#34d399" },
-        { name: "Pai", lat: 19.3582, lng: 98.4402, days: "Tage 8 - 10", color: "#34d399" },
-        { name: "Chiang Rai", lat: 19.9105, lng: 99.8406, days: "Tag 11", color: "#34d399" },
-        { name: "Bangkok", lat: 13.7563, lng: 100.5018, days: "Tage 12 - 14", color: "#a78bfa" },
-        { name: "Ko Phi Phi", lat: 7.7407, lng: 98.7784, days: "Tage 15 - 17", color: "#38bdf8" },
-        { name: "Krabi", lat: 8.0863, lng: 98.9063, days: "Tage 18 - 20", color: "#38bdf8" },
-        { name: "Koh Tao", lat: 10.1018, lng: 99.8383, days: "Tage 21 - 24", color: "#38bdf8" },
-        { name: "Ko Pha-ngan", lat: 9.7319, lng: 100.0136, days: "Tag 22 (Vollmond)", color: "#f43f5e" },
-        { name: "Ko Samui", lat: 9.5120, lng: 99.9360, days: "Tage 24 - 27", color: "#38bdf8" },
-        { name: "Bangkok (Rückflug)", lat: 13.7563, lng: 100.5018, days: "Tage 27 - 29", color: "#a78bfa" }
+        { 
+          name: "Bangkok (Ankunft BKK)", 
+          lat: 13.6900, lng: 100.7501, 
+          days: "Tag 2 (02.01.)", 
+          activity: "Ankunft BKK (13:40 Uhr) & Weiterflug nach Udon Thani", 
+          transport: "✈️ Saudia SV152/846 ➔ Inlandsflug", 
+          hotel: "🏠 Bei OW / Transfer",
+          color: "#a78bfa"
+        },
+        { 
+          name: "Udon Thani", 
+          lat: 17.4138, lng: 102.7872, 
+          days: "Tage 2 – 4 (02.01. – 04.01.)", 
+          activity: "Zeit mit OW (Tipp: Red Lotus Lake)", 
+          transport: "🚗 Mietwagen / Taxi", 
+          hotel: "🏠 Bei OW?",
+          color: "#8b949e" 
+        },
+        { 
+          name: "Chiang Mai", 
+          lat: 18.7883, lng: 98.9853, 
+          days: "Tage 5 – 7 (05.01. – 07.01.)", 
+          activity: "Altstadt, Tempel-Tour & Doi Inthanon Nationalpark", 
+          transport: "✈️ Flug / 🛵 Roller & Ausflug", 
+          hotel: "🏨 EZ in Chiang Mai",
+          color: "#34d399" 
+        },
+        { 
+          name: "Pai", 
+          lat: 19.3582, lng: 98.4402, 
+          days: "Tage 8 – 10 (08.01. – 10.01.)", 
+          activity: "Pai Canyon, Lod Cave, Hot Springs & Night Market", 
+          transport: "🚐 Minivan (762 Kurven) / 🛵 Roller", 
+          hotel: "🏨 EZ in Pai",
+          color: "#34d399" 
+        },
+        { 
+          name: "Chiang Rai", 
+          lat: 19.9105, lng: 99.8406, 
+          days: "Tag 11 (11.01.)", 
+          activity: "Weißer Tempel (Wat Rong Khun) & Umgebung", 
+          transport: "🚐 Minivan / Transfer", 
+          hotel: "🏨 EZ in Chiang Rai",
+          color: "#34d399" 
+        },
+        { 
+          name: "Bangkok (Kultur & City)", 
+          lat: 13.7563, lng: 100.5018, 
+          days: "Tage 12 – 14 (12.01. – 14.01.)", 
+          activity: "Grand Palace, Wat Pho, Chinatown & Rooftop-Bar", 
+          transport: "✈️ Flug / 🚆 BTS / 🚤 Boot", 
+          hotel: "🏨 EZ in Bangkok",
+          color: "#a78bfa" 
+        },
+        { 
+          name: "Ko Phi Phi", 
+          lat: 7.7407, lng: 98.7784, 
+          days: "Tage 15 – 17 (15.01. – 17.01.)", 
+          activity: "Maya Bay, Pileh Lagoon, Long Beach & Viewpoint", 
+          transport: "✈️ Flug ➔ ⛴️ Fähre / 🚤 Longtail-Boot", 
+          hotel: "🏨 EZ auf Koh Phi Phi",
+          color: "#38bdf8" 
+        },
+        { 
+          name: "Krabi / Railay", 
+          lat: 8.0863, lng: 98.9063, 
+          days: "Tage 18 – 20 (18.01. – 20.01.)", 
+          activity: "Railay Beach, Ko Hong Lagune & Tiger Cave Temple", 
+          transport: "⛴️ Fähre / 🚤 Private Longtail-Tour", 
+          hotel: "🏨 EZ auf Krabi",
+          color: "#38bdf8" 
+        },
+        { 
+          name: "Koh Tao", 
+          lat: 10.1018, lng: 99.8383, 
+          days: "Tage 21 – 24 (21.01. – 24.01.)", 
+          activity: "Schnorcheln Tanote Bay, Ko Nang Yuan & Erholung", 
+          transport: "🚌 Fähre + Bus + Fähre / 🛵 Roller", 
+          hotel: "🏨 EZ auf Koh Tao",
+          color: "#38bdf8" 
+        },
+        { 
+          name: "Ko Pha-ngan", 
+          lat: 9.7319, lng: 100.0136, 
+          days: "Tag 22 (22.01.)", 
+          activity: "🌕 Abends Full Moon Party am Haad Rin Beach", 
+          transport: "🚤 Party-Speedboat (ab/an Koh Tao)", 
+          hotel: "🏨 EZ auf Koh Tao",
+          color: "#f43f5e" 
+        },
+        { 
+          name: "Ko Samui", 
+          lat: 9.5120, lng: 99.9360, 
+          days: "Tage 24 – 27 (24.01. – 27.01.)", 
+          activity: "Ang Thong Marinepark, Fisherman's Village & Beach Club", 
+          transport: "⛴️ Fähre / 🚤 Boot- & Kajak-Tour", 
+          hotel: "🏨 EZ auf Koh Samui",
+          color: "#38bdf8" 
+        },
+        { 
+          name: "Bangkok (Abschluss)", 
+          lat: 13.7, lng: 100.4, 
+          days: "Tage 27 – 29 (27.01. – 29.01.)", 
+          activity: "Souvenirs, Massage, Abschiedsessen & Rückflug", 
+          transport: "✈️ USM➔BKK / 🚕 Taxi / Airport Rail Link", 
+          hotel: "🏨 EZ in Bangkok / Flug",
+          color: "#a78bfa" 
+        }
       ];
 
-      const map = L.map('map');
+      // ✈️ INTERNATIONALE FLUG-PUNKTE MIT FLUGDATEN
+      const intlPoints = {
+        wien: { 
+          name: "Wien (VIE)", 
+          lat: 48.1103, lng: 16.5697, 
+          desc: "<b>Flug nach Bangkok (BKK)</b><br>📅 01.01.2027 • 15:30 ➔ 13:40 (+1 Tag)<br>✈️ Saudia (SV152 & SV846)<br>⏱️ 16h 10m • 💶 € 349,90" 
+        },
+        riad: { 
+          name: "Riad (RUH)", 
+          lat: 24.9576, lng: 46.6988, 
+          desc: "<b>Zwischenstopp Saudia</b><br>⏱️ Aufenthalt: 3h 45m" 
+        },
+        muenchen: { 
+          name: "München (MUC)", 
+          lat: 48.3537, lng: 11.7861, 
+          desc: "<b>Rückflug Stefan (Direkt)</b><br>📅 29.01.2027 • 13:00 ➔ 18:55 Uhr<br>✈️ Thai Airways (TG926)<br>⏱️ 11h 55m • 💶 € 424,13" 
+        },
+        colombo: { 
+          name: "Colombo (CMB)", 
+          lat: 7.1808, lng: 79.8841, 
+          desc: "<b>Weiterflug Ines (Direkt)</b><br>📅 29.01.2027 • 13:50 ➔ 15:50 Uhr<br>✈️ SriLankan Airlines (UL405)<br>⏱️ 3h 30m • 💶 € 175,00" 
+        }
+      };
 
-      // Dark-Mode Kartendesign (CartoDB Dark Matter)
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
-        subdomains: 'abcd',
+      // 🗺️ KARTEN-DESIGNS (BASE LAYERS)
+      const darkMap = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; OpenStreetMap &copy; CARTO',
         maxZoom: 19
-      }).addTo(map);
+      });
 
+      const lightMap = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; OpenStreetMap &copy; CARTO',
+        maxZoom: 19
+      });
+
+      const osmMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors',
+        maxZoom: 19
+      });
+
+      const satelliteMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        attribution: '&copy; Esri',
+        maxZoom: 19
+      });
+
+      const map = L.map('map', { layers: [lightMap] });
+
+      const baseMaps = {
+        "🌙 Dunkelmodus": darkMap,
+        "☀️ Hellmodus": lightMap,
+        "🗺️ Straßenkarte": osmMap,
+        "🛰️ Satellit": satelliteMap
+      };
+      L.control.layers(baseMaps).addTo(map);
+
+      const allBounds = [];
+
+      // 1. THAILAND MARKER & POPUPS ERSTELLEN
       const latlngs = [];
-
       waypoints.forEach((wp, index) => {
-        latlngs.push([wp.lat, wp.lng]);
+        const pt = [wp.lat, wp.lng];
+        latlngs.push(pt);
+        allBounds.push(pt);
 
-        L.circleMarker([wp.lat, wp.lng], {
+        const popupContent = `
+          <div style="color: #0d1117; font-family: 'Plus Jakarta Sans', sans-serif; min-width: 200px; padding: 2px;">
+            <div style="font-size: 0.75rem; font-weight: 700; color: ${wp.color === '#8b949e' ? '#57606a' : wp.color}; text-transform: uppercase; margin-bottom: 2px;">
+              ${wp.days}
+            </div>
+            <h3 style="margin: 0 0 8px 0; font-size: 1.05rem; color: #161b22; border-bottom: 1px solid #ddd; padding-bottom: 4px;">
+              ${index + 1}. ${wp.name}
+            </h3>
+            <div style="font-size: 0.85rem; margin-bottom: 6px; line-height: 1.3; color: #24292f;">
+              <strong>🎯 Aktivität:</strong> ${wp.activity}
+            </div>
+            <div style="font-size: 0.82rem; color: #57606a; margin-bottom: 4px;">
+              <strong>🛵 Transport:</strong> ${wp.transport}
+            </div>
+            <div style="font-size: 0.82rem; color: #57606a;">
+              <strong>🏨 Unterkunft:</strong> ${wp.hotel}
+            </div>
+          </div>
+        `;
+
+        L.circleMarker(pt, {
           color: wp.color,
           fillColor: wp.color,
           fillOpacity: 0.85,
           radius: 8,
           weight: 2
-        }).addTo(map)
-          .bindPopup(`<div style="color: #0d1117; font-family: sans-serif;"><b>${index + 1}. ${wp.name}</b><br>${wp.days}</div>`);
+        }).addTo(map).bindPopup(popupContent);
       });
 
-      // Verbindet die Punkte in der exakten Reihenfolge der Reise
-      const polyline = L.polyline(latlngs, {
+      // Hauptlinie Thailand-Rundreise
+      L.polyline(latlngs, {
         color: '#38bdf8',
-        weight: 2,
-        opacity: 0.5,
+        weight: 3,
+        opacity: 0.7,
         dashArray: '5, 7'
       }).addTo(map);
 
-      // Passt den Kartenausschnitt automatisch an
-      map.fitBounds(polyline.getBounds(), {
-        padding: [30, 30]
+      // 2. INTERNATIONALE PUNKTE PLAZIEREN
+      Object.keys(intlPoints).forEach(key => {
+        const p = intlPoints[key];
+        const pt = [p.lat, p.lng];
+        allBounds.push(pt);
+
+        L.circleMarker(pt, {
+          color: '#e1e4e8',
+          fillColor: '#6e7681',
+          fillOpacity: 0.9,
+          radius: 6,
+          weight: 2
+        }).addTo(map).bindPopup(`
+          <div style="color: #0d1117; font-family: sans-serif;">
+            <b>✈️ ${p.name}</b><br>${p.desc}
+          </div>
+        `);
       });
 
-      setTimeout(() => {
-        map.invalidateSize();
-      }, 100);
+      // 3. FLUGROUTEN ZEICHNEN
+      
+      // HINFLUG: Wien ➔ Riad ➔ Bangkok
+      const flightOutbound = [
+        [intlPoints.wien.lat, intlPoints.wien.lng],
+        [intlPoints.riad.lat, intlPoints.riad.lng],
+        [13.69, 100.7501]
+      ];
+      L.polyline(flightOutbound, {
+        color: '#a78bfa', // Violett
+        weight: 2,
+        opacity: 0.8,
+        dashArray: '4, 8'
+      }).addTo(map);
+
+      // RÜCKFLUG STEFAN: Bangkok ➔ München
+      const flightStefan = [
+        [13.7, 100.4],
+        [intlPoints.muenchen.lat, intlPoints.muenchen.lng]
+      ];
+      L.polyline(flightStefan, {
+        color: '#38bdf8', // Blau
+        weight: 2,
+        opacity: 0.8,
+        dashArray: '4, 8'
+      }).addTo(map);
+
+      // WEITERFLUG INES: Bangkok ➔ Colombo
+      const flightInes = [
+        [13.7, 100.4],
+        [intlPoints.colombo.lat, intlPoints.colombo.lng]
+      ];
+      L.polyline(flightInes, {
+        color: '#f43f5e', // Pink/Rot
+        weight: 2,
+        opacity: 0.85,
+        dashArray: '4, 8'
+      }).addTo(map);
+
+      // Kartenausschnitt anpassen
+      map.fitBounds(allBounds, { padding: [40, 40] });
+
+      setTimeout(() => { map.invalidateSize(); }, 100);
     }
 
     window.addEventListener('DOMContentLoaded', () => {
