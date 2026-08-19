@@ -6,7 +6,7 @@
   <title>Thailand Reiseplan 2027</title>
 
   <!-- PWA & Mobile Web App Meta -->
-  <meta name="theme-color" content="#1a2e20">
+  <meta name="theme-color" content="#0c1a11">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
@@ -21,25 +21,29 @@
 
   <style>
     /* ==========================================================================
-       1. FARBEN & DESIGNEINSTELLUNGEN (Dunkelgrün & Orange Akzente)
+       1. FARBEN & DESIGNEINSTELLUNGEN (GRÜN & ORANGE THEME)
        ========================================================================== */
     :root {
-      --bg: #1a2e20;           /* Tiefes, schönes Dunkelgrün für den Hintergrund */
-      --card-bg: #233b2b;      /* Etwas helleres Waldgrün für Karten & Tabellen */
-      --border: #35543f;       /* Rahmentöne */
-      --text: #e2e8f0;         /* Standard-Textfarbe (sehr gut lesbar) */
-      --text-main: #f8fafc;    /* Überschriften & wichtige Texte */
-      --text-muted: #94a3b8;   /* Nebensächlicher Text / Datumsangaben */
+      --bg: #0c1a11;           /* Sehr dunkles Waldgrün als Haupt-Hintergrund */
+      --card-bg: #1e3d27;      /* Elegantes Dunkelgrün für Karten & Tabellen */
+      --card-bg-hover: #264d32;
+      --border: #2d5a3a;       /* Harmonische grüne Rahmen */
       
-      /* Akzentfarben */
-      --primary: #f97316;      /* Strahlendes Warm-Orange */
+      --text-main: #f0fdf4;    /* Sehr helles Grün-Weiß für beste Lesbarkeit */
+      --text: #dcfce7;         /* Standard-Textfarbe */
+      --text-muted: #86efac;   /* Nebensächlicher Text / Datumsangaben */
+      
+      /* Akzentfarben (Orange & Komplementärtöne) */
+      --primary: #f97316;      /* Strahlendes Orange */
+      --primary-hover: #ea580c;
       --primary-rgb: 249, 115, 22;
-      --accent: #3e8f50;       /* Schönes Mittelgrün */
-      --norden: #4ade80;       /* Frisches Grün */
-      --bangkok: #c084fc;      /* Soft Violett */
-      --inseln: #38bdf8;       /* Ozeanblau */
-      --isan: #a3e635;        /* Limettengrün */
-      --danger: #f43f5e;       /* Rot/Rosa für Warnungen */
+      --accent: #fb923c;       /* Weiches Orange für Highlights */
+      
+      --norden: #4ade80;       /* Helles Grün für Norden */
+      --bangkok: #c084fc;      /* Violett für Bangkok */
+      --inseln: #38bdf8;       /* Blau für Inseln */
+      --isan: #a3e635;        /* Limette für Isan */
+      --danger: #f87171;
     }
 
     * {
@@ -90,9 +94,9 @@
     .countdown-badge {
       display: inline-block;
       margin-top: 8px;
-      background: rgba(249, 115, 22, 0.15);
+      background: rgba(var(--primary-rgb), 0.15);
       border: 1px solid var(--primary);
-      color: var(--primary);
+      color: var(--accent);
       padding: 4px 12px;
       border-radius: 20px;
       font-size: 0.85rem;
@@ -136,9 +140,9 @@
     }
 
     .tab-btn.active, .tab-btn:hover {
-      background: rgba(var(--primary-rgb), 0.2);
+      background: var(--primary);
       border-color: var(--primary);
-      color: var(--primary);
+      color: #0c1a11;
     }
 
     .tab-content {
@@ -179,9 +183,9 @@
 
     /* Map Legend Overlay */
     .map-legend {
-      background: #1a2e20;
-      color: #f8fafc;
-      border: 1px solid #35543f;
+      background: #1e3d27;
+      color: #f0fdf4;
+      border: 1px solid #2d5a3a;
       border-radius: 8px;
       padding: 10px 14px;
       font-size: 0.78rem;
@@ -191,8 +195,9 @@
     .legend-title {
       font-weight: bold;
       margin-bottom: 4px;
-      border-bottom: 1px solid #35543f;
+      border-bottom: 1px solid #2d5a3a;
       padding-bottom: 2px;
+      color: var(--accent);
     }
 
     .legend-item {
@@ -235,7 +240,7 @@
 
     .search-input:focus {
       border-color: var(--primary);
-      box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.25);
+      box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.3);
     }
 
     .filter-btn {
@@ -251,9 +256,9 @@
     }
 
     .filter-btn:hover, .filter-btn.active {
-      background: rgba(var(--primary-rgb), 0.18);
+      background: rgba(var(--primary-rgb), 0.2);
       border-color: var(--primary);
-      color: var(--primary);
+      color: var(--accent);
     }
 
     .table-wrapper {
@@ -261,7 +266,7 @@
       border: 1px solid var(--border);
       border-radius: 12px;
       overflow-x: auto;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
     }
 
     table {
@@ -272,8 +277,8 @@
     }
 
     th {
-      background: #15261a;
-      color: var(--text-muted);
+      background: #142b1b;
+      color: var(--accent);
       font-weight: 600;
       text-transform: uppercase;
       font-size: 0.75rem;
@@ -295,7 +300,7 @@
     }
 
     tr.clickable-row:hover td {
-      background: rgba(249, 115, 22, 0.08) !important;
+      background: rgba(249, 115, 22, 0.12) !important;
     }
 
     .day-badge {
@@ -303,9 +308,8 @@
       align-items: center;
       justify-content: center;
       font-weight: 700;
-      color: var(--text-main);
-      background: #172a1d;
-      border: 1px solid var(--border);
+      color: #0c1a11;
+      background: var(--accent);
       border-radius: 6px;
       padding: 2px 8px;
       font-size: 0.85rem;
@@ -320,10 +324,10 @@
       text-transform: uppercase;
     }
 
-    .tag-norden { background: rgba(74, 222, 128, 0.15); color: var(--norden); }
-    .tag-bangkok { background: rgba(192, 132, 252, 0.15); color: var(--bangkok); }
-    .tag-inseln { background: rgba(56, 189, 248, 0.15); color: var(--inseln); }
-    .tag-default { background: #172a1d; color: var(--text-muted); }
+    .tag-norden { background: rgba(74, 222, 128, 0.2); color: var(--norden); }
+    .tag-bangkok { background: rgba(192, 132, 252, 0.2); color: var(--bangkok); }
+    .tag-inseln { background: rgba(56, 189, 248, 0.2); color: var(--inseln); }
+    .tag-default { background: rgba(255, 255, 255, 0.1); color: var(--text-muted); }
 
     .route-title {
       font-weight: 600;
@@ -343,17 +347,17 @@
       align-items: center;
       gap: 6px;
       font-size: 0.8rem;
-      padding: 2px 8px;
+      padding: 3px 8px;
       border-radius: 4px;
-      background: #172a1d;
-      border: 1px solid var(--border);
+      background: #142b1b;
       color: var(--text);
+      border: 1px solid var(--border);
     }
 
     .hotel-pill {
-      background: rgba(249, 115, 22, 0.12);
-      border-color: rgba(249, 115, 22, 0.3);
-      color: #fb923c;
+      background: rgba(251, 146, 60, 0.15);
+      border-color: rgba(251, 146, 60, 0.3);
+      color: var(--accent);
     }
 
     /* Grid Layouts für Tabs */
@@ -387,7 +391,7 @@
       display: flex;
       gap: 16px;
       flex-wrap: wrap;
-      background: rgba(249, 115, 22, 0.1);
+      background: rgba(249, 115, 22, 0.12);
       border: 1px solid var(--primary);
       padding: 16px;
       border-radius: 10px;
@@ -404,7 +408,7 @@
     .pack-summary-val {
       font-size: 1.4rem;
       font-weight: 700;
-      color: var(--primary);
+      color: var(--accent);
     }
 
     .pack-summary-lbl {
@@ -417,7 +421,7 @@
       gap: 8px;
       flex-wrap: wrap;
       margin-bottom: 20px;
-      background: #172a1d;
+      background: #142b1b;
       padding: 12px;
       border-radius: 8px;
       border: 1px solid var(--border);
@@ -439,7 +443,7 @@
 
     .btn-add {
       background: var(--primary);
-      color: #1a2e20;
+      color: #0c1a11;
       font-weight: 700;
       border: none;
       padding: 8px 16px;
@@ -466,7 +470,7 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: #172a1d;
+      background: #142b1b;
       border-radius: 4px;
       padding: 2px 6px;
       border: 1px solid var(--border);
@@ -481,11 +485,11 @@
       padding: 0 4px;
     }
 
-    .qty-btn:hover { color: var(--primary); }
+    .qty-btn:hover { color: var(--accent); }
 
     .pack-table-category {
-      background: #15261a;
-      color: #fb923c;
+      background: #142b1b;
+      color: var(--accent);
       font-weight: 700;
       font-size: 0.85rem;
       text-transform: uppercase;
@@ -497,7 +501,7 @@
       border: none;
       cursor: pointer;
       font-size: 0.9rem;
-      opacity: 0.7;
+      opacity: 0.8;
       transition: opacity 0.15s ease;
       padding: 2px 4px;
     }
@@ -901,7 +905,7 @@
         <div class="info-card">
           <h3>💵 Tagesbudget-Rechner</h3>
           <p style="margin-bottom:12px; font-size:0.9rem;">Geschätztes Tagesbudget vor Ort (Essen, Roller, Unterkünfte, Ausflüge):</p>
-          <div style="font-size:1.4rem; font-weight:700; color:var(--norden); margin-bottom:8px;">
+          <div style="font-size:1.4rem; font-weight:700; color:var(--accent); margin-bottom:8px;">
             ~ 45,00 € / Tag <span style="font-size:0.9rem; color:var(--text-muted);">(ca. 1.700 THB)</span>
           </div>
           <p style="font-size:0.82rem; color:var(--text-muted);">
@@ -1154,7 +1158,7 @@
               </div>
             </td>
             <td style="text-align:right;">${item.weight || 0} g</td>
-            <td style="text-align:right; font-weight:600; color:var(--primary);">${totalItemWeight} g</td>
+            <td style="text-align:right; font-weight:600; color:var(--accent);">${totalItemWeight} g</td>
             <td style="text-align:center;">
               <button class="btn-icon" title="Bearbeiten" onclick="editPackItem(${idx})">✏️</button>
               <button class="btn-icon" title="Löschen" onclick="deletePackItem(${idx})">🗑️</button>
@@ -1322,15 +1326,15 @@
       const waypoints = [
         { name: "Bangkok (Ankunft BKK)", lat: 13.6900, lng: 100.7501, days: "Tag 2 (02.01.)", activity: "Ankunft BKK (13:40 Uhr) & Weiterflug nach Udon Thani", transport: "✈️ Saudia SV152/846 ➔ Inlandsflug", hotel: "🏠 Bei OW / Transfer", color: "#c084fc" },
         { name: "Udon Thani", lat: 17.4138, lng: 102.7872, days: "Tage 2 – 4 (02.01. – 04.01.)", activity: "Zeit mit OW (Tipp: Red Lotus Lake)", transport: "🚗 Mietwagen / Taxi", hotel: "🏠 Bei OW?", color: "#a3e635" },
-        { name: "Chiang Mai", lat: 18.7883, lng: 98.9853, days: "Tage 5 – 7 (05.01. – 07.01.)", activity: "Altstadt, Tempel-Tour & Doi Inthanon Nationalpark", transport: "✈️ Flug / 🛵 Roller & Ausflug", hotel: "🏨 EZ in Chiang Mai", color: "#4ade80" },
-        { name: "Pai", lat: 19.3582, lng: 98.4402, days: "Tage 8 – 10 (08.01. – 10.01.)", activity: "Pai Canyon, Lod Cave, Hot Springs & Night Market", transport: "🚐 Minivan (762 Kurven) / 🛵 Roller", hotel: "🏨 EZ in Pai", color: "#4ade80" },
-        { name: "Chiang Rai", lat: 19.9105, lng: 99.8406, days: "Tag 11 (11.01.)", activity: "Weißer Tempel (Wat Rong Khun) & Umgebung", transport: "🚐 Minivan / Transfer", hotel: "🏨 EZ in Chiang Rai", color: "#4ade80" },
+        { name: "Chiang Mai", lat: 18.7883, lng: 98.9853, days: "Tage 5 – 7 (05.01. – 07.01.)", activity: "Altstadt, Tempel-Tour & Doi Inthanon Nationalpark", transport: "✈️ Flug / 🛵 Roller & Ausflug", hotel: "🏨 EZ in Chiang Mai", color: "#16a34a" },
+        { name: "Pai", lat: 19.3582, lng: 98.4402, days: "Tage 8 – 10 (08.01. – 10.01.)", activity: "Pai Canyon, Lod Cave, Hot Springs & Night Market", transport: "🚐 Minivan (762 Kurven) / 🛵 Roller", hotel: "🏨 EZ in Pai", color: "#16a34a" },
+        { name: "Chiang Rai", lat: 19.9105, lng: 99.8406, days: "Tag 11 (11.01.)", activity: "Weißer Tempel (Wat Rong Khun) & Umgebung", transport: "🚐 Minivan / Transfer", hotel: "🏨 EZ in Chiang Rai", color: "#16a34a" },
         { name: "Bangkok (Kultur & City)", lat: 13.7563, lng: 100.5018, days: "Tage 12 – 14 (12.01. – 14.01.)", activity: "Grand Palace, Wat Pho, Chinatown & Rooftop-Bar", transport: "✈️ Flug / 🚆 BTS / 🚤 Boot", hotel: "🏨 EZ in Bangkok", color: "#c084fc" },
-        { name: "Ko Phi Phi", lat: 7.7407, lng: 98.7784, days: "Tage 15 – 17 (15.01. – 17.01.)", activity: "Maya Bay, Pileh Lagoon, Long Beach & Viewpoint", transport: "✈️ Flug ➔ ⛴️ Fähre / 🚤 Longtail-Boot", hotel: "🏨 EZ auf Koh Phi Phi", color: "#38bdf8" },
-        { name: "Krabi / Railay", lat: 8.0863, lng: 98.9063, days: "Tage 18 – 20 (18.01. – 20.01.)", activity: "Railay Beach, Ko Hong Lagune & Tiger Cave Temple", transport: "⛴️ Fähre / 🚤 Private Longtail-Tour", hotel: "🏨 EZ auf Krabi", color: "#38bdf8" },
-        { name: "Koh Tao", lat: 10.1018, lng: 99.8383, days: "Tage 21 – 24 (21.01. – 24.01.)", activity: "Schnorcheln Tanote Bay, Ko Nang Yuan & Erholung", transport: "🚌 Fähre + Bus + Fähre / 🛵 Roller", hotel: "🏨 EZ auf Koh Tao", color: "#38bdf8" },
-        { name: "Ko Pha-ngan", lat: 9.7319, lng: 100.0136, days: "Tag 22 (22.01.)", activity: "Abends Full Moon Party am Haad Rin Beach", transport: "🚤 Party-Speedboat (ab/an Koh Tao)", hotel: "🏨 EZ auf Koh Tao", color: "#38bdf8" },
-        { name: "Samui-Archipel (Inseln)", lat: 9.5120, lng: 99.9360, days: "Tage 24 – 27 (24.01. – 27.01.)", activity: "Ang Thong Marinepark, Fisherman's Village & Beach Club", transport: "⛴️ Fähre / 🚤 Boot- & Kajak-Tour", hotel: "🏨 Unterkunft im Samui-Archipel", color: "#38bdf8" },
+        { name: "Ko Phi Phi", lat: 7.7407, lng: 98.7784, days: "Tage 15 – 17 (15.01. – 17.01.)", activity: "Maya Bay, Pileh Lagoon, Long Beach & Viewpoint", transport: "✈️ Flug ➔ ⛴️ Fähre / 🚤 Longtail-Boot", hotel: "🏨 EZ auf Koh Phi Phi", color: "#0284c7" },
+        { name: "Krabi / Railay", lat: 8.0863, lng: 98.9063, days: "Tage 18 – 20 (18.01. – 20.01.)", activity: "Railay Beach, Ko Hong Lagune & Tiger Cave Temple", transport: "⛴️ Fähre / 🚤 Private Longtail-Tour", hotel: "🏨 EZ auf Krabi", color: "#0284c7" },
+        { name: "Koh Tao", lat: 10.1018, lng: 99.8383, days: "Tage 21 – 24 (21.01. – 24.01.)", activity: "Schnorcheln Tanote Bay, Ko Nang Yuan & Erholung", transport: "🚌 Fähre + Bus + Fähre / 🛵 Roller", hotel: "🏨 EZ auf Koh Tao", color: "#0284c7" },
+        { name: "Ko Pha-ngan", lat: 9.7319, lng: 100.0136, days: "Tag 22 (22.01.)", activity: "Abends Full Moon Party am Haad Rin Beach", transport: "🚤 Party-Speedboat (ab/an Koh Tao)", hotel: "🏨 EZ auf Koh Tao", color: "#0284c7" },
+        { name: "Samui-Archipel (Inseln)", lat: 9.5120, lng: 99.9360, days: "Tage 24 – 27 (24.01. – 27.01.)", activity: "Ang Thong Marinepark, Fisherman's Village & Beach Club", transport: "⛴️ Fähre / 🚤 Boot- & Kajak-Tour", hotel: "🏨 Unterkunft im Samui-Archipel", color: "#0284c7" },
         { name: "Bangkok (Abschluss)", lat: 13.7000, lng: 100.4000, days: "Tage 27 – 29 (27.01. – 29.01.)", activity: "Souvenirs, Massage, Abschiedsessen & Rückflug", transport: "✈️ USM➔BKK / 🚕 Taxi / Airport Rail Link", hotel: "🏨 EZ in Bangkok / Flug", color: "#c084fc" }
       ];
 
@@ -1341,15 +1345,16 @@
         colombo: { name: "Colombo (CMB)", lat: 7.1808, lng: 79.8841, desc: "<b>Weiterflug Ines</b><br>📅 29.01.2027 • 13:50 ➔ 15:50 Uhr<br>✈️ SriLankan (UL405)<br>💶 € 175,00" }
       };
 
-      const darkMap = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { attribution: '&copy; OpenStreetMap &copy; CARTO', maxZoom: 19 });
       const lightMap = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', { attribution: '&copy; OpenStreetMap &copy; CARTO', maxZoom: 19 });
+      const darkMap = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { attribution: '&copy; OpenStreetMap &copy; CARTO', maxZoom: 19 });
       const osmMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap', maxZoom: 19 });
 
-      map = L.map('map', { layers: [darkMap] });
+      // Startet explizit im Hellmodus (lightMap)
+      map = L.map('map', { layers: [lightMap] });
 
       L.control.layers({
+        "☀️ Hellmodus (Standard)": lightMap,
         "🌙 Dunkelmodus": darkMap,
-        "☀️ Hellmodus": lightMap,
         "🗺️ Straßenkarte": osmMap
       }).addTo(map);
 
@@ -1362,9 +1367,9 @@
         allBounds.push(pt);
 
         const popupContent = `
-          <div style="color: #0d1117; font-family: 'Plus Jakarta Sans', sans-serif; min-width: 200px;">
+          <div style="color: #0c1a11; font-family: 'Plus Jakarta Sans', sans-serif; min-width: 200px;">
             <div style="font-size: 0.75rem; font-weight: 700; color: ${wp.color}; text-transform: uppercase; margin-bottom: 2px;">${wp.days}</div>
-            <h3 style="margin: 0 0 8px 0; font-size: 1.05rem; color: #161b22; border-bottom: 1px solid #ddd; padding-bottom: 4px;">${index + 1}. ${wp.name}</h3>
+            <h3 style="margin: 0 0 8px 0; font-size: 1.05rem; color: #1e3d27; border-bottom: 1px solid #ddd; padding-bottom: 4px;">${index + 1}. ${wp.name}</h3>
             <div style="font-size: 0.85rem; margin-bottom: 6px; color: #24292f;"><strong>🎯 Aktivität:</strong> ${wp.activity}</div>
             <div style="font-size: 0.82rem; color: #57606a; margin-bottom: 4px;"><strong>🛵 Transport:</strong> ${wp.transport}</div>
             <div style="font-size: 0.82rem; color: #57606a;"><strong>🏨 Unterkunft:</strong> ${wp.hotel}</div>
@@ -1390,28 +1395,28 @@
         const pt = [p.lat, p.lng];
         allBounds.push(pt);
 
-        L.circleMarker(pt, { color: '#e2e8f0', fillColor: '#64748b', fillOpacity: 0.9, radius: 6, weight: 2 })
-          .addTo(map).bindPopup(`<div style="color: #0d1117; font-family: sans-serif;"><b>✈️ ${p.name}</b><br>${p.desc}</div>`);
+        L.circleMarker(pt, { color: '#1e3d27', fillColor: '#ea580c', fillOpacity: 0.9, radius: 6, weight: 2 })
+          .addTo(map).bindPopup(`<div style="color: #0c1a11; font-family: sans-serif;"><b>✈️ ${p.name}</b><br>${p.desc}</div>`);
       });
 
-      L.polyline([[intlPoints.wien.lat, intlPoints.wien.lng], [intlPoints.riad.lat, intlPoints.riad.lng], [13.6900, 100.7501]], { color: '#c084fc', weight: 2, opacity: 0.8, dashArray: '4, 8' }).addTo(map);
+      L.polyline([[intlPoints.wien.lat, intlPoints.wien.lng], [intlPoints.riad.lat, intlPoints.riad.lng], [13.6900, 100.7501]], { color: '#a855f7', weight: 2, opacity: 0.8, dashArray: '4, 8' }).addTo(map);
       L.polyline([[13.6900, 100.7501], [intlPoints.muenchen.lat, intlPoints.muenchen.lng]], { color: '#f97316', weight: 2, opacity: 0.8, dashArray: '4, 8' }).addTo(map);
-      L.polyline([[13.6900, 100.7501], [intlPoints.colombo.lat, intlPoints.colombo.lng]], { color: '#f43f5e', weight: 2, opacity: 0.85, dashArray: '4, 8' }).addTo(map);
+      L.polyline([[13.6900, 100.7501], [intlPoints.colombo.lat, intlPoints.colombo.lng]], { color: '#ef4444', weight: 2, opacity: 0.85, dashArray: '4, 8' }).addTo(map);
 
-      // Erweiterte Legende zur Karte hinzufügen
+      // Legende zur Karte
       const legend = L.control({ position: 'bottomright' });
       legend.onAdd = function () {
         const div = L.DomUtil.create('div', 'map-legend');
         div.innerHTML = `
           <div class="legend-title">Orte & Regionen</div>
           <div class="legend-item"><div class="legend-color-dot" style="background:#a3e635;"></div> Isan (Udon Thani)</div>
-          <div class="legend-item"><div class="legend-color-dot" style="background:#4ade80;"></div> Norden (Chiang Mai, Pai, Rai)</div>
+          <div class="legend-item"><div class="legend-color-dot" style="background:#16a34a;"></div> Norden (Chiang Mai, Pai, Rai)</div>
           <div class="legend-item"><div class="legend-color-dot" style="background:#c084fc;"></div> Bangkok</div>
-          <div class="legend-item"><div class="legend-color-dot" style="background:#38bdf8;"></div> Inseln (Andamanensee & Samui-Archipel)</div>
+          <div class="legend-item"><div class="legend-color-dot" style="background:#0284c7;"></div> Inseln (Andamanensee & Samui-Archipel)</div>
           <div class="legend-title" style="margin-top:8px;">Flugrouten</div>
-          <div class="legend-item"><div class="legend-color-line" style="background:#c084fc;"></div> Saudia (Hinflug VIE)</div>
+          <div class="legend-item"><div class="legend-color-line" style="background:#a855f7;"></div> Saudia (Hinflug VIE)</div>
           <div class="legend-item"><div class="legend-color-line" style="background:#f97316;"></div> Thai Airways (MUC)</div>
-          <div class="legend-item"><div class="legend-color-line" style="background:#f43f5e;"></div> SriLankan (CMB)</div>
+          <div class="legend-item"><div class="legend-color-line" style="background:#ef4444;"></div> SriLankan (CMB)</div>
         `;
         return div;
       };
