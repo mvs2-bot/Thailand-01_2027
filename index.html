@@ -6,7 +6,7 @@
   <title>Thailand Reiseplan 2027</title>
 
   <!-- PWA & Mobile Web App Meta -->
-  <meta name="theme-color" content="#0d1117">
+  <meta name="theme-color" content="#1a2e20">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
@@ -21,25 +21,25 @@
 
   <style>
     /* ==========================================================================
-       1. FARBEN & DESIGNEINSTELLUNGEN
+       1. FARBEN & DESIGNEINSTELLUNGEN (Dunkelgrün & Orange Akzente)
        ========================================================================== */
     :root {
-      --bg: #0d1117;           /* Haupt-Hintergrundfarbe */
-      --card-bg: #161b22;      /* Karten & Tabellen-Hintergrund */
-      --border: #30363d;       /* Rahmentöne */
-      --text: #c9d1d9;         /* Standard-Textfarbe */
-      --text-main: #f0f6fc;    /* Überschriften & wichtige Texte */
-      --text-muted: #8b949e;   /* Nebensächlicher Text / Datumsangaben */
+      --bg: #1a2e20;           /* Tiefes, schönes Dunkelgrün für den Hintergrund */
+      --card-bg: #233b2b;      /* Etwas helleres Waldgrün für Karten & Tabellen */
+      --border: #35543f;       /* Rahmentöne */
+      --text: #e2e8f0;         /* Standard-Textfarbe (sehr gut lesbar) */
+      --text-main: #f8fafc;    /* Überschriften & wichtige Texte */
+      --text-muted: #94a3b8;   /* Nebensächlicher Text / Datumsangaben */
       
       /* Akzentfarben */
-      --primary: #38bdf8;      
-      --primary-rgb: 56, 189, 248;
-      --accent: #f59e0b;       
-      --norden: #34d399;       
-      --bangkok: #a78bfa;      
-      --inseln: #38bdf8;       
-      --isan: #8b949e;
-      --danger: #f43f5e;
+      --primary: #f97316;      /* Strahlendes Warm-Orange */
+      --primary-rgb: 249, 115, 22;
+      --accent: #3e8f50;       /* Schönes Mittelgrün */
+      --norden: #4ade80;       /* Frisches Grün */
+      --bangkok: #c084fc;      /* Soft Violett */
+      --inseln: #38bdf8;       /* Ozeanblau */
+      --isan: #a3e635;        /* Limettengrün */
+      --danger: #f43f5e;       /* Rot/Rosa für Warnungen */
     }
 
     * {
@@ -90,7 +90,7 @@
     .countdown-badge {
       display: inline-block;
       margin-top: 8px;
-      background: rgba(56, 189, 248, 0.12);
+      background: rgba(249, 115, 22, 0.15);
       border: 1px solid var(--primary);
       color: var(--primary);
       padding: 4px 12px;
@@ -136,7 +136,7 @@
     }
 
     .tab-btn.active, .tab-btn:hover {
-      background: rgba(var(--primary-rgb), 0.15);
+      background: rgba(var(--primary-rgb), 0.2);
       border-color: var(--primary);
       color: var(--primary);
     }
@@ -156,7 +156,7 @@
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 20px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
       position: relative;
     }
 
@@ -179,9 +179,9 @@
 
     /* Map Legend Overlay */
     .map-legend {
-      background: #161b22;
-      color: #f0f6fc;
-      border: 1px solid #30363d;
+      background: #1a2e20;
+      color: #f8fafc;
+      border: 1px solid #35543f;
       border-radius: 8px;
       padding: 10px 14px;
       font-size: 0.78rem;
@@ -191,7 +191,7 @@
     .legend-title {
       font-weight: bold;
       margin-bottom: 4px;
-      border-bottom: 1px solid #30363d;
+      border-bottom: 1px solid #35543f;
       padding-bottom: 2px;
     }
 
@@ -235,7 +235,7 @@
 
     .search-input:focus {
       border-color: var(--primary);
-      box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.2);
+      box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.25);
     }
 
     .filter-btn {
@@ -251,7 +251,7 @@
     }
 
     .filter-btn:hover, .filter-btn.active {
-      background: rgba(var(--primary-rgb), 0.12);
+      background: rgba(var(--primary-rgb), 0.18);
       border-color: var(--primary);
       color: var(--primary);
     }
@@ -272,7 +272,7 @@
     }
 
     th {
-      background: #1c2128;
+      background: #15261a;
       color: var(--text-muted);
       font-weight: 600;
       text-transform: uppercase;
@@ -295,7 +295,7 @@
     }
 
     tr.clickable-row:hover td {
-      background: rgba(56, 189, 248, 0.06) !important;
+      background: rgba(249, 115, 22, 0.08) !important;
     }
 
     .day-badge {
@@ -304,7 +304,8 @@
       justify-content: center;
       font-weight: 700;
       color: var(--text-main);
-      background: #21262d;
+      background: #172a1d;
+      border: 1px solid var(--border);
       border-radius: 6px;
       padding: 2px 8px;
       font-size: 0.85rem;
@@ -319,10 +320,10 @@
       text-transform: uppercase;
     }
 
-    .tag-norden { background: rgba(52, 211, 153, 0.15); color: var(--norden); }
-    .tag-bangkok { background: rgba(167, 139, 250, 0.15); color: var(--bangkok); }
+    .tag-norden { background: rgba(74, 222, 128, 0.15); color: var(--norden); }
+    .tag-bangkok { background: rgba(192, 132, 252, 0.15); color: var(--bangkok); }
     .tag-inseln { background: rgba(56, 189, 248, 0.15); color: var(--inseln); }
-    .tag-default { background: #21262d; color: var(--text-muted); }
+    .tag-default { background: #172a1d; color: var(--text-muted); }
 
     .route-title {
       font-weight: 600;
@@ -344,13 +345,15 @@
       font-size: 0.8rem;
       padding: 2px 8px;
       border-radius: 4px;
-      background: #21262d;
+      background: #172a1d;
+      border: 1px solid var(--border);
       color: var(--text);
     }
 
     .hotel-pill {
-      background: rgba(245, 158, 11, 0.1);
-      color: #fbbf24;
+      background: rgba(249, 115, 22, 0.12);
+      border-color: rgba(249, 115, 22, 0.3);
+      color: #fb923c;
     }
 
     /* Grid Layouts für Tabs */
@@ -384,7 +387,7 @@
       display: flex;
       gap: 16px;
       flex-wrap: wrap;
-      background: rgba(56, 189, 248, 0.08);
+      background: rgba(249, 115, 22, 0.1);
       border: 1px solid var(--primary);
       padding: 16px;
       border-radius: 10px;
@@ -414,9 +417,10 @@
       gap: 8px;
       flex-wrap: wrap;
       margin-bottom: 20px;
-      background: #21262d;
+      background: #172a1d;
       padding: 12px;
       border-radius: 8px;
+      border: 1px solid var(--border);
     }
 
     .pack-add-form input, .pack-add-form select {
@@ -435,7 +439,7 @@
 
     .btn-add {
       background: var(--primary);
-      color: #0d1117;
+      color: #1a2e20;
       font-weight: 700;
       border: none;
       padding: 8px 16px;
@@ -462,9 +466,10 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: #21262d;
+      background: #172a1d;
       border-radius: 4px;
       padding: 2px 6px;
+      border: 1px solid var(--border);
     }
 
     .qty-btn {
@@ -479,8 +484,8 @@
     .qty-btn:hover { color: var(--primary); }
 
     .pack-table-category {
-      background: #1c2128;
-      color: var(--primary);
+      background: #15261a;
+      color: #fb923c;
       font-weight: 700;
       font-size: 0.85rem;
       text-transform: uppercase;
@@ -500,7 +505,7 @@
     .btn-icon:hover { opacity: 1; }
 
     @media (max-width: 860px) {
-      .table-wrapper { display: none; }
+      .table-wrapper-responsive { display: none; }
       .mobile-cards { display: flex; flex-direction: column; gap: 12px; }
       .card {
         background: var(--card-bg);
@@ -560,7 +565,7 @@
       </div>
 
       <!-- Desktop Ansicht (Tabelle) -->
-      <div class="table-wrapper">
+      <div class="table-wrapper table-wrapper-responsive">
         <table id="planTable">
           <thead>
             <tr>
@@ -860,8 +865,8 @@
           <button class="btn-add" onclick="addPackItem()">+ Hinzufügen</button>
         </div>
 
-        <!-- Packlisten Tabelle -->
-        <div class="table-wrapper" style="display: block;">
+        <!-- Packlisten Tabelle (überall sichtbar) -->
+        <div class="table-wrapper">
           <table id="packTable">
             <thead>
               <tr>
@@ -913,152 +918,160 @@
     let map;
     const markers = {};
 
-    /* Standard CSV Daten der Packliste */
-    const defaultPacklist = [
-      { cat: "Dokumente & Wertsachen", name: "Reisepass", weight: 41, qty: 1, packed: false },
-      { cat: "Dokumente & Wertsachen", name: "Kopien Reisepass & Impfpass", weight: 33, qty: 1, packed: false },
-      { cat: "Dokumente & Wertsachen", name: "Kopien gebuchte Flüge", weight: 30, qty: 1, packed: false },
-      { cat: "Dokumente & Wertsachen", name: "Internationaler Führerschein", weight: 37, qty: 1, packed: false },
-      { cat: "Dokumente & Wertsachen", name: "Geldbörse", weight: 111, qty: 1, packed: false },
-      { cat: "Dokumente & Wertsachen", name: "Reisetagebuch", weight: 312, qty: 1, packed: false },
-      { cat: "Rucksäcke & Gepäck", name: "Rucksack - Jack Wolfskin 55+5 Liter", weight: 2100, qty: 1, packed: false },
-      { cat: "Rucksäcke & Gepäck", name: "Kleiner Rucksack - Deuter Speed lite 20 Liter", weight: 870, qty: 1, packed: false },
-      { cat: "Rucksäcke & Gepäck", name: "Tages-Rucksack", weight: 165, qty: 1, packed: false },
-      { cat: "Rucksäcke & Gepäck", name: "Umhängetasche Decathlon", weight: 108, qty: 1, packed: false },
-      { cat: "Rucksäcke & Gepäck", name: "Umhängetasche North Face", weight: 188, qty: 1, packed: false },
-      { cat: "Rucksäcke & Gepäck", name: "Reisehülle Rucksack Aufgabegepäck", weight: 920, qty: 1, packed: false },
-      { cat: "Elektronik & Ladekabel", name: "Handy", weight: 233, qty: 1, packed: false },
-      { cat: "Elektronik & Ladekabel", name: "Kindle", weight: 165, qty: 1, packed: false },
-      { cat: "Elektronik & Ladekabel", name: "Zip Beutel für Elektrozeug", weight: 12, qty: 1, packed: false },
-      { cat: "Elektronik & Ladekabel", name: "Kopfhörer Jabra", weight: 45, qty: 1, packed: false },
-      { cat: "Elektronik & Ladekabel", name: "Stirnlampe", weight: 38, qty: 1, packed: false },
-      { cat: "Elektronik & Ladekabel", name: "Mini Taschenlampe von Aliexpress", weight: 40, qty: 1, packed: false },
-      { cat: "Elektronik & Ladekabel", name: "Mobiler Akku 10.000 mAh", weight: 230, qty: 1, packed: false },
-      { cat: "Elektronik & Ladekabel", name: "Mini Powerbank 5.000 mAh", weight: 91, qty: 1, packed: false },
-      { cat: "Elektronik & Ladekabel", name: "Anker Ladestecker mit 2 USBs (klein)", weight: 89, qty: 1, packed: false },
-      { cat: "Elektronik & Ladekabel", name: "Anker Ladestecker mit 1 USB-C (klein)", weight: 38, qty: 1, packed: false },
-      { cat: "Elektronik & Ladekabel", name: "Kurzes USB auf USB-C Kabel", weight: 7, qty: 1, packed: false },
-      { cat: "Elektronik & Ladekabel", name: "Adapter Ladekabel USB-C auf Garmin", weight: 9, qty: 1, packed: false },
-      { cat: "Elektronik & Ladekabel", name: "Adapter Ladekabel USB-C auf Rasierer", weight: 9, qty: 1, packed: false },
-      { cat: "Elektronik & Ladekabel", name: "USB-C auf USB-C Kabel schwarz Anker", weight: 33, qty: 1, packed: false },
-      { cat: "Elektronik & Ladekabel", name: "USB-C auf USB-C Kabel lange weiß", weight: 38, qty: 1, packed: false },
-      { cat: "Elektronik & Ladekabel", name: "USB-C auf USB-C Kabel sehr kurz", weight: 6, qty: 1, packed: false },
-      { cat: "Elektronik & Ladekabel", name: "USB-A auf USB-C Kabel kurz", weight: 11, qty: 1, packed: false },
-      { cat: "Elektronik & Ladekabel", name: "USB-C Kopfhörer Reserve", weight: 12, qty: 1, packed: false },
-      { cat: "Elektronik & Ladekabel", name: "Strom Adapter", weight: 141, qty: 1, packed: false },
-      { cat: "Elektronik & Ladekabel", name: "Mehrfachstecker 3-fach", weight: 71, qty: 1, packed: false },
-      { cat: "Kleidung", name: "T-Shirts Merino", weight: 237, qty: 1, packed: false },
-      { cat: "Kleidung", name: "T-Shirts Baumwolle Oversize Uniqlo", weight: 430, qty: 1, packed: false },
-      { cat: "Kleidung", name: "T-Shirts Baumwolle Oversize Moon", weight: 191, qty: 1, packed: false },
-      { cat: "Kleidung", name: "T-Shirts Kunstfaser Adidas", weight: 141, qty: 1, packed: false },
-      { cat: "Kleidung", name: "Tanktops Baumwolle H&M", weight: 141, qty: 1, packed: false },
-      { cat: "Kleidung", name: "Tanktops Kunstfaser H&M", weight: 86, qty: 1, packed: false },
-      { cat: "Kleidung", name: "Fleecepulli Patagonia blau", weight: 278, qty: 1, packed: false },
-      { cat: "Kleidung", name: "Fleecepulli Patagonia rotblau", weight: 270, qty: 1, packed: false },
-      { cat: "Kleidung", name: "Hemden langarm", weight: 209, qty: 1, packed: false },
-      { cat: "Kleidung", name: "Lange Wanderhose OHNE Gürtel", weight: 320, qty: 1, packed: false },
-      { cat: "Kleidung", name: "Kurze Wanderhose OHNE Gürtel", weight: 270, qty: 1, packed: false },
-      { cat: "Kleidung", name: "Gürtel Wanderhosen", weight: 34, qty: 1, packed: false },
-      { cat: "Kleidung", name: "Gürtel normal schmal schwarz", weight: 129, qty: 1, packed: false },
-      { cat: "Kleidung", name: "Lange Leinenhose schwarz", weight: 384, qty: 1, packed: false },
-      { cat: "Kleidung", name: "Lange Cordhose schwarz", weight: 550, qty: 1, packed: false },
-      { cat: "Kleidung", name: "Kurze Cord Hose", weight: 260, qty: 1, packed: false },
-      { cat: "Kleidung", name: "Lange Jogginghose stretch schwarz", weight: 374, qty: 1, packed: false },
-      { cat: "Kleidung", name: "Unterhose schnelltrocknend under armour", weight: 148, qty: 1, packed: false },
-      { cat: "Kleidung", name: "Normale Unterhosen", weight: 475, qty: 1, packed: false },
-      { cat: "Kleidung", name: "Zehensocken dünn", weight: 48, qty: 1, packed: false },
-      { cat: "Kleidung", name: "Zehensocken dicker", weight: 43, qty: 1, packed: false },
-      { cat: "Kleidung", name: "gestrickte socken", weight: 111, qty: 1, packed: false },
-      { cat: "Kleidung", name: "Kompressionssocken TSI Flug", weight: 48, qty: 1, packed: false },
-      { cat: "Kleidung", name: "Falke Wandersocken", weight: 57, qty: 1, packed: false },
-      { cat: "Kleidung", name: "Normale Socken", weight: 127, qty: 1, packed: false },
-      { cat: "Kleidung", name: "Unterziehshirt Warm", weight: 128, qty: 1, packed: false },
-      { cat: "Kleidung", name: "Lange Unterhose Merino", weight: 139, qty: 1, packed: false },
-      { cat: "Kleidung", name: "Regenhose", weight: 227, qty: 1, packed: false },
-      { cat: "Kleidung", name: "Regenjacke", weight: 195, qty: 1, packed: false },
-      { cat: "Kleidung", name: "Windjacke", weight: 73, qty: 1, packed: false },
-      { cat: "Kleidung", name: "Schwarze warme Jacke Decathlon", weight: 366, qty: 1, packed: false },
-      { cat: "Kleidung", name: "Handschuhe (20 g)", weight: 23, qty: 1, packed: false },
-      { cat: "Kleidung", name: "Buff Halstuch Merino", weight: 48, qty: 1, packed: false },
-      { cat: "Kleidung", name: "Hut von Mom", weight: 65, qty: 1, packed: false },
-      { cat: "Kleidung", name: "Badehose rot", weight: 110, qty: 1, packed: false },
-      { cat: "Kleidung", name: "Badehose schwarz", weight: 208, qty: 1, packed: false },
-      { cat: "Schuhe", name: "Altra Schuhe", weight: 434, qty: 1, packed: false },
-      { cat: "Schuhe", name: "sandalen teva hurricane", weight: 374, qty: 1, packed: false },
-      { cat: "Schuhe", name: "sneaker weiß", weight: 772, qty: 1, packed: false },
-      { cat: "Schuhe", name: "Birkenstock", weight: 565, qty: 1, packed: false },
-      { cat: "Schuhe", name: "Badelatschen blau", weight: 203, qty: 1, packed: false },
-      { cat: "Schuhe", name: "Badelatschen selfmade", weight: 83, qty: 1, packed: false },
-      { cat: "Hygiene & Pflege", name: "Kulturbeutel mit allem, was nicht flüssig ist (Handgepäck)", weight: 183, qty: 1, packed: false },
-      { cat: "Hygiene & Pflege", name: "Festes Shampoo in Aufbewahrung (Handgepäck)", weight: 132, qty: 1, packed: false },
-      { cat: "Hygiene & Pflege", name: "Elektrischer Rasierer mit Transporthülle", weight: 290, qty: 1, packed: false },
-      { cat: "Hygiene & Pflege", name: "Zahnpasta 75 ml", weight: 128, qty: 1, packed: false },
-      { cat: "Hygiene & Pflege", name: "Deoroller 50 ml", weight: 81, qty: 1, packed: false },
-      { cat: "Hygiene & Pflege", name: "Haargel bläschen", weight: 21, qty: 1, packed: false },
-      { cat: "Hygiene & Pflege", name: "Rei klein", weight: 29, qty: 1, packed: false },
-      { cat: "Hygiene & Pflege", name: "Gesichtscreme Aqua fluid", weight: 41, qty: 1, packed: false },
-      { cat: "Hygiene & Pflege", name: "Parfum", weight: 85, qty: 1, packed: false },
-      { cat: "Hygiene & Pflege", name: "Handcreme", weight: 65, qty: 1, packed: false },
-      { cat: "Hygiene & Pflege", name: "Feuchtes Toilettenpapier", weight: 206, qty: 1, packed: false },
-      { cat: "Hygiene & Pflege", name: "ZIP-Beutel für Cremes und so", weight: 32, qty: 1, packed: false },
-      { cat: "Hygiene & Pflege", name: "After Sun", weight: 113, qty: 1, packed: false },
-      { cat: "Hygiene & Pflege", name: "Desinfektionsmittel", weight: 151, qty: 1, packed: false },
-      { cat: "Hygiene & Pflege", name: "Kleber Haargel", weight: 192, qty: 1, packed: false },
-      { cat: "Hygiene & Pflege", name: "Tattoo Creme", weight: 104, qty: 1, packed: false },
-      { cat: "Hygiene & Pflege", name: "Sonnencreme", weight: 234, qty: 1, packed: false },
-      { cat: "Hygiene & Pflege", name: "Tube Rei", weight: 143, qty: 1, packed: false },
-      { cat: "Hygiene & Pflege", name: "Insektenschutz", weight: 125, qty: 1, packed: false },
-      { cat: "Hygiene & Pflege", name: "Gesichtscreme Tigel Glas", weight: 103, qty: 1, packed: false },
-      { cat: "Hygiene & Pflege", name: "Voltarencreme", weight: 99, qty: 1, packed: false },
-      { cat: "Hygiene & Pflege", name: "Zahnseide sticks", weight: 37, qty: 1, packed: false },
-      { cat: "Gesundheit & Apotheke", name: "Medikamentenkit", weight: 62, qty: 1, packed: false },
-      { cat: "Gesundheit & Apotheke", name: "Lippenbalsam", weight: 9, qty: 1, packed: false },
-      { cat: "Gesundheit & Apotheke", name: "Tempo Packungen 3 Stk.", weight: 53, qty: 1, packed: false },
-      { cat: "Gesundheit & Apotheke", name: "Bandage Knie", weight: 181, qty: 1, packed: false },
-      { cat: "Gesundheit & Apotheke", name: "Elektrolyte", weight: 42, qty: 1, packed: false },
-      { cat: "Gesundheit & Apotheke", name: "Kreatin beutel", weight: 273, qty: 1, packed: false },
-      { cat: "Gesundheit & Apotheke", name: "Kork Ball", weight: 16, qty: 1, packed: false },
-      { cat: "Gesundheit & Apotheke", name: "Gummiband Blau Training", weight: 138, qty: 1, packed: false },
-      { cat: "Komfort & Schlafzubehör", name: "Mikrofaser Handtuch klein", weight: 77, qty: 1, packed: false },
-      { cat: "Komfort & Schlafzubehör", name: "Mikrofaser Handtuch mittel", weight: 150, qty: 1, packed: false },
-      { cat: "Komfort & Schlafzubehör", name: "Mikrofaser Handtuch groß", weight: 401, qty: 1, packed: false },
-      { cat: "Komfort & Schlafzubehör", name: "sitzkissen halb", weight: 27, qty: 1, packed: false },
-      { cat: "Komfort & Schlafzubehör", name: "Kissenbezug", weight: 99, qty: 1, packed: false },
-      { cat: "Komfort & Schlafzubehör", name: "Nackenkissen", weight: 65, qty: 1, packed: false },
-      { cat: "Komfort & Schlafzubehör", name: "Ohrstöpsel", weight: 15, qty: 1, packed: false },
-      { cat: "Komfort & Schlafzubehör", name: "Schlafmaske", weight: 0, qty: 1, packed: false },
-      { cat: "Accessoires & Alltagshelfer", name: "Sonnenbrille Ray Ban", weight: 30, qty: 1, packed: false },
-      { cat: "Accessoires & Alltagshelfer", name: "Etui Sonnenbrille Ray Ban", weight: 48, qty: 1, packed: false },
-      { cat: "Accessoires & Alltagshelfer", name: "Sonnenbrille Zalando", weight: 35, qty: 1, packed: false },
-      { cat: "Accessoires & Alltagshelfer", name: "Campingbesteck für Notfall", weight: 11, qty: 1, packed: false },
-      { cat: "Accessoires & Alltagshelfer", name: "Taschenmesser klein Handgepäck", weight: 22, qty: 1, packed: false },
-      { cat: "Accessoires & Alltagshelfer", name: "Taschenmesser normal Aufgabegepäck", weight: 59, qty: 1, packed: false },
-      { cat: "Accessoires & Alltagshelfer", name: "Leere Wasserflasche 1,5 Liter", weight: 32, qty: 1, packed: false },
-      { cat: "Accessoires & Alltagshelfer", name: "Trinkbecher Decathlon", weight: 18, qty: 1, packed: false },
-      { cat: "Accessoires & Alltagshelfer", name: "Selfiestick", weight: 188, qty: 1, packed: false },
-      { cat: "Accessoires & Alltagshelfer", name: "Uno Karten", weight: 205, qty: 1, packed: false },
-      { cat: "Organisation & Utensilien", name: "drybag osprey für wäsche getragen zum waschen", weight: 82, qty: 1, packed: false },
-      { cat: "Organisation & Utensilien", name: "Müllbeutel grau", weight: 92, qty: 1, packed: false },
-      { cat: "Organisation & Utensilien", name: "Zip Beutel RESERVE 2x", weight: 40, qty: 1, packed: false },
-      { cat: "Organisation & Utensilien", name: "Kugelschreiber", weight: 38, qty: 1, packed: false },
-      { cat: "Organisation & Utensilien", name: "Kleiderbügel 3D gedruckt", weight: 58, qty: 1, packed: false },
-      { cat: "Organisation & Utensilien", name: "Thermometer", weight: 28, qty: 1, packed: false },
-      { cat: "Organisation & Utensilien", name: "4 Stk. Wäscheklammern", weight: 48, qty: 1, packed: false },
-      { cat: "Organisation & Utensilien", name: "Kabelbinder", weight: 12, qty: 1, packed: false },
-      { cat: "Organisation & Utensilien", name: "Schuhlöffel", weight: 17, qty: 1, packed: false },
-      { cat: "Organisation & Utensilien", name: "Panzertape", weight: 13, qty: 1, packed: false },
-      { cat: "Organisation & Utensilien", name: "Hero Clip", weight: 34, qty: 1, packed: false },
-      { cat: "Organisation & Utensilien", name: "Karabiner", weight: 11, qty: 1, packed: false },
-      { cat: "Organisation & Utensilien", name: "Gummibänder", weight: 4, qty: 1, packed: false },
-      { cat: "Organisation & Utensilien", name: "Namensschild mit Telefonnummer", weight: 6, qty: 1, packed: false },
-      { cat: "Organisation & Utensilien", name: "Kleines TSA Schloss", weight: 38, qty: 1, packed: false }
+    /* Alle Gegenstände deiner CSV Liste */
+    const rawItemsData = [
+      ["Dokumente & Wertsachen", "Reisepass", 41],
+      ["Dokumente & Wertsachen", "Kopien Reisepass & Impfpass", 33],
+      ["Dokumente & Wertsachen", "Kopien gebuchte Flüge", 30],
+      ["Dokumente & Wertsachen", "Internationaler Führerschein", 37],
+      ["Dokumente & Wertsachen", "Geldbörse", 111],
+      ["Dokumente & Wertsachen", "Reisetagebuch", 312],
+      ["Rucksäcke & Gepäck", "Rucksack - Jack Wolfskin 55+5 Liter", 2100],
+      ["Rucksäcke & Gepäck", "Kleiner Rucksack - Deuter Speed lite 20 Liter", 870],
+      ["Rucksäcke & Gepäck", "Tages-Rucksack", 165],
+      ["Rucksäcke & Gepäck", "Umhängetasche Decathlon", 108],
+      ["Rucksäcke & Gepäck", "Umhängetasche North Face", 188],
+      ["Rucksäcke & Gepäck", "Reisehülle Rucksack Aufgabegepäck", 920],
+      ["Elektronik & Ladekabel", "Handy", 233],
+      ["Elektronik & Ladekabel", "Kindle", 165],
+      ["Elektronik & Ladekabel", "Zip Beutel für Elektrozeug", 12],
+      ["Elektronik & Ladekabel", "Kopfhörer Jabra", 45],
+      ["Elektronik & Ladekabel", "Stirnlampe", 38],
+      ["Elektronik & Ladekabel", "Mini Taschenlampe von Aliexpress", 40],
+      ["Elektronik & Ladekabel", "Mobiler Akku 10.000 mAh", 230],
+      ["Elektronik & Ladekabel", "Mini Powerbank 5.000 mAh", 91],
+      ["Elektronik & Ladekabel", "Anker Ladestecker mit 2 USBs (klein)", 89],
+      ["Elektronik & Ladekabel", "Anker Ladestecker mit 1 USB-C (klein)", 38],
+      ["Elektronik & Ladekabel", "Kurzes USB auf USB-C Kabel", 7],
+      ["Elektronik & Ladekabel", "Adapter Ladekabel USB-C auf Garmin", 9],
+      ["Elektronik & Ladekabel", "Adapter Ladekabel USB-C auf Rasierer", 9],
+      ["Elektronik & Ladekabel", "USB-C auf USB-C Kabel schwarz Anker", 33],
+      ["Elektronik & Ladekabel", "USB-C auf USB-C Kabel lange weiß", 38],
+      ["Elektronik & Ladekabel", "USB-C auf USB-C Kabel sehr kurz", 6],
+      ["Elektronik & Ladekabel", "USB-A auf USB-C Kabel kurz", 11],
+      ["Elektronik & Ladekabel", "USB-C Kopfhörer Reserve", 12],
+      ["Elektronik & Ladekabel", "Strom Adapter", 141],
+      ["Elektronik & Ladekabel", "Mehrfachstecker 3-fach", 71],
+      ["Kleidung", "T-Shirts Merino", 237],
+      ["Kleidung", "T-Shirts Baumwolle Oversize Uniqlo", 430],
+      ["Kleidung", "T-Shirts Baumwolle Oversize Moon", 191],
+      ["Kleidung", "T-Shirts Kunstfaser Adidas", 141],
+      ["Kleidung", "Tanktops Baumwolle H&M", 141],
+      ["Kleidung", "Tanktops Kunstfaser H&M", 86],
+      ["Kleidung", "Fleecepulli Patagonia blau", 278],
+      ["Kleidung", "Fleecepulli Patagonia rotblau", 270],
+      ["Kleidung", "Hemden langarm", 209],
+      ["Kleidung", "Lange Wanderhose OHNE Gürtel", 320],
+      ["Kleidung", "Kurze Wanderhose OHNE Gürtel", 270],
+      ["Kleidung", "Gürtel Wanderhosen", 34],
+      ["Kleidung", "Gürtel normal schmal schwarz", 129],
+      ["Kleidung", "Lange Leinenhose schwarz", 384],
+      ["Kleidung", "Lange Cordhose schwarz", 550],
+      ["Kleidung", "Kurze Cord Hose", 260],
+      ["Kleidung", "Lange Jogginghose stretch schwarz", 374],
+      ["Kleidung", "Unterhose schnelltrocknend under armour", 148],
+      ["Kleidung", "Normale Unterhosen", 475],
+      ["Kleidung", "Zehensocken dünn", 48],
+      ["Kleidung", "Zehensocken dicker", 43],
+      ["Kleidung", "gestrickte socken", 111],
+      ["Kleidung", "Kompressionssocken TSI Flug", 48],
+      ["Kleidung", "Falke Wandersocken", 57],
+      ["Kleidung", "Normale Socken", 127],
+      ["Kleidung", "Unterziehshirt Warm", 128],
+      ["Kleidung", "Lange Unterhose Merino", 139],
+      ["Kleidung", "Regenhose", 227],
+      ["Kleidung", "Regenjacke", 195],
+      ["Kleidung", "Windjacke", 73],
+      ["Kleidung", "Schwarze warme Jacke Decathlon", 366],
+      ["Kleidung", "Handschuhe (20 g)", 23],
+      ["Kleidung", "Buff Halstuch Merino", 48],
+      ["Kleidung", "Hut von Mom", 65],
+      ["Kleidung", "Badehose rot", 110],
+      ["Kleidung", "Badehose schwarz", 208],
+      ["Schuhe", "Altra Schuhe", 434],
+      ["Schuhe", "sandalen teva hurricane", 374],
+      ["Schuhe", "sneaker weiß", 772],
+      ["Schuhe", "Birkenstock", 565],
+      ["Schuhe", "Badelatschen blau", 203],
+      ["Schuhe", "Badelatschen selfmade", 83],
+      ["Hygiene & Pflege", "Kulturbeutel mit allem, was nicht flüssig ist (Handgepäck)", 183],
+      ["Hygiene & Pflege", "Festes Shampoo in Aufbewahrung (Handgepäck)", 132],
+      ["Hygiene & Pflege", "Elektrischer Rasierer mit Transporthülle", 290],
+      ["Hygiene & Pflege", "Zahnpasta 75 ml", 128],
+      ["Hygiene & Pflege", "Deoroller 50 ml", 81],
+      ["Hygiene & Pflege", "Haargel bläschen", 21],
+      ["Hygiene & Pflege", "Rei klein", 29],
+      ["Hygiene & Pflege", "Gesichtscreme Aqua fluid", 41],
+      ["Hygiene & Pflege", "Parfum", 85],
+      ["Hygiene & Pflege", "Handcreme", 65],
+      ["Hygiene & Pflege", "Feuchtes Toilettenpapier", 206],
+      ["Hygiene & Pflege", "ZIP-Beutel für Cremes und so", 32],
+      ["Hygiene & Pflege", "After Sun", 113],
+      ["Hygiene & Pflege", "Desinfektionsmittel", 151],
+      ["Hygiene & Pflege", "Kleber Haargel", 192],
+      ["Hygiene & Pflege", "Tattoo Creme", 104],
+      ["Hygiene & Pflege", "Sonnencreme", 234],
+      ["Hygiene & Pflege", "Tube Rei", 143],
+      ["Hygiene & Pflege", "Insektenschutz", 125],
+      ["Hygiene & Pflege", "Gesichtscreme Tigel Glas", 103],
+      ["Hygiene & Pflege", "Voltarencreme", 99],
+      ["Hygiene & Pflege", "Zahnseide sticks", 37],
+      ["Gesundheit & Apotheke", "Medikamentenkit", 62],
+      ["Gesundheit & Apotheke", "Lippenbalsam", 9],
+      ["Gesundheit & Apotheke", "Tempo Packungen 3 Stk.", 53],
+      ["Gesundheit & Apotheke", "Bandage Knie", 181],
+      ["Gesundheit & Apotheke", "Elektrolyte", 42],
+      ["Gesundheit & Apotheke", "Kreatin beutel", 273],
+      ["Gesundheit & Apotheke", "Kork Ball", 16],
+      ["Gesundheit & Apotheke", "Gummiband Blau Training", 138],
+      ["Komfort & Schlafzubehör", "Mikrofaser Handtuch klein", 77],
+      ["Komfort & Schlafzubehör", "Mikrofaser Handtuch mittel", 150],
+      ["Komfort & Schlafzubehör", "Mikrofaser Handtuch groß", 401],
+      ["Komfort & Schlafzubehör", "sitzkissen halb", 27],
+      ["Komfort & Schlafzubehör", "Kissenbezug", 99],
+      ["Komfort & Schlafzubehör", "Nackenkissen", 65],
+      ["Komfort & Schlafzubehör", "Ohrstöpsel", 15],
+      ["Komfort & Schlafzubehör", "Schlafmaske", 0],
+      ["Accessoires & Alltagshelfer", "Sonnenbrille Ray Ban", 30],
+      ["Accessoires & Alltagshelfer", "Etui Sonnenbrille Ray Ban", 48],
+      ["Accessoires & Alltagshelfer", "Sonnenbrille Zalando", 35],
+      ["Accessoires & Alltagshelfer", "Campingbesteck für Notfall", 11],
+      ["Accessoires & Alltagshelfer", "Taschenmesser klein Handgepäck", 22],
+      ["Accessoires & Alltagshelfer", "Taschenmesser normal Aufgabegepäck", 59],
+      ["Accessoires & Alltagshelfer", "Leere Wasserflasche 1,5 Liter", 32],
+      ["Accessoires & Alltagshelfer", "Trinkbecher Decathlon", 18],
+      ["Accessoires & Alltagshelfer", "Selfiestick", 188],
+      ["Accessoires & Alltagshelfer", "Uno Karten", 205],
+      ["Organisation & Utensilien", "drybag osprey für wäsche getragen zum waschen", 82],
+      ["Organisation & Utensilien", "Müllbeutel grau", 92],
+      ["Organisation & Utensilien", "Zip Beutel RESERVE 2x", 40],
+      ["Organisation & Utensilien", "Kugelschreiber", 38],
+      ["Organisation & Utensilien", "Kleiderbügel 3D gedruckt", 58],
+      ["Organisation & Utensilien", "Thermometer", 28],
+      ["Organisation & Utensilien", "4 Stk. Wäscheklammern", 48],
+      ["Organisation & Utensilien", "Kabelbinder", 12],
+      ["Organisation & Utensilien", "Schuhlöffel", 17],
+      ["Organisation & Utensilien", "Panzertape", 13],
+      ["Organisation & Utensilien", "Hero Clip", 34],
+      ["Organisation & Utensilien", "Karabiner", 11],
+      ["Organisation & Utensilien", "Gummibänder", 4],
+      ["Organisation & Utensilien", "Namensschild mit Telefonnummer", 6],
+      ["Organisation & Utensilien", "Kleines TSA Schloss", 38]
     ];
+
+    const defaultPacklist = rawItemsData.map(item => ({
+      cat: item[0],
+      name: item[1],
+      weight: item[2],
+      qty: 1,
+      packed: false
+    }));
 
     let packlist = [];
 
     /* Lade Packliste aus LocalStorage */
     function loadPacklist() {
-      const saved = localStorage.getItem('thailand_packlist_2027');
+      const saved = localStorage.getItem('thailand_packlist_2027_v2');
       if (saved) {
         try { 
           packlist = JSON.parse(saved); 
@@ -1075,7 +1088,7 @@
     }
 
     function savePacklist() {
-      localStorage.setItem('thailand_packlist_2027', JSON.stringify(packlist));
+      localStorage.setItem('thailand_packlist_2027_v2', JSON.stringify(packlist));
       renderPacklist();
     }
 
@@ -1307,18 +1320,18 @@
     /* Karten-Initialisierung */
     function initMap() {
       const waypoints = [
-        { name: "Bangkok (Ankunft BKK)", lat: 13.6900, lng: 100.7501, days: "Tag 2 (02.01.)", activity: "Ankunft BKK (13:40 Uhr) & Weiterflug nach Udon Thani", transport: "✈️ Saudia SV152/846 ➔ Inlandsflug", hotel: "🏠 Bei OW / Transfer", color: "#a78bfa" },
-        { name: "Udon Thani", lat: 17.4138, lng: 102.7872, days: "Tage 2 – 4 (02.01. – 04.01.)", activity: "Zeit mit OW (Tipp: Red Lotus Lake)", transport: "🚗 Mietwagen / Taxi", hotel: "🏠 Bei OW?", color: "#8b949e" },
-        { name: "Chiang Mai", lat: 18.7883, lng: 98.9853, days: "Tage 5 – 7 (05.01. – 07.01.)", activity: "Altstadt, Tempel-Tour & Doi Inthanon Nationalpark", transport: "✈️ Flug / 🛵 Roller & Ausflug", hotel: "🏨 EZ in Chiang Mai", color: "#34d399" },
-        { name: "Pai", lat: 19.3582, lng: 98.4402, days: "Tage 8 – 10 (08.01. – 10.01.)", activity: "Pai Canyon, Lod Cave, Hot Springs & Night Market", transport: "🚐 Minivan (762 Kurven) / 🛵 Roller", hotel: "🏨 EZ in Pai", color: "#34d399" },
-        { name: "Chiang Rai", lat: 19.9105, lng: 99.8406, days: "Tag 11 (11.01.)", activity: "Weißer Tempel (Wat Rong Khun) & Umgebung", transport: "🚐 Minivan / Transfer", hotel: "🏨 EZ in Chiang Rai", color: "#34d399" },
-        { name: "Bangkok (Kultur & City)", lat: 13.7563, lng: 100.5018, days: "Tage 12 – 14 (12.01. – 14.01.)", activity: "Grand Palace, Wat Pho, Chinatown & Rooftop-Bar", transport: "✈️ Flug / 🚆 BTS / 🚤 Boot", hotel: "🏨 EZ in Bangkok", color: "#a78bfa" },
+        { name: "Bangkok (Ankunft BKK)", lat: 13.6900, lng: 100.7501, days: "Tag 2 (02.01.)", activity: "Ankunft BKK (13:40 Uhr) & Weiterflug nach Udon Thani", transport: "✈️ Saudia SV152/846 ➔ Inlandsflug", hotel: "🏠 Bei OW / Transfer", color: "#c084fc" },
+        { name: "Udon Thani", lat: 17.4138, lng: 102.7872, days: "Tage 2 – 4 (02.01. – 04.01.)", activity: "Zeit mit OW (Tipp: Red Lotus Lake)", transport: "🚗 Mietwagen / Taxi", hotel: "🏠 Bei OW?", color: "#a3e635" },
+        { name: "Chiang Mai", lat: 18.7883, lng: 98.9853, days: "Tage 5 – 7 (05.01. – 07.01.)", activity: "Altstadt, Tempel-Tour & Doi Inthanon Nationalpark", transport: "✈️ Flug / 🛵 Roller & Ausflug", hotel: "🏨 EZ in Chiang Mai", color: "#4ade80" },
+        { name: "Pai", lat: 19.3582, lng: 98.4402, days: "Tage 8 – 10 (08.01. – 10.01.)", activity: "Pai Canyon, Lod Cave, Hot Springs & Night Market", transport: "🚐 Minivan (762 Kurven) / 🛵 Roller", hotel: "🏨 EZ in Pai", color: "#4ade80" },
+        { name: "Chiang Rai", lat: 19.9105, lng: 99.8406, days: "Tag 11 (11.01.)", activity: "Weißer Tempel (Wat Rong Khun) & Umgebung", transport: "🚐 Minivan / Transfer", hotel: "🏨 EZ in Chiang Rai", color: "#4ade80" },
+        { name: "Bangkok (Kultur & City)", lat: 13.7563, lng: 100.5018, days: "Tage 12 – 14 (12.01. – 14.01.)", activity: "Grand Palace, Wat Pho, Chinatown & Rooftop-Bar", transport: "✈️ Flug / 🚆 BTS / 🚤 Boot", hotel: "🏨 EZ in Bangkok", color: "#c084fc" },
         { name: "Ko Phi Phi", lat: 7.7407, lng: 98.7784, days: "Tage 15 – 17 (15.01. – 17.01.)", activity: "Maya Bay, Pileh Lagoon, Long Beach & Viewpoint", transport: "✈️ Flug ➔ ⛴️ Fähre / 🚤 Longtail-Boot", hotel: "🏨 EZ auf Koh Phi Phi", color: "#38bdf8" },
         { name: "Krabi / Railay", lat: 8.0863, lng: 98.9063, days: "Tage 18 – 20 (18.01. – 20.01.)", activity: "Railay Beach, Ko Hong Lagune & Tiger Cave Temple", transport: "⛴️ Fähre / 🚤 Private Longtail-Tour", hotel: "🏨 EZ auf Krabi", color: "#38bdf8" },
         { name: "Koh Tao", lat: 10.1018, lng: 99.8383, days: "Tage 21 – 24 (21.01. – 24.01.)", activity: "Schnorcheln Tanote Bay, Ko Nang Yuan & Erholung", transport: "🚌 Fähre + Bus + Fähre / 🛵 Roller", hotel: "🏨 EZ auf Koh Tao", color: "#38bdf8" },
         { name: "Ko Pha-ngan", lat: 9.7319, lng: 100.0136, days: "Tag 22 (22.01.)", activity: "Abends Full Moon Party am Haad Rin Beach", transport: "🚤 Party-Speedboat (ab/an Koh Tao)", hotel: "🏨 EZ auf Koh Tao", color: "#38bdf8" },
         { name: "Samui-Archipel (Inseln)", lat: 9.5120, lng: 99.9360, days: "Tage 24 – 27 (24.01. – 27.01.)", activity: "Ang Thong Marinepark, Fisherman's Village & Beach Club", transport: "⛴️ Fähre / 🚤 Boot- & Kajak-Tour", hotel: "🏨 Unterkunft im Samui-Archipel", color: "#38bdf8" },
-        { name: "Bangkok (Abschluss)", lat: 13.7000, lng: 100.4000, days: "Tage 27 – 29 (27.01. – 29.01.)", activity: "Souvenirs, Massage, Abschiedsessen & Rückflug", transport: "✈️ USM➔BKK / 🚕 Taxi / Airport Rail Link", hotel: "🏨 EZ in Bangkok / Flug", color: "#a78bfa" }
+        { name: "Bangkok (Abschluss)", lat: 13.7000, lng: 100.4000, days: "Tage 27 – 29 (27.01. – 29.01.)", activity: "Souvenirs, Massage, Abschiedsessen & Rückflug", transport: "✈️ USM➔BKK / 🚕 Taxi / Airport Rail Link", hotel: "🏨 EZ in Bangkok / Flug", color: "#c084fc" }
       ];
 
       const intlPoints = {
@@ -1332,7 +1345,7 @@
       const lightMap = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', { attribution: '&copy; OpenStreetMap &copy; CARTO', maxZoom: 19 });
       const osmMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap', maxZoom: 19 });
 
-      map = L.map('map', { layers: [lightMap] });
+      map = L.map('map', { layers: [darkMap] });
 
       L.control.layers({
         "🌙 Dunkelmodus": darkMap,
@@ -1369,7 +1382,7 @@
         markers[wp.name] = { marker, lat: wp.lat, lng: wp.lng };
       });
 
-      L.polyline(latlngs, { color: '#38bdf8', weight: 3, opacity: 0.7, dashArray: '5, 7' }).addTo(map);
+      L.polyline(latlngs, { color: '#f97316', weight: 3, opacity: 0.8, dashArray: '5, 7' }).addTo(map);
 
       // Internationale Punkte & Fluglinien
       Object.keys(intlPoints).forEach(key => {
@@ -1377,12 +1390,12 @@
         const pt = [p.lat, p.lng];
         allBounds.push(pt);
 
-        L.circleMarker(pt, { color: '#e1e4e8', fillColor: '#6e7681', fillOpacity: 0.9, radius: 6, weight: 2 })
+        L.circleMarker(pt, { color: '#e2e8f0', fillColor: '#64748b', fillOpacity: 0.9, radius: 6, weight: 2 })
           .addTo(map).bindPopup(`<div style="color: #0d1117; font-family: sans-serif;"><b>✈️ ${p.name}</b><br>${p.desc}</div>`);
       });
 
-      L.polyline([[intlPoints.wien.lat, intlPoints.wien.lng], [intlPoints.riad.lat, intlPoints.riad.lng], [13.6900, 100.7501]], { color: '#a78bfa', weight: 2, opacity: 0.8, dashArray: '4, 8' }).addTo(map);
-      L.polyline([[13.6900, 100.7501], [intlPoints.muenchen.lat, intlPoints.muenchen.lng]], { color: '#38bdf8', weight: 2, opacity: 0.8, dashArray: '4, 8' }).addTo(map);
+      L.polyline([[intlPoints.wien.lat, intlPoints.wien.lng], [intlPoints.riad.lat, intlPoints.riad.lng], [13.6900, 100.7501]], { color: '#c084fc', weight: 2, opacity: 0.8, dashArray: '4, 8' }).addTo(map);
+      L.polyline([[13.6900, 100.7501], [intlPoints.muenchen.lat, intlPoints.muenchen.lng]], { color: '#f97316', weight: 2, opacity: 0.8, dashArray: '4, 8' }).addTo(map);
       L.polyline([[13.6900, 100.7501], [intlPoints.colombo.lat, intlPoints.colombo.lng]], { color: '#f43f5e', weight: 2, opacity: 0.85, dashArray: '4, 8' }).addTo(map);
 
       // Erweiterte Legende zur Karte hinzufügen
@@ -1391,13 +1404,13 @@
         const div = L.DomUtil.create('div', 'map-legend');
         div.innerHTML = `
           <div class="legend-title">Orte & Regionen</div>
-          <div class="legend-item"><div class="legend-color-dot" style="background:#8b949e;"></div> Isan (Udon Thani)</div>
-          <div class="legend-item"><div class="legend-color-dot" style="background:#34d399;"></div> Norden (Chiang Mai, Pai, Rai)</div>
-          <div class="legend-item"><div class="legend-color-dot" style="background:#a78bfa;"></div> Bangkok</div>
+          <div class="legend-item"><div class="legend-color-dot" style="background:#a3e635;"></div> Isan (Udon Thani)</div>
+          <div class="legend-item"><div class="legend-color-dot" style="background:#4ade80;"></div> Norden (Chiang Mai, Pai, Rai)</div>
+          <div class="legend-item"><div class="legend-color-dot" style="background:#c084fc;"></div> Bangkok</div>
           <div class="legend-item"><div class="legend-color-dot" style="background:#38bdf8;"></div> Inseln (Andamanensee & Samui-Archipel)</div>
           <div class="legend-title" style="margin-top:8px;">Flugrouten</div>
-          <div class="legend-item"><div class="legend-color-line" style="background:#a78bfa;"></div> Saudia (Hinflug VIE)</div>
-          <div class="legend-item"><div class="legend-color-line" style="background:#38bdf8;"></div> Thai Airways (MUC)</div>
+          <div class="legend-item"><div class="legend-color-line" style="background:#c084fc;"></div> Saudia (Hinflug VIE)</div>
+          <div class="legend-item"><div class="legend-color-line" style="background:#f97316;"></div> Thai Airways (MUC)</div>
           <div class="legend-item"><div class="legend-color-line" style="background:#f43f5e;"></div> SriLankan (CMB)</div>
         `;
         return div;
