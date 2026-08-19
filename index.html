@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Verhindert, dass Suchmaschinen wie Google die Seite indexieren -->
+  <meta name="robots" content="noindex, nofollow" />
   <title>Thailand Reiseplan 2027</title>
 
   <!-- PWA & Mobile Web App Meta -->
@@ -181,23 +183,47 @@
       z-index: 1;
     }
 
-    /* Map Legend Overlay */
+    /* Map Legend Overlay mit Klapp-Funktion */
     .map-legend {
       background: #1e3d27;
       color: #f0fdf4;
       border: 1px solid #2d5a3a;
       border-radius: 8px;
-      padding: 10px 14px;
+      padding: 8px 12px;
       font-size: 0.78rem;
       line-height: 1.6;
+      max-width: 240px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .legend-toggle-header {
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--accent);
+      user-select: none;
+    }
+
+    .legend-body {
+      margin-top: 6px;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .legend-body.collapsed {
+      display: none;
     }
 
     .legend-title {
       font-weight: bold;
-      margin-bottom: 4px;
+      margin-top: 4px;
+      margin-bottom: 2px;
       border-bottom: 1px solid #2d5a3a;
       padding-bottom: 2px;
-      color: var(--accent);
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      text-transform: uppercase;
     }
 
     .legend-item {
@@ -536,9 +562,9 @@
       </div>
       <div class="stats-bar">
         <div class="stat-pill">📍 29 Tage</div>
-        <div class="stat-pill">✈️ Saudia (SV152 / SV846)</div>
-        <div class="stat-pill">✈️ Thai Airways (TG926)</div>
-        <div class="stat-pill">✈️ SriLankan (UL405)</div>
+        <div class="stat-pill">✈️ Saudia</div>
+        <div class="stat-pill">✈️ Thai Airways</div>
+        <div class="stat-pill">✈️ SriLankan</div>
       </div>
     </header>
 
@@ -587,32 +613,32 @@
               <td><span class="tag-region tag-default">Anreise</span></td>
               <td><div class="route-title">Start Reise ab Wien (VIE)</div></td>
               <td>Flug nach Bangkok (BKK) um 15:30 Uhr (Ankunft 13:40 +1 Tag, Dauer: 16h 10m)</td>
-              <td><span class="transport-pill">✈️ Saudia (SV152 & SV846) - Stopp in RUH</span></td>
+              <td><span class="transport-pill">✈️ Saudia - Stopp in RUH</span></td>
               <td><span class="hotel-pill">✈️ Im Flugzeug</span></td>
             </tr>
             <tr data-region="Isan / Start" data-location="Udon Thani" class="clickable-row" onclick="focusMap('Udon Thani')">
               <td><span class="day-badge">Tag 2</span><div class="sub-note">02.01. (Sa)</div></td>
               <td><span class="tag-region tag-default">Isan</span></td>
               <td><div class="route-title">Ankunft Bangkok ➔ Udon Thani</div></td>
-              <td>Ankunft ca. 13:40 in Bangkok ➔ Weiterfliegen nach Udon Thani ➔ Nachmittags bei OW</td>
+              <td>Ankunft ca. 13:40 in Bangkok ➔ Weiterfliegen nach Udon Thani ➔ Nachmittags Ankunft</td>
               <td><span class="transport-pill">✈️ Flugzeug</span></td>
-              <td><span class="hotel-pill">🏠 Bei OW?</span></td>
+              <td><span class="hotel-pill">🏠 vor Ort</span></td>
             </tr>
             <tr data-region="Isan / Start" data-location="Udon Thani" class="clickable-row" onclick="focusMap('Udon Thani')">
               <td><span class="day-badge">Tag 3</span><div class="sub-note">03.01. (So)</div></td>
               <td><span class="tag-region tag-default">Isan</span></td>
               <td><div class="route-title">Udon Thani</div></td>
-              <td>Zeit mit OW – Ganzer Tag (Tipp: Red Lotus Lake)</td>
-              <td><span class="transport-pill">🚗 Mietwagen / Taxi mit OW?</span></td>
-              <td><span class="hotel-pill">🏠 Bei OW?</span></td>
+              <td>Ganzer Tag vor Ort (Tipp: Red Lotus Lake)</td>
+              <td><span class="transport-pill">🚗 Mietwagen / Taxi</span></td>
+              <td><span class="hotel-pill">🏠 vor Ort</span></td>
             </tr>
             <tr data-region="Isan / Start" data-location="Udon Thani" class="clickable-row" onclick="focusMap('Udon Thani')">
               <td><span class="day-badge">Tag 4</span><div class="sub-note">04.01. (Mo)</div></td>
               <td><span class="tag-region tag-default">Isan</span></td>
               <td><div class="route-title">Udon Thani</div></td>
-              <td>Zeit mit OW – Ganzer Tag</td>
-              <td><span class="transport-pill">🚗 Mietwagen / Taxi mit OW?</span></td>
-              <td><span class="hotel-pill">🏠 Bei OW?</span></td>
+              <td>Ganzer Tag vor Ort</td>
+              <td><span class="transport-pill">🚗 Mietwagen / Taxi</span></td>
+              <td><span class="hotel-pill">🏠 vor Ort</span></td>
             </tr>
             <tr data-region="Norden" data-location="Chiang Mai" class="clickable-row" onclick="focusMap('Chiang Mai')">
               <td><span class="day-badge">Tag 5</span><div class="sub-note">05.01. (Di)</div></td>
@@ -747,7 +773,7 @@
               <td><span class="tag-region tag-inseln">Inselgruppe 2</span></td>
               <td><div class="route-title">z.B. Krabi ➔ Koh Tao</div></td>
               <td>Vor Ort direkt Party-Speedboat-Ticket für 22.01. buchen</td>
-              <td><span class="transport-pill">🚌 Fähre ➔ Bus ➔ Fähre (ca. 7 - 9 h)</span></td>
+              <td><span class="transport-pill">🚌 Fähre + Bus + Fähre (ca. 7 - 9 h)</span></td>
               <td><span class="hotel-pill">🏨 EZ auf Koh Tao</span></td>
             </tr>
             <tr data-region="Inselgruppe 2" data-location="Ko Pha-ngan" class="clickable-row" onclick="focusMap('Ko Pha-ngan')">
@@ -812,8 +838,8 @@
               <td><div class="route-title">Bangkok (BKK) / Heim- & Weiterflug</div></td>
               <td>
                 Check-out, Transfer Flughafen Suvarnabhumi (BKK)<br>
-                <strong>Stefan:</strong> Thai Airways TG926 (13:00 ➔ 18:55 MUC, 11h 55m)<br>
-                <strong>Ines:</strong> SriLankan Airlines UL405 (13:50 ➔ 15:50 CMB, 3h 30m)
+                <strong>Reisender A:</strong> Thai Airways (13:00 ➔ 18:55 MUC, 11h 55m)<br>
+                <strong>Reisender B:</strong> SriLankan Airlines (13:50 ➔ 15:50 CMB, 3h 30m)
               </td>
               <td><span class="transport-pill">🚕 Taxi / Airport Rail Link ➔ ✈️ Flugzeug</span></td>
               <td><span class="hotel-pill">🏠 Etwas in Colombo? / Flug</span></td>
@@ -898,8 +924,8 @@
           <h3>✈️ Gebuchte Flüge</h3>
           <ul class="checklist" style="line-height:1.8;">
             <li><strong>Hinflug (Saudia):</strong> VIE ➔ RUH ➔ BKK • <strong>€ 349,90 p.P.</strong></li>
-            <li><strong>Rückflug Stefan (Thai Airways):</strong> BKK ➔ MUC • <strong>€ 424,13</strong></li>
-            <li><strong>Weiterflug Ines (SriLankan):</strong> BKK ➔ CMB • <strong>€ 175,00</strong></li>
+            <li><strong>Rückflug Reisender A (Thai Airways):</strong> BKK ➔ MUC • <strong>€ 424,13</strong></li>
+            <li><strong>Weiterflug Reisender B (SriLankan):</strong> BKK ➔ CMB • <strong>€ 175,00</strong></li>
           </ul>
         </div>
         <div class="info-card">
@@ -989,7 +1015,7 @@
       ["Kleidung", "Schwarze warme Jacke Decathlon", 366],
       ["Kleidung", "Handschuhe (20 g)", 23],
       ["Kleidung", "Buff Halstuch Merino", 48],
-      ["Kleidung", "Hut von Mom", 65],
+      ["Kleidung", "Sonnenhut", 65],
       ["Kleidung", "Badehose rot", 110],
       ["Kleidung", "Badehose schwarz", 208],
       ["Schuhe", "Altra Schuhe", 434],
@@ -1321,11 +1347,24 @@
       }
     }
 
+    /* Funktion zum Ein-/Ausklappen der Legende */
+    function toggleLegend() {
+      const body = document.getElementById('legendBody');
+      const arrow = document.getElementById('legendArrow');
+      if (body.classList.contains('collapsed')) {
+        body.classList.remove('collapsed');
+        arrow.innerText = '▼';
+      } else {
+        body.classList.add('collapsed');
+        arrow.innerText = '▲';
+      }
+    }
+
     /* Karten-Initialisierung */
     function initMap() {
       const waypoints = [
-        { name: "Bangkok (Ankunft BKK)", lat: 13.6900, lng: 100.7501, days: "Tag 2 (02.01.)", activity: "Ankunft BKK (13:40 Uhr) & Weiterflug nach Udon Thani", transport: "✈️ Saudia SV152/846 ➔ Inlandsflug", hotel: "🏠 Bei OW / Transfer", color: "#c084fc" },
-        { name: "Udon Thani", lat: 17.4138, lng: 102.7872, days: "Tage 2 – 4 (02.01. – 04.01.)", activity: "Zeit mit OW (Tipp: Red Lotus Lake)", transport: "🚗 Mietwagen / Taxi", hotel: "🏠 Bei OW?", color: "#a3e635" },
+        { name: "Bangkok (Ankunft BKK)", lat: 13.6900, lng: 100.7501, days: "Tag 2 (02.01.)", activity: "Ankunft BKK (13:40 Uhr) & Weiterflug nach Udon Thani", transport: "✈️ Saudia ➔ Inlandsflug", hotel: "🏠 Transfer / Unterkunft", color: "#c084fc" },
+        { name: "Udon Thani", lat: 17.4138, lng: 102.7872, days: "Tage 2 – 4 (02.01. – 04.01.)", activity: "Zeit vor Ort (Tipp: Red Lotus Lake)", transport: "🚗 Mietwagen / Taxi", hotel: "🏠 vor Ort", color: "#a3e635" },
         { name: "Chiang Mai", lat: 18.7883, lng: 98.9853, days: "Tage 5 – 7 (05.01. – 07.01.)", activity: "Altstadt, Tempel-Tour & Doi Inthanon Nationalpark", transport: "✈️ Flug / 🛵 Roller & Ausflug", hotel: "🏨 EZ in Chiang Mai", color: "#16a34a" },
         { name: "Pai", lat: 19.3582, lng: 98.4402, days: "Tage 8 – 10 (08.01. – 10.01.)", activity: "Pai Canyon, Lod Cave, Hot Springs & Night Market", transport: "🚐 Minivan (762 Kurven) / 🛵 Roller", hotel: "🏨 EZ in Pai", color: "#16a34a" },
         { name: "Chiang Rai", lat: 19.9105, lng: 99.8406, days: "Tag 11 (11.01.)", activity: "Weißer Tempel (Wat Rong Khun) & Umgebung", transport: "🚐 Minivan / Transfer", hotel: "🏨 EZ in Chiang Rai", color: "#16a34a" },
@@ -1339,10 +1378,10 @@
       ];
 
       const intlPoints = {
-        wien: { name: "Wien (VIE)", lat: 48.1103, lng: 16.5697, desc: "<b>Flug nach Bangkok</b><br>📅 01.01.2027 • 15:30 ➔ 13:40 (+1 Tag)<br>✈️ Saudia (SV152/846)<br>💶 € 349,90" },
+        wien: { name: "Wien (VIE)", lat: 48.1103, lng: 16.5697, desc: "<b>Flug nach Bangkok</b><br>📅 01.01.2027 • 15:30 ➔ 13:40 (+1 Tag)<br>✈️ Saudia<br>💶 € 349,90" },
         riad: { name: "Riad (RUH)", lat: 24.9576, lng: 46.6988, desc: "<b>Zwischenstopp Saudia</b><br>⏱️ Aufenthalt: 3h 45m" },
-        muenchen: { name: "München (MUC)", lat: 48.3537, lng: 11.7861, desc: "<b>Rückflug Stefan</b><br>📅 29.01.2027 • 13:00 ➔ 18:55 Uhr<br>✈️ Thai Airways (TG926)<br>💶 € 424,13" },
-        colombo: { name: "Colombo (CMB)", lat: 7.1808, lng: 79.8841, desc: "<b>Weiterflug Ines</b><br>📅 29.01.2027 • 13:50 ➔ 15:50 Uhr<br>✈️ SriLankan (UL405)<br>💶 € 175,00" }
+        muenchen: { name: "München (MUC)", lat: 48.3537, lng: 11.7861, desc: "<b>Rückflug Reisender A</b><br>📅 29.01.2027 • 13:00 ➔ 18:55 Uhr<br>✈️ Thai Airways<br>💶 € 424,13" },
+        colombo: { name: "Colombo (CMB)", lat: 7.1808, lng: 79.8841, desc: "<b>Weiterflug Reisender B</b><br>📅 29.01.2027 • 13:50 ➔ 15:50 Uhr<br>✈️ SriLankan<br>💶 € 175,00" }
       };
 
       const lightMap = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', { attribution: '&copy; OpenStreetMap &copy; CARTO', maxZoom: 19 });
@@ -1403,21 +1442,32 @@
       L.polyline([[13.6900, 100.7501], [intlPoints.muenchen.lat, intlPoints.muenchen.lng]], { color: '#f97316', weight: 2, opacity: 0.8, dashArray: '4, 8' }).addTo(map);
       L.polyline([[13.6900, 100.7501], [intlPoints.colombo.lat, intlPoints.colombo.lng]], { color: '#ef4444', weight: 2, opacity: 0.85, dashArray: '4, 8' }).addTo(map);
 
-      // Legende zur Karte
+      // Legende zur Karte (ausklappbar)
       const legend = L.control({ position: 'bottomright' });
       legend.onAdd = function () {
         const div = L.DomUtil.create('div', 'map-legend');
         div.innerHTML = `
-          <div class="legend-title">Orte & Regionen</div>
-          <div class="legend-item"><div class="legend-color-dot" style="background:#a3e635;"></div> Isan (Udon Thani)</div>
-          <div class="legend-item"><div class="legend-color-dot" style="background:#16a34a;"></div> Norden (Chiang Mai, Pai, Rai)</div>
-          <div class="legend-item"><div class="legend-color-dot" style="background:#c084fc;"></div> Bangkok</div>
-          <div class="legend-item"><div class="legend-color-dot" style="background:#0284c7;"></div> Inseln (Andamanensee & Samui-Archipel)</div>
-          <div class="legend-title" style="margin-top:8px;">Flugrouten</div>
-          <div class="legend-item"><div class="legend-color-line" style="background:#a855f7;"></div> Saudia (Hinflug VIE)</div>
-          <div class="legend-item"><div class="legend-color-line" style="background:#f97316;"></div> Thai Airways (MUC)</div>
-          <div class="legend-item"><div class="legend-color-line" style="background:#ef4444;"></div> SriLankan (CMB)</div>
+          <div class="legend-toggle-header" onclick="toggleLegend()">
+            <span>Legende</span>
+            <span id="legendArrow">▼</span>
+          </div>
+          <div class="legend-body" id="legendBody">
+            <div class="legend-title">Orte & Regionen</div>
+            <div class="legend-item"><div class="legend-color-dot" style="background:#a3e635;"></div> Isan (Udon Thani)</div>
+            <div class="legend-item"><div class="legend-color-dot" style="background:#16a34a;"></div> Norden (Chiang Mai, Pai, Rai)</div>
+            <div class="legend-item"><div class="legend-color-dot" style="background:#c084fc;"></div> Bangkok</div>
+            <div class="legend-item"><div class="legend-color-dot" style="background:#0284c7;"></div> Inseln (Andamanensee & Samui)</div>
+            <div class="legend-title" style="margin-top:6px;">Flugrouten</div>
+            <div class="legend-item"><div class="legend-color-line" style="background:#a855f7;"></div> Saudia (Hinflug VIE)</div>
+            <div class="legend-item"><div class="legend-color-line" style="background:#f97316;"></div> Thai Airways (MUC)</div>
+            <div class="legend-item"><div class="legend-color-line" style="background:#ef4444;"></div> SriLankan (CMB)</div>
+          </div>
         `;
+
+        // Verhindert, dass Klicks auf die Legende die Karte verschieben oder zoomen
+        L.DomEvent.disableClickPropagation(div);
+        L.DomEvent.disableScrollPropagation(div);
+
         return div;
       };
       legend.addTo(map);
