@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Thailand Reiseplan 2027</title>
 
+  <!-- PWA & Mobile Web App Meta -->
+  <meta name="theme-color" content="#0d1117">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,21 +24,22 @@
        1. FARBEN & DESIGNEINSTELLUNGEN
        ========================================================================== */
     :root {
-      --bg: #0d1117;           /* Haupt-Hintergrundfarbe (Dunkel) */
+      --bg: #0d1117;           /* Haupt-Hintergrundfarbe */
       --card-bg: #161b22;      /* Karten & Tabellen-Hintergrund */
       --border: #30363d;       /* Rahmentöne */
       --text: #c9d1d9;         /* Standard-Textfarbe */
       --text-main: #f0f6fc;    /* Überschriften & wichtige Texte */
       --text-muted: #8b949e;   /* Nebensächlicher Text / Datumsangaben */
       
-      /* Akzentfarben für Regionen & Marker */
-      --primary: #38bdf8;      /* Primary Blau (z.B. für Inseln) */
+      /* Akzentfarben */
+      --primary: #38bdf8;      
       --primary-rgb: 56, 189, 248;
-      --accent: #f59e0b;       /* Gelb/Orange (Unterkünfte) */
-      --norden: #34d399;       /* Grün (Norden) */
-      --bangkok: #a78bfa;      /* Violett (Bangkok / Anreise) */
-      --inseln: #38bdf8;       /* Hellblau (Andamanen & Samui) */
-      --fullmoon: #f43f5e;     /* Pink/Rot (Full Moon Party / Ines) */
+      --accent: #f59e0b;       
+      --norden: #34d399;       
+      --bangkok: #a78bfa;      
+      --inseln: #38bdf8;       
+      --isan: #8b949e;
+      --danger: #f43f5e;
     }
 
     * {
@@ -56,7 +62,7 @@
     }
 
     header {
-      margin-bottom: 28px;
+      margin-bottom: 20px;
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
@@ -81,9 +87,21 @@
       margin-top: 4px;
     }
 
+    .countdown-badge {
+      display: inline-block;
+      margin-top: 8px;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
     .stats-bar {
       display: flex;
-      gap: 12px;
+      gap: 10px;
       flex-wrap: wrap;
     }
 
@@ -96,15 +114,50 @@
       color: var(--text-main);
     }
 
-    /* Styles für die Kartenansicht oben */
+    /* Main Navigation Tabs */
+    .nav-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 10px;
+    }
+
+    .tab-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn.active, .tab-btn:hover {
+      background: rgba(var(--primary-rgb), 0.15);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Kartenansicht */
     .map-section {
-      margin-top: 0;
       margin-bottom: 24px;
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 20px;
       box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      position: relative;
     }
 
     .map-section h2 {
@@ -124,15 +177,40 @@
       z-index: 1;
     }
 
-    .leaflet-control-layers {
-      background: #161b22 !important;
-      color: #f0f6fc !important;
-      border: 1px solid #30363d !important;
-      border-radius: 8px !important;
-      padding: 6px 10px !important;
+    /* Map Legend Overlay */
+    .map-legend {
+      background: #161b22;
+      color: #f0f6fc;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 0.78rem;
+      line-height: 1.6;
     }
-    .leaflet-control-layers-toggle {
-      filter: invert(1);
+
+    .legend-title {
+      font-weight: bold;
+      margin-bottom: 4px;
+      border-bottom: 1px solid #30363d;
+      padding-bottom: 2px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .legend-color-line {
+      width: 12px;
+      height: 3px;
+      border-radius: 2px;
+    }
+
+    .legend-color-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
     }
 
     .controls {
@@ -206,17 +284,18 @@
     }
 
     td {
-      padding: 14px 16px;
+      padding: 12px 16px;
       border-bottom: 1px solid var(--border);
-      vertical-align: top;
+      vertical-align: middle;
     }
 
-    tr:last-child td {
-      border-bottom: none;
+    tr.clickable-row {
+      cursor: pointer;
+      transition: background 0.15s ease;
     }
 
-    tr:hover td {
-      background: rgba(255, 255, 255, 0.02);
+    tr.clickable-row:hover td {
+      background: rgba(56, 189, 248, 0.06) !important;
     }
 
     .day-badge {
@@ -243,7 +322,6 @@
     .tag-norden { background: rgba(52, 211, 153, 0.15); color: var(--norden); }
     .tag-bangkok { background: rgba(167, 139, 250, 0.15); color: var(--bangkok); }
     .tag-inseln { background: rgba(56, 189, 248, 0.15); color: var(--inseln); }
-    .tag-party { background: rgba(244, 63, 94, 0.15); color: var(--fullmoon); }
     .tag-default { background: #21262d; color: var(--text-muted); }
 
     .route-title {
@@ -275,9 +353,151 @@
       color: #fbbf24;
     }
 
-    .party-row {
-      background: rgba(244, 63, 94, 0.05) !important;
+    /* Grid Layouts für Tabs */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
     }
+
+    .info-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .info-card h3 {
+      color: var(--text-main);
+      font-size: 1.1rem;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+
+    /* Packliste Styles */
+    .pack-summary {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      background: rgba(56, 189, 248, 0.08);
+      border: 1px solid var(--primary);
+      padding: 16px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .pack-summary-stat {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pack-summary-val {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .pack-summary-lbl {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .pack-add-form {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+      background: #21262d;
+      padding: 12px;
+      border-radius: 8px;
+    }
+
+    .pack-add-form input, .pack-add-form select {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      outline: none;
+    }
+
+    .pack-add-form input[type="text"] { flex: 2; min-width: 160px; }
+    .pack-add-form select { flex: 1; min-width: 140px; }
+    .pack-add-form input[type="number"] { width: 90px; }
+
+    .btn-add {
+      background: var(--primary);
+      color: #0d1117;
+      font-weight: 700;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: opacity 0.15s ease;
+    }
+
+    .btn-add:hover { opacity: 0.9; }
+
+    .btn-reset {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
+
+    .btn-reset:hover { border-color: var(--danger); color: var(--danger); }
+
+    .qty-controls {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #21262d;
+      border-radius: 4px;
+      padding: 2px 6px;
+    }
+
+    .qty-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-main);
+      font-weight: bold;
+      cursor: pointer;
+      padding: 0 4px;
+    }
+
+    .qty-btn:hover { color: var(--primary); }
+
+    .pack-table-category {
+      background: #1c2128;
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .btn-icon {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-size: 0.9rem;
+      opacity: 0.7;
+      transition: opacity 0.15s ease;
+      padding: 2px 4px;
+    }
+
+    .btn-icon:hover { opacity: 1; }
 
     @media (max-width: 860px) {
       .table-wrapper { display: none; }
@@ -287,6 +507,7 @@
         border: 1px solid var(--border);
         border-radius: 10px;
         padding: 16px;
+        cursor: pointer;
       }
       .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
     }
@@ -302,294 +523,717 @@
       <div class="title-group">
         <h1>Thailand Reiseplan - 2027</h1>
         <p>01.01.2027 – 29.01.2027 • 29 Tage Reisedauer</p>
+        <div class="countdown-badge" id="countdown">⏳ Countdown wird geladen...</div>
       </div>
       <div class="stats-bar">
         <div class="stat-pill">📍 29 Tage</div>
-        <div class="stat-pill">✈️ Saudia SV152 & SV846</div>
-        <div class="stat-pill">✈️ Thai Airways TG926</div>
-        <div class="stat-pill">✈️ SriLankan UL405</div>
+        <div class="stat-pill">✈️ Saudia (SV152 / SV846)</div>
+        <div class="stat-pill">✈️ Thai Airways (TG926)</div>
+        <div class="stat-pill">✈️ SriLankan (UL405)</div>
       </div>
     </header>
 
-    <!-- Karten-Sektion -->
-    <div class="map-section">
-      <h2>🗺️ Routenkarte</h2>
-      <div id="map"></div>
+    <!-- TAB NAVIGATION -->
+    <div class="nav-tabs">
+      <button class="tab-btn active" onclick="switchTab('routeTab', this)">🗺️ Reiseroute & Karte</button>
+      <button class="tab-btn" onclick="switchTab('packTab', this)">🎒 Interaktive Packliste</button>
+      <button class="tab-btn" onclick="switchTab('budgetTab', this)">💰 Budget & Flugübersicht</button>
     </div>
 
-    <!-- Suchfeld und Filter-Buttons -->
-    <div class="controls">
-      <input type="text" id="searchInput" class="search-input" placeholder="Nach Ort, Tempel, Aktivität oder Transport suchen..." onkeyup="filterPlan()">
-      <button class="filter-btn active" onclick="setFilter('all', this)">Alle</button>
-      <button class="filter-btn" onclick="setFilter('Isan / Start', this)">Udon Thani</button>
-      <button class="filter-btn" onclick="setFilter('Norden', this)">Norden</button>
-      <button class="filter-btn" onclick="setFilter('Bangkok', this)">Bangkok</button>
-      <button class="filter-btn" onclick="setFilter('Inselgruppe 1', this)">Andamanensee</button>
-      <button class="filter-btn" onclick="setFilter('Inselgruppe 2', this)">Samui-Archipel</button>
+    <!-- TAB 1: REISEROUTE & KARTE -->
+    <div id="routeTab" class="tab-content active">
+      <!-- Karten-Sektion -->
+      <div class="map-section">
+        <h2>🗺️ Interaktive Routenkarte <span style="font-size:0.8rem; font-weight:normal; color:var(--text-muted);">(Tabelle anklicken zum Zoomen)</span></h2>
+        <div id="map"></div>
+      </div>
+
+      <!-- Suchfeld und Filter-Buttons -->
+      <div class="controls">
+        <input type="text" id="searchInput" class="search-input" placeholder="Nach Ort, Tempel, Aktivität oder Transport suchen..." onkeyup="filterPlan()">
+        <button class="filter-btn active" onclick="setFilter('all', this)">Alle</button>
+        <button class="filter-btn" onclick="setFilter('Isan / Start', this)">Udon Thani</button>
+        <button class="filter-btn" onclick="setFilter('Norden', this)">Norden</button>
+        <button class="filter-btn" onclick="setFilter('Bangkok', this)">Bangkok</button>
+        <button class="filter-btn" onclick="setFilter('Inselgruppe 1', this)">Andamanensee</button>
+        <button class="filter-btn" onclick="setFilter('Inselgruppe 2', this)">Samui-Archipel</button>
+      </div>
+
+      <!-- Desktop Ansicht (Tabelle) -->
+      <div class="table-wrapper">
+        <table id="planTable">
+          <thead>
+            <tr>
+              <th>Tag / Datum</th>
+              <th>Region</th>
+              <th>Ort & Aktivität</th>
+              <th>Details & Programm</th>
+              <th>Transportmittel</th>
+              <th>Unterkunft</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-region="Isan / Start" data-location="Bangkok (Ankunft BKK)" class="clickable-row" onclick="focusMap('Bangkok (Ankunft BKK)')">
+              <td><span class="day-badge">Tag 1</span><div class="sub-note">01.01. (Fr)</div></td>
+              <td><span class="tag-region tag-default">Anreise</span></td>
+              <td><div class="route-title">Start Reise ab Wien (VIE)</div></td>
+              <td>Flug nach Bangkok (BKK) um 15:30 Uhr (Ankunft 13:40 +1 Tag, Dauer: 16h 10m)</td>
+              <td><span class="transport-pill">✈️ Saudia (SV152 & SV846) - Stopp in RUH</span></td>
+              <td><span class="hotel-pill">✈️ Im Flugzeug</span></td>
+            </tr>
+            <tr data-region="Isan / Start" data-location="Udon Thani" class="clickable-row" onclick="focusMap('Udon Thani')">
+              <td><span class="day-badge">Tag 2</span><div class="sub-note">02.01. (Sa)</div></td>
+              <td><span class="tag-region tag-default">Isan</span></td>
+              <td><div class="route-title">Ankunft Bangkok ➔ Udon Thani</div></td>
+              <td>Ankunft ca. 13:40 in Bangkok ➔ Weiterfliegen nach Udon Thani ➔ Nachmittags bei OW</td>
+              <td><span class="transport-pill">✈️ Flugzeug</span></td>
+              <td><span class="hotel-pill">🏠 Bei OW?</span></td>
+            </tr>
+            <tr data-region="Isan / Start" data-location="Udon Thani" class="clickable-row" onclick="focusMap('Udon Thani')">
+              <td><span class="day-badge">Tag 3</span><div class="sub-note">03.01. (So)</div></td>
+              <td><span class="tag-region tag-default">Isan</span></td>
+              <td><div class="route-title">Udon Thani</div></td>
+              <td>Zeit mit OW – Ganzer Tag (Tipp: Red Lotus Lake)</td>
+              <td><span class="transport-pill">🚗 Mietwagen / Taxi mit OW?</span></td>
+              <td><span class="hotel-pill">🏠 Bei OW?</span></td>
+            </tr>
+            <tr data-region="Isan / Start" data-location="Udon Thani" class="clickable-row" onclick="focusMap('Udon Thani')">
+              <td><span class="day-badge">Tag 4</span><div class="sub-note">04.01. (Mo)</div></td>
+              <td><span class="tag-region tag-default">Isan</span></td>
+              <td><div class="route-title">Udon Thani</div></td>
+              <td>Zeit mit OW – Ganzer Tag</td>
+              <td><span class="transport-pill">🚗 Mietwagen / Taxi mit OW?</span></td>
+              <td><span class="hotel-pill">🏠 Bei OW?</span></td>
+            </tr>
+            <tr data-region="Norden" data-location="Chiang Mai" class="clickable-row" onclick="focusMap('Chiang Mai')">
+              <td><span class="day-badge">Tag 5</span><div class="sub-note">05.01. (Di)</div></td>
+              <td><span class="tag-region tag-norden">Norden</span></td>
+              <td><div class="route-title">Udon Thani ➔ Chiang Mai</div></td>
+              <td>Ankunft in Chiang Mai, Einchecken, Altstadt & Street Food</td>
+              <td><span class="transport-pill">✈️ Flugzeug</span></td>
+              <td><span class="hotel-pill">🏨 EZ in Chiang Mai</span></td>
+            </tr>
+            <tr data-region="Norden" data-location="Chiang Mai" class="clickable-row" onclick="focusMap('Chiang Mai')">
+              <td><span class="day-badge">Tag 6</span><div class="sub-note">06.01. (Mi)</div></td>
+              <td><span class="tag-region tag-norden">Norden</span></td>
+              <td><div class="route-title">Chiang Mai / Umland</div></td>
+              <td>Tempel-Tour (Wat Chedi Luang, Wat Phra Singh, Wat Phra That Doi Suthep)</td>
+              <td><span class="transport-pill">🛵 Grab / Roller / Songthaew</span></td>
+              <td><span class="hotel-pill">🏨 EZ in Chiang Mai</span></td>
+            </tr>
+            <tr data-region="Norden" data-location="Chiang Mai" class="clickable-row" onclick="focusMap('Chiang Mai')">
+              <td><span class="day-badge">Tag 7</span><div class="sub-note">07.01. (Do)</div></td>
+              <td><span class="tag-region tag-norden">Norden</span></td>
+              <td><div class="route-title">Chiang Mai / Umland</div></td>
+              <td>Tagestour in den Doi Inthanon Nationalpark (Wandern & Wasserfälle - 2565 m)</td>
+              <td><span class="transport-pill">🚐 Geführter Tagesausflug / Mietwagen</span></td>
+              <td><span class="hotel-pill">🏨 EZ in Chiang Mai</span></td>
+            </tr>
+            <tr data-region="Norden" data-location="Pai" class="clickable-row" onclick="focusMap('Pai')">
+              <td><span class="day-badge">Tag 8</span><div class="sub-note">08.01. (Fr)</div></td>
+              <td><span class="tag-region tag-norden">Norden</span></td>
+              <td><div class="route-title">Chiang Mai ➔ Pai</div></td>
+              <td>Reise nach Pai – ca. 3 h Fahrt (762 Kurven)</td>
+              <td><span class="transport-pill">🚐 Minivan (AYA Service) / Roller</span></td>
+              <td><span class="hotel-pill">🏨 EZ in Pai</span></td>
+            </tr>
+            <tr data-region="Norden" data-location="Pai" class="clickable-row" onclick="focusMap('Pai')">
+              <td><span class="day-badge">Tag 9</span><div class="sub-note">09.01. (Sa)</div></td>
+              <td><span class="tag-region tag-norden">Norden</span></td>
+              <td><div class="route-title">Pai / Umland</div></td>
+              <td>Wandern Pai Canyon, Land Split & Night Market</td>
+              <td><span class="transport-pill">🛵 Roller</span></td>
+              <td><span class="hotel-pill">🏨 EZ in Pai</span></td>
+            </tr>
+            <tr data-region="Norden" data-location="Pai" class="clickable-row" onclick="focusMap('Pai')">
+              <td><span class="day-badge">Tag 10</span><div class="sub-note">10.01. (So)</div></td>
+              <td><span class="tag-region tag-norden">Norden</span></td>
+              <td><div class="route-title">Pai / Umland</div></td>
+              <td>Pai genießen: Lod Cave, Bamboo Bridge & Hot Springs</td>
+              <td><span class="transport-pill">🛵 Roller</span></td>
+              <td><span class="hotel-pill">🏨 EZ in Pai</span></td>
+            </tr>
+            <tr data-region="Norden" data-location="Chiang Rai" class="clickable-row" onclick="focusMap('Chiang Rai')">
+              <td><span class="day-badge">Tag 11</span><div class="sub-note">11.01. (Mo)</div></td>
+              <td><span class="tag-region tag-norden">Norden</span></td>
+              <td><div class="route-title">Pai ➔ Chiang Rai</div></td>
+              <td>Weißer Tempel und so</td>
+              <td><span class="transport-pill">🚐 Minivan / Transfer</span></td>
+              <td><span class="hotel-pill">🏨 EZ in Chiang Rai</span></td>
+            </tr>
+            <tr data-region="Bangkok" data-location="Bangkok (Kultur & City)" class="clickable-row" onclick="focusMap('Bangkok (Kultur & City)')">
+              <td><span class="day-badge">Tag 12</span><div class="sub-note">12.01. (Di)</div></td>
+              <td><span class="tag-region tag-bangkok">Bangkok</span></td>
+              <td><div class="route-title">Chiang Rai ➔ Bangkok</div></td>
+              <td>Von Chiang Rai mit dem Flugzeug nach Bangkok</td>
+              <td><span class="transport-pill">✈️ Flugzeug</span></td>
+              <td><span class="hotel-pill">🏨 EZ in Bangkok</span></td>
+            </tr>
+            <tr data-region="Bangkok" data-location="Bangkok (Kultur & City)" class="clickable-row" onclick="focusMap('Bangkok (Kultur & City)')">
+              <td><span class="day-badge">Tag 13</span><div class="sub-note">13.01. (Mi)</div></td>
+              <td><span class="tag-region tag-bangkok">Bangkok</span></td>
+              <td><div class="route-title">Bangkok</div></td>
+              <td>Kultur & Tempel (Grand Palace, Wat Pho, Wat Arun)</td>
+              <td><span class="transport-pill">🚤 MRT / Chao Phraya Express Boot</span></td>
+              <td><span class="hotel-pill">🏨 EZ in Bangkok</span></td>
+            </tr>
+            <tr data-region="Bangkok" data-location="Bangkok (Kultur & City)" class="clickable-row" onclick="focusMap('Bangkok (Kultur & City)')">
+              <td><span class="day-badge">Tag 14</span><div class="sub-note">14.01. (Do)</div></td>
+              <td><span class="tag-region tag-bangkok">Bangkok</span></td>
+              <td><div class="route-title">Bangkok</div></td>
+              <td>Chinatown (Yaowarat), Sukhumvit, Rooftop-Bar</td>
+              <td><span class="transport-pill">🚆 Skytrain (BTS) / Grab</span></td>
+              <td><span class="hotel-pill">🏨 EZ in Bangkok</span></td>
+            </tr>
+            <tr data-region="Inselgruppe 1" data-location="Ko Phi Phi" class="clickable-row" onclick="focusMap('Ko Phi Phi')">
+              <td><span class="day-badge">Tag 15</span><div class="sub-note">15.01. (Fr)</div></td>
+              <td><span class="tag-region tag-inseln">Inselgruppe 1</span></td>
+              <td><div class="route-title">Bangkok ➔ z.B. Ko Phi Phi</div></td>
+              <td>Anreise & Ankommen, Sunset Viewpoint</td>
+              <td><span class="transport-pill">✈️ Flug (BKK/DMK ➔ HKT/KBV) ➔ ⛴️ Fähre</span></td>
+              <td><span class="hotel-pill">🏨 EZ auf Koh Phi Phi</span></td>
+            </tr>
+            <tr data-region="Inselgruppe 1" data-location="Ko Phi Phi" class="clickable-row" onclick="focusMap('Ko Phi Phi')">
+              <td><span class="day-badge">Tag 16</span><div class="sub-note">16.01. (Sa)</div></td>
+              <td><span class="tag-region tag-inseln">Inselgruppe 1</span></td>
+              <td><div class="route-title">z.B. Ko Phi Phi</div></td>
+              <td>Ausflug Maya Bay, Pileh Lagoon & Bamboo Island</td>
+              <td><span class="transport-pill">🚤 Longtail-Boot / Tourboat</span></td>
+              <td><span class="hotel-pill">🏨 EZ auf Koh Phi Phi</span></td>
+            </tr>
+            <tr data-region="Inselgruppe 1" data-location="Ko Phi Phi" class="clickable-row" onclick="focusMap('Ko Phi Phi')">
+              <td><span class="day-badge">Tag 17</span><div class="sub-note">17.01. (So)</div></td>
+              <td><span class="tag-region tag-inseln">Inselgruppe 1</span></td>
+              <td><div class="route-title">z.B. Ko Phi Phi</div></td>
+              <td>Schnorcheln, Entspannen am Long Beach</td>
+              <td><span class="transport-pill">🚤 Roller / Wassertaxi</span></td>
+              <td><span class="hotel-pill">🏨 EZ auf Koh Phi Phi</span></td>
+            </tr>
+            <tr data-region="Inselgruppe 1" data-location="Krabi / Railay" class="clickable-row" onclick="focusMap('Krabi / Railay')">
+              <td><span class="day-badge">Tag 18</span><div class="sub-note">18.01. (Mo)</div></td>
+              <td><span class="tag-region tag-inseln">Inselgruppe 1</span></td>
+              <td><div class="route-title">z.B. Ko Phi Phi ➔ z.B. Krabi</div></td>
+              <td>Nachmittags Railay Beach & Phra Nang Cave Beach</td>
+              <td><span class="transport-pill">⛴️ Fähre (ca. 1,5 - 2 h)</span></td>
+              <td><span class="hotel-pill">🏨 EZ auf Krabi</span></td>
+            </tr>
+            <tr data-region="Inselgruppe 1" data-location="Krabi / Railay" class="clickable-row" onclick="focusMap('Krabi / Railay')">
+              <td><span class="day-badge">Tag 19</span><div class="sub-note">19.01. (Di)</div></td>
+              <td><span class="tag-region tag-inseln">Inselgruppe 1</span></td>
+              <td><div class="route-title">z.B. Krabi</div></td>
+              <td>Tagestrip nach Ko Hong (Lagune & Viewpoint)</td>
+              <td><span class="transport-pill">🚤 Private Longtail-Boot Tour</span></td>
+              <td><span class="hotel-pill">🏨 EZ auf Krabi</span></td>
+            </tr>
+            <tr data-region="Inselgruppe 1" data-location="Krabi / Railay" class="clickable-row" onclick="focusMap('Krabi / Railay')">
+              <td><span class="day-badge">Tag 20</span><div class="sub-note">20.01. (Mi)</div></td>
+              <td><span class="tag-region tag-inseln">Inselgruppe 1</span></td>
+              <td><div class="route-title">z.B. Krabi</div></td>
+              <td>Tiger Cave Temple (Aussicht) oder Mangroven-Kajaktour</td>
+              <td><span class="transport-pill">🛵 Roller / Samlor / Grab</span></td>
+              <td><span class="hotel-pill">🏨 EZ auf Krabi</span></td>
+            </tr>
+            <tr data-region="Inselgruppe 2" data-location="Koh Tao" class="clickable-row" onclick="focusMap('Koh Tao')">
+              <td><span class="day-badge">Tag 21</span><div class="sub-note">21.01. (Do)</div></td>
+              <td><span class="tag-region tag-inseln">Inselgruppe 2</span></td>
+              <td><div class="route-title">z.B. Krabi ➔ Koh Tao</div></td>
+              <td>Vor Ort direkt Party-Speedboat-Ticket für 22.01. buchen</td>
+              <td><span class="transport-pill">🚌 Fähre ➔ Bus ➔ Fähre (ca. 7 - 9 h)</span></td>
+              <td><span class="hotel-pill">🏨 EZ auf Koh Tao</span></td>
+            </tr>
+            <tr data-region="Inselgruppe 2" data-location="Ko Pha-ngan" class="clickable-row" onclick="focusMap('Ko Pha-ngan')">
+              <td><span class="day-badge">Tag 22</span><div class="sub-note">22.01. (Fr)</div></td>
+              <td><span class="tag-region tag-inseln">Inselgruppe 2</span></td>
+              <td><div class="route-title">Koh Tao ➔ Ko Pha-ngan ➔ Koh Tao</div></td>
+              <td>Abends Vollmond Party auf Koh Pha-ngan</td>
+              <td><span class="transport-pill">🚤 Party-Speedboat</span></td>
+              <td><span class="hotel-pill">🏨 EZ auf Koh Tao</span></td>
+            </tr>
+            <tr data-region="Inselgruppe 2" data-location="Koh Tao" class="clickable-row" onclick="focusMap('Koh Tao')">
+              <td><span class="day-badge">Tag 23</span><div class="sub-note">23.01. (Sa)</div></td>
+              <td><span class="tag-region tag-inseln">Inselgruppe 2</span></td>
+              <td><div class="route-title">Koh Tao</div></td>
+              <td>Ausschlafen, Entspannen, Schnorcheln Tanote Bay</td>
+              <td><span class="transport-pill">🛵 Roller / Wassertaxi</span></td>
+              <td><span class="hotel-pill">🏨 EZ auf Koh Tao</span></td>
+            </tr>
+            <tr data-region="Inselgruppe 2" data-location="Samui-Archipel (Inseln)" class="clickable-row" onclick="focusMap('Samui-Archipel (Inseln)')">
+              <td><span class="day-badge">Tag 24</span><div class="sub-note">24.01. (So)</div></td>
+              <td><span class="tag-region tag-inseln">Inselgruppe 2</span></td>
+              <td><div class="route-title">Koh Tao ➔ Samui-Archipel</div></td>
+              <td>Vormittags Trip nach Ko Nang Yuan, nachmittags Überfahrt zu Ziel-Insel</td>
+              <td><span class="transport-pill">⛴️ Fähre (ca. 1,5 - 2 h)</span></td>
+              <td><span class="hotel-pill">🏨 Unterkunft im Samui-Archipel</span></td>
+            </tr>
+            <tr data-region="Inselgruppe 2" data-location="Samui-Archipel (Inseln)" class="clickable-row" onclick="focusMap('Samui-Archipel (Inseln)')">
+              <td><span class="day-badge">Tag 25</span><div class="sub-note">25.01. (Mo)</div></td>
+              <td><span class="tag-region tag-inseln">Inselgruppe 2</span></td>
+              <td><div class="route-title">Samui-Archipel</div></td>
+              <td>Tagestrip Ang Thong Marine Nationalpark</td>
+              <td><span class="transport-pill">🚤 Boot / Kajak-Tour</span></td>
+              <td><span class="hotel-pill">🏨 Unterkunft im Samui-Archipel</span></td>
+            </tr>
+            <tr data-region="Inselgruppe 2" data-location="Samui-Archipel (Inseln)" class="clickable-row" onclick="focusMap('Samui-Archipel (Inseln)')">
+              <td><span class="day-badge">Tag 26</span><div class="sub-note">26.01. (Di)</div></td>
+              <td><span class="tag-region tag-inseln">Inselgruppe 2</span></td>
+              <td><div class="route-title">Samui-Archipel</div></td>
+              <td>Insel erkunden, Fisherman's Village, Tempel & Beach Club</td>
+              <td><span class="transport-pill">🛵 Roller / Songthaew</span></td>
+              <td><span class="hotel-pill">🏨 Unterkunft im Samui-Archipel</span></td>
+            </tr>
+            <tr data-region="Inselgruppe 2" data-location="Bangkok (Abschluss)" class="clickable-row" onclick="focusMap('Bangkok (Abschluss)')">
+              <td><span class="day-badge">Tag 27</span><div class="sub-note">27.01. (Mi)</div></td>
+              <td><span class="tag-region tag-inseln">Inselgruppe 2</span></td>
+              <td><div class="route-title">Samui-Archipel ➔ Bangkok</div></td>
+              <td>Transfertag: Rückreise nach Bangkok</td>
+              <td><span class="transport-pill">✈️ Flugzeug (USM/URT ➔ BKK)</span></td>
+              <td><span class="hotel-pill">🏨 EZ in Bangkok</span></td>
+            </tr>
+            <tr data-region="Bangkok" data-location="Bangkok (Abschluss)" class="clickable-row" onclick="focusMap('Bangkok (Abschluss)')">
+              <td><span class="day-badge">Tag 28</span><div class="sub-note">28.01. (Do)</div></td>
+              <td><span class="tag-region tag-bangkok">Bangkok</span></td>
+              <td><div class="route-title">Bangkok</div></td>
+              <td>Entspannter Tag: Souvenirs, Thai-Massage & Lieblingsspots - gemeinsames Abendessen</td>
+              <td><span class="transport-pill">🚆 BTS / MRT / Grab</span></td>
+              <td><span class="hotel-pill">🏨 EZ in Bangkok</span></td>
+            </tr>
+            <tr data-region="Bangkok" data-location="Bangkok (Abschluss)" class="clickable-row" onclick="focusMap('Bangkok (Abschluss)')">
+              <td><span class="day-badge">Tag 29</span><div class="sub-note">29.01. (Fr)</div></td>
+              <td><span class="tag-region tag-default">Abschluss</span></td>
+              <td><div class="route-title">Bangkok (BKK) / Heim- & Weiterflug</div></td>
+              <td>
+                Check-out, Transfer Flughafen Suvarnabhumi (BKK)<br>
+                <strong>Stefan:</strong> Thai Airways TG926 (13:00 ➔ 18:55 MUC, 11h 55m)<br>
+                <strong>Ines:</strong> SriLankan Airlines UL405 (13:50 ➔ 15:50 CMB, 3h 30m)
+              </td>
+              <td><span class="transport-pill">🚕 Taxi / Airport Rail Link ➔ ✈️ Flugzeug</span></td>
+              <td><span class="hotel-pill">🏠 Etwas in Colombo? / Flug</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Mobile Cards Ansicht -->
+      <div class="mobile-cards" id="mobileCards"></div>
     </div>
 
-    <!-- Desktop Ansicht (Tabelle) -->
-    <div class="table-wrapper">
-      <table id="planTable">
-        <thead>
-          <tr>
-            <th>Tag / Datum</th>
-            <th>Region</th>
-            <th>Ort & Aktivität</th>
-            <th>Details & Programm</th>
-            <th>Transportmittel</th>
-            <th>Unterkunft</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Tag 1 bis 29 -->
-          <tr data-region="Isan / Start">
-            <td><span class="day-badge">Tag 1</span><div class="sub-note">01.01. (Fr)</div></td>
-            <td><span class="tag-region tag-default">Anreise</span></td>
-            <td><div class="route-title">Start Reise ab Wien (VIE)</div></td>
-            <td>Flug nach Bangkok (BKK) um 15:30 Uhr (Ankunft 13:40 +1 Tag, Dauer: 16h 10m)</td>
-            <td><span class="transport-pill">✈️ Saudia (SV152 & SV846) - Stopp in RUH</span></td>
-            <td><span class="hotel-pill">✈️ Im Flugzeug</span></td>
-          </tr>
-          <tr data-region="Isan / Start">
-            <td><span class="day-badge">Tag 2</span><div class="sub-note">02.01. (Sa)</div></td>
-            <td><span class="tag-region tag-default">Isan</span></td>
-            <td><div class="route-title">Ankunft Bangkok ➔ Udon Thani</div></td>
-            <td>Ankunft ca. 13:40 in Bangkok ➔ Weiterfliegen nach Udon Thani ➔ Nachmittags bei OW</td>
-            <td><span class="transport-pill">✈️ Flugzeug</span></td>
-            <td><span class="hotel-pill">🏠 Bei OW?</span></td>
-          </tr>
-          <tr data-region="Isan / Start">
-            <td><span class="day-badge">Tag 3</span><div class="sub-note">03.01. (So)</div></td>
-            <td><span class="tag-region tag-default">Isan</span></td>
-            <td><div class="route-title">Udon Thani</div></td>
-            <td>Zeit mit OW – Ganzer Tag (Tipp: Red Lotus Lake)</td>
-            <td><span class="transport-pill">🚗 Mietwagen / Taxi mit OW?</span></td>
-            <td><span class="hotel-pill">🏠 Bei OW?</span></td>
-          </tr>
-          <tr data-region="Isan / Start">
-            <td><span class="day-badge">Tag 4</span><div class="sub-note">04.01. (Mo)</div></td>
-            <td><span class="tag-region tag-default">Isan</span></td>
-            <td><div class="route-title">Udon Thani</div></td>
-            <td>Zeit mit OW – Ganzer Tag</td>
-            <td><span class="transport-pill">🚗 Mietwagen / Taxi mit OW?</span></td>
-            <td><span class="hotel-pill">🏠 Bei OW?</span></td>
-          </tr>
-          <tr data-region="Norden">
-            <td><span class="day-badge">Tag 5</span><div class="sub-note">05.01. (Di)</div></td>
-            <td><span class="tag-region tag-norden">Norden</span></td>
-            <td><div class="route-title">Udon Thani ➔ Chiang Mai</div></td>
-            <td>Ankunft in Chiang Mai, Einchecken, Altstadt & Street Food</td>
-            <td><span class="transport-pill">✈️ Flugzeug</span></td>
-            <td><span class="hotel-pill">🏨 EZ in Chiang Mai</span></td>
-          </tr>
-          <tr data-region="Norden">
-            <td><span class="day-badge">Tag 6</span><div class="sub-note">06.01. (Mi)</div></td>
-            <td><span class="tag-region tag-norden">Norden</span></td>
-            <td><div class="route-title">Chiang Mai / Umland</div></td>
-            <td>Tempel-Tour (Wat Chedi Luang, Wat Phra Singh, Wat Phra That Doi Suthep)</td>
-            <td><span class="transport-pill">🛵 Grab / Roller / Songthaew</span></td>
-            <td><span class="hotel-pill">🏨 EZ in Chiang Mai</span></td>
-          </tr>
-          <tr data-region="Norden">
-            <td><span class="day-badge">Tag 7</span><div class="sub-note">07.01. (Do)</div></td>
-            <td><span class="tag-region tag-norden">Norden</span></td>
-            <td><div class="route-title">Chiang Mai / Umland</div></td>
-            <td>Tagestour in den Doi Inthanon Nationalpark (Wandern & Wasserfälle - 2565 m)</td>
-            <td><span class="transport-pill">🚐 Geführter Tagesausflug / Mietwagen</span></td>
-            <td><span class="hotel-pill">🏨 EZ in Chiang Mai</span></td>
-          </tr>
-          <tr data-region="Norden">
-            <td><span class="day-badge">Tag 8</span><div class="sub-note">08.01. (Fr)</div></td>
-            <td><span class="tag-region tag-norden">Norden</span></td>
-            <td><div class="route-title">Chiang Mai ➔ Pai</div></td>
-            <td>Reise nach Pai – ca. 3 h Fahrt (762 Kurven)</td>
-            <td><span class="transport-pill">🚐 Minivan (AYA Service) / Roller</span></td>
-            <td><span class="hotel-pill">🏨 EZ in Pai</span></td>
-          </tr>
-          <tr data-region="Norden">
-            <td><span class="day-badge">Tag 9</span><div class="sub-note">09.01. (Sa)</div></td>
-            <td><span class="tag-region tag-norden">Norden</span></td>
-            <td><div class="route-title">Pai / Umland</div></td>
-            <td>Wandern Pai Canyon, Land Split & Night Market</td>
-            <td><span class="transport-pill">🛵 Roller</span></td>
-            <td><span class="hotel-pill">🏨 EZ in Pai</span></td>
-          </tr>
-          <tr data-region="Norden">
-            <td><span class="day-badge">Tag 10</span><div class="sub-note">10.01. (So)</div></td>
-            <td><span class="tag-region tag-norden">Norden</span></td>
-            <td><div class="route-title">Pai / Umland</div></td>
-            <td>Pai genießen: Lod Cave, Bamboo Bridge & Hot Springs</td>
-            <td><span class="transport-pill">🛵 Roller</span></td>
-            <td><span class="hotel-pill">🏨 EZ in Pai</span></td>
-          </tr>
-          <tr data-region="Norden">
-            <td><span class="day-badge">Tag 11</span><div class="sub-note">11.01. (Mo)</div></td>
-            <td><span class="tag-region tag-norden">Norden</span></td>
-            <td><div class="route-title">Pai ➔ Chiang Rai</div></td>
-            <td>Weißer Tempel und so</td>
-            <td><span class="transport-pill">🚐 Minivan / Transfer</span></td>
-            <td><span class="hotel-pill">🏨 EZ in Chiang Rai</span></td>
-          </tr>
-          <tr data-region="Bangkok">
-            <td><span class="day-badge">Tag 12</span><div class="sub-note">12.01. (Di)</div></td>
-            <td><span class="tag-region tag-bangkok">Bangkok</span></td>
-            <td><div class="route-title">Chiang Rai ➔ Bangkok</div></td>
-            <td>Von Chiang Rai mit dem Flugzeug nach Bangkok</td>
-            <td><span class="transport-pill">✈️ Flugzeug</span></td>
-            <td><span class="hotel-pill">🏨 EZ in Bangkok</span></td>
-          </tr>
-          <tr data-region="Bangkok">
-            <td><span class="day-badge">Tag 13</span><div class="sub-note">13.01. (Mi)</div></td>
-            <td><span class="tag-region tag-bangkok">Bangkok</span></td>
-            <td><div class="route-title">Bangkok</div></td>
-            <td>Kultur & Tempel (Grand Palace, Wat Pho, Wat Arun)</td>
-            <td><span class="transport-pill">🚤 MRT / Chao Phraya Express Boot</span></td>
-            <td><span class="hotel-pill">🏨 EZ in Bangkok</span></td>
-          </tr>
-          <tr data-region="Bangkok">
-            <td><span class="day-badge">Tag 14</span><div class="sub-note">14.01. (Do)</div></td>
-            <td><span class="tag-region tag-bangkok">Bangkok</span></td>
-            <td><div class="route-title">Bangkok</div></td>
-            <td>Chinatown (Yaowarat), Sukhumvit, Rooftop-Bar</td>
-            <td><span class="transport-pill">🚆 Skytrain (BTS) / Grab</span></td>
-            <td><span class="hotel-pill">🏨 EZ in Bangkok</span></td>
-          </tr>
-          <tr data-region="Inselgruppe 1">
-            <td><span class="day-badge">Tag 15</span><div class="sub-note">15.01. (Fr)</div></td>
-            <td><span class="tag-region tag-inseln">Inselgruppe 1</span></td>
-            <td><div class="route-title">Bangkok ➔ z.B. Ko Phi Phi</div></td>
-            <td>Anreise & Ankommen, Sunset Viewpoint</td>
-            <td><span class="transport-pill">✈️ Flug (BKK/DMK ➔ HKT/KBV) ➔ ⛴️ Fähre</span></td>
-            <td><span class="hotel-pill">🏨 EZ auf Koh Phi Phi</span></td>
-          </tr>
-          <tr data-region="Inselgruppe 1">
-            <td><span class="day-badge">Tag 16</span><div class="sub-note">16.01. (Sa)</div></td>
-            <td><span class="tag-region tag-inseln">Inselgruppe 1</span></td>
-            <td><div class="route-title">z.B. Ko Phi Phi</div></td>
-            <td>Ausflug Maya Bay, Pileh Lagoon & Bamboo Island</td>
-            <td><span class="transport-pill">🚤 Longtail-Boot / Tourboat</span></td>
-            <td><span class="hotel-pill">🏨 EZ auf Koh Phi Phi</span></td>
-          </tr>
-          <tr data-region="Inselgruppe 1">
-            <td><span class="day-badge">Tag 17</span><div class="sub-note">17.01. (So)</div></td>
-            <td><span class="tag-region tag-inseln">Inselgruppe 1</span></td>
-            <td><div class="route-title">z.B. Ko Phi Phi</div></td>
-            <td>Schnorcheln, Entspannen am Long Beach</td>
-            <td><span class="transport-pill">🚤 Roller / Wassertaxi</span></td>
-            <td><span class="hotel-pill">🏨 EZ auf Koh Phi Phi</span></td>
-          </tr>
-          <tr data-region="Inselgruppe 1">
-            <td><span class="day-badge">Tag 18</span><div class="sub-note">18.01. (Mo)</div></td>
-            <td><span class="tag-region tag-inseln">Inselgruppe 1</span></td>
-            <td><div class="route-title">z.B. Ko Phi Phi ➔ z.B. Krabi</div></td>
-            <td>Nachmittags Railay Beach & Phra Nang Cave Beach</td>
-            <td><span class="transport-pill">⛴️ Fähre (ca. 1,5 - 2 h)</span></td>
-            <td><span class="hotel-pill">🏨 EZ auf Krabi</span></td>
-          </tr>
-          <tr data-region="Inselgruppe 1">
-            <td><span class="day-badge">Tag 19</span><div class="sub-note">19.01. (Di)</div></td>
-            <td><span class="tag-region tag-inseln">Inselgruppe 1</span></td>
-            <td><div class="route-title">z.B. Krabi</div></td>
-            <td>Tagestrip nach Ko Hong (Lagune & Viewpoint)</td>
-            <td><span class="transport-pill">🚤 Private Longtail-Boot Tour</span></td>
-            <td><span class="hotel-pill">🏨 EZ auf Krabi</span></td>
-          </tr>
-          <tr data-region="Inselgruppe 1">
-            <td><span class="day-badge">Tag 20</span><div class="sub-note">20.01. (Mi)</div></td>
-            <td><span class="tag-region tag-inseln">Inselgruppe 1</span></td>
-            <td><div class="route-title">z.B. Krabi</div></td>
-            <td>Tiger Cave Temple (Aussicht) oder Mangroven-Kajaktour</td>
-            <td><span class="transport-pill">🛵 Roller / Samlor / Grab</span></td>
-            <td><span class="hotel-pill">🏨 EZ auf Krabi</span></td>
-          </tr>
-          <tr data-region="Inselgruppe 2">
-            <td><span class="day-badge">Tag 21</span><div class="sub-note">21.01. (Do)</div></td>
-            <td><span class="tag-region tag-inseln">Inselgruppe 2</span></td>
-            <td><div class="route-title">z.B. Krabi ➔ Koh Tao</div></td>
-            <td>Vor Ort direkt Party-Speedboat-Ticket für 22.01. buchen</td>
-            <td><span class="transport-pill">🚌 Fähre ➔ Bus ➔ Fähre (ca. 7 - 9 h)</span></td>
-            <td><span class="hotel-pill">🏨 EZ auf Koh Tao</span></td>
-          </tr>
-          <tr data-region="Inselgruppe 2" class="party-row">
-            <td><span class="day-badge">Tag 22</span><div class="sub-note">22.01. (Fr)</div></td>
-            <td><span class="tag-region tag-party">🌕 Vollmond</span></td>
-            <td><div class="route-title">Koh Tao ➔ Ko Pha-ngan ➔ Koh Tao</div></td>
-            <td>Abends <strong>Vollmond Party</strong> auf Koh Pha-ngan</td>
-            <td><span class="transport-pill">🚤 Party-Speedboat</span></td>
-            <td><span class="hotel-pill">🏨 EZ auf Koh Tao</span></td>
-          </tr>
-          <tr data-region="Inselgruppe 2">
-            <td><span class="day-badge">Tag 23</span><div class="sub-note">23.01. (Sa)</div></td>
-            <td><span class="tag-region tag-inseln">Inselgruppe 2</span></td>
-            <td><div class="route-title">Koh Tao</div></td>
-            <td>Ausschlafen, Entspannen, Schnorcheln Tanote Bay</td>
-            <td><span class="transport-pill">🛵 Roller / Wassertaxi</span></td>
-            <td><span class="hotel-pill">🏨 EZ auf Koh Tao</span></td>
-          </tr>
-          <tr data-region="Inselgruppe 2">
-            <td><span class="day-badge">Tag 24</span><div class="sub-note">24.01. (So)</div></td>
-            <td><span class="tag-region tag-inseln">Inselgruppe 2</span></td>
-            <td><div class="route-title">Koh Tao ➔ z.B. Ko Samui</div></td>
-            <td>Vormittags Trip nach Ko Nang Yuan, nachmittags Überfahrt</td>
-            <td><span class="transport-pill">⛴️ Fähre (ca. 1,5 - 2 h)</span></td>
-            <td><span class="hotel-pill">🏨 EZ auf Ko Samui</span></td>
-          </tr>
-          <tr data-region="Inselgruppe 2">
-            <td><span class="day-badge">Tag 25</span><div class="sub-note">25.01. (Mo)</div></td>
-            <td><span class="tag-region tag-inseln">Inselgruppe 2</span></td>
-            <td><div class="route-title">z.B. Ko Samui</div></td>
-            <td>Tagestrip Ang Thong Marine Nationalpark</td>
-            <td><span class="transport-pill">🚤 Boot / Kajak-Tour</span></td>
-            <td><span class="hotel-pill">🏨 EZ auf Ko Samui</span></td>
-          </tr>
-          <tr data-region="Inselgruppe 2">
-            <td><span class="day-badge">Tag 26</span><div class="sub-note">26.01. (Di)</div></td>
-            <td><span class="tag-region tag-inseln">Inselgruppe 2</span></td>
-            <td><div class="route-title">z.B. Ko Samui</div></td>
-            <td>Bophut Fisherman's Village, Tempel & Beach Club</td>
-            <td><span class="transport-pill">🛵 Roller / Songthaew</span></td>
-            <td><span class="hotel-pill">🏨 EZ auf Ko Samui</span></td>
-          </tr>
-          <tr data-region="Inselgruppe 2">
-            <td><span class="day-badge">Tag 27</span><div class="sub-note">27.01. (Mi)</div></td>
-            <td><span class="tag-region tag-inseln">Inselgruppe 2</span></td>
-            <td><div class="route-title">z.B. Ko Samui ➔ Bangkok</div></td>
-            <td>Transfertag: Rückreise nach Bangkok</td>
-            <td><span class="transport-pill">✈️ Flugzeug (USM ➔ BKK)</span></td>
-            <td><span class="hotel-pill">🏨 EZ in Bangkok</span></td>
-          </tr>
-          <tr data-region="Bangkok">
-            <td><span class="day-badge">Tag 28</span><div class="sub-note">28.01. (Do)</div></td>
-            <td><span class="tag-region tag-bangkok">Bangkok</span></td>
-            <td><div class="route-title">Bangkok</div></td>
-            <td>Entspannter Tag: Souvenirs, Thai-Massage & Lieblingsspots - gemeinsames Abendessen</td>
-            <td><span class="transport-pill">🚆 BTS / MRT / Grab</span></td>
-            <td><span class="hotel-pill">🏨 EZ in Bangkok</span></td>
-          </tr>
-          <tr data-region="Bangkok">
-            <td><span class="day-badge">Tag 29</span><div class="sub-note">29.01. (Fr)</div></td>
-            <td><span class="tag-region tag-default">Abschluss</span></td>
-            <td><div class="route-title">Bangkok (BKK) / Heim- & Weiterflug</div></td>
-            <td>
-              Check-out, Transfer Flughafen Suvarnabhumi (BKK)<br>
-              <strong>Stefan:</strong> Thai Airways TG926 (13:00 ➔ 18:55 MUC, 11h 55m)<br>
-              <strong>Ines:</strong> SriLankan Airlines UL405 (13:50 ➔ 15:50 CMB, 3h 30m)
-            </td>
-            <td><span class="transport-pill">🚕 Taxi / Airport Rail Link ➔ ✈️ Flugzeug</span></td>
-            <td><span class="hotel-pill">🏠 Etwas in Colombo? / Flug</span></td>
-          </tr>
-        </tbody>
-      </table>
+    <!-- TAB 2: PACKLISTE -->
+    <div id="packTab" class="tab-content">
+      <div class="info-card">
+        <h3>
+          <span>🎒 Interaktive Packliste & Kilo-Rechner</span>
+          <button class="btn-reset" onclick="resetPacklist()">🔄 Liste auf Standard zurücksetzen</button>
+        </h3>
+
+        <!-- Zusammenfassungs-Dashboard -->
+        <div class="pack-summary">
+          <div class="pack-summary-stat">
+            <span class="pack-summary-val" id="totalWeightKg">0.00 kg</span>
+            <span class="pack-summary-lbl">Gesamtgewicht (Gepackt)</span>
+          </div>
+          <div class="pack-summary-stat">
+            <span class="pack-summary-val" id="totalPackedItems">0 / 0</span>
+            <span class="pack-summary-lbl">Gegenstände ausgewählt</span>
+          </div>
+          <div class="pack-summary-stat">
+            <span class="pack-summary-val" id="totalWeightG">0 g</span>
+            <span class="pack-summary-lbl">Gewicht in Gramm</span>
+          </div>
+        </div>
+
+        <!-- Formular zum Hinzufügen neuer Gegenstände -->
+        <div class="pack-add-form">
+          <input type="text" id="newItemName" placeholder="Neuer Gegenstand (z.B. Schnorchelmaske)">
+          <select id="newItemCat">
+            <option value="Dokumente & Wertsachen">Dokumente & Wertsachen</option>
+            <option value="Rucksäcke & Gepäck">Rucksäcke & Gepäck</option>
+            <option value="Elektronik & Ladekabel">Elektronik & Ladekabel</option>
+            <option value="Kleidung">Kleidung</option>
+            <option value="Schuhe">Schuhe</option>
+            <option value="Hygiene & Pflege">Hygiene & Pflege</option>
+            <option value="Gesundheit & Apotheke">Gesundheit & Apotheke</option>
+            <option value="Komfort & Schlafzubehör">Komfort & Schlafzubehör</option>
+            <option value="Accessoires & Alltagshelfer">Accessoires & Alltagshelfer</option>
+            <option value="Organisation & Utensilien">Organisation & Utensilien</option>
+          </select>
+          <input type="number" id="newItemWeight" placeholder="Gramm" min="0">
+          <button class="btn-add" onclick="addPackItem()">+ Hinzufügen</button>
+        </div>
+
+        <!-- Packlisten Tabelle -->
+        <div class="table-wrapper" style="display: block;">
+          <table id="packTable">
+            <thead>
+              <tr>
+                <th style="width: 40px; text-align:center;">Status</th>
+                <th>Gegenstand</th>
+                <th>Kategorie</th>
+                <th style="width: 110px; text-align:center;">Anzahl</th>
+                <th style="width: 100px; text-align:right;">Gewicht (g)</th>
+                <th style="width: 100px; text-align:right;">Gesamt (g)</th>
+                <th style="width: 80px; text-align:center;">Aktionen</th>
+              </tr>
+            </thead>
+            <tbody id="packTableBody">
+              <!-- Dynamisch aus JS befüllt -->
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
 
-    <!-- Mobile Cards Ansicht -->
-    <div class="mobile-cards" id="mobileCards"></div>
+    <!-- TAB 3: BUDGET & FLUGÜBERSICHT -->
+    <div id="budgetTab" class="tab-content">
+      <div class="grid-2">
+        <div class="info-card">
+          <h3>✈️ Gebuchte Flüge</h3>
+          <ul class="checklist" style="line-height:1.8;">
+            <li><strong>Hinflug (Saudia):</strong> VIE ➔ RUH ➔ BKK • <strong>€ 349,90 p.P.</strong></li>
+            <li><strong>Rückflug Stefan (Thai Airways):</strong> BKK ➔ MUC • <strong>€ 424,13</strong></li>
+            <li><strong>Weiterflug Ines (SriLankan):</strong> BKK ➔ CMB • <strong>€ 175,00</strong></li>
+          </ul>
+        </div>
+        <div class="info-card">
+          <h3>💵 Tagesbudget-Rechner</h3>
+          <p style="margin-bottom:12px; font-size:0.9rem;">Geschätztes Tagesbudget vor Ort (Essen, Roller, Unterkünfte, Ausflüge):</p>
+          <div style="font-size:1.4rem; font-weight:700; color:var(--norden); margin-bottom:8px;">
+            ~ 45,00 € / Tag <span style="font-size:0.9rem; color:var(--text-muted);">(ca. 1.700 THB)</span>
+          </div>
+          <p style="font-size:0.82rem; color:var(--text-muted);">
+            Empfehlung: Bargeld an ATMs immer in 10.000 - 30.000 THB Tranchen abheben (220 THB Gebühr pro Abhebung vermeiden).
+          </p>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <script>
     let currentRegion = 'all';
+    let map;
+    const markers = {};
 
+    /* Standard CSV Daten der Packliste */
+    const defaultPacklist = [
+      { cat: "Dokumente & Wertsachen", name: "Reisepass", weight: 41, qty: 1, packed: false },
+      { cat: "Dokumente & Wertsachen", name: "Kopien Reisepass & Impfpass", weight: 33, qty: 1, packed: false },
+      { cat: "Dokumente & Wertsachen", name: "Kopien gebuchte Flüge", weight: 30, qty: 1, packed: false },
+      { cat: "Dokumente & Wertsachen", name: "Internationaler Führerschein", weight: 37, qty: 1, packed: false },
+      { cat: "Dokumente & Wertsachen", name: "Geldbörse", weight: 111, qty: 1, packed: false },
+      { cat: "Dokumente & Wertsachen", name: "Reisetagebuch", weight: 312, qty: 1, packed: false },
+      { cat: "Rucksäcke & Gepäck", name: "Rucksack - Jack Wolfskin 55+5 Liter", weight: 2100, qty: 1, packed: false },
+      { cat: "Rucksäcke & Gepäck", name: "Kleiner Rucksack - Deuter Speed lite 20 Liter", weight: 870, qty: 1, packed: false },
+      { cat: "Rucksäcke & Gepäck", name: "Tages-Rucksack", weight: 165, qty: 1, packed: false },
+      { cat: "Rucksäcke & Gepäck", name: "Umhängetasche Decathlon", weight: 108, qty: 1, packed: false },
+      { cat: "Rucksäcke & Gepäck", name: "Umhängetasche North Face", weight: 188, qty: 1, packed: false },
+      { cat: "Rucksäcke & Gepäck", name: "Reisehülle Rucksack Aufgabegepäck", weight: 920, qty: 1, packed: false },
+      { cat: "Elektronik & Ladekabel", name: "Handy", weight: 233, qty: 1, packed: false },
+      { cat: "Elektronik & Ladekabel", name: "Kindle", weight: 165, qty: 1, packed: false },
+      { cat: "Elektronik & Ladekabel", name: "Zip Beutel für Elektrozeug", weight: 12, qty: 1, packed: false },
+      { cat: "Elektronik & Ladekabel", name: "Kopfhörer Jabra", weight: 45, qty: 1, packed: false },
+      { cat: "Elektronik & Ladekabel", name: "Stirnlampe", weight: 38, qty: 1, packed: false },
+      { cat: "Elektronik & Ladekabel", name: "Mini Taschenlampe von Aliexpress", weight: 40, qty: 1, packed: false },
+      { cat: "Elektronik & Ladekabel", name: "Mobiler Akku 10.000 mAh", weight: 230, qty: 1, packed: false },
+      { cat: "Elektronik & Ladekabel", name: "Mini Powerbank 5.000 mAh", weight: 91, qty: 1, packed: false },
+      { cat: "Elektronik & Ladekabel", name: "Anker Ladestecker mit 2 USBs (klein)", weight: 89, qty: 1, packed: false },
+      { cat: "Elektronik & Ladekabel", name: "Anker Ladestecker mit 1 USB-C (klein)", weight: 38, qty: 1, packed: false },
+      { cat: "Elektronik & Ladekabel", name: "Kurzes USB auf USB-C Kabel", weight: 7, qty: 1, packed: false },
+      { cat: "Elektronik & Ladekabel", name: "Adapter Ladekabel USB-C auf Garmin", weight: 9, qty: 1, packed: false },
+      { cat: "Elektronik & Ladekabel", name: "Adapter Ladekabel USB-C auf Rasierer", weight: 9, qty: 1, packed: false },
+      { cat: "Elektronik & Ladekabel", name: "USB-C auf USB-C Kabel schwarz Anker", weight: 33, qty: 1, packed: false },
+      { cat: "Elektronik & Ladekabel", name: "USB-C auf USB-C Kabel lange weiß", weight: 38, qty: 1, packed: false },
+      { cat: "Elektronik & Ladekabel", name: "USB-C auf USB-C Kabel sehr kurz", weight: 6, qty: 1, packed: false },
+      { cat: "Elektronik & Ladekabel", name: "USB-A auf USB-C Kabel kurz", weight: 11, qty: 1, packed: false },
+      { cat: "Elektronik & Ladekabel", name: "USB-C Kopfhörer Reserve", weight: 12, qty: 1, packed: false },
+      { cat: "Elektronik & Ladekabel", name: "Strom Adapter", weight: 141, qty: 1, packed: false },
+      { cat: "Elektronik & Ladekabel", name: "Mehrfachstecker 3-fach", weight: 71, qty: 1, packed: false },
+      { cat: "Kleidung", name: "T-Shirts Merino", weight: 237, qty: 1, packed: false },
+      { cat: "Kleidung", name: "T-Shirts Baumwolle Oversize Uniqlo", weight: 430, qty: 1, packed: false },
+      { cat: "Kleidung", name: "T-Shirts Baumwolle Oversize Moon", weight: 191, qty: 1, packed: false },
+      { cat: "Kleidung", name: "T-Shirts Kunstfaser Adidas", weight: 141, qty: 1, packed: false },
+      { cat: "Kleidung", name: "Tanktops Baumwolle H&M", weight: 141, qty: 1, packed: false },
+      { cat: "Kleidung", name: "Tanktops Kunstfaser H&M", weight: 86, qty: 1, packed: false },
+      { cat: "Kleidung", name: "Fleecepulli Patagonia blau", weight: 278, qty: 1, packed: false },
+      { cat: "Kleidung", name: "Fleecepulli Patagonia rotblau", weight: 270, qty: 1, packed: false },
+      { cat: "Kleidung", name: "Hemden langarm", weight: 209, qty: 1, packed: false },
+      { cat: "Kleidung", name: "Lange Wanderhose OHNE Gürtel", weight: 320, qty: 1, packed: false },
+      { cat: "Kleidung", name: "Kurze Wanderhose OHNE Gürtel", weight: 270, qty: 1, packed: false },
+      { cat: "Kleidung", name: "Gürtel Wanderhosen", weight: 34, qty: 1, packed: false },
+      { cat: "Kleidung", name: "Gürtel normal schmal schwarz", weight: 129, qty: 1, packed: false },
+      { cat: "Kleidung", name: "Lange Leinenhose schwarz", weight: 384, qty: 1, packed: false },
+      { cat: "Kleidung", name: "Lange Cordhose schwarz", weight: 550, qty: 1, packed: false },
+      { cat: "Kleidung", name: "Kurze Cord Hose", weight: 260, qty: 1, packed: false },
+      { cat: "Kleidung", name: "Lange Jogginghose stretch schwarz", weight: 374, qty: 1, packed: false },
+      { cat: "Kleidung", name: "Unterhose schnelltrocknend under armour", weight: 148, qty: 1, packed: false },
+      { cat: "Kleidung", name: "Normale Unterhosen", weight: 475, qty: 1, packed: false },
+      { cat: "Kleidung", name: "Zehensocken dünn", weight: 48, qty: 1, packed: false },
+      { cat: "Kleidung", name: "Zehensocken dicker", weight: 43, qty: 1, packed: false },
+      { cat: "Kleidung", name: "gestrickte socken", weight: 111, qty: 1, packed: false },
+      { cat: "Kleidung", name: "Kompressionssocken TSI Flug", weight: 48, qty: 1, packed: false },
+      { cat: "Kleidung", name: "Falke Wandersocken", weight: 57, qty: 1, packed: false },
+      { cat: "Kleidung", name: "Normale Socken", weight: 127, qty: 1, packed: false },
+      { cat: "Kleidung", name: "Unterziehshirt Warm", weight: 128, qty: 1, packed: false },
+      { cat: "Kleidung", name: "Lange Unterhose Merino", weight: 139, qty: 1, packed: false },
+      { cat: "Kleidung", name: "Regenhose", weight: 227, qty: 1, packed: false },
+      { cat: "Kleidung", name: "Regenjacke", weight: 195, qty: 1, packed: false },
+      { cat: "Kleidung", name: "Windjacke", weight: 73, qty: 1, packed: false },
+      { cat: "Kleidung", name: "Schwarze warme Jacke Decathlon", weight: 366, qty: 1, packed: false },
+      { cat: "Kleidung", name: "Handschuhe (20 g)", weight: 23, qty: 1, packed: false },
+      { cat: "Kleidung", name: "Buff Halstuch Merino", weight: 48, qty: 1, packed: false },
+      { cat: "Kleidung", name: "Hut von Mom", weight: 65, qty: 1, packed: false },
+      { cat: "Kleidung", name: "Badehose rot", weight: 110, qty: 1, packed: false },
+      { cat: "Kleidung", name: "Badehose schwarz", weight: 208, qty: 1, packed: false },
+      { cat: "Schuhe", name: "Altra Schuhe", weight: 434, qty: 1, packed: false },
+      { cat: "Schuhe", name: "sandalen teva hurricane", weight: 374, qty: 1, packed: false },
+      { cat: "Schuhe", name: "sneaker weiß", weight: 772, qty: 1, packed: false },
+      { cat: "Schuhe", name: "Birkenstock", weight: 565, qty: 1, packed: false },
+      { cat: "Schuhe", name: "Badelatschen blau", weight: 203, qty: 1, packed: false },
+      { cat: "Schuhe", name: "Badelatschen selfmade", weight: 83, qty: 1, packed: false },
+      { cat: "Hygiene & Pflege", name: "Kulturbeutel mit allem, was nicht flüssig ist (Handgepäck)", weight: 183, qty: 1, packed: false },
+      { cat: "Hygiene & Pflege", name: "Festes Shampoo in Aufbewahrung (Handgepäck)", weight: 132, qty: 1, packed: false },
+      { cat: "Hygiene & Pflege", name: "Elektrischer Rasierer mit Transporthülle", weight: 290, qty: 1, packed: false },
+      { cat: "Hygiene & Pflege", name: "Zahnpasta 75 ml", weight: 128, qty: 1, packed: false },
+      { cat: "Hygiene & Pflege", name: "Deoroller 50 ml", weight: 81, qty: 1, packed: false },
+      { cat: "Hygiene & Pflege", name: "Haargel bläschen", weight: 21, qty: 1, packed: false },
+      { cat: "Hygiene & Pflege", name: "Rei klein", weight: 29, qty: 1, packed: false },
+      { cat: "Hygiene & Pflege", name: "Gesichtscreme Aqua fluid", weight: 41, qty: 1, packed: false },
+      { cat: "Hygiene & Pflege", name: "Parfum", weight: 85, qty: 1, packed: false },
+      { cat: "Hygiene & Pflege", name: "Handcreme", weight: 65, qty: 1, packed: false },
+      { cat: "Hygiene & Pflege", name: "Feuchtes Toilettenpapier", weight: 206, qty: 1, packed: false },
+      { cat: "Hygiene & Pflege", name: "ZIP-Beutel für Cremes und so", weight: 32, qty: 1, packed: false },
+      { cat: "Hygiene & Pflege", name: "After Sun", weight: 113, qty: 1, packed: false },
+      { cat: "Hygiene & Pflege", name: "Desinfektionsmittel", weight: 151, qty: 1, packed: false },
+      { cat: "Hygiene & Pflege", name: "Kleber Haargel", weight: 192, qty: 1, packed: false },
+      { cat: "Hygiene & Pflege", name: "Tattoo Creme", weight: 104, qty: 1, packed: false },
+      { cat: "Hygiene & Pflege", name: "Sonnencreme", weight: 234, qty: 1, packed: false },
+      { cat: "Hygiene & Pflege", name: "Tube Rei", weight: 143, qty: 1, packed: false },
+      { cat: "Hygiene & Pflege", name: "Insektenschutz", weight: 125, qty: 1, packed: false },
+      { cat: "Hygiene & Pflege", name: "Gesichtscreme Tigel Glas", weight: 103, qty: 1, packed: false },
+      { cat: "Hygiene & Pflege", name: "Voltarencreme", weight: 99, qty: 1, packed: false },
+      { cat: "Hygiene & Pflege", name: "Zahnseide sticks", weight: 37, qty: 1, packed: false },
+      { cat: "Gesundheit & Apotheke", name: "Medikamentenkit", weight: 62, qty: 1, packed: false },
+      { cat: "Gesundheit & Apotheke", name: "Lippenbalsam", weight: 9, qty: 1, packed: false },
+      { cat: "Gesundheit & Apotheke", name: "Tempo Packungen 3 Stk.", weight: 53, qty: 1, packed: false },
+      { cat: "Gesundheit & Apotheke", name: "Bandage Knie", weight: 181, qty: 1, packed: false },
+      { cat: "Gesundheit & Apotheke", name: "Elektrolyte", weight: 42, qty: 1, packed: false },
+      { cat: "Gesundheit & Apotheke", name: "Kreatin beutel", weight: 273, qty: 1, packed: false },
+      { cat: "Gesundheit & Apotheke", name: "Kork Ball", weight: 16, qty: 1, packed: false },
+      { cat: "Gesundheit & Apotheke", name: "Gummiband Blau Training", weight: 138, qty: 1, packed: false },
+      { cat: "Komfort & Schlafzubehör", name: "Mikrofaser Handtuch klein", weight: 77, qty: 1, packed: false },
+      { cat: "Komfort & Schlafzubehör", name: "Mikrofaser Handtuch mittel", weight: 150, qty: 1, packed: false },
+      { cat: "Komfort & Schlafzubehör", name: "Mikrofaser Handtuch groß", weight: 401, qty: 1, packed: false },
+      { cat: "Komfort & Schlafzubehör", name: "sitzkissen halb", weight: 27, qty: 1, packed: false },
+      { cat: "Komfort & Schlafzubehör", name: "Kissenbezug", weight: 99, qty: 1, packed: false },
+      { cat: "Komfort & Schlafzubehör", name: "Nackenkissen", weight: 65, qty: 1, packed: false },
+      { cat: "Komfort & Schlafzubehör", name: "Ohrstöpsel", weight: 15, qty: 1, packed: false },
+      { cat: "Komfort & Schlafzubehör", name: "Schlafmaske", weight: 0, qty: 1, packed: false },
+      { cat: "Accessoires & Alltagshelfer", name: "Sonnenbrille Ray Ban", weight: 30, qty: 1, packed: false },
+      { cat: "Accessoires & Alltagshelfer", name: "Etui Sonnenbrille Ray Ban", weight: 48, qty: 1, packed: false },
+      { cat: "Accessoires & Alltagshelfer", name: "Sonnenbrille Zalando", weight: 35, qty: 1, packed: false },
+      { cat: "Accessoires & Alltagshelfer", name: "Campingbesteck für Notfall", weight: 11, qty: 1, packed: false },
+      { cat: "Accessoires & Alltagshelfer", name: "Taschenmesser klein Handgepäck", weight: 22, qty: 1, packed: false },
+      { cat: "Accessoires & Alltagshelfer", name: "Taschenmesser normal Aufgabegepäck", weight: 59, qty: 1, packed: false },
+      { cat: "Accessoires & Alltagshelfer", name: "Leere Wasserflasche 1,5 Liter", weight: 32, qty: 1, packed: false },
+      { cat: "Accessoires & Alltagshelfer", name: "Trinkbecher Decathlon", weight: 18, qty: 1, packed: false },
+      { cat: "Accessoires & Alltagshelfer", name: "Selfiestick", weight: 188, qty: 1, packed: false },
+      { cat: "Accessoires & Alltagshelfer", name: "Uno Karten", weight: 205, qty: 1, packed: false },
+      { cat: "Organisation & Utensilien", name: "drybag osprey für wäsche getragen zum waschen", weight: 82, qty: 1, packed: false },
+      { cat: "Organisation & Utensilien", name: "Müllbeutel grau", weight: 92, qty: 1, packed: false },
+      { cat: "Organisation & Utensilien", name: "Zip Beutel RESERVE 2x", weight: 40, qty: 1, packed: false },
+      { cat: "Organisation & Utensilien", name: "Kugelschreiber", weight: 38, qty: 1, packed: false },
+      { cat: "Organisation & Utensilien", name: "Kleiderbügel 3D gedruckt", weight: 58, qty: 1, packed: false },
+      { cat: "Organisation & Utensilien", name: "Thermometer", weight: 28, qty: 1, packed: false },
+      { cat: "Organisation & Utensilien", name: "4 Stk. Wäscheklammern", weight: 48, qty: 1, packed: false },
+      { cat: "Organisation & Utensilien", name: "Kabelbinder", weight: 12, qty: 1, packed: false },
+      { cat: "Organisation & Utensilien", name: "Schuhlöffel", weight: 17, qty: 1, packed: false },
+      { cat: "Organisation & Utensilien", name: "Panzertape", weight: 13, qty: 1, packed: false },
+      { cat: "Organisation & Utensilien", name: "Hero Clip", weight: 34, qty: 1, packed: false },
+      { cat: "Organisation & Utensilien", name: "Karabiner", weight: 11, qty: 1, packed: false },
+      { cat: "Organisation & Utensilien", name: "Gummibänder", weight: 4, qty: 1, packed: false },
+      { cat: "Organisation & Utensilien", name: "Namensschild mit Telefonnummer", weight: 6, qty: 1, packed: false },
+      { cat: "Organisation & Utensilien", name: "Kleines TSA Schloss", weight: 38, qty: 1, packed: false }
+    ];
+
+    let packlist = [];
+
+    /* Lade Packliste aus LocalStorage */
+    function loadPacklist() {
+      const saved = localStorage.getItem('thailand_packlist_2027');
+      if (saved) {
+        try { 
+          packlist = JSON.parse(saved); 
+          if (!Array.isArray(packlist) || packlist.length === 0) {
+            packlist = JSON.parse(JSON.stringify(defaultPacklist));
+          }
+        } catch (e) { 
+          packlist = JSON.parse(JSON.stringify(defaultPacklist)); 
+        }
+      } else {
+        packlist = JSON.parse(JSON.stringify(defaultPacklist));
+      }
+      renderPacklist();
+    }
+
+    function savePacklist() {
+      localStorage.setItem('thailand_packlist_2027', JSON.stringify(packlist));
+      renderPacklist();
+    }
+
+    function resetPacklist() {
+      if (confirm("Möchtest du die Packliste wirklich auf den Ursprungszustand zurücksetzen?")) {
+        packlist = JSON.parse(JSON.stringify(defaultPacklist));
+        savePacklist();
+      }
+    }
+
+    function renderPacklist() {
+      const tbody = document.getElementById('packTableBody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      let totalWeight = 0;
+      let packedCount = 0;
+
+      // Group by Category
+      const categories = {};
+      packlist.forEach((item, index) => {
+        item._origIndex = index;
+        if (!categories[item.cat]) categories[item.cat] = [];
+        categories[item.cat].push(item);
+
+        if (item.packed) {
+          totalWeight += (item.weight || 0) * (item.qty || 1);
+          packedCount++;
+        }
+      });
+
+      // Update Header Stats
+      document.getElementById('totalWeightG').innerText = `${totalWeight.toLocaleString('de-DE')} g`;
+      document.getElementById('totalWeightKg').innerText = `${(totalWeight / 1000).toFixed(2)} kg`;
+      document.getElementById('totalPackedItems').innerText = `${packedCount} / ${packlist.length}`;
+
+      // Render Categories & Items
+      Object.keys(categories).forEach(cat => {
+        const catRow = document.createElement('tr');
+        catRow.innerHTML = `<td colspan="7" class="pack-table-category">${cat}</td>`;
+        tbody.appendChild(catRow);
+
+        categories[cat].forEach(item => {
+          const idx = item._origIndex;
+          const totalItemWeight = (item.weight || 0) * (item.qty || 1);
+          const tr = document.createElement('tr');
+
+          tr.innerHTML = `
+            <td style="text-align:center;">
+              <input type="checkbox" ${item.packed ? 'checked' : ''} onchange="togglePacked(${idx})" style="accent-color: var(--primary); width:16px; height:16px; cursor:pointer;">
+            </td>
+            <td>
+              <strong style="color: ${item.packed ? 'var(--text-muted)' : 'var(--text-main)'}; ${item.packed ? 'text-decoration: line-through;' : ''}">
+                ${item.name}
+              </strong>
+            </td>
+            <td style="font-size:0.8rem; color:var(--text-muted);">${item.cat}</td>
+            <td style="text-align:center;">
+              <div class="qty-controls">
+                <button class="qty-btn" onclick="changeQty(${idx}, -1)">-</button>
+                <span>${item.qty || 1}</span>
+                <button class="qty-btn" onclick="changeQty(${idx}, 1)">+</button>
+              </div>
+            </td>
+            <td style="text-align:right;">${item.weight || 0} g</td>
+            <td style="text-align:right; font-weight:600; color:var(--primary);">${totalItemWeight} g</td>
+            <td style="text-align:center;">
+              <button class="btn-icon" title="Bearbeiten" onclick="editPackItem(${idx})">✏️</button>
+              <button class="btn-icon" title="Löschen" onclick="deletePackItem(${idx})">🗑️</button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      });
+    }
+
+    function togglePacked(index) {
+      packlist[index].packed = !packlist[index].packed;
+      savePacklist();
+    }
+
+    function changeQty(index, delta) {
+      const current = packlist[index].qty || 1;
+      const updated = Math.max(1, current + delta);
+      packlist[index].qty = updated;
+      savePacklist();
+    }
+
+    function addPackItem() {
+      const nameInput = document.getElementById('newItemName');
+      const catInput = document.getElementById('newItemCat');
+      const weightInput = document.getElementById('newItemWeight');
+
+      const name = nameInput.value.trim();
+      const cat = catInput.value;
+      const weight = parseInt(weightInput.value) || 0;
+
+      if (!name) {
+        alert("Bitte gib einen Namen für den Gegenstand ein.");
+        return;
+      }
+
+      packlist.push({ name, cat, weight, qty: 1, packed: false });
+      nameInput.value = '';
+      weightInput.value = '';
+      savePacklist();
+    }
+
+    function deletePackItem(index) {
+      if (confirm(`Möchtest du "${packlist[index].name}" aus der Liste entfernen?`)) {
+        packlist.splice(index, 1);
+        savePacklist();
+      }
+    }
+
+    function editPackItem(index) {
+      const item = packlist[index];
+      const newName = prompt("Name des Gegenstands:", item.name);
+      if (newName === null) return;
+
+      const newWeightStr = prompt("Gewicht in Gramm:", item.weight);
+      if (newWeightStr === null) return;
+
+      item.name = newName.trim() || item.name;
+      item.weight = parseInt(newWeightStr) || 0;
+      savePacklist();
+    }
+
+    /* Tab Wechseln */
+    function switchTab(tabId, btn) {
+      document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(tb => tb.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      btn.classList.add('active');
+      if(tabId === 'routeTab' && map) {
+        setTimeout(() => { map.invalidateSize(); }, 100);
+      }
+    }
+
+    /* Live Countdown */
+    function updateCountdown() {
+      const flightDate = new Date('2027-01-01T15:30:00');
+      const now = new Date();
+      const diff = flightDate - now;
+
+      if (diff > 0) {
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const mins = Math.floor((diff / (1000 * 60)) % 60);
+        document.getElementById('countdown').innerText = `⏳ Noch ${days} Tage, ${hours} Std. & ${mins} Min. bis zum Abflug!`;
+      } else {
+        document.getElementById('countdown').innerText = `🎉 Gute Reise! Der Trip läuft!`;
+      }
+    }
+    setInterval(updateCountdown, 60000);
+    updateCountdown();
+
+    /* Filter & Suche */
     function setFilter(region, btn) {
       currentRegion = region;
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -626,8 +1270,11 @@
         if (row.style.display === 'none') return;
 
         const cells = row.querySelectorAll('td');
+        const locName = row.getAttribute('data-location');
         const card = document.createElement('div');
         card.className = 'card';
+        card.onclick = () => focusMap(locName);
+
         card.innerHTML = `
           <div class="card-header">
             <div>${cells[0].innerHTML}</div>
@@ -648,303 +1295,122 @@
       });
     }
 
-    /* ==========================================================================
-       2. KARTEN-INITIALISIERUNG & ANPASSUNGEN
-       ========================================================================== */
+    /* Anspringen eines Ortes auf der Karte bei Zeilenklick */
+    function focusMap(locationName) {
+      if (markers[locationName]) {
+        map.flyTo([markers[locationName].lat, markers[locationName].lng], 10, { duration: 1.2 });
+        markers[locationName].marker.openPopup();
+        document.querySelector('.map-section').scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    /* Karten-Initialisierung */
     function initMap() {
-      
-      // 📍 ORTE IN THAILAND
       const waypoints = [
-        { 
-          name: "Bangkok (Ankunft BKK)", 
-          lat: 13.6900, lng: 100.7501, // BKK Flughafen
-          days: "Tag 2 (02.01.)", 
-          activity: "Ankunft BKK (13:40 Uhr) & Weiterflug nach Udon Thani", 
-          transport: "✈️ Saudia SV152/846 ➔ Inlandsflug", 
-          hotel: "🏠 Bei OW / Transfer",
-          color: "#a78bfa"
-        },
-        { 
-          name: "Udon Thani", 
-          lat: 17.4138, lng: 102.7872, 
-          days: "Tage 2 – 4 (02.01. – 04.01.)", 
-          activity: "Zeit mit OW (Tipp: Red Lotus Lake)", 
-          transport: "🚗 Mietwagen / Taxi", 
-          hotel: "🏠 Bei OW?",
-          color: "#8b949e" 
-        },
-        { 
-          name: "Chiang Mai", 
-          lat: 18.7883, lng: 98.9853, 
-          days: "Tage 5 – 7 (05.01. – 07.01.)", 
-          activity: "Altstadt, Tempel-Tour & Doi Inthanon Nationalpark", 
-          transport: "✈️ Flug / 🛵 Roller & Ausflug", 
-          hotel: "🏨 EZ in Chiang Mai",
-          color: "#34d399" 
-        },
-        { 
-          name: "Pai", 
-          lat: 19.3582, lng: 98.4402, 
-          days: "Tage 8 – 10 (08.01. – 10.01.)", 
-          activity: "Pai Canyon, Lod Cave, Hot Springs & Night Market", 
-          transport: "🚐 Minivan (762 Kurven) / 🛵 Roller", 
-          hotel: "🏨 EZ in Pai",
-          color: "#34d399" 
-        },
-        { 
-          name: "Chiang Rai", 
-          lat: 19.9105, lng: 99.8406, 
-          days: "Tag 11 (11.01.)", 
-          activity: "Weißer Tempel (Wat Rong Khun) & Umgebung", 
-          transport: "🚐 Minivan / Transfer", 
-          hotel: "🏨 EZ in Chiang Rai",
-          color: "#34d399" 
-        },
-        { 
-          name: "Bangkok (Kultur & City)", 
-          lat: 13.7563, lng: 100.5018, // Stadtzentrum
-          days: "Tage 12 – 14 (12.01. – 14.01.)", 
-          activity: "Grand Palace, Wat Pho, Chinatown & Rooftop-Bar", 
-          transport: "✈️ Flug / 🚆 BTS / 🚤 Boot", 
-          hotel: "🏨 EZ in Bangkok",
-          color: "#a78bfa" 
-        },
-        { 
-          name: "Ko Phi Phi", 
-          lat: 7.7407, lng: 98.7784, 
-          days: "Tage 15 – 17 (15.01. – 17.01.)", 
-          activity: "Maya Bay, Pileh Lagoon, Long Beach & Viewpoint", 
-          transport: "✈️ Flug ➔ ⛴️ Fähre / 🚤 Longtail-Boot", 
-          hotel: "🏨 EZ auf Koh Phi Phi",
-          color: "#38bdf8" 
-        },
-        { 
-          name: "Krabi / Railay", 
-          lat: 8.0863, lng: 98.9063, 
-          days: "Tage 18 – 20 (18.01. – 20.01.)", 
-          activity: "Railay Beach, Ko Hong Lagune & Tiger Cave Temple", 
-          transport: "⛴️ Fähre / 🚤 Private Longtail-Tour", 
-          hotel: "🏨 EZ auf Krabi",
-          color: "#38bdf8" 
-        },
-        { 
-          name: "Koh Tao", 
-          lat: 10.1018, lng: 99.8383, 
-          days: "Tage 21 – 24 (21.01. – 24.01.)", 
-          activity: "Schnorcheln Tanote Bay, Ko Nang Yuan & Erholung", 
-          transport: "🚌 Fähre + Bus + Fähre / 🛵 Roller", 
-          hotel: "🏨 EZ auf Koh Tao",
-          color: "#38bdf8" 
-        },
-        { 
-          name: "Ko Pha-ngan", 
-          lat: 9.7319, lng: 100.0136, 
-          days: "Tag 22 (22.01.)", 
-          activity: "🌕 Abends Full Moon Party am Haad Rin Beach", 
-          transport: "🚤 Party-Speedboat (ab/an Koh Tao)", 
-          hotel: "🏨 EZ auf Koh Tao",
-          color: "#f43f5e" 
-        },
-        { 
-          name: "Ko Samui", 
-          lat: 9.5120, lng: 99.9360, 
-          days: "Tage 24 – 27 (24.01. – 27.01.)", 
-          activity: "Ang Thong Marinepark, Fisherman's Village & Beach Club", 
-          transport: "⛴️ Fähre / 🚤 Boot- & Kajak-Tour", 
-          hotel: "🏨 EZ auf Koh Samui",
-          color: "#38bdf8" 
-        },
-        { 
-          name: "Bangkok (Abschluss)", 
-          lat: 13.7000, lng: 100.4000, // Leicht versetzt für gute Klickbarkeit
-          days: "Tage 27 – 29 (27.01. – 29.01.)", 
-          activity: "Souvenirs, Massage, Abschiedsessen & Rückflug", 
-          transport: "✈️ USM➔BKK / 🚕 Taxi / Airport Rail Link", 
-          hotel: "🏨 EZ in Bangkok / Flug",
-          color: "#a78bfa" 
-        }
+        { name: "Bangkok (Ankunft BKK)", lat: 13.6900, lng: 100.7501, days: "Tag 2 (02.01.)", activity: "Ankunft BKK (13:40 Uhr) & Weiterflug nach Udon Thani", transport: "✈️ Saudia SV152/846 ➔ Inlandsflug", hotel: "🏠 Bei OW / Transfer", color: "#a78bfa" },
+        { name: "Udon Thani", lat: 17.4138, lng: 102.7872, days: "Tage 2 – 4 (02.01. – 04.01.)", activity: "Zeit mit OW (Tipp: Red Lotus Lake)", transport: "🚗 Mietwagen / Taxi", hotel: "🏠 Bei OW?", color: "#8b949e" },
+        { name: "Chiang Mai", lat: 18.7883, lng: 98.9853, days: "Tage 5 – 7 (05.01. – 07.01.)", activity: "Altstadt, Tempel-Tour & Doi Inthanon Nationalpark", transport: "✈️ Flug / 🛵 Roller & Ausflug", hotel: "🏨 EZ in Chiang Mai", color: "#34d399" },
+        { name: "Pai", lat: 19.3582, lng: 98.4402, days: "Tage 8 – 10 (08.01. – 10.01.)", activity: "Pai Canyon, Lod Cave, Hot Springs & Night Market", transport: "🚐 Minivan (762 Kurven) / 🛵 Roller", hotel: "🏨 EZ in Pai", color: "#34d399" },
+        { name: "Chiang Rai", lat: 19.9105, lng: 99.8406, days: "Tag 11 (11.01.)", activity: "Weißer Tempel (Wat Rong Khun) & Umgebung", transport: "🚐 Minivan / Transfer", hotel: "🏨 EZ in Chiang Rai", color: "#34d399" },
+        { name: "Bangkok (Kultur & City)", lat: 13.7563, lng: 100.5018, days: "Tage 12 – 14 (12.01. – 14.01.)", activity: "Grand Palace, Wat Pho, Chinatown & Rooftop-Bar", transport: "✈️ Flug / 🚆 BTS / 🚤 Boot", hotel: "🏨 EZ in Bangkok", color: "#a78bfa" },
+        { name: "Ko Phi Phi", lat: 7.7407, lng: 98.7784, days: "Tage 15 – 17 (15.01. – 17.01.)", activity: "Maya Bay, Pileh Lagoon, Long Beach & Viewpoint", transport: "✈️ Flug ➔ ⛴️ Fähre / 🚤 Longtail-Boot", hotel: "🏨 EZ auf Koh Phi Phi", color: "#38bdf8" },
+        { name: "Krabi / Railay", lat: 8.0863, lng: 98.9063, days: "Tage 18 – 20 (18.01. – 20.01.)", activity: "Railay Beach, Ko Hong Lagune & Tiger Cave Temple", transport: "⛴️ Fähre / 🚤 Private Longtail-Tour", hotel: "🏨 EZ auf Krabi", color: "#38bdf8" },
+        { name: "Koh Tao", lat: 10.1018, lng: 99.8383, days: "Tage 21 – 24 (21.01. – 24.01.)", activity: "Schnorcheln Tanote Bay, Ko Nang Yuan & Erholung", transport: "🚌 Fähre + Bus + Fähre / 🛵 Roller", hotel: "🏨 EZ auf Koh Tao", color: "#38bdf8" },
+        { name: "Ko Pha-ngan", lat: 9.7319, lng: 100.0136, days: "Tag 22 (22.01.)", activity: "Abends Full Moon Party am Haad Rin Beach", transport: "🚤 Party-Speedboat (ab/an Koh Tao)", hotel: "🏨 EZ auf Koh Tao", color: "#38bdf8" },
+        { name: "Samui-Archipel (Inseln)", lat: 9.5120, lng: 99.9360, days: "Tage 24 – 27 (24.01. – 27.01.)", activity: "Ang Thong Marinepark, Fisherman's Village & Beach Club", transport: "⛴️ Fähre / 🚤 Boot- & Kajak-Tour", hotel: "🏨 Unterkunft im Samui-Archipel", color: "#38bdf8" },
+        { name: "Bangkok (Abschluss)", lat: 13.7000, lng: 100.4000, days: "Tage 27 – 29 (27.01. – 29.01.)", activity: "Souvenirs, Massage, Abschiedsessen & Rückflug", transport: "✈️ USM➔BKK / 🚕 Taxi / Airport Rail Link", hotel: "🏨 EZ in Bangkok / Flug", color: "#a78bfa" }
       ];
 
-      // ✈️ INTERNATIONALE FLUG-PUNKTE MIT FLUGDATEN
       const intlPoints = {
-        wien: { 
-          name: "Wien (VIE)", 
-          lat: 48.1103, lng: 16.5697, 
-          desc: "<b>Flug nach Bangkok (BKK)</b><br>📅 01.01.2027 • 15:30 ➔ 13:40 (+1 Tag)<br>✈️ Saudia (SV152 & SV846)<br>⏱️ 16h 10m • 💶 € 349,90" 
-        },
-        riad: { 
-          name: "Riad (RUH)", 
-          lat: 24.9576, lng: 46.6988, 
-          desc: "<b>Zwischenstopp Saudia</b><br>⏱️ Aufenthalt: 3h 45m" 
-        },
-        muenchen: { 
-          name: "München (MUC)", 
-          lat: 48.3537, lng: 11.7861, 
-          desc: "<b>Rückflug Stefan (Direkt)</b><br>📅 29.01.2027 • 13:00 ➔ 18:55 Uhr<br>✈️ Thai Airways (TG926)<br>⏱️ 11h 55m • 💶 € 424,13" 
-        },
-        colombo: { 
-          name: "Colombo (CMB)", 
-          lat: 7.1808, lng: 79.8841, 
-          desc: "<b>Weiterflug Ines (Direkt)</b><br>📅 29.01.2027 • 13:50 ➔ 15:50 Uhr<br>✈️ SriLankan Airlines (UL405)<br>⏱️ 3h 30m • 💶 € 175,00" 
-        }
+        wien: { name: "Wien (VIE)", lat: 48.1103, lng: 16.5697, desc: "<b>Flug nach Bangkok</b><br>📅 01.01.2027 • 15:30 ➔ 13:40 (+1 Tag)<br>✈️ Saudia (SV152/846)<br>💶 € 349,90" },
+        riad: { name: "Riad (RUH)", lat: 24.9576, lng: 46.6988, desc: "<b>Zwischenstopp Saudia</b><br>⏱️ Aufenthalt: 3h 45m" },
+        muenchen: { name: "München (MUC)", lat: 48.3537, lng: 11.7861, desc: "<b>Rückflug Stefan</b><br>📅 29.01.2027 • 13:00 ➔ 18:55 Uhr<br>✈️ Thai Airways (TG926)<br>💶 € 424,13" },
+        colombo: { name: "Colombo (CMB)", lat: 7.1808, lng: 79.8841, desc: "<b>Weiterflug Ines</b><br>📅 29.01.2027 • 13:50 ➔ 15:50 Uhr<br>✈️ SriLankan (UL405)<br>💶 € 175,00" }
       };
 
-      // 🗺️ KARTEN-DESIGNS (BASE LAYERS)
-      const darkMap = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; OpenStreetMap &copy; CARTO',
-        maxZoom: 19
-      });
+      const darkMap = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { attribution: '&copy; OpenStreetMap &copy; CARTO', maxZoom: 19 });
+      const lightMap = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', { attribution: '&copy; OpenStreetMap &copy; CARTO', maxZoom: 19 });
+      const osmMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap', maxZoom: 19 });
 
-      const lightMap = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; OpenStreetMap &copy; CARTO',
-        maxZoom: 19
-      });
+      map = L.map('map', { layers: [lightMap] });
 
-      const osmMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap contributors',
-        maxZoom: 19
-      });
-
-      const satelliteMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-        attribution: '&copy; Esri',
-        maxZoom: 19
-      });
-
-      const map = L.map('map', { layers: [lightMap] });
-
-      const baseMaps = {
+      L.control.layers({
         "🌙 Dunkelmodus": darkMap,
         "☀️ Hellmodus": lightMap,
-        "🗺️ Straßenkarte": osmMap,
-        "🛰️ Satellit": satelliteMap
-      };
-      L.control.layers(baseMaps).addTo(map);
+        "🗺️ Straßenkarte": osmMap
+      }).addTo(map);
 
       const allBounds = [];
-
-      // 1. THAILAND MARKER & POPUPS ERSTELLEN
       const latlngs = [];
+
       waypoints.forEach((wp, index) => {
         const pt = [wp.lat, wp.lng];
         latlngs.push(pt);
         allBounds.push(pt);
 
         const popupContent = `
-          <div style="color: #0d1117; font-family: 'Plus Jakarta Sans', sans-serif; min-width: 200px; padding: 2px;">
-            <div style="font-size: 0.75rem; font-weight: 700; color: ${wp.color === '#8b949e' ? '#57606a' : wp.color}; text-transform: uppercase; margin-bottom: 2px;">
-              ${wp.days}
-            </div>
-            <h3 style="margin: 0 0 8px 0; font-size: 1.05rem; color: #161b22; border-bottom: 1px solid #ddd; padding-bottom: 4px;">
-              ${index + 1}. ${wp.name}
-            </h3>
-            <div style="font-size: 0.85rem; margin-bottom: 6px; line-height: 1.3; color: #24292f;">
-              <strong>🎯 Aktivität:</strong> ${wp.activity}
-            </div>
-            <div style="font-size: 0.82rem; color: #57606a; margin-bottom: 4px;">
-              <strong>🛵 Transport:</strong> ${wp.transport}
-            </div>
-            <div style="font-size: 0.82rem; color: #57606a;">
-              <strong>🏨 Unterkunft:</strong> ${wp.hotel}
-            </div>
+          <div style="color: #0d1117; font-family: 'Plus Jakarta Sans', sans-serif; min-width: 200px;">
+            <div style="font-size: 0.75rem; font-weight: 700; color: ${wp.color}; text-transform: uppercase; margin-bottom: 2px;">${wp.days}</div>
+            <h3 style="margin: 0 0 8px 0; font-size: 1.05rem; color: #161b22; border-bottom: 1px solid #ddd; padding-bottom: 4px;">${index + 1}. ${wp.name}</h3>
+            <div style="font-size: 0.85rem; margin-bottom: 6px; color: #24292f;"><strong>🎯 Aktivität:</strong> ${wp.activity}</div>
+            <div style="font-size: 0.82rem; color: #57606a; margin-bottom: 4px;"><strong>🛵 Transport:</strong> ${wp.transport}</div>
+            <div style="font-size: 0.82rem; color: #57606a;"><strong>🏨 Unterkunft:</strong> ${wp.hotel}</div>
           </div>
         `;
 
-        L.circleMarker(pt, {
+        const marker = L.circleMarker(pt, {
           color: wp.color,
           fillColor: wp.color,
           fillOpacity: 0.85,
           radius: 8,
           weight: 2
         }).addTo(map).bindPopup(popupContent);
+
+        markers[wp.name] = { marker, lat: wp.lat, lng: wp.lng };
       });
 
-      // Hauptlinie Thailand-Rundreise
-      L.polyline(latlngs, {
-        color: '#38bdf8',
-        weight: 3,
-        opacity: 0.7,
-        dashArray: '5, 7'
-      }).addTo(map);
+      L.polyline(latlngs, { color: '#38bdf8', weight: 3, opacity: 0.7, dashArray: '5, 7' }).addTo(map);
 
-      // Verbindungslinie: 12. Bangkok-Abschluss-Punkt -> Flughafen Suvarnabhumi
-      const bangkokToAirport = [
-        [13.7000, 100.4000], // 12. Punkt
-        [13.6900, 100.7501]  // Flughafen BKK
-      ];
-      L.polyline(bangkokToAirport, {
-        color: '#a78bfa',
-        weight: 2,
-        opacity: 0.8,
-        dashArray: '3, 6'
-      }).addTo(map);
-
-      // 2. INTERNATIONALE PUNKTE PLAZIEREN
+      // Internationale Punkte & Fluglinien
       Object.keys(intlPoints).forEach(key => {
         const p = intlPoints[key];
         const pt = [p.lat, p.lng];
         allBounds.push(pt);
 
-        L.circleMarker(pt, {
-          color: '#e1e4e8',
-          fillColor: '#6e7681',
-          fillOpacity: 0.9,
-          radius: 6,
-          weight: 2
-        }).addTo(map).bindPopup(`
-          <div style="color: #0d1117; font-family: sans-serif;">
-            <b>✈️ ${p.name}</b><br>${p.desc}
-          </div>
-        `);
+        L.circleMarker(pt, { color: '#e1e4e8', fillColor: '#6e7681', fillOpacity: 0.9, radius: 6, weight: 2 })
+          .addTo(map).bindPopup(`<div style="color: #0d1117; font-family: sans-serif;"><b>✈️ ${p.name}</b><br>${p.desc}</div>`);
       });
 
-      // 3. FLUGROUTEN ZEICHNEN
-      
-      // HINFLUG: Wien ➔ Riad ➔ Bangkok (Flughafen BKK)
-      const flightOutbound = [
-        [intlPoints.wien.lat, intlPoints.wien.lng],
-        [intlPoints.riad.lat, intlPoints.riad.lng],
-        [13.6900, 100.7501]
-      ];
-      L.polyline(flightOutbound, {
-        color: '#a78bfa', // Violett
-        weight: 2,
-        opacity: 0.8,
-        dashArray: '4, 8'
-      }).addTo(map);
+      L.polyline([[intlPoints.wien.lat, intlPoints.wien.lng], [intlPoints.riad.lat, intlPoints.riad.lng], [13.6900, 100.7501]], { color: '#a78bfa', weight: 2, opacity: 0.8, dashArray: '4, 8' }).addTo(map);
+      L.polyline([[13.6900, 100.7501], [intlPoints.muenchen.lat, intlPoints.muenchen.lng]], { color: '#38bdf8', weight: 2, opacity: 0.8, dashArray: '4, 8' }).addTo(map);
+      L.polyline([[13.6900, 100.7501], [intlPoints.colombo.lat, intlPoints.colombo.lng]], { color: '#f43f5e', weight: 2, opacity: 0.85, dashArray: '4, 8' }).addTo(map);
 
-      // RÜCKFLUG STEFAN: Bangkok (BKK) ➔ München
-      const flightStefan = [
-        [13.6900, 100.7501], // Startet am Flughafen BKK
-        [intlPoints.muenchen.lat, intlPoints.muenchen.lng]
-      ];
-      L.polyline(flightStefan, {
-        color: '#38bdf8', // Blau
-        weight: 2,
-        opacity: 0.8,
-        dashArray: '4, 8'
-      }).addTo(map);
+      // Erweiterte Legende zur Karte hinzufügen
+      const legend = L.control({ position: 'bottomright' });
+      legend.onAdd = function () {
+        const div = L.DomUtil.create('div', 'map-legend');
+        div.innerHTML = `
+          <div class="legend-title">Orte & Regionen</div>
+          <div class="legend-item"><div class="legend-color-dot" style="background:#8b949e;"></div> Isan (Udon Thani)</div>
+          <div class="legend-item"><div class="legend-color-dot" style="background:#34d399;"></div> Norden (Chiang Mai, Pai, Rai)</div>
+          <div class="legend-item"><div class="legend-color-dot" style="background:#a78bfa;"></div> Bangkok</div>
+          <div class="legend-item"><div class="legend-color-dot" style="background:#38bdf8;"></div> Inseln (Andamanensee & Samui-Archipel)</div>
+          <div class="legend-title" style="margin-top:8px;">Flugrouten</div>
+          <div class="legend-item"><div class="legend-color-line" style="background:#a78bfa;"></div> Saudia (Hinflug VIE)</div>
+          <div class="legend-item"><div class="legend-color-line" style="background:#38bdf8;"></div> Thai Airways (MUC)</div>
+          <div class="legend-item"><div class="legend-color-line" style="background:#f43f5e;"></div> SriLankan (CMB)</div>
+        `;
+        return div;
+      };
+      legend.addTo(map);
 
-      // WEITERFLUG INES: Bangkok (BKK) ➔ Colombo
-      const flightInes = [
-        [13.6900, 100.7501], // Startet am Flughafen BKK
-        [intlPoints.colombo.lat, intlPoints.colombo.lng]
-      ];
-      L.polyline(flightInes, {
-        color: '#f43f5e', // Pink/Rot
-        weight: 2,
-        opacity: 0.85,
-        dashArray: '4, 8'
-      }).addTo(map);
-
-      // Kartenausschnitt anpassen
       map.fitBounds(allBounds, { padding: [40, 40] });
-
-      setTimeout(() => { map.invalidateSize(); }, 100);
     }
 
     window.addEventListener('DOMContentLoaded', () => {
       renderMobileCards();
       initMap();
+      loadPacklist();
     });
   </script>
 </body>
