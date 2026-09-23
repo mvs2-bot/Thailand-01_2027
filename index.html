@@ -7,7 +7,7 @@
   <title>Thailand & Sri Lanka Reise 2027</title>
 
   <!-- PWA & Mobile Web App Meta -->
-  <meta name="theme-color" content="#1e3a8a">
+  <meta name="theme-color" content="#15803d">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
@@ -22,27 +22,27 @@
 
   <style>
     :root {
-      --bg: #f1f5f9;           
+      --bg: #f4f7f4;           
       --card-bg: #ffffff;      
-      --card-bg-hover: #f8fafc;
+      --card-bg-hover: #f0fdf4;
       --border: #cbd5e1;       
       
       --text-main: #0f172a;    
       --text: #334155;         
       --text-muted: #64748b;   
       
-      --primary: #1e40af;      
-      --primary-hover: #1d4ed8;
-      --primary-rgb: 30, 64, 175;
-      --accent: #0284c7;       
+      --primary: #15803d;      
+      --primary-hover: #166534;
+      --primary-rgb: 21, 128, 61;
+      --accent: #0d9488;       
       
       --norden: #15803d;       
       --bangkok: #6b21a8;      
-      --inseln: #0284c7;       
+      --inseln: #0d9488;       
       --danger: #dc2626;
 
       /* Sri Lanka Regionen-Farben */
-      --sl-westkueste: #0284c7;
+      --sl-westkueste: #059669;
       --sl-kulturdreieck: #b45309;
       --sl-hochland: #15803d;
       --sl-suedkueste: #0d9488;
@@ -59,8 +59,8 @@
       font-family: 'Plus Jakarta Sans', sans-serif;
       background-color: var(--bg);
       color: var(--text);
-      line-height: 1.4;
-      padding: 24px 16px;
+      line-height: 1.35;
+      padding: 20px 14px;
     }
 
     .container {
@@ -69,18 +69,18 @@
     }
 
     header {
-      margin-bottom: 20px;
+      margin-bottom: 16px;
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: flex-end;
-      gap: 16px;
+      gap: 12px;
       border-bottom: 3px solid var(--primary);
-      padding-bottom: 20px;
+      padding-bottom: 16px;
     }
 
     .title-group h1 {
-      font-size: 1.85rem;
+      font-size: 1.75rem;
       font-weight: 800;
       color: var(--text-main);
       display: flex;
@@ -90,38 +90,38 @@
 
     .title-group p {
       color: var(--text-muted);
-      font-size: 0.95rem;
-      margin-top: 4px;
+      font-size: 0.9rem;
+      margin-top: 2px;
       font-weight: 600;
     }
 
     .countdown-badge {
       display: inline-block;
-      margin-top: 8px;
-      background: #e0f2fe;
-      border: 1px solid #7dd3fc;
-      color: #0369a1;
-      padding: 6px 14px;
+      margin-top: 6px;
+      background: #dcfce7;
+      border: 1px solid #86efac;
+      color: #15803d;
+      padding: 4px 12px;
       border-radius: 20px;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       font-weight: 800;
     }
 
     .stats-bar {
       display: flex;
-      gap: 10px;
+      gap: 8px;
       flex-wrap: wrap;
     }
 
     .stat-pill {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      padding: 6px 14px;
+      padding: 5px 12px;
       border-radius: 9999px;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       color: var(--text-main);
       font-weight: 600;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
     }
 
     .stat-pill strong {
@@ -132,9 +132,9 @@
     .nav-tabs {
       display: flex;
       gap: 8px;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
       border-bottom: 1px solid var(--border);
-      padding-bottom: 10px;
+      padding-bottom: 8px;
       overflow-x: auto;
     }
 
@@ -142,10 +142,10 @@
       background: var(--card-bg);
       border: 1px solid var(--border);
       color: var(--text-muted);
-      padding: 10px 18px;
+      padding: 8px 16px;
       border-radius: 8px;
       cursor: pointer;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 700;
       transition: all 0.2s ease;
       white-space: nowrap;
@@ -167,13 +167,13 @@
 
     /* Kartenansicht & Fullscreen Overlay */
     .map-section {
-      margin-bottom: 24px;
+      margin-bottom: 18px;
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-top: 4px solid var(--primary);
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.04);
       position: relative;
       transition: all 0.3s ease;
     }
@@ -187,7 +187,7 @@
       z-index: 9999;
       border-radius: 0;
       border: none;
-      padding: 16px;
+      padding: 14px;
       margin: 0;
       overflow-y: auto;
       background: var(--bg);
@@ -197,11 +197,11 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
 
     .map-section h2 {
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       font-weight: 800;
       color: var(--text-main);
       display: flex;
@@ -213,15 +213,15 @@
       background: var(--card-bg);
       border: 1px solid var(--border);
       color: var(--primary);
-      padding: 6px 14px;
-      border-radius: 8px;
+      padding: 5px 12px;
+      border-radius: 6px;
       cursor: pointer;
       font-weight: 700;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       display: flex;
       align-items: center;
       gap: 6px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
       transition: all 0.15s ease;
     }
 
@@ -232,7 +232,7 @@
     }
 
     #map {
-      height: 520px;
+      height: 480px;
       width: 100%;
       border-radius: 8px;
       z-index: 1;
@@ -241,7 +241,7 @@
     }
 
     .map-section.fullscreen #map {
-      height: calc(100vh - 100px);
+      height: calc(100vh - 90px);
       min-height: 400px;
     }
 
@@ -250,11 +250,11 @@
       background: #ffffff;
       border: 1px solid var(--border);
       border-radius: 8px;
-      padding: 10px 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      font-size: 0.8rem;
+      padding: 8px 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      font-size: 0.78rem;
       color: var(--text-main);
-      max-width: 260px;
+      max-width: 250px;
       font-family: 'Plus Jakarta Sans', sans-serif;
     }
 
@@ -269,28 +269,28 @@
     }
 
     .legend-body {
-      margin-top: 8px;
+      margin-top: 6px;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 5px;
     }
 
     .legend-item {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
 
     .legend-color {
-      width: 12px;
-      height: 12px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
       display: inline-block;
       flex-shrink: 0;
     }
 
     .legend-line {
-      width: 20px;
+      width: 18px;
       height: 3px;
       display: inline-block;
       flex-shrink: 0;
@@ -300,26 +300,26 @@
     .country-switcher {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-bottom: 20px;
+      gap: 12px;
+      margin-bottom: 16px;
     }
 
     .country-btn {
       background: var(--card-bg);
       border: 2px solid var(--border);
       color: var(--text-main);
-      padding: 14px 20px;
-      border-radius: 10px;
+      padding: 10px 16px;
+      border-radius: 8px;
       cursor: pointer;
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: 800;
       text-align: center;
       transition: all 0.2s ease;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+      gap: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
     }
 
     .country-btn:hover {
@@ -331,27 +331,27 @@
       background: var(--primary);
       border-color: var(--primary);
       color: #ffffff;
-      box-shadow: 0 4px 12px rgba(30, 64, 175, 0.25);
+      box-shadow: 0 2px 8px rgba(21, 128, 61, 0.25);
     }
 
     /* Filter & Suche */
     .controls {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 24px;
+      gap: 10px;
+      margin-bottom: 16px;
     }
 
     .search-input {
       flex: 1;
-      min-width: 240px;
+      min-width: 220px;
       background: var(--card-bg);
       border: 1px solid var(--border);
       color: var(--text-main);
-      padding: 10px 14px;
-      border-radius: 8px;
+      padding: 8px 12px;
+      border-radius: 6px;
       font-family: inherit;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       outline: none;
       font-weight: 500;
     }
@@ -365,10 +365,10 @@
       background: var(--card-bg);
       border: 1px solid var(--border);
       color: var(--text);
-      padding: 8px 14px;
-      border-radius: 8px;
+      padding: 6px 12px;
+      border-radius: 6px;
       cursor: pointer;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 600;
       transition: all 0.15s ease;
     }
@@ -379,20 +379,20 @@
       color: #ffffff;
     }
 
-    /* Tabellen Styling */
+    /* Tabellen Styling - KOMPAKT & ÜBERSICHTLICH */
     .table-wrapper {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 12px;
+      border-radius: 8px;
       overflow-x: auto;
-      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.03);
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
       text-align: left;
-      font-size: 0.88rem;
+      font-size: 0.84rem;
     }
 
     th {
@@ -400,23 +400,24 @@
       color: var(--text-main);
       font-weight: 800;
       text-transform: uppercase;
-      font-size: 0.75rem;
-      letter-spacing: 0.05em;
-      padding: 12px 14px;
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
+      padding: 8px 10px;
       border-bottom: 2px solid var(--border);
       white-space: nowrap;
     }
 
     td {
-      padding: 10px 14px;
+      padding: 6px 10px;
       border-bottom: 1px solid var(--border);
       vertical-align: middle;
       color: var(--text-main);
+      line-height: 1.25;
     }
 
     tr.clickable-row {
       cursor: pointer;
-      transition: background 0.15s ease;
+      transition: background 0.12s ease;
     }
 
     tr.clickable-row:hover td {
@@ -430,65 +431,66 @@
       font-weight: 800;
       color: #ffffff;
       background: var(--primary);
-      border-radius: 6px;
-      padding: 2px 8px;
-      font-size: 0.82rem;
+      border-radius: 4px;
+      padding: 1px 6px;
+      font-size: 0.78rem;
     }
 
     /* Gruppen Badges */
     .group-badge-ines-stefan {
       display: inline-block;
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 700;
-      padding: 2px 6px;
+      padding: 1px 5px;
       border-radius: 4px;
-      background: #e0f2fe;
-      color: #0369a1;
-      border: 1px solid #bae6fd;
-      margin-top: 4px;
+      background: #dcfce7;
+      color: #15803d;
+      border: 1px solid #bbf7d0;
+      margin-top: 2px;
     }
 
     .group-badge-ines-alleine {
       display: inline-block;
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 700;
-      padding: 2px 6px;
+      padding: 1px 5px;
       border-radius: 4px;
       background: #f3e8ff;
       color: #6b21a8;
       border: 1px solid #e9d5ff;
-      margin-top: 4px;
+      margin-top: 2px;
     }
 
     .group-badge-ines-anna {
       display: inline-block;
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 700;
-      padding: 2px 6px;
+      padding: 1px 5px;
       border-radius: 4px;
       background: #fef3c7;
       color: #92400e;
       border: 1px solid #fde68a;
-      margin-top: 4px;
+      margin-top: 2px;
     }
 
     /* Region Tags */
     .tag-region {
       display: inline-block;
-      padding: 3px 8px;
-      border-radius: 6px;
-      font-size: 0.75rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.72rem;
       font-weight: 700;
       text-transform: uppercase;
+      white-space: nowrap;
     }
 
     .tag-norden { background: #dcfce7; color: var(--norden); }
     .tag-bangkok { background: #f3e8ff; color: var(--bangkok); }
-    .tag-inseln { background: #e0f2fe; color: var(--inseln); }
+    .tag-inseln { background: #ccfbf1; color: var(--inseln); }
     .tag-default { background: #f1f5f9; color: var(--text-muted); }
 
     /* Sri Lanka spezifische Regionen Tags */
-    .tag-sl-westkueste { background: #e0f2fe; color: var(--sl-westkueste); }
+    .tag-sl-westkueste { background: #d1fae5; color: var(--sl-westkueste); }
     .tag-sl-kulturdreieck { background: #fef3c7; color: var(--sl-kulturdreieck); }
     .tag-sl-hochland { background: #dcfce7; color: var(--sl-hochland); }
     .tag-sl-suedkueste { background: #ccfbf1; color: var(--sl-suedkueste); }
@@ -497,28 +499,29 @@
     .route-title {
       font-weight: 700;
       color: var(--text-main);
-      margin-bottom: 2px;
+      margin-bottom: 1px;
     }
 
     .sub-note {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       color: var(--text-muted);
-      margin-top: 2px;
-      line-height: 1.3;
+      margin-top: 1px;
+      line-height: 1.15;
       font-weight: 500;
     }
 
     .transport-pill, .hotel-pill {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      font-size: 0.8rem;
-      padding: 3px 8px;
+      gap: 4px;
+      font-size: 0.76rem;
+      padding: 2px 6px;
       border-radius: 4px;
       background: #f8fafc;
       color: var(--text-main);
       font-weight: 600;
       border: 1px solid var(--border);
+      white-space: nowrap;
     }
 
     .hotel-pill {
@@ -527,14 +530,26 @@
       color: #166534;
     }
 
+    .popup-date-badge {
+      display: inline-block;
+      background: #f1f5f9;
+      color: var(--primary);
+      border: 1px solid var(--border);
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-bottom: 6px;
+    }
+
     /* Interaktive Packliste Styles */
     .info-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.03);
     }
 
     .info-card-header {
@@ -542,13 +557,13 @@
       align-items: center;
       justify-content: space-between;
       border-bottom: 2px solid var(--bg);
-      padding-bottom: 10px;
-      margin-bottom: 16px;
+      padding-bottom: 8px;
+      margin-bottom: 14px;
     }
 
     .info-card h3 {
       color: var(--text-main);
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       font-weight: 800;
       margin: 0;
     }
@@ -560,45 +575,45 @@
       margin: 0;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
     }
 
     .flight-item {
       background: #f8fafc;
       border: 1px solid var(--border);
       border-left: 4px solid var(--primary);
-      padding: 12px 16px;
-      border-radius: 8px;
+      padding: 10px 14px;
+      border-radius: 6px;
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 2px;
     }
 
     .flight-date {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 800;
       color: var(--primary);
       text-transform: uppercase;
     }
 
     .flight-route {
-      font-size: 1rem;
+      font-size: 0.95rem;
       font-weight: 700;
       color: var(--text-main);
     }
 
     .flight-details {
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       color: var(--text);
     }
 
     .flight-price {
       display: inline-block;
-      margin-top: 4px;
-      font-size: 0.8rem;
+      margin-top: 3px;
+      font-size: 0.78rem;
       font-weight: 700;
-      background: #e0f2fe;
-      color: #0369a1;
+      background: #dcfce7;
+      color: #15803d;
       padding: 2px 8px;
       border-radius: 4px;
       width: fit-content;
@@ -606,13 +621,13 @@
 
     .pack-summary {
       display: flex;
-      gap: 16px;
+      gap: 12px;
       flex-wrap: wrap;
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
-      padding: 16px;
-      border-radius: 10px;
-      margin-bottom: 20px;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      padding: 12px 14px;
+      border-radius: 8px;
+      margin-bottom: 16px;
       align-items: center;
       justify-content: space-between;
     }
@@ -623,13 +638,13 @@
     }
 
     .pack-summary-val {
-      font-size: 1.35rem;
+      font-size: 1.25rem;
       font-weight: 800;
       color: var(--primary);
     }
 
     .pack-summary-lbl {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--text-muted);
       font-weight: 600;
     }
@@ -638,10 +653,10 @@
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
       background: #f1f5f9;
-      padding: 12px;
-      border-radius: 8px;
+      padding: 10px;
+      border-radius: 6px;
       border: 1px solid var(--border);
     }
 
@@ -649,37 +664,38 @@
       background: var(--card-bg);
       border: 1px solid var(--border);
       color: var(--text-main);
-      padding: 8px 12px;
-      border-radius: 6px;
-      font-size: 0.85rem;
+      padding: 6px 10px;
+      border-radius: 5px;
+      font-size: 0.82rem;
       outline: none;
       font-weight: 500;
     }
 
-    .pack-add-form input[type="text"] { flex: 2; min-width: 160px; }
-    .pack-add-form select { flex: 1.5; min-width: 160px; }
-    .pack-add-form input[type="number"] { width: 90px; }
+    .pack-add-form input[type="text"] { flex: 2; min-width: 150px; }
+    .pack-add-form select { flex: 1.5; min-width: 150px; }
+    .pack-add-form input[type="number"] { width: 80px; }
 
     .btn-add {
       background: var(--primary);
       color: #ffffff;
       font-weight: 800;
       border: none;
-      padding: 8px 16px;
-      border-radius: 6px;
+      padding: 6px 14px;
+      border-radius: 5px;
       cursor: pointer;
+      font-size: 0.82rem;
     }
 
-    .btn-tools { display: flex; gap: 8px; flex-wrap: wrap; }
+    .btn-tools { display: flex; gap: 6px; flex-wrap: wrap; }
 
     .btn-action {
       background: transparent;
       border: 1px solid var(--border);
       color: var(--text-main);
-      padding: 6px 12px;
-      border-radius: 6px;
+      padding: 5px 10px;
+      border-radius: 5px;
       cursor: pointer;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 600;
     }
 
@@ -688,10 +704,10 @@
     .qty-controls {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 4px;
       background: #f1f5f9;
       border-radius: 4px;
-      padding: 2px 6px;
+      padding: 1px 5px;
       border: 1px solid var(--border);
     }
 
@@ -701,27 +717,27 @@
       color: var(--text-main);
       font-weight: bold;
       cursor: pointer;
-      padding: 0 4px;
+      padding: 0 3px;
     }
 
     .btn-icon {
       background: transparent;
       border: none;
       cursor: pointer;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       opacity: 0.85;
-      padding: 2px 4px;
+      padding: 1px 3px;
     }
 
     .worn-label {
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       color: var(--text-muted);
       cursor: pointer;
       background: #f8fafc;
-      padding: 2px 6px;
+      padding: 1px 5px;
       border-radius: 4px;
       border: 1px solid var(--border);
       font-weight: 600;
@@ -729,8 +745,8 @@
     }
 
     .worn-label input {
-      width: 13px;
-      height: 13px;
+      width: 12px;
+      height: 12px;
       accent-color: var(--primary);
       cursor: pointer;
     }
@@ -744,24 +760,24 @@
       background: #f1f5f9;
       color: var(--primary);
       font-weight: 800;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.04em;
       border-left: 3px solid var(--primary);
-      padding: 8px 12px !important;
+      padding: 6px 10px !important;
     }
 
     .bkk-popup-list {
-      font-size: 0.82rem;
-      line-height: 1.4;
-      margin-top: 6px;
+      font-size: 0.8rem;
+      line-height: 1.35;
+      margin-top: 5px;
       padding-left: 0;
       list-style: none;
     }
 
     .bkk-popup-list li {
-      margin-bottom: 6px;
-      padding-bottom: 6px;
+      margin-bottom: 5px;
+      padding-bottom: 5px;
       border-bottom: 1px dashed #cbd5e1;
     }
 
@@ -773,15 +789,15 @@
 
     @media (max-width: 860px) {
       .table-wrapper-responsive { display: none; }
-      .mobile-cards { display: flex; flex-direction: column; gap: 12px; }
+      .mobile-cards { display: flex; flex-direction: column; gap: 10px; }
       .card {
         background: var(--card-bg);
         border: 1px solid var(--border);
-        border-radius: 10px;
-        padding: 16px;
+        border-radius: 8px;
+        padding: 12px;
         cursor: pointer;
       }
-      .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+      .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
     }
 
     @media (min-width: 861px) {
@@ -800,8 +816,8 @@
         <div class="countdown-badge" id="countdown">⏳ Countdown wird berechnet...</div>
       </div>
       <div class="stats-bar">
-        <div class="stat-pill">🇹🇭 Thailand: <strong>29</strong> Tage</div>
-        <div class="stat-pill">🇱🇰 Sri Lanka: <strong>25</strong> Tage</div>
+        <div class="stat-pill">Thailand: <strong>29</strong> Tage</div>
+        <div class="stat-pill">Sri Lanka: <strong>25</strong> Tage</div>
       </div>
     </header>
 
@@ -829,10 +845,10 @@
       <!-- LÄNDER AUSWAHLFELD UNTERHALB DER KARTE -->
       <div class="country-switcher">
         <button id="btnThailand" class="country-btn active" onclick="switchCountry('thailand')">
-          🇹🇭 THAILAND (01.01. – 29.01.)
+          THAILAND (01.01. – 29.01.)
         </button>
         <button id="btnSriLanka" class="country-btn" onclick="switchCountry('srilanka')">
-          🇱🇰 SRI LANKA (29.01. – 23.02.)
+          SRI LANKA (29.01. – 23.02.)
         </button>
       </div>
 
@@ -937,7 +953,7 @@
     <div id="budgetTab" class="tab-content">
       <div class="info-card">
         <h3>✈️ Gebuchte Flüge (Übersicht)</h3>
-        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 16px;">Alle gebuchten Flugverbindungen und Zwischenstopps im Detail:</p>
+        <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 14px;">Alle gebuchten Flugverbindungen und Zwischenstopps im Detail:</p>
         
         <ul class="flight-list">
           <li class="flight-item">
@@ -1020,7 +1036,7 @@
        DATEN: THAILAND & SRI LANKA
        ========================================================================== */
     const thailandData = [
-      { day: "Tag 1", date: "01.01. (Fr)", groupTag: "Ines & Stefan", region: "Anreise", regTag: "tag-default", title: "Start Reise ab Flughafen Wien (VIE)", details: "Flug nach Bangkok (BKK) um 15:30 Uhr (Saudia SV152 + SV846, Stopp in Flughafen Riad RUH)", transport: "✈️ Saudia SV152", hotel: "✈️ Im Flugzeug", locName: "Flughafen Wien (VIE)", lat: 48.1103, lng: 16.5697, color: "#1e40af" },
+      { day: "Tag 1", date: "01.01. (Fr)", groupTag: "Ines & Stefan", region: "Anreise", regTag: "tag-default", title: "Start Reise ab Flughafen Wien (VIE)", details: "Flug nach Bangkok (BKK) um 15:30 Uhr (Saudia SV152 + SV846, Stopp in Flughafen Riad RUH)", transport: "✈️ Saudia SV152", hotel: "✈️ Im Flugzeug", locName: "Flughafen Wien (VIE)", lat: 48.1103, lng: 16.5697, color: "#15803d" },
       { day: "Tag 2", date: "02.01. (Sa)", groupTag: "Ines & Stefan", region: "Isan / Udon Thani", regTag: "tag-default", title: "Ankunft Bangkok ➔ Udon Thani", details: "Ankunft 13:40 am Flughafen BKK ➔ Weiterflug TG008 um 18:20 ➔ Ankunft UTH 19:30, Abholung OW", transport: "✈️ Thai TG008", hotel: "🏠 Bei OW?", locName: "Udon Thani", lat: 17.4138, lng: 102.7872, color: "#15803d" },
       { day: "Tag 3", date: "03.01. (So)", groupTag: "Ines & Stefan", region: "Isan / Udon Thani", regTag: "tag-default", title: "Udon Thani", details: "Zeit mit OW – Ganzer Tag (Tipp: Red Lotus Lake)", transport: "🚗 Mietwagen/Taxi", hotel: "🏠 Bei OW?", locName: "Udon Thani", lat: 17.4138, lng: 102.7872, color: "#15803d" },
       { day: "Tag 4", date: "04.01. (Mo)", groupTag: "Ines & Stefan", region: "Isan / Udon Thani", regTag: "tag-default", title: "Udon Thani", details: "Zeit mit OW – Ganzer Tag", transport: "🚗 Mietwagen/Taxi", hotel: "🏠 Bei OW?", locName: "Udon Thani", lat: 17.4138, lng: 102.7872, color: "#15803d" },
@@ -1031,34 +1047,34 @@
       { day: "Tag 9", date: "09.01. (Sa)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Pai / Umland", details: "Wandern Pai Canyon, Land Split & Night Market", transport: "🛵 Roller", hotel: "🏨 EZ in Pai", locName: "Pai", lat: 19.3582, lng: 98.4402, color: "#15803d" },
       { day: "Tag 10", date: "10.01. (So)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Pai / Umland", details: "Pai genießen: Lod Cave, Bamboo Bridge & Hot Springs", transport: "🛵 Roller", hotel: "🏨 EZ in Pai", locName: "Pai", lat: 19.3582, lng: 98.4402, color: "#15803d" },
       { day: "Tag 11", date: "11.01. (Mo)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Pai ➔ Chiang Rai", details: "Weiterfahrt nach Chiang Rai, Weißer Tempel & Kultur", transport: "🚐 Minivan", hotel: "🏨 EZ in Chiang Rai", locName: "Chiang Rai", lat: 19.9105, lng: 99.8406, color: "#15803d" },
-      { day: "Tag 12", date: "12.01. (Di)", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Chiang Rai ➔ Bangkok", details: "Von Chiang Rai mit dem Flugzeug zurück nach Bangkok", transport: "✈️ Flugzeug", hotel: "🏨 EZ in Bangkok", locName: "Flughafen Bangkok (BKK)", lat: 13.6900, lng: 100.7501, color: "#6b21a8" },
-      { day: "Tag 13", date: "13.01. (Mi)", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Bangkok", details: "Kultur & Tempel (Grand Palace, Wat Pho, Wat Arun)", transport: "🚤 MRT / Boot", hotel: "🏨 EZ in Bangkok", locName: "Flughafen Bangkok (BKK)", lat: 13.6900, lng: 100.7501, color: "#6b21a8" },
-      { day: "Tag 14", date: "14.01. (Do)", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Bangkok", details: "Chinatown (Yaowarat), Sukhumvit, Rooftop-Bar", transport: "🚆 Skytrain / Grab", hotel: "🏨 EZ in Bangkok", locName: "Flughafen Bangkok (BKK)", lat: 13.6900, lng: 100.7501, color: "#6b21a8" },
-      { day: "Tag 15", date: "15.01. (Fr)", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Bangkok ➔ Ko Phi Phi", details: "Anreise & Ankommen, Sunset Viewpoint", transport: "✈️ Flug ➔ ⛴️ Fähre", hotel: "🏨 EZ auf Koh Phi Phi", locName: "Ko Phi Phi", lat: 7.7407, lng: 98.7784, color: "#0284c7" },
-      { day: "Tag 16", date: "16.01. (Sa)", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Ko Phi Phi", details: "Ausflug Maya Bay, Pileh Lagoon & Bamboo Island", transport: "🚤 Longtail-Boot", hotel: "🏨 EZ auf Koh Phi Phi", locName: "Ko Phi Phi", lat: 7.7407, lng: 98.7784, color: "#0284c7" },
-      { day: "Tag 17", date: "17.01. (So)", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Ko Phi Phi", details: "Schnorcheln, Entspannen am Long Beach", transport: "🚤 Roller / Wassertaxi", hotel: "🏨 EZ auf Koh Phi Phi", locName: "Ko Phi Phi", lat: 7.7407, lng: 98.7784, color: "#0284c7" },
-      { day: "Tag 18", date: "18.01. (Mo)", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Ko Phi Phi ➔ Krabi", details: "Nachmittags Railay Beach & Phra Nang Cave Beach", transport: "⛴️ Fähre (1.5 - 2 h)", hotel: "🏨 EZ auf Krabi", locName: "Krabi / Railay", lat: 8.0863, lng: 98.9063, color: "#0284c7" },
-      { day: "Tag 19", date: "19.01. (Di)", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Krabi", details: "Tagestrip nach Ko Hong (Lagune & Viewpoint)", transport: "🚤 Longtail-Tour", hotel: "🏨 EZ auf Krabi", locName: "Krabi / Railay", lat: 8.0863, lng: 98.9063, color: "#0284c7" },
-      { day: "Tag 20", date: "20.01. (Mi)", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Krabi", details: "Tiger Cave Temple (Aussicht) oder Mangroven-Kajaktour", transport: "🛵 Roller / Samlor", hotel: "🏨 EZ auf Krabi", locName: "Krabi / Railay", lat: 8.0863, lng: 98.9063, color: "#0284c7" },
-      { day: "Tag 21", date: "21.01. (Do)", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Krabi ➔ Koh Tao", details: "Vor Ort direkt Party-Speedboat-Ticket für 22.01. buchen", transport: "🚌 Fähre + Bus + Fähre", hotel: "🏨 EZ auf Koh Tao", locName: "Koh Tao", lat: 10.1018, lng: 99.8383, color: "#0284c7" },
-      { day: "Tag 22", date: "22.01. (Fr)", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Koh Tao ➔ Ko Pha-ngan ➔ Koh Tao", details: "Abends Vollmond Party auf Koh Pha-ngan", transport: "🚤 Party-Speedboat", hotel: "🏨 EZ auf Koh Tao", locName: "Ko Pha-ngan", lat: 9.7319, lng: 100.0136, color: "#0284c7" },
-      { day: "Tag 23", date: "23.01. (Sa)", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Koh Tao", details: "Ausschlafen, Entspannen, Schnorcheln Tanote Bay", transport: "🛵 Roller / Wassertaxi", hotel: "🏨 EZ auf Koh Tao", locName: "Koh Tao", lat: 10.1018, lng: 99.8383, color: "#0284c7" },
-      { day: "Tag 24", date: "24.01. (So)", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Koh Tao ➔ Ko Samui", details: "Vormittags Trip nach Ko Nang Yuan, nachmittags Überfahrt", transport: "⛴️ Fähre (1.5 - 2 h)", hotel: "🏨 EZ auf Koh Samui", locName: "Koh Samui", lat: 9.5120, lng: 99.9360, color: "#0284c7" },
-      { day: "Tag 25", date: "25.01. (Mo)", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Ko Samui", details: "Tagestrip Ang Thong Marine Nationalpark", transport: "🚤 Boot / Kajak-Tour", hotel: "🏨 EZ auf Koh Samui", locName: "Koh Samui", lat: 9.5120, lng: 99.9360, color: "#0284c7" },
-      { day: "Tag 26", date: "26.01. (Di)", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Ko Samui", details: "Bophut Fisherman's Village, Tempel & Beach Club", transport: "🛵 Roller / Songthaew", hotel: "🏨 EZ auf Koh Samui", locName: "Koh Samui", lat: 9.5120, lng: 99.9360, color: "#0284c7" },
-      { day: "Tag 27", date: "27.01. (Mi)", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Ko Samui ➔ Bangkok", details: "Transfertag: Rückreise nach Bangkok", transport: "✈️ Flugzeug (USM ➔ BKK)", hotel: "🏨 EZ in Bangkok", locName: "Flughafen Bangkok (BKK)", lat: 13.6900, lng: 100.7501, color: "#6b21a8" },
-      { day: "Tag 28", date: "28.01. (Do)", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Bangkok", details: "Entspannter Tag: Souvenirs, Thai-Massage & Lieblingsspots", transport: "🚆 Skytrain / Grab", hotel: "🏨 EZ in Bangkok", locName: "Flughafen Bangkok (BKK)", lat: 13.6900, lng: 100.7501, color: "#6b21a8" },
-      { day: "Tag 29", date: "29.01. (Fr)", groupTag: "Ines & Stefan", region: "Abschluss", regTag: "tag-default", title: "Bangkok / Heim- & Weiterflug", details: "Stefan ➔ MUC (TG926 13:00 Direkt) | Ines ➔ CMB (UL405 13:50 Direkt)", transport: "✈️ Flugzeug", hotel: "✈️ Flug / Ceylon Glory", locName: "Flughafen Bangkok (BKK)", lat: 13.6900, lng: 100.7501, color: "#6b21a8" }
+      { day: "Tag 12", date: "12.01. (Di)", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Chiang Rai ➔ Bangkok Stadt", details: "Von Chiang Rai mit dem Flugzeug zurück nach Bangkok, Fahrt ins Zentrum", transport: "✈️ Flugzeug / Taxi", hotel: "🏨 EZ in Bangkok", locName: "Bangkok Stadtzentrum", lat: 13.7563, lng: 100.5018, color: "#6b21a8" },
+      { day: "Tag 13", date: "13.01. (Mi)", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Bangkok", details: "Kultur & Tempel (Grand Palace, Wat Pho, Wat Arun)", transport: "🚤 MRT / Boot", hotel: "🏨 EZ in Bangkok", locName: "Bangkok Stadtzentrum", lat: 13.7563, lng: 100.5018, color: "#6b21a8" },
+      { day: "Tag 14", date: "14.01. (Do)", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Bangkok", details: "Chinatown (Yaowarat), Sukhumvit, Rooftop-Bar", transport: "🚆 Skytrain / Grab", hotel: "🏨 EZ in Bangkok", locName: "Bangkok Stadtzentrum", lat: 13.7563, lng: 100.5018, color: "#6b21a8" },
+      { day: "Tag 15", date: "15.01. (Fr)", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Bangkok ➔ Ko Phi Phi", details: "Anreise & Ankommen, Sunset Viewpoint", transport: "✈️ Flug ➔ ⛴️ Fähre", hotel: "🏨 EZ auf Koh Phi Phi", locName: "Ko Phi Phi", lat: 7.7407, lng: 98.7784, color: "#0d9488" },
+      { day: "Tag 16", date: "16.01. (Sa)", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Ko Phi Phi", details: "Ausflug Maya Bay, Pileh Lagoon & Bamboo Island", transport: "🚤 Longtail-Boot", hotel: "🏨 EZ auf Koh Phi Phi", locName: "Ko Phi Phi", lat: 7.7407, lng: 98.7784, color: "#0d9488" },
+      { day: "Tag 17", date: "17.01. (So)", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Ko Phi Phi", details: "Schnorcheln, Entspannen am Long Beach", transport: "🚤 Roller / Wassertaxi", hotel: "🏨 EZ auf Koh Phi Phi", locName: "Ko Phi Phi", lat: 7.7407, lng: 98.7784, color: "#0d9488" },
+      { day: "Tag 18", date: "18.01. (Mo)", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Ko Phi Phi ➔ Krabi", details: "Nachmittags Railay Beach & Phra Nang Cave Beach", transport: "⛴️ Fähre (1.5 - 2 h)", hotel: "🏨 EZ auf Krabi", locName: "Krabi / Railay", lat: 8.0863, lng: 98.9063, color: "#0d9488" },
+      { day: "Tag 19", date: "19.01. (Di)", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Krabi", details: "Tagestrip nach Ko Hong (Lagune & Viewpoint)", transport: "🚤 Longtail-Tour", hotel: "🏨 EZ auf Krabi", locName: "Krabi / Railay", lat: 8.0863, lng: 98.9063, color: "#0d9488" },
+      { day: "Tag 20", date: "20.01. (Mi)", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Krabi", details: "Tiger Cave Temple (Aussicht) oder Mangroven-Kajaktour", transport: "🛵 Roller / Samlor", hotel: "🏨 EZ auf Krabi", locName: "Krabi / Railay", lat: 8.0863, lng: 98.9063, color: "#0d9488" },
+      { day: "Tag 21", date: "21.01. (Do)", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Krabi ➔ Koh Tao", details: "Vor Ort direkt Party-Speedboat-Ticket für 22.01. buchen", transport: "🚌 Fähre + Bus + Fähre", hotel: "🏨 EZ auf Koh Tao", locName: "Koh Tao", lat: 10.1018, lng: 99.8383, color: "#0d9488" },
+      { day: "Tag 22", date: "22.01. (Fr)", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Koh Tao ➔ Ko Pha-ngan ➔ Koh Tao", details: "Abends Vollmond Party auf Koh Pha-ngan", transport: "🚤 Party-Speedboat", hotel: "🏨 EZ auf Koh Tao", locName: "Ko Pha-ngan", lat: 9.7319, lng: 100.0136, color: "#0d9488" },
+      { day: "Tag 23", date: "23.01. (Sa)", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Koh Tao", details: "Ausschlafen, Entspannen, Schnorcheln Tanote Bay", transport: "🛵 Roller / Wassertaxi", hotel: "🏨 EZ auf Koh Tao", locName: "Koh Tao", lat: 10.1018, lng: 99.8383, color: "#0d9488" },
+      { day: "Tag 24", date: "24.01. (So)", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Koh Tao ➔ Ko Samui", details: "Vormittags Trip nach Ko Nang Yuan, nachmittags Überfahrt", transport: "⛴️ Fähre (1.5 - 2 h)", hotel: "🏨 EZ auf Koh Samui", locName: "Koh Samui", lat: 9.5120, lng: 99.9360, color: "#0d9488" },
+      { day: "Tag 25", date: "25.01. (Mo)", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Ko Samui", details: "Tagestrip Ang Thong Marine Nationalpark", transport: "🚤 Boot / Kajak-Tour", hotel: "🏨 EZ auf Koh Samui", locName: "Koh Samui", lat: 9.5120, lng: 99.9360, color: "#0d9488" },
+      { day: "Tag 26", date: "26.01. (Di)", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Ko Samui", details: "Bophut Fisherman's Village, Tempel & Beach Club", transport: "🛵 Roller / Songthaew", hotel: "🏨 EZ auf Koh Samui", locName: "Koh Samui", lat: 9.5120, lng: 99.9360, color: "#0d9488" },
+      { day: "Tag 27", date: "27.01. (Mi)", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Ko Samui ➔ Bangkok Stadt", details: "Transfertag: Rückreise nach Bangkok, Hotelbezug Stadtzentrum", transport: "✈️ Flugzeug (USM ➔ BKK)", hotel: "🏨 EZ in Bangkok", locName: "Bangkok Stadtzentrum", lat: 13.7563, lng: 100.5018, color: "#6b21a8" },
+      { day: "Tag 28", date: "28.01. (Do)", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Bangkok", details: "Entspannter Tag: Souvenirs, Thai-Massage & Lieblingsspots", transport: "🚆 Skytrain / Grab", hotel: "🏨 EZ in Bangkok", locName: "Bangkok Stadtzentrum", lat: 13.7563, lng: 100.5018, color: "#6b21a8" },
+      { day: "Tag 29", date: "29.01. (Fr)", groupTag: "Ines & Stefan", region: "Abschluss", regTag: "tag-default", title: "Bangkok Stadt ➔ Flughafen / Heim- & Weiterflug", details: "Stefan ➔ MUC (TG926 13:00 Direkt) | Ines ➔ CMB (UL405 13:50 Direkt)", transport: "✈️ Flugzeug", hotel: "✈️ Flug / Ceylon Glory", locName: "Flughafen Bangkok (BKK)", lat: 13.6900, lng: 100.7501, color: "#6b21a8" }
     ];
 
     const sriLankaData = [
       // INES ALLEINE
-      { day: "Tag 1", date: "30.01. (Sa)", groupTag: "Ines alleine", region: "Westküste", regTag: "tag-sl-westkueste", title: "Negombo (Ines alleine)", details: "Akklimatisieren in Negombo, mögliche Aktivitäten auschecken, Strand.", transport: "🛵 TukTuk / Zu Fuß", hotel: "🏨 Ceylon Glory Hostel (gebucht)", locName: "Flughafen Colombo (CMB)", lat: 7.1808, lng: 79.8841, color: "#0284c7" },
-      { day: "Tag 2", date: "31.01. (So)", groupTag: "Ines alleine", region: "Westküste", regTag: "tag-sl-westkueste", title: "Negombo (Ines alleine)", details: "Aktivität & Entspannen am Strand.", transport: "🛵 TukTuk", hotel: "🏨 Ceylon Glory Hostel (gebucht)", locName: "Flughafen Colombo (CMB)", lat: 7.1808, lng: 79.8841, color: "#0284c7" },
-      { day: "Tag 3", date: "01.02. (Mo)", groupTag: "Ines alleine", region: "Westküste", regTag: "tag-sl-westkueste", title: "Negombo (Ines alleine)", details: "Zugfahrt Kandy ➔ Ella zwingend online buchen!", transport: "🛵 TukTuk", hotel: "🏨 noch offen", locName: "Flughafen Colombo (CMB)", lat: 7.1808, lng: 79.8841, color: "#0284c7" },
+      { day: "Tag 1", date: "30.01. (Sa)", groupTag: "Ines alleine", region: "Westküste", regTag: "tag-sl-westkueste", title: "Negombo (Ines alleine)", details: "Akklimatisieren in Negombo, mögliche Aktivitäten auschecken, Strand.", transport: "🛵 TukTuk / Zu Fuß", hotel: "🏨 Ceylon Glory Hostel (gebucht)", locName: "Flughafen Colombo (CMB)", lat: 7.1808, lng: 79.8841, color: "#059669" },
+      { day: "Tag 2", date: "31.01. (So)", groupTag: "Ines alleine", region: "Westküste", regTag: "tag-sl-westkueste", title: "Negombo (Ines alleine)", details: "Aktivität & Entspannen am Strand.", transport: "🛵 TukTuk", hotel: "🏨 Ceylon Glory Hostel (gebucht)", locName: "Flughafen Colombo (CMB)", lat: 7.1808, lng: 79.8841, color: "#059669" },
+      { day: "Tag 3", date: "01.02. (Mo)", groupTag: "Ines alleine", region: "Westküste", regTag: "tag-sl-westkueste", title: "Negombo (Ines alleine)", details: "Zugfahrt Kandy ➔ Ella zwingend online buchen!", transport: "🛵 TukTuk", hotel: "🏨 noch offen", locName: "Flughafen Colombo (CMB)", lat: 7.1808, lng: 79.8841, color: "#059669" },
 
       // INES MIT ANNA
-      { day: "Tag 1", date: "02.02. (Di)", groupTag: "Ines & Anna", region: "Westküste", regTag: "tag-sl-westkueste", title: "Negombo / Colombo (Ankunft Anna)", details: "Ankunft Anna (05:00-06:00). Gemütlicher Tag, Kaffee trinken, Planung.", transport: "🚕 Taxi / TukTuk", hotel: "🏨 noch offen", locName: "Flughafen Colombo (CMB)", lat: 7.1808, lng: 79.8841, color: "#0284c7" },
+      { day: "Tag 1", date: "02.02. (Di)", groupTag: "Ines & Anna", region: "Westküste", regTag: "tag-sl-westkueste", title: "Negombo / Colombo (Ankunft Anna)", details: "Ankunft Anna (05:00-06:00). Gemütlicher Tag, Kaffee trinken, Planung.", transport: "🚕 Taxi / TukTuk", hotel: "🏨 noch offen", locName: "Flughafen Colombo (CMB)", lat: 7.1808, lng: 79.8841, color: "#059669" },
       { day: "Tag 2", date: "03.02. (Mi)", groupTag: "Ines & Anna", region: "Kulturdreieck", regTag: "tag-sl-kulturdreieck", title: "Negombo/Colombo ➔ Anuradhapura", details: "Einchecken, Akklimatisieren, TukTuk nach Mihintale organisieren.", transport: "🚆 Zug (Direkt) / Bus", hotel: "🏨 noch offen", locName: "Anuradhapura", lat: 8.3114, lng: 80.4037, color: "#b45309" },
       { day: "Tag 3", date: "04.02. (Do)", groupTag: "Ines & Anna", region: "Kulturdreieck", regTag: "tag-sl-kulturdreieck", title: "Anuradhapura", details: "Ancient Anuradhapura mit dem Fahrrad erkunden (UNESCO World Heritage).", transport: "🚲 Fahrrad", hotel: "🏨 noch offen", locName: "Anuradhapura", lat: 8.3114, lng: 80.4037, color: "#b45309" },
       { day: "Tag 4", date: "05.02. (Fr)", groupTag: "Ines & Anna", region: "Kulturdreieck", regTag: "tag-sl-kulturdreieck", title: "Anuradhapura", details: "Vormittag Mihintale, Weiterreise planen.", transport: "🛺 TukTuk", hotel: "🏨 noch offen", locName: "Anuradhapura", lat: 8.3114, lng: 80.4037, color: "#b45309" },
@@ -1077,9 +1093,9 @@
       { day: "Tag 17", date: "18.02. (Do)", groupTag: "Ines & Anna", region: "Südküste", regTag: "tag-sl-suedkueste", title: "Mirissa", details: "Whale Watching Ausflug, Coconut Tree Hill Fotospot.", transport: "🛺 TukTuk", hotel: "🏨 noch offen", locName: "Mirissa", lat: 5.9483, lng: 80.4716, color: "#0d9488" },
       { day: "Tag 18", date: "19.02. (Fr)", groupTag: "Ines & Anna", region: "Südküste", regTag: "tag-sl-suedkueste", title: "Mirissa ➔ Weligama", details: "Surfen für Anfängerinnen in Weligama Bay.", transport: "🛺 TukTuk (20 min)", hotel: "🏨 noch offen", locName: "Weligama", lat: 5.9722, lng: 80.4289, color: "#0d9488" },
       { day: "Tag 19", date: "20.02. (Sa)", groupTag: "Ines & Anna", region: "Südküste", regTag: "tag-sl-suedkueste", title: "Weligama", details: "Strand- & Surftage im Süden ausklingen lassen.", transport: "🛵 Scooter", hotel: "🏨 noch offen", locName: "Weligama", lat: 5.9722, lng: 80.4289, color: "#0d9488" },
-      { day: "Tag 20", date: "21.02. (So)", groupTag: "Ines & Anna", region: "Colombo", regTag: "tag-sl-colombo", title: "Weligama ➔ Colombo", details: "Vibe der Hauptstadt spüren, Rooftop Bars, Galle Face Promenade.", transport: "🚆 Zug (2.5h) / Bus", hotel: "🏨 Empfehlung: Bunkyard", locName: "Colombo", lat: 6.9271, lng: 79.8612, color: "#6b21a8" },
-      { day: "Tag 21", date: "22.02. (Mo)", groupTag: "Ines & Anna", region: "Colombo", regTag: "tag-sl-colombo", title: "Colombo", details: "Entspannter Tag in Colombo, Souvenirs & Café.", transport: "🛺 TukTuk", hotel: "🏨 Empfehlung: Bunkyard", locName: "Colombo", lat: 6.9271, lng: 79.8612, color: "#6b21a8" },
-      { day: "Tag 22", date: "23.02. (Di)", groupTag: "Ines & Anna", region: "Abreise", regTag: "tag-default", title: "Colombo ➔ Wien", details: "Abflug CMB 09:15 ➔ IST 15:45 ➔ Ankunft Wien 17:35 Uhr (TK1131 & TK1887).", transport: "✈️ Turkish Airlines", hotel: "✈️ Im Flugzeug", locName: "Flughafen Colombo (CMB)", lat: 7.1808, lng: 79.8841, color: "#0284c7" }
+      { day: "Tag 20", date: "21.02. (So)", groupTag: "Ines & Anna", region: "Colombo", regTag: "tag-sl-colombo", title: "Weligama ➔ Colombo Stadt", details: "Fahrt ins Zentrum: Vibe der Hauptstadt spüren, Rooftop Bars, Galle Face Promenade.", transport: "🚆 Zug (2.5h) / Bus", hotel: "🏨 Empfehlung: Bunkyard", locName: "Colombo Stadtzentrum", lat: 6.9344, lng: 79.8428, color: "#6b21a8" },
+      { day: "Tag 21", date: "22.02. (Mo)", groupTag: "Ines & Anna", region: "Colombo", regTag: "tag-sl-colombo", title: "Colombo Stadt", details: "Entspannter Tag in Colombo, Souvenirs & Café.", transport: "🛺 TukTuk", hotel: "🏨 Empfehlung: Bunkyard", locName: "Colombo Stadtzentrum", lat: 6.9344, lng: 79.8428, color: "#6b21a8" },
+      { day: "Tag 22", date: "23.02. (Di)", groupTag: "Ines & Anna", region: "Abreise", regTag: "tag-default", title: "Colombo ➔ Flughafen CMB ➔ Wien", details: "Fahrt zum Flughafen, Abflug CMB 09:15 ➔ IST 15:45 ➔ Ankunft Wien 17:35 Uhr (TK1131 & TK1887).", transport: "✈️ Turkish Airlines", hotel: "✈️ Im Flugzeug", locName: "Flughafen Colombo (CMB)", lat: 7.1808, lng: 79.8841, color: "#059669" }
     ];
 
     /* ==========================================================================
@@ -1198,13 +1214,13 @@
             <div>${cells[0].innerHTML}</div>
             <div>${cells[1].innerHTML}</div>
           </div>
-          <div style="font-size: 1rem; font-weight: 700; color: var(--text-main); margin-bottom: 6px;">
+          <div style="font-size: 0.95rem; font-weight: 700; color: var(--text-main); margin-bottom: 4px;">
             ${cells[2].innerText}
           </div>
-          <div style="font-size: 0.88rem; color: var(--text); margin-bottom: 10px;">
+          <div style="font-size: 0.84rem; color: var(--text); margin-bottom: 8px;">
             ${cells[3].innerHTML}
           </div>
-          <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+          <div style="display: flex; flex-wrap: wrap; gap: 4px;">
             ${cells[4].innerHTML}
             ${cells[5].innerHTML}
           </div>
@@ -1227,61 +1243,82 @@
         "⛰️ Topografisch (CyclOSM)": topoMap
       }, null, { collapsed: true, position: 'topright' }).addTo(map);
 
-      // WEG-, ZWISCHENSTOPP- & FLUGPUNKTE
+      // WEG-, ZWISCHENSTOPP- & FLUGPUNKTE (inkl. Datumsangaben)
       const points = {
-        wien: { name: "Flughafen Wien (VIE)", lat: 48.1103, lng: 16.5697, desc: "<b>Start & Endpunkt der Reise</b><br>✈️ 01.01.2027: Abflug nach BKK (15:30)<br>✈️ 23.02.2027: Ankunft aus CMB (17:35)", color: "#1e40af" },
-        muc: { name: "Flughafen München (MUC)", lat: 48.3537, lng: 11.7861, desc: "<b>Zielort Stefan</b><br>✈️ 29.01.2027: Ankunft TG926 Direktflug aus Bangkok (18:55 Uhr)", color: "#1e40af" },
-        ruh: { name: "Flughafen Riad (RUH)", lat: 24.9576, lng: 46.6988, desc: "<b>✈️ Zwischenstopp Hinflug (01.01.2027)</b><br>Saudia SV152 aus VIE ➔ Umstieg ➔ Saudia SV846 nach BKK", color: "#2563eb" },
-        ist: { name: "Flughafen Istanbul (IST)", lat: 41.2753, lng: 28.7519, desc: "<b>✈️ Zwischenstopp Rückflug (23.02.2027)</b><br>TK1131 aus CMB (Ankunft 15:45) ➔ Weiterflug TK1887 nach VIE (17:15)", color: "#2563eb" },
+        wien: { name: "Flughafen Wien (VIE)", date: "01.01. & 23.02.2027", lat: 48.1103, lng: 16.5697, desc: "<b>Start & Endpunkt der Reise</b><br>✈️ 01.01.2027: Abflug nach BKK (15:30)<br>✈️ 23.02.2027: Ankunft aus CMB (17:35)", color: "#15803d" },
+        muc: { name: "Flughafen München (MUC)", date: "29.01.2027", lat: 48.3537, lng: 11.7861, desc: "<b>Zielort Stefan</b><br>✈️ 29.01.2027: Ankunft TG926 Direktflug aus Bangkok (18:55 Uhr)", color: "#15803d" },
+        ruh: { name: "Flughafen Riad (RUH)", date: "01.01.2027", lat: 24.9576, lng: 46.6988, desc: "<b>✈️ Zwischenstopp Hinflug (01.01.2027)</b><br>Saudia SV152 aus VIE ➔ Umstieg ➔ Saudia SV846 nach BKK", color: "#059669" },
+        ist: { name: "Flughafen Istanbul (IST)", date: "23.02.2027", lat: 41.2753, lng: 28.7519, desc: "<b>✈️ Zwischenstopp Rückflug (23.02.2027)</b><br>TK1131 aus CMB (Ankunft 15:45) ➔ Weiterflug TK1887 nach VIE (17:15)", color: "#059669" },
         
-        // BANGKOK FLUGHAFEN
+        // BANGKOK FLUGHAFEN & STADT
         bkk: { 
           name: "Flughafen Bangkok (BKK)", 
+          date: "01.-02.01. | 12.01. | 27.-29.01.2027",
           lat: 13.6900, 
           lng: 100.7501, 
-          desc: `<b>🇹🇭 Drehkreuz Flughafen Suvarnabhumi (3 Stopps):</b>
+          desc: `<b>🇹🇭 Drehkreuz Flughafen Suvarnabhumi:</b>
             <ul class="bkk-popup-list">
-              <li><strong>1. Stopp (01.01. - 02.01.):</strong> Ankunft aus Wien (13:40) ➔ Weiterflug Udon Thani (18:20)</li>
-              <li><strong>2. Stopp (12.01. - 15.01.):</strong> Ankunft aus Chiang Rai ➔ Kultur, Tempel & Rooftop-Bars</li>
-              <li><strong>3. Stopp (27.01. - 29.01.):</strong> Rückkehr von Samui ➔ Souvenirs & Trennung (Stefan MUC / Ines CMB)</li>
+              <li><strong>1. Stopp (01.-02.01.):</strong> Ankunft VIE ➔ Weiterflug Udon Thani</li>
+              <li><strong>2. Stopp (12.01.):</strong> Ankunft CEI ➔ Transfer in die Stadt</li>
+              <li><strong>3. Stopp (29.01.):</strong> Heimflug Stefan (MUC) / Weiterflug Ines (CMB)</li>
             </ul>`, 
           color: "#6b21a8" 
         },
-
-        // COLOMBO FLUGHAFEN
-        cmb: {
-          name: "Flughafen Colombo (CMB)",
-          lat: 7.1808,
-          lng: 79.8841,
-          desc: "<b>🇱🇰 Bandaranaike International Airport</b><br>✈️ 29.01.2027: Ankunft Ines aus BKK (15:50 Uhr)<br>✈️ 02.02.2027: Ankunft Anna aus VIE (05:00-06:00 Uhr)<br>✈️ 23.02.2027: Rückflug Ines & Anna nach VIE (09:15 Uhr)",
-          color: "#0284c7"
+        bkk_city: {
+          name: "Bangkok Stadtzentrum",
+          date: "12.01. – 15.01. & 27.01. – 29.01.2027",
+          lat: 13.7563,
+          lng: 100.5018,
+          desc: "<b>🇹🇭 Aufenthalt & Kultur in der Metropole:</b><br>Grand Palace, Wat Pho, Chinatown, Sukhumvit & Rooftop Bars",
+          color: "#6b21a8"
         },
 
-        uth: { name: "Udon Thani", lat: 17.4138, lng: 102.7872, desc: "Isan & Red Lotus Lake", color: "#15803d" },
-        cnx: { name: "Chiang Mai", lat: 18.7883, lng: 98.9853, desc: "Norden, Doi Inthanon & Tempel", color: "#15803d" },
-        pai: { name: "Pai", lat: 19.3582, lng: 98.4402, desc: "Canyon, Hot Springs & Night Market", color: "#15803d" },
-        cei: { name: "Chiang Rai", lat: 19.9105, lng: 99.8406, desc: "Weißer Tempel & Kultur", color: "#15803d" },
-        phiphi: { name: "Ko Phi Phi", lat: 7.7407, lng: 98.7784, desc: "Maya Bay, Long Beach & Viewpoint", color: "#0284c7" },
-        krabi: { name: "Krabi / Railay", lat: 8.0863, lng: 98.9063, desc: "Railay Beach, Hong Island & Klettern", color: "#0284c7" },
-        tao: { name: "Koh Tao", lat: 10.1018, lng: 99.8383, desc: "Schnorcheln & Tanote Bay", color: "#0284c7" },
-        phangan: { name: "Ko Pha-ngan", lat: 9.7319, lng: 100.0136, desc: "Vollmond Party (22.01.)", color: "#0284c7" },
-        samui: { name: "Koh Samui", lat: 9.5120, lng: 99.9360, desc: "Ang Thong Marine Park & Fisherman's Village", color: "#0284c7" },
+        // COLOMBO FLUGHAFEN & STADT
+        cmb: {
+          name: "Flughafen Colombo (CMB)",
+          date: "29.01. | 02.02. | 23.02.2027",
+          lat: 7.1808,
+          lng: 79.8841,
+          desc: "<b>🇱🇰 Bandaranaike International Airport</b><br>✈️ 29.01.: Ankunft Ines aus BKK<br>✈️ 02.02.: Ankunft Anna aus VIE<br>✈️ 23.02.: Rückflug Ines & Anna nach VIE",
+          color: "#059669"
+        },
+        cmb_city: {
+          name: "Colombo Stadtzentrum",
+          date: "21.02. – 23.02.2027",
+          lat: 6.9344,
+          lng: 79.8428,
+          desc: "<b>🇱🇰 Sri Lankas Hauptstadt erkunden:</b><br>Vibe der Stadt, Pettah Market, Rooftop Bars & Galle Face Green Promenade",
+          color: "#6b21a8"
+        },
+
+        uth: { name: "Udon Thani", date: "02.01. – 05.01.2027", lat: 17.4138, lng: 102.7872, desc: "Isan & Red Lotus Lake", color: "#15803d" },
+        cnx: { name: "Chiang Mai", date: "05.01. – 08.01.2027", lat: 18.7883, lng: 98.9853, desc: "Norden, Doi Inthanon & Tempel", color: "#15803d" },
+        pai: { name: "Pai", date: "08.01. – 11.01.2027", lat: 19.3582, lng: 98.4402, desc: "Canyon, Hot Springs & Night Market", color: "#15803d" },
+        cei: { name: "Chiang Rai", date: "11.01. – 12.01.2027", lat: 19.9105, lng: 99.8406, desc: "Weißer Tempel & Kultur", color: "#15803d" },
+        phiphi: { name: "Ko Phi Phi", date: "15.01. – 18.01.2027", lat: 7.7407, lng: 98.7784, desc: "Maya Bay, Long Beach & Viewpoint", color: "#0d9488" },
+        krabi: { name: "Krabi / Railay", date: "18.01. – 21.01.2027", lat: 8.0863, lng: 98.9063, desc: "Railay Beach, Hong Island & Klettern", color: "#0d9488" },
+        tao: { name: "Koh Tao", date: "21.01. – 24.01.2027", lat: 10.1018, lng: 99.8383, desc: "Schnorcheln & Tanote Bay", color: "#0d9488" },
+        phangan: { name: "Ko Pha-ngan", date: "22.01.2027", lat: 9.7319, lng: 100.0136, desc: "Vollmond Party", color: "#0d9488" },
+        samui: { name: "Koh Samui", date: "24.01. – 27.01.2027", lat: 9.5120, lng: 99.9360, desc: "Ang Thong Marine Park & Fisherman's Village", color: "#0d9488" },
         
         // SRI LANKA ORTE
-        anuradhapura: { name: "Anuradhapura", lat: 8.3114, lng: 80.4037, desc: "Kulturdreieck & UNESCO Radtour", color: "#b45309" },
-        dambulla: { name: "Dambulla", lat: 7.8731, lng: 80.6517, desc: "Sigiriya Rock, Pidurangala & Elefantensafari", color: "#b45309" },
-        kandy: { name: "Kandy", lat: 7.2906, lng: 80.6337, desc: "Zahntempel & Start berühmte Zugfahrt", color: "#15803d" },
-        ella: { name: "Ella", lat: 6.8667, lng: 81.0466, desc: "Nine Arch Bridge, Little Adam's Peak & Wasserfälle", color: "#15803d" },
-        tangalle: { name: "Tangalle", lat: 6.0243, lng: 80.7941, desc: "Traumstrände an der Südküste", color: "#0d9488" },
-        mirissa: { name: "Mirissa", lat: 5.9483, lng: 80.4716, desc: "Whale Watching & Coconut Tree Hill", color: "#0d9488" },
-        weligama: { name: "Weligama", lat: 5.9722, lng: 80.4289, desc: "Surfen & Beach Vibes", color: "#0d9488" },
-        colombo: { name: "Colombo", lat: 6.9271, lng: 79.8612, desc: "Hauptstadt, Rooftop Bars & Galle Face", color: "#6b21a8" }
+        anuradhapura: { name: "Anuradhapura", date: "03.02. – 06.02.2027", lat: 8.3114, lng: 80.4037, desc: "Kulturdreieck & UNESCO Radtour", color: "#b45309" },
+        dambulla: { name: "Dambulla", date: "06.02. – 09.02.2027", lat: 7.8731, lng: 80.6517, desc: "Sigiriya Rock, Pidurangala & Elefantensafari", color: "#b45309" },
+        kandy: { name: "Kandy", date: "09.02. – 11.02.2027", lat: 7.2906, lng: 80.6337, desc: "Zahntempel & Start berühmte Zugfahrt", color: "#15803d" },
+        ella: { name: "Ella", date: "11.02. – 15.02.2027", lat: 6.8667, lng: 81.0466, desc: "Nine Arch Bridge, Little Adam's Peak & Wasserfälle", color: "#15803d" },
+        tangalle: { name: "Tangalle", date: "15.02. – 17.02.2027", lat: 6.0243, lng: 80.7941, desc: "Traumstrände an der Südküste", color: "#0d9488" },
+        mirissa: { name: "Mirissa", date: "17.02. – 19.02.2027", lat: 5.9483, lng: 80.4716, desc: "Whale Watching & Coconut Tree Hill", color: "#0d9488" },
+        weligama: { name: "Weligama", date: "19.02. – 21.02.2027", lat: 5.9722, lng: 80.4289, desc: "Surfen & Beach Vibes", color: "#0d9488" }
       };
 
-      const allBounds = [];
+      // REGIONALE BOUNDS FÜR STARTZOOM (THAILAND & SRI LANKA)
+      const targetFocusBounds = [
+        [5.0, 97.0],  // Südwestlicher Punkt (Süden Sri Lankas/Thailand)
+        [20.5, 105.0] // Nordöstlicher Punkt (Nordthailand)
+      ];
 
       /* 1. EINHEITLICHE ROUTEN-LINIEN & STYLES */
-      const flightStyle = { color: '#2563eb', weight: 2, opacity: 0.85, dashArray: '5, 5' };
+      const flightStyle = { color: '#059669', weight: 2, opacity: 0.85, dashArray: '5, 5' };
       const thOverlandStyle = { color: '#0d9488', weight: 3, opacity: 0.9 };
       const slOverlandStyle = { color: '#b45309', weight: 3, opacity: 0.9 };
       const trainStyle = { color: '#dc2626', weight: 4, opacity: 1, dashArray: '3, 4' };
@@ -1295,7 +1332,7 @@
       L.polyline([[points.samui.lat, points.samui.lng], [points.bkk.lat, points.bkk.lng]], flightStyle).addTo(map);
       
       // FLUG BKK ➔ MUC (Stefan)
-      L.polyline([[points.bkk.lat, points.bkk.lng], [points.muc.lat, points.muc.lng]], { color: '#1d4ed8', weight: 2.5, opacity: 0.9, dashArray: '6, 6' }).addTo(map);
+      L.polyline([[points.bkk.lat, points.bkk.lng], [points.muc.lat, points.muc.lng]], { color: '#166534', weight: 2.5, opacity: 0.9, dashArray: '6, 6' }).addTo(map);
 
       // FLUG BKK ➔ CMB (Ines)
       L.polyline([[points.bkk.lat, points.bkk.lng], [points.cmb.lat, points.cmb.lng]], flightStyle).addTo(map);
@@ -1303,13 +1340,17 @@
       // FLUG CMB ➔ IST ➔ VIE (Ines & Anna)
       L.polyline([[points.cmb.lat, points.cmb.lng], [points.ist.lat, points.ist.lng], [points.wien.lat, points.wien.lng]], flightStyle).addTo(map);
 
+      // TRANSFERS FLUGHAFEN ➔ STADT
+      L.polyline([[points.bkk.lat, points.bkk.lng], [points.bkk_city.lat, points.bkk_city.lng]], { color: '#6b21a8', weight: 2.5, opacity: 0.9, dashArray: '3, 3' }).addTo(map);
+      L.polyline([[points.cmb.lat, points.cmb.lng], [points.cmb_city.lat, points.cmb_city.lng]], { color: '#6b21a8', weight: 2.5, opacity: 0.9, dashArray: '3, 3' }).addTo(map);
+
       // OVERLAND THAILAND
       L.polyline([[points.cnx.lat, points.cnx.lng], [points.pai.lat, points.pai.lng], [points.cei.lat, points.cei.lng]], thOverlandStyle).addTo(map);
       L.polyline([[points.phiphi.lat, points.phiphi.lng], [points.krabi.lat, points.krabi.lng], [points.tao.lat, points.tao.lng], [points.phangan.lat, points.phangan.lng], [points.samui.lat, points.samui.lng]], thOverlandStyle).addTo(map);
 
       // OVERLAND SRI LANKA
       L.polyline([[points.cmb.lat, points.cmb.lng], [points.anuradhapura.lat, points.anuradhapura.lng], [points.dambulla.lat, points.dambulla.lng], [points.kandy.lat, points.kandy.lng]], slOverlandStyle).addTo(map);
-      L.polyline([[points.ella.lat, points.ella.lng], [points.tangalle.lat, points.tangalle.lng], [points.mirissa.lat, points.mirissa.lng], [points.weligama.lat, points.weligama.lng], [points.colombo.lat, points.colombo.lng], [points.cmb.lat, points.cmb.lng]], slOverlandStyle).addTo(map);
+      L.polyline([[points.ella.lat, points.ella.lng], [points.tangalle.lat, points.tangalle.lng], [points.mirissa.lat, points.mirissa.lng], [points.weligama.lat, points.weligama.lng], [points.cmb_city.lat, points.cmb_city.lng], [points.cmb.lat, points.cmb.lng]], slOverlandStyle).addTo(map);
 
       // ZUGFAHRT KANDY ➔ ELLA
       L.polyline([[points.kandy.lat, points.kandy.lng], [points.ella.lat, points.ella.lng]], trainStyle).addTo(map);
@@ -1320,15 +1361,16 @@
       Object.keys(points).forEach(key => {
         const p = points[key];
         const pt = [p.lat, p.lng];
-        allBounds.push(pt);
 
-        const isHub = ['wien', 'muc', 'bkk', 'cmb', 'colombo'].includes(key);
+        const isHub = ['wien', 'muc', 'bkk', 'cmb'].includes(key);
+        const isCity = ['bkk_city', 'cmb_city'].includes(key);
         const isStopover = ['ruh', 'ist'].includes(key);
 
         const popupContent = `
           <div style="color: #0f172a; font-family: 'Plus Jakarta Sans', sans-serif; min-width: 200px;">
-            <h3 style="margin: 0 0 6px 0; font-size: 1.05rem; color: ${p.color}; border-bottom: 1px solid #cbd5e1; padding-bottom: 4px;">📍 ${p.name}</h3>
-            <div style="font-size: 0.85rem; color: #334155;">${p.desc}</div>
+            <h3 style="margin: 0 0 4px 0; font-size: 1.05rem; color: ${p.color}; border-bottom: 1px solid #cbd5e1; padding-bottom: 4px;">📍 ${p.name}</h3>
+            <span class="popup-date-badge">📅 ${p.date}</span>
+            <div style="font-size: 0.85rem; color: #334155; margin-top: 4px;">${p.desc}</div>
           </div>
         `;
 
@@ -1336,7 +1378,7 @@
           color: p.color,
           fillColor: p.color,
           fillOpacity: 0.9,
-          radius: isHub ? 8 : (isStopover ? 6 : 6),
+          radius: isHub ? 8 : (isCity ? 7 : (isStopover ? 6 : 6)),
           weight: isHub ? 3 : 2
         }).bindPopup(popupContent);
 
@@ -1359,11 +1401,11 @@
           </div>
           <div class="legend-body" id="legendBody">
             <div class="legend-item"><span class="legend-color" style="background:#15803d;"></span> Nord-Thailand (Chiang Mai/Pai)</div>
-            <div class="legend-item"><span class="legend-color" style="background:#6b21a8;"></span> Bangkok & Kultur</div>
-            <div class="legend-item"><span class="legend-color" style="background:#0284c7;"></span> Thailand Inseln</div>
+            <div class="legend-item"><span class="legend-color" style="background:#6b21a8;"></span> Bangkok & Colombo Zentrum</div>
+            <div class="legend-item"><span class="legend-color" style="background:#0d9488;"></span> Thailand Inseln</div>
             <div class="legend-item"><span class="legend-color" style="background:#b45309;"></span> Sri Lanka Route</div>
             <div class="legend-item"><span class="legend-line" style="border-top: 3px dashed #dc2626;"></span> Zug Kandy ➔ Ella</div>
-            <div class="legend-item"><span class="legend-line" style="border-top: 2px dashed #2563eb;"></span> Flüge & Zwischenstopps</div>
+            <div class="legend-item"><span class="legend-line" style="border-top: 2px dashed #059669;"></span> Flüge & Zwischenstopps</div>
           </div>
         `;
         L.DomEvent.disableClickPropagation(div);
@@ -1371,7 +1413,8 @@
       };
       legend.addTo(map);
 
-      map.fitBounds(allBounds, { padding: [30, 30] });
+      // STARTANSICHT AUF THAILAND & SRI LANKA FOKUSSIEREN
+      map.fitBounds(targetFocusBounds, { padding: [20, 20] });
     }
 
     function toggleLegendBody() {
@@ -1390,7 +1433,9 @@
     function focusMap(locationName) {
       let targetMarker = null;
 
-      if (locationName.includes("Bangkok")) targetMarker = markers["Flughafen Bangkok (BKK)"];
+      if (locationName === "Bangkok Stadtzentrum") targetMarker = markers["bkk_city"];
+      else if (locationName.includes("Bangkok")) targetMarker = markers["Flughafen Bangkok (BKK)"];
+      else if (locationName === "Colombo Stadtzentrum") targetMarker = markers["cmb_city"];
       else if (locationName.includes("Colombo") && locationName.includes("Flughafen")) targetMarker = markers["Flughafen Colombo (CMB)"];
       else if (locationName.includes("Wien")) targetMarker = markers["Flughafen Wien (VIE)"];
       else if (locationName.includes("Krabi")) targetMarker = markers["Krabi / Railay"];
@@ -1460,7 +1505,7 @@
     let packlist = [];
 
     function loadPacklist() {
-      const saved = localStorage.getItem('thailand_packlist_2027_v8');
+      const saved = localStorage.getItem('thailand_packlist_2027_v10');
       if (saved) {
         try { packlist = JSON.parse(saved); } catch (e) { packlist = JSON.parse(JSON.stringify(defaultPacklist)); }
       } else {
@@ -1470,7 +1515,7 @@
     }
 
     function savePacklist() {
-      localStorage.setItem('thailand_packlist_2027_v8', JSON.stringify(packlist));
+      localStorage.setItem('thailand_packlist_2027_v10', JSON.stringify(packlist));
       renderPacklist();
     }
 
@@ -1542,10 +1587,10 @@
 
           tr.innerHTML = `
             <td style="text-align:center;">
-              <input type="checkbox" ${item.packed ? 'checked' : ''} onchange="togglePacked(${idx})" style="accent-color: var(--primary); width:15px; height:15px; cursor:pointer;">
+              <input type="checkbox" ${item.packed ? 'checked' : ''} onchange="togglePacked(${idx})" style="accent-color: var(--primary); width:14px; height:14px; cursor:pointer;">
             </td>
             <td><strong style="color: ${item.packed ? 'var(--text-main)' : 'var(--text-muted)'}; ${!item.packed ? 'text-decoration: line-through;' : ''}">${item.name}</strong></td>
-            <td style="font-size:0.8rem; color:var(--text-muted);">${cat}</td>
+            <td style="font-size:0.78rem; color:var(--text-muted);">${cat}</td>
             <td style="text-align:center;">
               <label class="worn-label">
                 <input type="checkbox" ${item.worn ? 'checked' : ''} onchange="toggleWorn(${idx})">
