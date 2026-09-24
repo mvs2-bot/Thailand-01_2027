@@ -889,11 +889,18 @@
       <div class="mobile-cards" id="mobileCards"></div>
     </div>
 
-    <!-- TAB 2: PACKLISTE -->
+    <!-- TAB 2: PACKLISTE MIT UNTERBEREICHEN -->
     <div id="packTab" class="tab-content">
+      
+      <!-- Unterbereich-Navigation -->
+      <div style="display: flex; gap: 8px; margin-bottom: 14px;">
+        <button id="btnPackStefan" class="tab-btn active" onclick="switchPerson('stefan')">🎒 Packliste Stefan</button>
+        <button id="btnPackInes" class="tab-btn" onclick="switchPerson('ines')">🎒 Packliste Ines</button>
+      </div>
+
       <div class="info-card">
         <div class="info-card-header">
-          <h3>🎒 Interaktive Packliste & Kilo-Rechner</h3>
+          <h3 id="packlistTitle">🎒 Interaktive Packliste & Kilo-Rechner (Stefan)</h3>
           <div class="btn-tools">
             <button class="btn-action" onclick="exportPacklistCSV()">📊 Export (CSV)</button>
             <button class="btn-action" style="color:var(--danger);" onclick="resetPacklist()">🔄 Reset</button>
@@ -930,6 +937,7 @@
             <option value="Hygiene & Pflege">Hygiene & Pflege</option>
             <option value="Gesundheit & Apotheke">Gesundheit & Apotheke</option>
             <option value="Komfort & Schlafzubehör">Komfort & Schlafzubehör</option>
+            <option value="Accessoires & Alltagshelfer">Accessoires & Alltagshelfer</option>
             <option value="Organisation & Utensilien">Organisation & Utensilien</option>
           </select>
           <input type="number" id="newItemWeight" placeholder="Gramm" min="1">
@@ -1246,83 +1254,44 @@
       });
     }
 
+    /* ==========================================================================
+       MAP INITIALISATION
+       ========================================================================== */
+    function initMap() {
+      const osmDe = L.tileLayer('https://tile.openstreetmap.de/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> (Deutscher Stil)'
+      });
+      
+      const osmMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { 
+        maxZoom: 19, 
+        attribution: '&copy; OpenStreetMap' 
+      });
 
+      const esriStreet = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+        maxZoom: 19,
+        attribution: 'Tiles &copy; Esri'
+      });
 
+      const topoMap = L.tileLayer('https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png', { 
+        maxZoom: 18, 
+        attribution: '&copy; OpenStreetMap / CyclOSM' 
+      });
 
+      const openTopo = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+        maxZoom: 17,
+        attribution: '&copy; OpenTopoMap'
+      });
 
+      map = L.map('map', { layers: [osmDe] });
 
-
-
-
-
-
-    
-    
-
-
-function initMap() {
-  // 1. Die verschiedenen Kartendienste definieren:
-  
-   // OSM Deutschland (Deutsch / Englische Transkription)
-  const osmDe = L.tileLayer('https://tile.openstreetmap.de/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> (Deutscher Stil)'
-  });
-  
-  // Bisheriges Standard OSM (Landessprache)
-  const osmMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { 
-    maxZoom: 19, 
-    attribution: '&copy; OpenStreetMap' 
-  });
-
-  // Esri World Street Map (Englisch)
-  const esriStreet = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
-    maxZoom: 19,
-    attribution: 'Tiles &copy; Esri'
-  });
-
-  // Topografische Karte
-  const topoMap = L.tileLayer('https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png', { 
-    maxZoom: 18, 
-    attribution: '&copy; OpenStreetMap / CyclOSM' 
-  });
-  
-    // OpenTopoMap (Topografische Wanderkarte mit Höhenlinien)
-  const openTopo = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-    maxZoom: 17,
-    attribution: '&copy; OpenTopoMap'
-  });
-
-
-  
-  // 2. Karte mit dem neuen Standard "OSM Deutschland" initialisieren:
-  map = L.map('map', { layers: [osmDe] });
-
-  // 3. Layer-Auswahl-Menü oben rechts erweitern:
-  L.control.layers({
-   "🇩🇪 OSM Deutsch (Deutsch / Landessprache)": osmDe,
-    "🌏 OSM Standard (NUR Landessprache)": osmMap,
-    "🗺️ Esri Street (Englisch)": esriStreet,
-    "⛰️ Topografisch (CyclOSM)": topoMap,
-    "⛰️ OpenTopoMap (Gelände)": openTopo
-  }, null, { collapsed: true, position: 'topright' }).addTo(map);
-
-  // ... (Hier folgt der restliche Marker- & Routen-Code deiner initMap)
-
-
-
-
-
-
-  
-
-
-
-  
-  
-
-  
-
+      L.control.layers({
+        "🇩🇪 OSM Deutsch (Deutsch / Landessprache)": osmDe,
+        "🌏 OSM Standard (NUR Landessprache)": osmMap,
+        "🗺️ Esri Street (Englisch)": esriStreet,
+        "⛰️ Topografisch (CyclOSM)": topoMap,
+        "⛰️ OpenTopoMap (Gelände)": openTopo
+      }, null, { collapsed: true, position: 'topright' }).addTo(map);
 
       // WEG-, ZWISCHENSTOPP- & FLUGPUNKTE
       const points = {
@@ -1331,7 +1300,6 @@ function initMap() {
         ruh: { name: "Flughafen Riad (RUH)", date: "01.01.2027", lat: 24.9576, lng: 46.6988, desc: "<b>✈️ Zwischenstopp Hinflug (01.01.2027)</b><br>Saudia SV152 aus VIE ➔ Umstieg ➔ Saudia SV846 nach BKK", color: "#059669" },
         ist: { name: "Flughafen Istanbul (IST)", date: "23.02.2027", lat: 41.2753, lng: 28.7519, desc: "<b>✈️ Zwischenstopp Rückflug (23.02.2027)</b><br>TK1131 aus CMB (Ankunft 15:45) ➔ Weiterflug TK1887 nach VIE (17:15)", color: "#059669" },
         
-        // BANGKOK FLUGHAFEN & STADT
         bkk: { 
           name: "Flughafen Bangkok (BKK)", 
           date: "01.-02.01. | 12.01. | 27.-29.01.2027",
@@ -1354,7 +1322,6 @@ function initMap() {
           color: "#6b21a8"
         },
 
-        // COLOMBO FLUGHAFEN & STADT
         cmb: {
           name: "Flughafen Colombo (CMB)",
           date: "29.01. | 02.02. | 23.02.2027",
@@ -1382,7 +1349,6 @@ function initMap() {
         phangan: { name: "Ko Pha-ngan", date: "22.01.2027", lat: 9.7319, lng: 100.0136, desc: "Vollmond Party", color: "#0d9488" },
         samui: { name: "Koh Samui", date: "24.01. – 27.01.2027", lat: 9.5120, lng: 99.9360, desc: "Ang Thong Marine Park & Fisherman's Village", color: "#0d9488" },
         
-        // SRI LANKA ORTE
         anuradhapura: { name: "Anuradhapura", date: "03.02. – 06.02.2027", lat: 8.3114, lng: 80.4037, desc: "Kulturdreieck & UNESCO Radtour", color: "#b45309" },
         dambulla: { name: "Dambulla", date: "06.02. – 09.02.2027", lat: 7.8731, lng: 80.6517, desc: "Sigiriya Rock, Pidurangala & Elefantensafari", color: "#b45309" },
         kandy: { name: "Kandy", date: "09.02. – 11.02.2027", lat: 7.2906, lng: 80.6337, desc: "Zahntempel & Start berühmte Zugfahrt", color: "#15803d" },
@@ -1392,19 +1358,17 @@ function initMap() {
         weligama: { name: "Weligama", date: "19.02. – 21.02.2027", lat: 5.9722, lng: 80.4289, desc: "Surfen & Beach Vibes", color: "#0d9488" }
       };
 
-      // REGIONALE BOUNDS FÜR STARTZOOM (THAILAND & SRI LANKA)
       const targetFocusBounds = [
         [5.0, 97.0], 
         [20.5, 105.0]
       ];
 
-      /* 1. ROUTEN-STYLES */
       const flightStyle = { color: '#059669', weight: 2, opacity: 0.85, dashArray: '5, 5' };
       const thOverlandStyle = { color: '#0d9488', weight: 3, opacity: 0.9 };
       const slOverlandStyle = { color: '#b45309', weight: 3, opacity: 0.9 };
       const trainStyle = { color: '#dc2626', weight: 3.5, opacity: 1, dashArray: '4, 4' };
 
-      // FLÜGE (Luftlinie)
+      // FLÜGE
       L.polyline([[points.wien.lat, points.wien.lng], [points.ruh.lat, points.ruh.lng], [points.bkk.lat, points.bkk.lng]], flightStyle).addTo(map);
       L.polyline([[points.bkk.lat, points.bkk.lng], [points.uth.lat, points.uth.lng]], flightStyle).addTo(map);
       L.polyline([[points.uth.lat, points.uth.lng], [points.cnx.lat, points.cnx.lng]], flightStyle).addTo(map);
@@ -1415,110 +1379,67 @@ function initMap() {
       L.polyline([[points.bkk.lat, points.bkk.lng], [points.cmb.lat, points.cmb.lng]], flightStyle).addTo(map);
       L.polyline([[points.cmb.lat, points.cmb.lng], [points.ist.lat, points.ist.lng], [points.wien.lat, points.wien.lng]], flightStyle).addTo(map);
 
-      // TRANSFERS FLUGHAFEN ➔ STADT (Expressway Route)
+      // TRANSFERS
       L.polyline([[points.bkk.lat, points.bkk.lng], [13.725, 100.650], [points.bkk_city.lat, points.bkk_city.lng]], { color: '#6b21a8', weight: 2.5, opacity: 0.9, dashArray: '3, 3' }).addTo(map);
       L.polyline([[points.cmb.lat, points.cmb.lng], [7.080, 79.890], [points.cmb_city.lat, points.cmb_city.lng]], { color: '#6b21a8', weight: 2.5, opacity: 0.9, dashArray: '3, 3' }).addTo(map);
 
-      /* 2. ECHTE LANDWEGE (GEBIRGSPÄSSE, HIGHWAYS & REALE BAHNSTRECKEN) */
-
-      // MINIVAN THAILAND: Chiang Mai ➔ Pai ➔ Chiang Rai (Route 1095 & Route 118 über Gebirgspass)
+      // LANDWEGE THAILAND
       const cnx_pai_cei_road = [
         [points.cnx.lat, points.cnx.lng],
-        [18.9150, 98.9450], // Mae Rim
-        [19.0850, 98.8970], // Mae Malai Abzweigung
-        [19.1450, 98.6920], // Pa Pae Gebirgspass
-        [19.3020, 98.4900], // Pai Canyon Pass
-        [points.pai.lat, points.pai.lng], // Pai
-        [19.3020, 98.4900],
-        [19.1450, 98.6920],
-        [19.0850, 98.8970], // Zurück zur Hauptstraße
-        [19.0500, 99.2000], // Doi Saket Pass
-        [19.3510, 99.5020], // Wiang Pa Pao
-        [19.6480, 99.5510], // Mae Suai
-        [points.cei.lat, points.cei.lng] // Chiang Rai
+        [18.9150, 98.9450], [19.0850, 98.8970], [19.1450, 98.6920], [19.3020, 98.4900],
+        [points.pai.lat, points.pai.lng],
+        [19.3020, 98.4900], [19.1450, 98.6920], [19.0850, 98.8970], [19.0500, 99.2000], [19.3510, 99.5020], [19.6480, 99.5510],
+        [points.cei.lat, points.cei.lng]
       ];
       L.polyline(cnx_pai_cei_road, thOverlandStyle).addTo(map);
 
-      // OVERLAND THAILAND INSELN: Krabi ➔ Surat Thani / Donsak ➔ Koh Tao (Ferry + Bus + Ferry)
       const krabi_tao_route = [
         [points.krabi.lat, points.krabi.lng],
-        [8.5300, 99.2300],  // Highway 44 Querung
-        [9.1400, 99.3300],  // Surat Thani
-        [9.3180, 99.6920],  // Donsak Pier
-        [9.7319, 100.0136], // Koh Phangan
-        [points.tao.lat, points.tao.lng] // Koh Tao
+        [8.5300, 99.2300], [9.1400, 99.3300], [9.3180, 99.6920], [9.7319, 100.0136],
+        [points.tao.lat, points.tao.lng]
       ];
       L.polyline(krabi_tao_route, thOverlandStyle).addTo(map);
 
-      // INSELÜBERFAHRTEN (Fähre)
       L.polyline([[points.phiphi.lat, points.phiphi.lng], [points.krabi.lat, points.krabi.lng]], thOverlandStyle).addTo(map);
       L.polyline([[points.tao.lat, points.tao.lng], [points.phangan.lat, points.phangan.lng], [points.samui.lat, points.samui.lng]], thOverlandStyle).addTo(map);
 
-      // BUS/ZUG SRI LANKA: Colombo/Negombo ➔ Kurunegala ➔ Anuradhapura (Northern Line / A9 Highway)
+      // LANDWEGE SRI LANKA
       const cmb_anura_road = [
         [points.cmb.lat, points.cmb.lng],
-        [7.2900, 79.8600], // Negombo Stadt
-        [7.3600, 79.9800], // Giriulla
-        [7.4860, 80.3650], // Kurunegala
-        [7.8120, 80.3010], // Maho Junction
-        [8.0300, 80.3200], // Galgamuwa
+        [7.2900, 79.8600], [7.3600, 79.9800], [7.4860, 80.3650], [7.8120, 80.3010], [8.0300, 80.3200],
         [points.anuradhapura.lat, points.anuradhapura.lng]
       ];
       L.polyline(cmb_anura_road, slOverlandStyle).addTo(map);
 
-      // BUS SRI LANKA: Anuradhapura ➔ Dambulla ➔ Kandy (A9 Highway)
       const anura_dambulla_kandy_road = [
         [points.anuradhapura.lat, points.anuradhapura.lng],
-        [8.0410, 80.5870], // Kekirawa
-        [points.dambulla.lat, points.dambulla.lng],
-        [7.4670, 80.6230], // Matale Pass
+        [8.0410, 80.5870], [points.dambulla.lat, points.dambulla.lng], [7.4670, 80.6230],
         [points.kandy.lat, points.kandy.lng]
       ];
       L.polyline(anura_dambulla_kandy_road, slOverlandStyle).addTo(map);
 
-      // 🚆 BERÜHMTE ZUGFAHRT: Kandy ➔ Ella (Main Line Railway durch die Teeplantagen)
       const kandy_ella_railway = [
         [points.kandy.lat, points.kandy.lng],
-        [7.2600, 80.5950], // Peradeniya Junction
-        [7.1500, 80.5600], // Gampola
-        [7.0500, 80.5350], // Nawalapitiya
-        [6.8920, 80.5980], // Hatton (Adam's Peak Zugang)
-        [6.8700, 80.6800], // Talawakele Tee-Täler
-        [6.9270, 80.7410], // Nanu Oya (Nuwara Eliya)
-        [6.8770, 80.8120], // Ambewela High Plains
-        [6.8120, 80.8800], // Pattipola Höchster Punkt
-        [6.7680, 80.9570], // Haputale Aussichtspunkt
-        [6.8330, 80.9980], // Bandarawela
-        [points.ella.lat, points.ella.lng] // Ella
+        [7.2600, 80.5950], [7.1500, 80.5600], [7.0500, 80.5350], [6.8920, 80.5980], [6.8700, 80.6800], [6.9270, 80.7410], [6.8770, 80.8120], [6.8120, 80.8800], [6.7680, 80.9570], [6.8330, 80.9980],
+        [points.ella.lat, points.ella.lng]
       ];
       L.polyline(kandy_ella_railway, trainStyle).addTo(map);
 
-      // BUS SRI LANKA: Ella ➔ Tangalle (Wellawaya / A23 Highway)
       const ella_tangalle_road = [
         [points.ella.lat, points.ella.lng],
-        [6.7370, 81.1030], // Wellawaya
-        [6.4380, 81.1340], // Thanamalwila
-        [6.1230, 81.0240], // Ambalantota
+        [6.7370, 81.1030], [6.4380, 81.1340], [6.1230, 81.0240],
         [points.tangalle.lat, points.tangalle.lng]
       ];
       L.polyline(ella_tangalle_road, slOverlandStyle).addTo(map);
 
-      // BUS / ZUG KÜSTENSTRASSE: Tangalle ➔ Mirissa ➔ Weligama ➔ Galle ➔ Colombo (A2 Southern Coastal Road)
       const south_coast_road = [
         [points.tangalle.lat, points.tangalle.lng],
-        [5.9480, 80.5350], // Matara
-        [points.mirissa.lat, points.mirissa.lng],
-        [points.weligama.lat, points.weligama.lng],
-        [6.0320, 80.2170], // Galle Fort
-        [6.1390, 80.1030], // Hikkaduwa
-        [6.4230, 79.9980], // Bentota
-        [6.5850, 79.9600], // Kalutara
-        [points.cmb_city.lat, points.cmb_city.lng],
-        [points.cmb.lat, points.cmb.lng]
+        [5.9480, 80.5350], [points.mirissa.lat, points.mirissa.lng], [points.weligama.lat, points.weligama.lng], [6.0320, 80.2170], [6.1390, 80.1030], [6.4230, 79.9980], [6.5850, 79.9600],
+        [points.cmb_city.lat, points.cmb_city.lng], [points.cmb.lat, points.cmb.lng]
       ];
       L.polyline(south_coast_road, slOverlandStyle).addTo(map);
 
-      /* 3. MARKER ERSTELLEN */
+      // MARKER
       const markerGroup = L.featureGroup();
 
       Object.keys(points).forEach(key => {
@@ -1553,7 +1474,7 @@ function initMap() {
 
       markerGroup.addTo(map);
 
-      /* 4. EINKLAPPBARE LEGENDE UNTEN RECHTS (STANDARDMÄSSIG EINGEKLAPPT) */
+      // LEGENDE
       const legend = L.control({ position: 'bottomright' });
       legend.onAdd = function() {
         const div = L.DomUtil.create('div', 'custom-legend');
@@ -1576,7 +1497,6 @@ function initMap() {
       };
       legend.addTo(map);
 
-      // STARTANSICHT AUF THAILAND & SRI LANKA FOKUSSIEREN
       map.fitBounds(targetFocusBounds, { padding: [20, 20] });
     }
 
@@ -1637,57 +1557,226 @@ function initMap() {
     }
 
     /* ==========================================================================
-       PACKLISTEN CODE
+       PACKLISTEN CODE (STEFAN & INES NEUES UPDATE)
        ========================================================================== */
-    const rawItemsData = [
+    let currentPerson = 'stefan';
+
+    // Aktualisierte Packliste Stefan (aus image_761881.jpg)
+    const rawItemsStefan = [
       ["Dokumente & Wertsachen", "Reisepass", 41, 1, true, false],
       ["Dokumente & Wertsachen", "Kopien Reisepass & Impfpass", 33, 1, true, false],
       ["Dokumente & Wertsachen", "Kopien gebuchte Flüge", 30, 1, true, false],
-      ["Dokumente & Wertsachen", "Internationaler Führerschein", 37, 1, true, false],
-      ["Dokumente & Wertsachen", "Geldbörse mit Karten & Cash", 111, 1, true, true],
-      ["Rucksäcke & Gepäck", "Trekkingrucksack Jack Wolfskin 55L", 2100, 1, true, false],
-      ["Rucksäcke & Gepäck", "Tagesrucksack Deuter Speed Lite 20L", 870, 1, true, false],
-      ["Elektronik & Ladekabel", "Smartphone & Hülle", 233, 1, true, true],
-      ["Elektronik & Ladekabel", "Kindle E-Reader", 165, 1, true, false],
-      ["Elektronik & Ladekabel", "Kopfhörer Jabra", 45, 1, true, true],
-      ["Elektronik & Ladekabel", "Powerbank 10.000 mAh", 230, 1, true, false],
-      ["Kleidung", "T-Shirts Merino (2x)", 120, 2, true, false],
-      ["Kleidung", "Wanderhose lang", 320, 1, true, true],
-      ["Kleidung", "Wanderhose kurz", 270, 1, true, false],
-      ["Kleidung", "Regenjacke leicht", 195, 1, true, false],
-      ["Schuhe", "Wanderschuhe / Altra", 434, 1, true, true],
-      ["Schuhe", "Sandalen Teva Hurricane", 374, 1, true, false],
-      ["Hygiene & Pflege", "Kulturbeutel", 183, 1, true, false],
-      ["Hygiene & Pflege", "Sonnencreme LSF 50", 234, 1, true, false],
-      ["Hygiene & Pflege", "Insektenschutz Nobite", 125, 1, true, false],
-      ["Gesundheit & Apotheke", "Erste-Hilfe-Kit & Medikamente", 162, 1, true, false]
+      ["Dokumente & Wertsachen", "Internationaler Führerschein", 37, 1, true, true],
+      ["Dokumente & Wertsachen", "Geldbörse & Kreditkarten", 95, 1, true, true],
+      ["Dokumente & Wertsachen", "Damenbörse oft", 98, 1, true, false],
+      ["Rucksäcke & Gepäck", "Rucksack - Forclaz Travel 500 (50 Liter)", 2300, 1, true, false],
+      ["Rucksäcke & Gepäck", "Kleiner Rucksack - Forclaz Travel (25 Liter)", 300, 1, true, false],
+      ["Rucksäcke & Gepäck", "Tagesrucksack aus Nylon", 99, 1, true, false],
+      ["Rucksäcke & Gepäck", "Umhängetasche Cordura", 200, 1, true, true],
+      ["Rucksäcke & Gepäck", "Reisehülle Rucksack Aufgabegepäck (Ikea Tasche)", 300, 1, true, false],
+      ["Elektronik & Ladekabel", "Smartphone", 223, 1, true, true],
+      ["Elektronik & Ladekabel", "Kindle", 165, 1, true, false],
+      ["Elektronik & Ladekabel", "Zip Beutel für Elektronikzeug", 20, 1, true, false],
+      ["Elektronik & Ladekabel", "Kopfhörer Jabra", 45, 1, true, false],
+      ["Elektronik & Ladekabel", "Stirnlampe", 38, 1, true, false],
+      ["Elektronik & Ladekabel", "Mini Taschenlampe im Kulturbeutel", 40, 1, true, false],
+      ["Elektronik & Ladekabel", "Anker Power Core 10.000 mAh", 360, 1, true, false],
+      ["Elektronik & Ladekabel", "Mini Powerbank 5000 mAh", 98, 1, true, false],
+      ["Elektronik & Ladekabel", "Anker Ladekabel 0.9m USB-C auf USB-C (weiß)", 30, 1, true, false],
+      ["Elektronik & Ladekabel", "Anker Ladekabel 0.9m USB-A auf USB-C (weiß)", 28, 1, true, false],
+      ["Elektronik & Ladekabel", "Kurzes USB auf Micro-USB Ladekabel", 7, 1, true, false],
+      ["Elektronik & Ladekabel", "Adapter Ladekabel USB-C auf Micro-USB", 2, 1, true, false],
+      ["Elektronik & Ladekabel", "Adapter Ladekabel USB-C auf Lightning", 3, 1, true, false],
+      ["Elektronik & Ladekabel", "USB-C auf USB-C Ladekabel schwarz Anker", 22, 1, true, false],
+      ["Elektronik & Ladekabel", "USB-C auf USB-C Ladekabel lang 2m", 56, 1, true, false],
+      ["Elektronik & Ladekabel", "1x Kurzes USB-C Ladekabel schwarz", 11, 1, true, false],
+      ["Elektronik & Ladekabel", "1x Kurzes USB-C Ladekabel weiß", 11, 1, true, false],
+      ["Elektronik & Ladekabel", "USB-C Kopfhörer Reserve", 14, 1, true, false],
+      ["Elektronik & Ladekabel", "Strom Adapter Weltweit", 141, 1, true, false],
+      ["Elektronik & Ladekabel", "Mehrfachstecker 3-fach", 112, 1, true, false],
+      ["Kleidung", "T-Shirts Merino", 121, 1, true, true],
+      ["Kleidung", "T-Shirts Baumwolle Dschungel/Isan", 139, 2, true, false],
+      ["Kleidung", "T-Shirts Baumwolle Dschungel/Isan", 140, 1, true, false],
+      ["Kleidung", "T-Shirts Baumwolle / Athleisure", 160, 1, true, false],
+      ["Kleidung", "Tank Top Baumwolle Isan", 111, 1, true, false],
+      ["Kleidung", "Hemd lang Mütze Dschungel/Isan", 188, 1, true, false],
+      ["Kleidung", "Hemd lang/Patagonia Merino", 226, 1, true, false],
+      ["Kleidung", "Hemd lang/Patagonia Merino", 225, 1, true, true],
+      ["Kleidung", "Trägershirt lang 1", 125, 1, true, false],
+      ["Kleidung", "Lange Wanderhose OHNE Gürtel", 270, 1, true, false],
+      ["Kleidung", "Kurze Wanderhose OHNE Gürtel", 303, 1, true, false],
+      ["Kleidung", "Gürtel Wandern braun", 84, 1, true, false],
+      ["Kleidung", "Gürtel normal schmal schwarz", 64, 1, true, false],
+      ["Kleidung", "Lange Anzug- und Stretchhose schwarz", 281, 1, true, false],
+      ["Kleidung", "Lange Anzug- und Stretchhose dunkelgrau", 182, 1, true, true],
+      ["Kleidung", "Langarmshirt Merino/Hemd braun 150er", 158, 1, true, true],
+      ["Kleidung", "Shorts leicht 2022", 102, 1, true, false],
+      ["Kleidung", "Badeshorts 2017", 148, 1, true, false],
+      ["Kleidung", "Zehentrenner Ahoi", 47, 1, true, false],
+      ["Kleidung", "Zehentrenner leicht", 43, 1, true, false],
+      ["Kleidung", "Langarmshirt Merino 150-180g", 158, 1, true, true],
+      ["Kleidung", "Lange Wanderhose schwarz", 192, 1, true, false],
+      ["Kleidung", "Unterhose Merino", 73, 5, true, false],
+      ["Kleidung", "Badeshorts schwarz", 115, 1, true, false],
+      ["Kleidung", "Langes Oberteil Merino", 202, 1, true, false],
+      ["Kleidung", "Regenjacke", 195, 1, true, false],
+      ["Kleidung", "Windjacke", 112, 1, true, false],
+      ["Kleidung", "Cap Wandern leicht braun 2018", 49, 1, true, false],
+      ["Kleidung", "Ersatzsocken (72g)", 72, 1, true, false],
+      ["Kleidung", "Socken Wolle/Merino", 56, 1, true, false],
+      ["Kleidung", "Hals-Tuch Merino", 116, 1, true, false],
+      ["Kleidung", "Unterhose kurz", 112, 1, true, false],
+      ["Kleidung", "Laufshorts schwarz", 102, 2, true, false],
+      ["Schuhe", "Altra Wanderschuhe", 580, 1, true, true],
+      ["Schuhe", "Sandalen Teva Hurricane", 310, 1, true, false],
+      ["Schuhe", "Badelatschen", 140, 1, true, false],
+      ["Schuhe", "FlipFlops leicht", 108, 1, true, false],
+      ["Hygiene & Pflege", "Kulturbeutel mit Haken, fest + Aufhängung im Waschsack", 183, 1, true, false],
+      ["Hygiene & Pflege", "Zahnbürste verpackt in Aufbewahrung Duschgel/Seife", 18, 1, true, false],
+      ["Hygiene & Pflege", "Elektrischer Rasierer / Philips Norelco OneBlade", 152, 1, true, false],
+      ["Hygiene & Pflege", "Aspirin/Ibuprofen", 12, 1, true, false],
+      ["Hygiene & Pflege", "Deo Roller 50 ml", 109, 1, true, false],
+      ["Hygiene & Pflege", "Nagelknipser & Pinzette", 38, 1, true, false],
+      ["Hygiene & Pflege", "Nagelfeile", 18, 1, true, false],
+      ["Hygiene & Pflege", "Lippenpflege LSF 50 Aqua Pack", 11, 1, true, false],
+      ["Hygiene & Pflege", "Waschlappen", 25, 1, true, false],
+      ["Hygiene & Pflege", "Pflaster/Tapes", 21, 1, true, false],
+      ["Hygiene & Pflege", "Mückenschutz Nobite", 234, 1, true, false],
+      ["Hygiene & Pflege", "Zip Beutel für Kosmetik und Co", 125, 1, true, false],
+      ["Hygiene & Pflege", "Haarbürste", 51, 1, true, false],
+      ["Hygiene & Pflege", "Desinfektionsspray", 80, 1, true, false],
+      ["Hygiene & Pflege", "Taschentücher", 22, 1, true, false],
+      ["Hygiene & Pflege", "Wattestäbchen", 10, 1, true, false],
+      ["Hygiene & Pflege", "Kamm klein", 12, 1, true, false],
+      ["Hygiene & Pflege", "Rasierer manuell", 35, 1, true, false],
+      ["Hygiene & Pflege", "Lippenpflegestift Tiger Balm", 120, 1, true, false],
+      ["Hygiene & Pflege", "Sonnencreme LSF 50", 100, 1, true, false],
+      ["Gesundheit & Apotheke", "Insektenschutzmittel", 125, 1, true, false],
+      ["Gesundheit & Apotheke", "Ibuprofen/Aspirin", 42, 1, true, false],
+      ["Gesundheit & Apotheke", "Magen/Darm/Vomex", 18, 1, true, false],
+      ["Gesundheit & Apotheke", "Pflaster/Verbandszeug", 12, 1, true, false],
+      ["Gesundheit & Apotheke", "Fieberthermometer", 15, 1, true, false],
+      ["Gesundheit & Apotheke", "Elektrolyte", 12, 1, true, false],
+      ["Gesundheit & Apotheke", "Erste Hilfe Set", 225, 1, true, false],
+      ["Gesundheit & Apotheke", "Kamm klein", 10, 1, true, false],
+      ["Komfort & Schlafzubehör", "Gummi-Bandschlaufe/Zip-Gurt", 30, 1, true, false],
+      ["Komfort & Schlafzubehör", "Mikrofaser Handtuch klein", 25, 1, true, false],
+      ["Komfort & Schlafzubehör", "Mikrofaser Handtuch mittel", 58, 1, true, false],
+      ["Komfort & Schlafzubehör", "Mikrofaser Handtuch groß", 110, 1, true, false],
+      ["Komfort & Schlafzubehör", "Schlafsack Inlett", 120, 1, true, false],
+      ["Komfort & Schlafzubehör", "Kissen Inlett", 180, 1, true, false],
+      ["Komfort & Schlafzubehör", "Kissenbezug", 25, 1, true, false],
+      ["Komfort & Schlafzubehör", "Nackenkissen", 10, 1, true, false],
+      ["Komfort & Schlafzubehör", "Ohrstöpsel", 10, 1, true, false],
+      ["Komfort & Schlafzubehör", "Schlafmaske", 10, 1, true, false],
+      ["Accessoires & Alltagshelfer", "Sonnenbrille RayBan", 32, 1, true, true],
+      ["Accessoires & Alltagshelfer", "Etui Sonnenbrille RayBan", 43, 1, true, false],
+      ["Accessoires & Alltagshelfer", "Campingbesteck für Notfall", 65, 1, true, false],
+      ["Accessoires & Alltagshelfer", "Taschenmesser klein Handgepäck", 22, 1, true, false],
+      ["Accessoires & Alltagshelfer", "Taschenmesser normal Aufgabegepäck", 90, 1, true, false],
+      ["Accessoires & Alltagshelfer", "Leere Wasserflasche 1.5 Liter", 30, 1, true, false],
+      ["Accessoires & Alltagshelfer", "Hüfttasche Deuter 1.5L", 180, 1, true, false],
+      ["Accessoires & Alltagshelfer", "Sitzkissen", 180, 1, true, false],
+      ["Accessoires & Alltagshelfer", "Schirm", 220, 1, true, false],
+      ["Organisation & Utensilien", "Drybag 5L/10L für feuchte Kleidung zum Waschen", 65, 1, true, false],
+      ["Organisation & Utensilien", "Wäschebeutel grau", 35, 1, true, false],
+      ["Organisation & Utensilien", "Zip Beutel 1L/2L/3L", 10, 2, true, false],
+      ["Organisation & Utensilien", "Flugzeugbeutel", 35, 1, true, true],
+      ["Organisation & Utensilien", "Thiesbeutel", 80, 1, true, false],
+      ["Organisation & Utensilien", "Kabelbinder/Gummis", 10, 2, true, false],
+      ["Organisation & Utensilien", "Kugelschreiber", 50, 1, true, false],
+      ["Organisation & Utensilien", "Schere klein", 20, 1, true, false],
+      ["Organisation & Utensilien", "Pflastertape", 40, 1, true, false],
+      ["Organisation & Utensilien", "Mini-Geldbörse", 25, 1, true, false],
+      ["Organisation & Utensilien", "Karabiner", 15, 1, true, false],
+      ["Organisation & Utensilien", "Gummi-Spanngurte", 30, 1, true, false],
+      ["Organisation & Utensilien", "Nähzeug / Sicherheitsnadeln / Messer", 15, 1, true, false],
+      ["Organisation & Utensilien", "Schloss TSA / TSA-Schloss", 60, 1, true, false]
     ];
 
-    const defaultPacklist = rawItemsData.map(item => ({
-      cat: item[0], name: item[1], weight: item[2], qty: item[3], packed: item[4], worn: item[5]
-    }));
+    // Aktualisierte Packliste Ines (aus image_76189d.png)
+    const rawItemsInes = [
+      ["Dokumente & Wertsachen", "Reisepass", 41, 1, true, true],
+      ["Dokumente & Wertsachen", "Kopien Reisepass & Dokumente", 30, 1, true, false],
+      ["Dokumente & Wertsachen", "Geldbörse & Kreditkarten", 95, 1, true, true],
+      ["Dokumente & Wertsachen", "Internationaler Führerschein", 37, 1, true, true],
+      ["Dokumente & Wertsachen", "Reisetagebuch", 99, 1, true, false],
+      ["Rucksäcke & Gepäck", "Backpacking Rucksack", 2000, 1, true, false],
+      ["Rucksäcke & Gepäck", "Kleiner Rucksack - Forclaz Travel (25 Liter)", 300, 1, true, false],
+      ["Rucksäcke & Gepäck", "Umhängetasche", 110, 1, true, true],
+      ["Rucksäcke & Gepäck", "Reisehülle Rucksack Aufgabegepäck (Ikea Tasche)", 300, 1, true, false],
+      ["Elektronik & Ladekabel", "Smartphone", 195, 1, true, true],
+      ["Elektronik & Ladekabel", "E-Reader?", 158, 1, true, false],
+      ["Elektronik & Ladekabel", "Apple Airpods", 35, 1, true, true],
+      ["Elektronik & Ladekabel", "Powerbank 20.000 mAh", 360, 1, true, false],
+      ["Elektronik & Ladekabel", "Ladestecker & Ladekabel", 300, 1, true, false],
+      ["Elektronik & Ladekabel", "Strom Adapter Weltweit", 141, 1, true, false],
+      ["Kleidung", "T-Shirts & Tops", 60, 7, true, false],
+      ["Kleidung", "Leichte Sommerkleider / Tunika", 170, 2, true, false],
+      ["Kleidung", "Leinenhose lang", 290, 1, true, true],
+      ["Kleidung", "Shorts leicht", 110, 2, true, false],
+      ["Kleidung", "Strickjacke / Strickpulli leicht", 280, 1, true, false],
+      ["Kleidung", "Fleece", 300, 1, true, true],
+      ["Kleidung", "Jacke für kalte Tage / Gebirge", 500, 1, true, false],
+      ["Kleidung", "Regenjacke / Poncho", 300, 1, true, false],
+      ["Kleidung", "Unterwäsche", 50, 7, true, false],
+      ["Kleidung", "Socken", 40, 10, true, false],
+      ["Kleidung", "Bikini & Badeanzug", 92, 2, true, false],
+      ["Kleidung", "Sonnenhut / Cap", 55, 1, true, false],
+      ["Schuhe", "Sneaker / Laufschuhe", 580, 1, true, true],
+      ["Schuhe", "Teva Sandalen?", 310, 1, true, false],
+      ["Schuhe", "Badelatschen / FlipFlops", 140, 1, true, false],
+      ["Hygiene & Pflege", "Kulturbeutel flüssigkeitsfrei", 140, 1, true, false],
+      ["Hygiene & Pflege", "Zahnbürste & Zahnpasta", 90, 1, true, false],
+      ["Hygiene & Pflege", "Shampoo & Spülung fest", 160, 1, true, false],
+      ["Hygiene & Pflege", "Gesichtscreme & Pflege", 110, 1, true, false],
+      ["Hygiene & Pflege", "Haarbürste & Haargummis", 75, 1, true, false],
+      ["Hygiene & Pflege", "Sonnencreme & Skin Protection", 210, 1, true, false],
+      ["Gesundheit & Apotheke", "Persönliche Reiseapotheke", 95, 1, true, false],
+      ["Komfort & Schlafzubehör", "Mikrofaser Handtuch mittel", 140, 1, true, false],
+      ["Komfort & Schlafzubehör", "Schlafmaske & Ohrstöpsel", 30, 1, true, false],
+      ["Accessoires & Alltagshelfer", "Sonnenbrille mit Etui", 70, 1, true, false],
+      ["Accessoires & Alltagshelfer", "Trinkflasche Edelstahl", 500, 1, true, false],
+      ["Organisation & Utensilien", "Packing Cubes / Packbeutel Set", 160, 1, true, false],
+      ["Organisation & Utensilien", "Wäschebeutel", 100, 1, true, false]
+    ];
 
-    let packlist = [];
+    const defaultStefan = rawItemsStefan.map(item => ({ cat: item[0], name: item[1], weight: item[2], qty: item[3], packed: item[4], worn: item[5] }));
+    const defaultInes = rawItemsInes.map(item => ({ cat: item[0], name: item[1], weight: item[2], qty: item[3], packed: item[4], worn: item[5] }));
+
+    let packlists = {
+      stefan: [],
+      ines: []
+    };
+
+    function switchPerson(person) {
+      currentPerson = person;
+      document.getElementById('btnPackStefan').classList.toggle('active', person === 'stefan');
+      document.getElementById('btnPackInes').classList.toggle('active', person === 'ines');
+      document.getElementById('packlistTitle').innerText = `🎒 Interaktive Packliste & Kilo-Rechner (${person === 'stefan' ? 'Stefan' : 'Ines'})`;
+      renderPacklist();
+    }
 
     function loadPacklist() {
-      const saved = localStorage.getItem('thailand_packlist_2027_v12');
-      if (saved) {
-        try { packlist = JSON.parse(saved); } catch (e) { packlist = JSON.parse(JSON.stringify(defaultPacklist)); }
-      } else {
-        packlist = JSON.parse(JSON.stringify(defaultPacklist));
-      }
+      const savedStefan = localStorage.getItem('thailand_packlist_stefan_v3');
+      const savedInes = localStorage.getItem('thailand_packlist_ines_v3');
+
+      packlists.stefan = savedStefan ? JSON.parse(savedStefan) : JSON.parse(JSON.stringify(defaultStefan));
+      packlists.ines = savedInes ? JSON.parse(savedInes) : JSON.parse(JSON.stringify(defaultInes));
+
       renderPacklist();
     }
 
     function savePacklist() {
-      localStorage.setItem('thailand_packlist_2027_v12', JSON.stringify(packlist));
+      localStorage.setItem(`thailand_packlist_${currentPerson}_v3`, JSON.stringify(packlists[currentPerson]));
       renderPacklist();
     }
 
     function exportPacklistCSV() {
+      const list = packlists[currentPerson];
       let csvContent = "Kategorie;Gegenstand;Anzahl;Einzelgewicht (g);Gesamtgewicht (g);Gepackt;Am Koerper\n";
 
-      packlist.forEach(item => {
+      list.forEach(item => {
         const totalWeight = (item.weight || 0) * (item.qty || 1);
         const packedStr = item.packed ? "Ja" : "Nein";
         const wornStr = item.worn ? "Ja" : "Nein";
@@ -1701,15 +1790,16 @@ function initMap() {
       const url = URL.createObjectURL(blob);
       const downloadAnchor = document.createElement('a');
       downloadAnchor.setAttribute("href", url);
-      downloadAnchor.setAttribute("download", "thailand_srilanka_packliste_2027.csv");
+      downloadAnchor.setAttribute("download", `packliste_${currentPerson}_2027.csv`);
       document.body.appendChild(downloadAnchor);
       downloadAnchor.click();
       downloadAnchor.remove();
     }
 
     function resetPacklist() {
-      if (confirm("Packliste auf Originalzustand zurücksetzen?")) {
-        packlist = JSON.parse(JSON.stringify(defaultPacklist));
+      const name = currentPerson === 'stefan' ? 'Stefan' : 'Ines';
+      if (confirm(`Packliste von ${name} auf Originalzustand zurücksetzen?`)) {
+        packlists[currentPerson] = currentPerson === 'stefan' ? JSON.parse(JSON.stringify(defaultStefan)) : JSON.parse(JSON.stringify(defaultInes));
         savePacklist();
       }
     }
@@ -1719,10 +1809,11 @@ function initMap() {
       if (!tbody) return;
       tbody.innerHTML = '';
 
+      const list = packlists[currentPerson];
       let packWeightG = 0, wornWeightG = 0, packedCount = 0;
       const categories = {};
 
-      packlist.forEach((item, index) => {
+      list.forEach((item, index) => {
         item._origIndex = index;
         if (!categories[item.cat]) categories[item.cat] = [];
         categories[item.cat].push(item);
@@ -1738,7 +1829,7 @@ function initMap() {
       document.getElementById('packWeightKg').innerText = `${(packWeightG / 1000).toFixed(2)} kg`;
       document.getElementById('wornWeightKg').innerText = `${(wornWeightG / 1000).toFixed(2)} kg`;
       document.getElementById('grandTotalKg').innerText = `${((packWeightG + wornWeightG) / 1000).toFixed(2)} kg`;
-      document.getElementById('totalPackedItems').innerText = `${packedCount} / ${packlist.length}`;
+      document.getElementById('totalPackedItems').innerText = `${packedCount} / ${list.length}`;
 
       Object.keys(categories).forEach(cat => {
         const catRow = document.createElement('tr');
@@ -1781,27 +1872,30 @@ function initMap() {
       });
     }
 
-    function togglePacked(idx) { packlist[idx].packed = !packlist[idx].packed; savePacklist(); }
-    function toggleWorn(idx) { packlist[idx].worn = !packlist[idx].worn; savePacklist(); }
-    function changeQty(idx, delta) { packlist[idx].qty = Math.max(1, (packlist[idx].qty || 1) + delta); savePacklist(); }
+    function togglePacked(idx) { packlists[currentPerson][idx].packed = !packlists[currentPerson][idx].packed; savePacklist(); }
+    function toggleWorn(idx) { packlists[currentPerson][idx].worn = !packlists[currentPerson][idx].worn; savePacklist(); }
+    function changeQty(idx, delta) { packlists[currentPerson][idx].qty = Math.max(1, (packlists[currentPerson][idx].qty || 1) + delta); savePacklist(); }
 
     function addPackItem() {
       const name = document.getElementById('newItemName').value.trim();
       const cat = document.getElementById('newItemCat').value;
       const weight = parseInt(document.getElementById('newItemWeight').value) || 0;
       if (!name) return alert("Bitte Name eingeben!");
-      packlist.push({ name, cat, weight, qty: 1, packed: true, worn: false });
+      packlists[currentPerson].push({ name, cat, weight, qty: 1, packed: true, worn: false });
       document.getElementById('newItemName').value = '';
       document.getElementById('newItemWeight').value = '';
       savePacklist();
     }
 
     function deletePackItem(idx) {
-      if (confirm(`"${packlist[idx].name}" löschen?`)) { packlist.splice(idx, 1); savePacklist(); }
+      if (confirm(`"${packlists[currentPerson][idx].name}" löschen?`)) { 
+        packlists[currentPerson].splice(idx, 1); 
+        savePacklist(); 
+      }
     }
 
     function editPackItem(idx) {
-      const item = packlist[idx];
+      const item = packlists[currentPerson][idx];
       const newName = prompt("Name des Gegenstands:", item.name);
       if (newName === null) return;
       const newWeightStr = prompt("Gewicht in Gramm:", item.weight);
