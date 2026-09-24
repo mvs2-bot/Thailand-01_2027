@@ -1254,6 +1254,12 @@
 
 
 
+
+
+    
+    
+
+
 function initMap() {
   // 1. Die verschiedenen Kartendienste definieren:
   
@@ -1262,23 +1268,17 @@ function initMap() {
     maxZoom: 19,
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> (Deutscher Stil)'
   });
-
-  // CARTO Voyager no Key (Kein Key nötig – englische/lateinische Schriftzeichen)
-  const cartoVoyager = L.tileLayer('https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}@2x.png', {
-    maxZoom: 19,
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
+  
+  // Bisheriges Standard OSM (Landessprache)
+  const osmMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { 
+    maxZoom: 19, 
+    attribution: '&copy; OpenStreetMap' 
   });
 
   // Esri World Street Map (Englisch)
   const esriStreet = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
     maxZoom: 19,
     attribution: 'Tiles &copy; Esri'
-  });
-
-  // Bisheriges Standard OSM (Landessprache)
-  const osmMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { 
-    maxZoom: 19, 
-    attribution: '&copy; OpenStreetMap' 
   });
 
   // Topografische Karte
@@ -1292,10 +1292,9 @@ function initMap() {
 
   // 3. Layer-Auswahl-Menü oben rechts erweitern:
   L.control.layers({
-   "🇩🇪 OSM Deutsch (Deutsch / Latein)": osmDe,
-   "🇬🇧 CARTO (Englisch / Lateinisch)": cartoVoyager,
+   "🇩🇪 OSM Deutsch (Deutsch / Landessprache)": osmDe,
+    "🌏 OSM Standard (NUR Landessprache)": osmMap,
     "🗺️ Esri Street (Englisch)": esriStreet,
-    "🌏 OSM Standard (Landessprache)": osmMap,
     "⛰️ Topografisch (CyclOSM)": topoMap
   }, null, { collapsed: true, position: 'topright' }).addTo(map);
 
@@ -1306,6 +1305,14 @@ function initMap() {
 
 
 
+  
+
+
+
+  
+  
+
+  
 
 
       // WEG-, ZWISCHENSTOPP- & FLUGPUNKTE
