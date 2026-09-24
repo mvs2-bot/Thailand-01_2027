@@ -1246,19 +1246,68 @@
       });
     }
 
-    /* ==========================================================================
-       MAP INITIALISIERUNG (OPENSTREETMAP & CYCLOSM)
-       ========================================================================== */
-    function initMap() {
-      const osmMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; OpenStreetMap' });
-      const topoMap = L.tileLayer('https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '&copy; OpenStreetMap / CyclOSM' });
 
-      map = L.map('map', { layers: [osmMap] });
 
-      L.control.layers({
-        "🗺️ OpenStreetMap (Standard)": osmMap,
-        "⛰️ Topografisch (CyclOSM)": topoMap
-      }, null, { collapsed: true, position: 'topright' }).addTo(map);
+
+
+
+
+
+
+function initMap() {
+  // 1. Die verschiedenen Kartendienste definieren:
+  
+   // OSM Deutschland (Deutsch / Englische Transkription)
+  const osmDe = L.tileLayer('https://tile.openstreetmap.de/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> (Deutscher Stil)'
+  });
+  
+  // CARTO Voyager (Englisch / Lateinische Schrift - SEHR EMPFOHLEN für Asien)
+  const cartoVoyager = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    maxZoom: 19,
+    subdomains: 'abcd',
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
+  });
+
+  // Esri World Street Map (Englisch)
+  const esriStreet = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+    maxZoom: 19,
+    attribution: 'Tiles &copy; Esri'
+  });
+
+  // Bisheriges Standard OSM (Landessprache)
+  const osmMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { 
+    maxZoom: 19, 
+    attribution: '&copy; OpenStreetMap' 
+  });
+
+  // Topografische Karte
+  const topoMap = L.tileLayer('https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png', { 
+    maxZoom: 18, 
+    attribution: '&copy; OpenStreetMap / CyclOSM' 
+  });
+
+  // 2. Karte mit dem neuen Standard "OSM Deutschland" initialisieren:
+  map = L.map('map', { layers: [osmDe] });
+
+  // 3. Layer-Auswahl-Menü oben rechts erweitern:
+  L.control.layers({
+   "🇩🇪 OSM Deutsch (Deutsch / Latein)": osmDe,
+   "🇬🇧 CARTO (Englisch / Lateinisch)": cartoVoyager,
+    "🗺️ Esri Street (Englisch)": esriStreet,
+    "🌏 OSM Standard (Landessprache)": osmMap,
+    "⛰️ Topografisch (CyclOSM)": topoMap
+  }, null, { collapsed: true, position: 'topright' }).addTo(map);
+
+  // ... (Hier folgt der restliche Marker- & Routen-Code deiner initMap)
+
+
+
+
+
+
+
 
       // WEG-, ZWISCHENSTOPP- & FLUGPUNKTE
       const points = {
