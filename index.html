@@ -334,7 +334,7 @@
       box-shadow: 0 2px 8px rgba(21, 128, 61, 0.25);
     }
 
-    /* Filter & Suche - EINHEITLICHE GRÖSSE UND LAYOUT */
+    /* Filter & Suche */
     .controls {
       display: flex;
       flex-wrap: wrap;
@@ -381,7 +381,7 @@
       color: #ffffff;
     }
 
-    /* Tabellen Styling - MAXIMAL KOMPAKT & ULTRA-ÜBERSICHTLICH */
+    /* Tabellen Styling - KOMPAKT & ÜBERSICHTLICH */
     .table-wrapper {
       background: var(--card-bg);
       border: 1px solid var(--border);
@@ -426,7 +426,6 @@
       background: var(--card-bg-hover) !important;
     }
 
-    /* KOMPAKTER HEADER FÜR DIE ERSTE SPALTE (NEBENEINANDER) */
     .day-cell-wrapper {
       display: flex;
       align-items: center;
@@ -1335,45 +1334,127 @@
         [20.5, 105.0]
       ];
 
-      /* 1. EINHEITLICHE ROUTEN-LINIEN & STYLES (ALLE FLÜGE JETZT IDENTISCH) */
+      /* 1. ROUTEN-STYLES */
       const flightStyle = { color: '#059669', weight: 2, opacity: 0.85, dashArray: '5, 5' };
       const thOverlandStyle = { color: '#0d9488', weight: 3, opacity: 0.9 };
       const slOverlandStyle = { color: '#b45309', weight: 3, opacity: 0.9 };
-      const trainStyle = { color: '#dc2626', weight: 4, opacity: 1, dashArray: '3, 4' };
+      const trainStyle = { color: '#dc2626', weight: 3.5, opacity: 1, dashArray: '4, 4' };
 
-      // FLÜGE
+      // FLÜGE (Luftlinie)
       L.polyline([[points.wien.lat, points.wien.lng], [points.ruh.lat, points.ruh.lng], [points.bkk.lat, points.bkk.lng]], flightStyle).addTo(map);
       L.polyline([[points.bkk.lat, points.bkk.lng], [points.uth.lat, points.uth.lng]], flightStyle).addTo(map);
       L.polyline([[points.uth.lat, points.uth.lng], [points.cnx.lat, points.cnx.lng]], flightStyle).addTo(map);
       L.polyline([[points.cei.lat, points.cei.lng], [points.bkk.lat, points.bkk.lng]], flightStyle).addTo(map);
       L.polyline([[points.bkk.lat, points.bkk.lng], [points.phiphi.lat, points.phiphi.lng]], flightStyle).addTo(map);
       L.polyline([[points.samui.lat, points.samui.lng], [points.bkk.lat, points.bkk.lng]], flightStyle).addTo(map);
-      
-      // FLUG BKK ➔ MUC (Stefan) - JETZT IDENTISCH ZU DEN ANDERN FLÜGEN
       L.polyline([[points.bkk.lat, points.bkk.lng], [points.muc.lat, points.muc.lng]], flightStyle).addTo(map);
-
-      // FLUG BKK ➔ CMB (Ines)
       L.polyline([[points.bkk.lat, points.bkk.lng], [points.cmb.lat, points.cmb.lng]], flightStyle).addTo(map);
-
-      // FLUG CMB ➔ IST ➔ VIE (Ines & Anna)
       L.polyline([[points.cmb.lat, points.cmb.lng], [points.ist.lat, points.ist.lng], [points.wien.lat, points.wien.lng]], flightStyle).addTo(map);
 
-      // TRANSFERS FLUGHAFEN ➔ STADT
-      L.polyline([[points.bkk.lat, points.bkk.lng], [points.bkk_city.lat, points.bkk_city.lng]], { color: '#6b21a8', weight: 2.5, opacity: 0.9, dashArray: '3, 3' }).addTo(map);
-      L.polyline([[points.cmb.lat, points.cmb.lng], [points.cmb_city.lat, points.cmb_city.lng]], { color: '#6b21a8', weight: 2.5, opacity: 0.9, dashArray: '3, 3' }).addTo(map);
+      // TRANSFERS FLUGHAFEN ➔ STADT (Expressway Route)
+      L.polyline([[points.bkk.lat, points.bkk.lng], [13.725, 100.650], [points.bkk_city.lat, points.bkk_city.lng]], { color: '#6b21a8', weight: 2.5, opacity: 0.9, dashArray: '3, 3' }).addTo(map);
+      L.polyline([[points.cmb.lat, points.cmb.lng], [7.080, 79.890], [points.cmb_city.lat, points.cmb_city.lng]], { color: '#6b21a8', weight: 2.5, opacity: 0.9, dashArray: '3, 3' }).addTo(map);
 
-      // OVERLAND THAILAND
-      L.polyline([[points.cnx.lat, points.cnx.lng], [points.pai.lat, points.pai.lng], [points.cei.lat, points.cei.lng]], thOverlandStyle).addTo(map);
-      L.polyline([[points.phiphi.lat, points.phiphi.lng], [points.krabi.lat, points.krabi.lng], [points.tao.lat, points.tao.lng], [points.phangan.lat, points.phangan.lng], [points.samui.lat, points.samui.lng]], thOverlandStyle).addTo(map);
+      /* 2. ECHTE LANDWEGE (GEBIRGSPÄSSE, HIGHWAYS & REALE BAHNSTRECKEN) */
 
-      // OVERLAND SRI LANKA
-      L.polyline([[points.cmb.lat, points.cmb.lng], [points.anuradhapura.lat, points.anuradhapura.lng], [points.dambulla.lat, points.dambulla.lng], [points.kandy.lat, points.kandy.lng]], slOverlandStyle).addTo(map);
-      L.polyline([[points.ella.lat, points.ella.lng], [points.tangalle.lat, points.tangalle.lng], [points.mirissa.lat, points.mirissa.lng], [points.weligama.lat, points.weligama.lng], [points.cmb_city.lat, points.cmb_city.lng], [points.cmb.lat, points.cmb.lng]], slOverlandStyle).addTo(map);
+      // MINIVAN THAILAND: Chiang Mai ➔ Pai ➔ Chiang Rai (Route 1095 & Route 118 über Gebirgspass)
+      const cnx_pai_cei_road = [
+        [points.cnx.lat, points.cnx.lng],
+        [18.9150, 98.9450], // Mae Rim
+        [19.0850, 98.8970], // Mae Malai Abzweigung
+        [19.1450, 98.6920], // Pa Pae Gebirgspass
+        [19.3020, 98.4900], // Pai Canyon Pass
+        [points.pai.lat, points.pai.lng], // Pai
+        [19.3020, 98.4900],
+        [19.1450, 98.6920],
+        [19.0850, 98.8970], // Zurück zur Hauptstraße
+        [19.0500, 99.2000], // Doi Saket Pass
+        [19.3510, 99.5020], // Wiang Pa Pao
+        [19.6480, 99.5510], // Mae Suai
+        [points.cei.lat, points.cei.lng] // Chiang Rai
+      ];
+      L.polyline(cnx_pai_cei_road, thOverlandStyle).addTo(map);
 
-      // ZUGFAHRT KANDY ➔ ELLA
-      L.polyline([[points.kandy.lat, points.kandy.lng], [points.ella.lat, points.ella.lng]], trainStyle).addTo(map);
+      // OVERLAND THAILAND INSELN: Krabi ➔ Surat Thani / Donsak ➔ Koh Tao (Ferry + Bus + Ferry)
+      const krabi_tao_route = [
+        [points.krabi.lat, points.krabi.lng],
+        [8.5300, 99.2300],  // Highway 44 Querung
+        [9.1400, 99.3300],  // Surat Thani
+        [9.3180, 99.6920],  // Donsak Pier
+        [9.7319, 100.0136], // Koh Phangan
+        [points.tao.lat, points.tao.lng] // Koh Tao
+      ];
+      L.polyline(krabi_tao_route, thOverlandStyle).addTo(map);
 
-      /* 2. MARKER ERSTELLEN */
+      // INSELÜBERFAHRTEN (Fähre)
+      L.polyline([[points.phiphi.lat, points.phiphi.lng], [points.krabi.lat, points.krabi.lng]], thOverlandStyle).addTo(map);
+      L.polyline([[points.tao.lat, points.tao.lng], [points.phangan.lat, points.phangan.lng], [points.samui.lat, points.samui.lng]], thOverlandStyle).addTo(map);
+
+      // BUS/ZUG SRI LANKA: Colombo/Negombo ➔ Kurunegala ➔ Anuradhapura (Northern Line / A9 Highway)
+      const cmb_anura_road = [
+        [points.cmb.lat, points.cmb.lng],
+        [7.2900, 79.8600], // Negombo Stadt
+        [7.3600, 79.9800], // Giriulla
+        [7.4860, 80.3650], // Kurunegala
+        [7.8120, 80.3010], // Maho Junction
+        [8.0300, 80.3200], // Galgamuwa
+        [points.anuradhapura.lat, points.anuradhapura.lng]
+      ];
+      L.polyline(cmb_anura_road, slOverlandStyle).addTo(map);
+
+      // BUS SRI LANKA: Anuradhapura ➔ Dambulla ➔ Kandy (A9 Highway)
+      const anura_dambulla_kandy_road = [
+        [points.anuradhapura.lat, points.anuradhapura.lng],
+        [8.0410, 80.5870], // Kekirawa
+        [points.dambulla.lat, points.dambulla.lng],
+        [7.4670, 80.6230], // Matale Pass
+        [points.kandy.lat, points.kandy.lng]
+      ];
+      L.polyline(anura_dambulla_kandy_road, slOverlandStyle).addTo(map);
+
+      // 🚆 BERÜHMTE ZUGFAHRT: Kandy ➔ Ella (Main Line Railway durch die Teeplantagen)
+      const kandy_ella_railway = [
+        [points.kandy.lat, points.kandy.lng],
+        [7.2600, 80.5950], // Peradeniya Junction
+        [7.1500, 80.5600], // Gampola
+        [7.0500, 80.5350], // Nawalapitiya
+        [6.8920, 80.5980], // Hatton (Adam's Peak Zugang)
+        [6.8700, 80.6800], // Talawakele Tee-Täler
+        [6.9270, 80.7410], // Nanu Oya (Nuwara Eliya)
+        [6.8770, 80.8120], // Ambewela High Plains
+        [6.8120, 80.8800], // Pattipola Höchster Punkt
+        [6.7680, 80.9570], // Haputale Aussichtspunkt
+        [6.8330, 80.9980], // Bandarawela
+        [points.ella.lat, points.ella.lng] // Ella
+      ];
+      L.polyline(kandy_ella_railway, trainStyle).addTo(map);
+
+      // BUS SRI LANKA: Ella ➔ Tangalle (Wellawaya / A23 Highway)
+      const ella_tangalle_road = [
+        [points.ella.lat, points.ella.lng],
+        [6.7370, 81.1030], // Wellawaya
+        [6.4380, 81.1340], // Thanamalwila
+        [6.1230, 81.0240], // Ambalantota
+        [points.tangalle.lat, points.tangalle.lng]
+      ];
+      L.polyline(ella_tangalle_road, slOverlandStyle).addTo(map);
+
+      // BUS / ZUG KÜSTENSTRASSE: Tangalle ➔ Mirissa ➔ Weligama ➔ Galle ➔ Colombo (A2 Southern Coastal Road)
+      const south_coast_road = [
+        [points.tangalle.lat, points.tangalle.lng],
+        [5.9480, 80.5350], // Matara
+        [points.mirissa.lat, points.mirissa.lng],
+        [points.weligama.lat, points.weligama.lng],
+        [6.0320, 80.2170], // Galle Fort
+        [6.1390, 80.1030], // Hikkaduwa
+        [6.4230, 79.9980], // Bentota
+        [6.5850, 79.9600], // Kalutara
+        [points.cmb_city.lat, points.cmb_city.lng],
+        [points.cmb.lat, points.cmb.lng]
+      ];
+      L.polyline(south_coast_road, slOverlandStyle).addTo(map);
+
+      /* 3. MARKER ERSTELLEN */
       const markerGroup = L.featureGroup();
 
       Object.keys(points).forEach(key => {
@@ -1408,7 +1489,7 @@
 
       markerGroup.addTo(map);
 
-      /* 3. EINKLAPPBARE LEGENDE UNTEN RECHTS */
+      /* 4. EINKLAPPBARE LEGENDE UNTEN RECHTS */
       const legend = L.control({ position: 'bottomright' });
       legend.onAdd = function() {
         const div = L.DomUtil.create('div', 'custom-legend');
@@ -1418,11 +1499,11 @@
             <span id="legendToggleIcon">▲</span>
           </div>
           <div class="legend-body" id="legendBody">
-            <div class="legend-item"><span class="legend-color" style="background:#15803d;"></span> Nord-Thailand (Chiang Mai/Pai)</div>
+            <div class="legend-item"><span class="legend-color" style="background:#15803d;"></span> Nord-Thailand (Minivan Pass)</div>
             <div class="legend-item"><span class="legend-color" style="background:#6b21a8;"></span> Bangkok & Colombo Zentrum</div>
-            <div class="legend-item"><span class="legend-color" style="background:#0d9488;"></span> Thailand Inseln</div>
-            <div class="legend-item"><span class="legend-color" style="background:#b45309;"></span> Sri Lanka Route</div>
-            <div class="legend-item"><span class="legend-line" style="border-top: 3px dashed #dc2626;"></span> Zug Kandy ➔ Ella</div>
+            <div class="legend-item"><span class="legend-color" style="background:#0d9488;"></span> Thailand Inseln & Bus/Fähre</div>
+            <div class="legend-item"><span class="legend-color" style="background:#b45309;"></span> Sri Lanka Bus & Küste</div>
+            <div class="legend-item"><span class="legend-line" style="border-top: 3px dashed #dc2626;"></span> Zug Kandy ➔ Ella (Gebirge)</div>
             <div class="legend-item"><span class="legend-line" style="border-top: 2px dashed #059669;"></span> Flüge & Zwischenstopps</div>
           </div>
         `;
@@ -1523,7 +1604,7 @@
     let packlist = [];
 
     function loadPacklist() {
-      const saved = localStorage.getItem('thailand_packlist_2027_v11');
+      const saved = localStorage.getItem('thailand_packlist_2027_v12');
       if (saved) {
         try { packlist = JSON.parse(saved); } catch (e) { packlist = JSON.parse(JSON.stringify(defaultPacklist)); }
       } else {
@@ -1533,7 +1614,7 @@
     }
 
     function savePacklist() {
-      localStorage.setItem('thailand_packlist_2027_v11', JSON.stringify(packlist));
+      localStorage.setItem('thailand_packlist_2027_v12', JSON.stringify(packlist));
       renderPacklist();
     }
 
