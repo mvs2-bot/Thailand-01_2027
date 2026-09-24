@@ -1489,16 +1489,16 @@
 
       markerGroup.addTo(map);
 
-      /* 4. EINKLAPPBARE LEGENDE UNTEN RECHTS */
+      /* 4. EINKLAPPBARE LEGENDE UNTEN RECHTS (STANDARDMÄSSIG EINGEKLAPPT) */
       const legend = L.control({ position: 'bottomright' });
       legend.onAdd = function() {
         const div = L.DomUtil.create('div', 'custom-legend');
         div.innerHTML = `
           <div class="legend-header" onclick="toggleLegendBody()">
             <span>📌 Routen-Legende</span>
-            <span id="legendToggleIcon">▲</span>
+            <span id="legendToggleIcon">▼</span>
           </div>
-          <div class="legend-body" id="legendBody">
+          <div class="legend-body" id="legendBody" style="display: none;">
             <div class="legend-item"><span class="legend-color" style="background:#15803d;"></span> Nord-Thailand (Minivan Pass)</div>
             <div class="legend-item"><span class="legend-color" style="background:#6b21a8;"></span> Bangkok & Colombo Zentrum</div>
             <div class="legend-item"><span class="legend-color" style="background:#0d9488;"></span> Thailand Inseln & Bus/Fähre</div>
@@ -1520,7 +1520,9 @@
       const body = document.getElementById('legendBody');
       const icon = document.getElementById('legendToggleIcon');
       if (!body) return;
-      if (body.style.display === 'none') {
+      
+      const isHidden = window.getComputedStyle(body).display === 'none';
+      if (isHidden) {
         body.style.display = 'flex';
         icon.innerText = '▲';
       } else {
@@ -1558,8 +1560,6 @@
 
       if (!el) return;
 
-
-
       if (diff > 0) {
         const totalMins = Math.floor(diff / (1000 * 60));
         const mins = totalMins % 60;
@@ -1571,7 +1571,6 @@
         el.innerHTML = `🎉 Gute Reise! Der Trip läuft!`;
       }
     }
-
 
     /* ==========================================================================
        PACKLISTEN CODE
