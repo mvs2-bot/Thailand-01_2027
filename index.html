@@ -16,9 +16,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- Leaflet CSS & JS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- MapLibre GL JS (Vektor-Karte mit 3D Globus, vollkommen kostenlos & ohne API-Key) -->
+  <link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet" />
+  <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
 
   <style>
     :root {
@@ -238,6 +238,7 @@
       z-index: 1;
       border: 1px solid var(--border);
       transition: height 0.3s ease;
+      background-color: #0b111e;
     }
 
     .map-section.fullscreen #map {
@@ -245,13 +246,25 @@
       min-height: 400px;
     }
 
+    /* Custom MapLibre Popups */
+    .maplibregl-popup-content {
+      padding: 10px 12px;
+      border-radius: 6px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
     /* Einklappbare Legende auf der Karte */
     .custom-legend {
+      position: absolute;
+      bottom: 25px;
+      right: 25px;
+      z-index: 10;
       background: #ffffff;
       border: 1px solid var(--border);
       border-radius: 6px;
       padding: 8px 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
       font-size: 0.78rem;
       color: var(--text-main);
       max-width: 250px;
@@ -381,7 +394,7 @@
       color: #ffffff;
     }
 
-    /* Tabellen Styling - KOMPAKT & ÜBERSICHTLICH */
+    /* Tabellen Styling */
     .table-wrapper {
       background: var(--card-bg);
       border: 1px solid var(--border);
@@ -843,12 +856,28 @@
       <!-- Gesamte Karten-Sektion -->
       <div class="map-section" id="mapSection">
         <div class="map-header">
-          <h2>🗺️ Interaktive Gesamtkarte <span style="font-size:0.8rem; font-weight:500; color:var(--text-muted);">(Tabelle anklicken zum Zoomen)</span></h2>
+          <h2>🗺️ 3D-Globus Gesamtkarte <span style="font-size:0.8rem; font-weight:500; color:var(--text-muted);">(Tabelle anklicken zum Zoomen)</span></h2>
           <button class="btn-fullscreen" onclick="toggleMapFullscreen()" id="fullscreenBtn">
             <span id="fullscreenIcon">🔍</span> <span id="fullscreenText">Vollbild</span>
           </button>
         </div>
-        <div id="map"></div>
+        <div id="map">
+          <!-- EINKLAPPBARE LEGENDE -->
+          <div class="custom-legend">
+            <div class="legend-header" onclick="toggleLegendBody()">
+              <span>📌 Routen-Legende</span>
+              <span id="legendToggleIcon">▲</span>
+            </div>
+            <div class="legend-body" id="legendBody">
+              <div class="legend-item"><span class="legend-color" style="background:#15803d;"></span> Nord-Thailand (Minivan Pass)</div>
+              <div class="legend-item"><span class="legend-color" style="background:#6b21a8;"></span> Bangkok & Colombo Zentrum</div>
+              <div class="legend-item"><span class="legend-color" style="background:#0d9488;"></span> Thailand Inseln & Bus/Fähre</div>
+              <div class="legend-item"><span class="legend-color" style="background:#b45309;"></span> Sri Lanka Bus & Küste</div>
+              <div class="legend-item"><span class="legend-line" style="border-top: 3px dashed #dc2626;"></span> Zug Kandy ➔ Ella (Gebirge)</div>
+              <div class="legend-item"><span class="legend-line" style="border-top: 2px dashed #059669;"></span> Flüge & Zwischenstopps</div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- LÄNDER AUSWAHLFELD UNTERHALB DER KARTE -->
@@ -1037,7 +1066,7 @@
       }
 
       setTimeout(() => {
-        if (map) map.invalidateSize();
+        if (map) map.resize();
       }, 300);
     }
 
@@ -1247,273 +1276,150 @@
     }
 
     /* ==========================================================================
-       MAP INITIALISIERUNG (OPENSTREETMAP & CYCLOSM)
+       MAP INITIALISIERUNG (MAPLIBRE GL JS 3D GLOBUS)
        ========================================================================== */
     function initMap() {
-      const osmMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; OpenStreetMap' });
-      const topoMap = L.tileLayer('https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '&copy; OpenStreetMap / CyclOSM' });
-
-      map = L.map('map', { layers: [osmMap] });
-
-      L.control.layers({
-        "🗺️ OpenStreetMap (Standard)": osmMap,
-        "⛰️ Topografisch (CyclOSM)": topoMap
-      }, null, { collapsed: true, position: 'topright' }).addTo(map);
-
-      // WEG-, ZWISCHENSTOPP- & FLUGPUNKTE
-      const points = {
-        wien: { name: "Flughafen Wien (VIE)", date: "01.01. & 23.02.2027", lat: 48.1103, lng: 16.5697, desc: "<b>Start & Endpunkt der Reise</b><br>✈️ 01.01.2027: Abflug nach BKK (15:30)<br>✈️ 23.02.2027: Ankunft aus CMB (17:35)", color: "#15803d" },
-        muc: { name: "Flughafen München (MUC)", date: "29.01.2027", lat: 48.3537, lng: 11.7861, desc: "<b>Zielort Stefan</b><br>✈️ 29.01.2027: Ankunft TG926 Direktflug aus Bangkok (18:55 Uhr)", color: "#15803d" },
-        ruh: { name: "Flughafen Riad (RUH)", date: "01.01.2027", lat: 24.9576, lng: 46.6988, desc: "<b>✈️ Zwischenstopp Hinflug (01.01.2027)</b><br>Saudia SV152 aus VIE ➔ Umstieg ➔ Saudia SV846 nach BKK", color: "#059669" },
-        ist: { name: "Flughafen Istanbul (IST)", date: "23.02.2027", lat: 41.2753, lng: 28.7519, desc: "<b>✈️ Zwischenstopp Rückflug (23.02.2027)</b><br>TK1131 aus CMB (Ankunft 15:45) ➔ Weiterflug TK1887 nach VIE (17:15)", color: "#059669" },
-        
-        // BANGKOK FLUGHAFEN & STADT
-        bkk: { 
-          name: "Flughafen Bangkok (BKK)", 
-          date: "01.-02.01. | 12.01. | 27.-29.01.2027",
-          lat: 13.6900, 
-          lng: 100.7501, 
-          desc: `<b>🇹🇭 Drehkreuz Flughafen Suvarnabhumi:</b>
-            <ul class="bkk-popup-list">
-              <li><strong>1. Stopp (01.-02.01.):</strong> Ankunft VIE ➔ Weiterflug Udon Thani</li>
-              <li><strong>2. Stopp (12.01.):</strong> Ankunft CEI ➔ Transfer in die Stadt</li>
-              <li><strong>3. Stopp (29.01.):</strong> Heimflug Stefan (MUC) / Weiterflug Ines (CMB)</li>
-            </ul>`, 
-          color: "#6b21a8" 
-        },
-        bkk_city: {
-          name: "Bangkok Stadtzentrum",
-          date: "12.01. – 15.01. & 27.01. – 29.01.2027",
-          lat: 13.7563,
-          lng: 100.5018,
-          desc: "<b>🇹🇭 Aufenthalt & Kultur in der Metropole:</b><br>Grand Palace, Wat Pho, Chinatown, Sukhumvit & Rooftop Bars",
-          color: "#6b21a8"
-        },
-
-        // COLOMBO FLUGHAFEN & STADT
-        cmb: {
-          name: "Flughafen Colombo (CMB)",
-          date: "29.01. | 02.02. | 23.02.2027",
-          lat: 7.1808,
-          lng: 79.8841,
-          desc: "<b>🇱🇰 Bandaranaike International Airport</b><br>✈️ 29.01.: Ankunft Ines aus BKK<br>✈️ 02.02.: Ankunft Anna aus VIE<br>✈️ 23.02.: Rückflug Ines & Anna nach VIE",
-          color: "#059669"
-        },
-        cmb_city: {
-          name: "Colombo Stadtzentrum",
-          date: "21.02. – 23.02.2027",
-          lat: 6.9344,
-          lng: 79.8428,
-          desc: "<b>🇱🇰 Sri Lankas Hauptstadt erkunden:</b><br>Vibe der Stadt, Pettah Market, Rooftop Bars & Galle Face Green Promenade",
-          color: "#6b21a8"
-        },
-
-        uth: { name: "Udon Thani", date: "02.01. – 05.01.2027", lat: 17.4138, lng: 102.7872, desc: "Isan & Red Lotus Lake", color: "#15803d" },
-        cnx: { name: "Chiang Mai", date: "05.01. – 08.01.2027", lat: 18.7883, lng: 98.9853, desc: "Norden, Doi Inthanon & Tempel", color: "#15803d" },
-        pai: { name: "Pai", date: "08.01. – 11.01.2027", lat: 19.3582, lng: 98.4402, desc: "Canyon, Hot Springs & Night Market", color: "#15803d" },
-        cei: { name: "Chiang Rai", date: "11.01. – 12.01.2027", lat: 19.9105, lng: 99.8406, desc: "Weißer Tempel & Kultur", color: "#15803d" },
-        phiphi: { name: "Ko Phi Phi", date: "15.01. – 18.01.2027", lat: 7.7407, lng: 98.7784, desc: "Maya Bay, Long Beach & Viewpoint", color: "#0d9488" },
-        krabi: { name: "Krabi / Railay", date: "18.01. – 21.01.2027", lat: 8.0863, lng: 98.9063, desc: "Railay Beach, Hong Island & Klettern", color: "#0d9488" },
-        tao: { name: "Koh Tao", date: "21.01. – 24.01.2027", lat: 10.1018, lng: 99.8383, desc: "Schnorcheln & Tanote Bay", color: "#0d9488" },
-        phangan: { name: "Ko Pha-ngan", date: "22.01.2027", lat: 9.7319, lng: 100.0136, desc: "Vollmond Party", color: "#0d9488" },
-        samui: { name: "Koh Samui", date: "24.01. – 27.01.2027", lat: 9.5120, lng: 99.9360, desc: "Ang Thong Marine Park & Fisherman's Village", color: "#0d9488" },
-        
-        // SRI LANKA ORTE
-        anuradhapura: { name: "Anuradhapura", date: "03.02. – 06.02.2027", lat: 8.3114, lng: 80.4037, desc: "Kulturdreieck & UNESCO Radtour", color: "#b45309" },
-        dambulla: { name: "Dambulla", date: "06.02. – 09.02.2027", lat: 7.8731, lng: 80.6517, desc: "Sigiriya Rock, Pidurangala & Elefantensafari", color: "#b45309" },
-        kandy: { name: "Kandy", date: "09.02. – 11.02.2027", lat: 7.2906, lng: 80.6337, desc: "Zahntempel & Start berühmte Zugfahrt", color: "#15803d" },
-        ella: { name: "Ella", date: "11.02. – 15.02.2027", lat: 6.8667, lng: 81.0466, desc: "Nine Arch Bridge, Little Adam's Peak & Wasserfälle", color: "#15803d" },
-        tangalle: { name: "Tangalle", date: "15.02. – 17.02.2027", lat: 6.0243, lng: 80.7941, desc: "Traumstrände an der Südküste", color: "#0d9488" },
-        mirissa: { name: "Mirissa", date: "17.02. – 19.02.2027", lat: 5.9483, lng: 80.4716, desc: "Whale Watching & Coconut Tree Hill", color: "#0d9488" },
-        weligama: { name: "Weligama", date: "19.02. – 21.02.2027", lat: 5.9722, lng: 80.4289, desc: "Surfen & Beach Vibes", color: "#0d9488" }
-      };
-
-      // REGIONALE BOUNDS FÜR STARTZOOM (THAILAND & SRI LANKA)
-      const targetFocusBounds = [
-        [5.0, 97.0], 
-        [20.5, 105.0]
-      ];
-
-      /* 1. ROUTEN-STYLES */
-      const flightStyle = { color: '#059669', weight: 2, opacity: 0.85, dashArray: '5, 5' };
-      const thOverlandStyle = { color: '#0d9488', weight: 3, opacity: 0.9 };
-      const slOverlandStyle = { color: '#b45309', weight: 3, opacity: 0.9 };
-      const trainStyle = { color: '#dc2626', weight: 3.5, opacity: 1, dashArray: '4, 4' };
-
-      // FLÜGE (Luftlinie)
-      L.polyline([[points.wien.lat, points.wien.lng], [points.ruh.lat, points.ruh.lng], [points.bkk.lat, points.bkk.lng]], flightStyle).addTo(map);
-      L.polyline([[points.bkk.lat, points.bkk.lng], [points.uth.lat, points.uth.lng]], flightStyle).addTo(map);
-      L.polyline([[points.uth.lat, points.uth.lng], [points.cnx.lat, points.cnx.lng]], flightStyle).addTo(map);
-      L.polyline([[points.cei.lat, points.cei.lng], [points.bkk.lat, points.bkk.lng]], flightStyle).addTo(map);
-      L.polyline([[points.bkk.lat, points.bkk.lng], [points.phiphi.lat, points.phiphi.lng]], flightStyle).addTo(map);
-      L.polyline([[points.samui.lat, points.samui.lng], [points.bkk.lat, points.bkk.lng]], flightStyle).addTo(map);
-      L.polyline([[points.bkk.lat, points.bkk.lng], [points.muc.lat, points.muc.lng]], flightStyle).addTo(map);
-      L.polyline([[points.bkk.lat, points.bkk.lng], [points.cmb.lat, points.cmb.lng]], flightStyle).addTo(map);
-      L.polyline([[points.cmb.lat, points.cmb.lng], [points.ist.lat, points.ist.lng], [points.wien.lat, points.wien.lng]], flightStyle).addTo(map);
-
-      // TRANSFERS FLUGHAFEN ➔ STADT (Expressway Route)
-      L.polyline([[points.bkk.lat, points.bkk.lng], [13.725, 100.650], [points.bkk_city.lat, points.bkk_city.lng]], { color: '#6b21a8', weight: 2.5, opacity: 0.9, dashArray: '3, 3' }).addTo(map);
-      L.polyline([[points.cmb.lat, points.cmb.lng], [7.080, 79.890], [points.cmb_city.lat, points.cmb_city.lng]], { color: '#6b21a8', weight: 2.5, opacity: 0.9, dashArray: '3, 3' }).addTo(map);
-
-      /* 2. ECHTE LANDWEGE (GEBIRGSPÄSSE, HIGHWAYS & REALE BAHNSTRECKEN) */
-
-      // MINIVAN THAILAND: Chiang Mai ➔ Pai ➔ Chiang Rai (Route 1095 & Route 118 über Gebirgspass)
-      const cnx_pai_cei_road = [
-        [points.cnx.lat, points.cnx.lng],
-        [18.9150, 98.9450], // Mae Rim
-        [19.0850, 98.8970], // Mae Malai Abzweigung
-        [19.1450, 98.6920], // Pa Pae Gebirgspass
-        [19.3020, 98.4900], // Pai Canyon Pass
-        [points.pai.lat, points.pai.lng], // Pai
-        [19.3020, 98.4900],
-        [19.1450, 98.6920],
-        [19.0850, 98.8970], // Zurück zur Hauptstraße
-        [19.0500, 99.2000], // Doi Saket Pass
-        [19.3510, 99.5020], // Wiang Pa Pao
-        [19.6480, 99.5510], // Mae Suai
-        [points.cei.lat, points.cei.lng] // Chiang Rai
-      ];
-      L.polyline(cnx_pai_cei_road, thOverlandStyle).addTo(map);
-
-      // OVERLAND THAILAND INSELN: Krabi ➔ Surat Thani / Donsak ➔ Koh Tao (Ferry + Bus + Ferry)
-      const krabi_tao_route = [
-        [points.krabi.lat, points.krabi.lng],
-        [8.5300, 99.2300],  // Highway 44 Querung
-        [9.1400, 99.3300],  // Surat Thani
-        [9.3180, 99.6920],  // Donsak Pier
-        [9.7319, 100.0136], // Koh Phangan
-        [points.tao.lat, points.tao.lng] // Koh Tao
-      ];
-      L.polyline(krabi_tao_route, thOverlandStyle).addTo(map);
-
-      // INSELÜBERFAHRTEN (Fähre)
-      L.polyline([[points.phiphi.lat, points.phiphi.lng], [points.krabi.lat, points.krabi.lng]], thOverlandStyle).addTo(map);
-      L.polyline([[points.tao.lat, points.tao.lng], [points.phangan.lat, points.phangan.lng], [points.samui.lat, points.samui.lng]], thOverlandStyle).addTo(map);
-
-      // BUS/ZUG SRI LANKA: Colombo/Negombo ➔ Kurunegala ➔ Anuradhapura (Northern Line / A9 Highway)
-      const cmb_anura_road = [
-        [points.cmb.lat, points.cmb.lng],
-        [7.2900, 79.8600], // Negombo Stadt
-        [7.3600, 79.9800], // Giriulla
-        [7.4860, 80.3650], // Kurunegala
-        [7.8120, 80.3010], // Maho Junction
-        [8.0300, 80.3200], // Galgamuwa
-        [points.anuradhapura.lat, points.anuradhapura.lng]
-      ];
-      L.polyline(cmb_anura_road, slOverlandStyle).addTo(map);
-
-      // BUS SRI LANKA: Anuradhapura ➔ Dambulla ➔ Kandy (A9 Highway)
-      const anura_dambulla_kandy_road = [
-        [points.anuradhapura.lat, points.anuradhapura.lng],
-        [8.0410, 80.5870], // Kekirawa
-        [points.dambulla.lat, points.dambulla.lng],
-        [7.4670, 80.6230], // Matale Pass
-        [points.kandy.lat, points.kandy.lng]
-      ];
-      L.polyline(anura_dambulla_kandy_road, slOverlandStyle).addTo(map);
-
-      // 🚆 BERÜHMTE ZUGFAHRT: Kandy ➔ Ella (Main Line Railway durch die Teeplantagen)
-      const kandy_ella_railway = [
-        [points.kandy.lat, points.kandy.lng],
-        [7.2600, 80.5950], // Peradeniya Junction
-        [7.1500, 80.5600], // Gampola
-        [7.0500, 80.5350], // Nawalapitiya
-        [6.8920, 80.5980], // Hatton (Adam's Peak Zugang)
-        [6.8700, 80.6800], // Talawakele Tee-Täler
-        [6.9270, 80.7410], // Nanu Oya (Nuwara Eliya)
-        [6.8770, 80.8120], // Ambewela High Plains
-        [6.8120, 80.8800], // Pattipola Höchster Punkt
-        [6.7680, 80.9570], // Haputale Aussichtspunkt
-        [6.8330, 80.9980], // Bandarawela
-        [points.ella.lat, points.ella.lng] // Ella
-      ];
-      L.polyline(kandy_ella_railway, trainStyle).addTo(map);
-
-      // BUS SRI LANKA: Ella ➔ Tangalle (Wellawaya / A23 Highway)
-      const ella_tangalle_road = [
-        [points.ella.lat, points.ella.lng],
-        [6.7370, 81.1030], // Wellawaya
-        [6.4380, 81.1340], // Thanamalwila
-        [6.1230, 81.0240], // Ambalantota
-        [points.tangalle.lat, points.tangalle.lng]
-      ];
-      L.polyline(ella_tangalle_road, slOverlandStyle).addTo(map);
-
-      // BUS / ZUG KÜSTENSTRASSE: Tangalle ➔ Mirissa ➔ Weligama ➔ Galle ➔ Colombo (A2 Southern Coastal Road)
-      const south_coast_road = [
-        [points.tangalle.lat, points.tangalle.lng],
-        [5.9480, 80.5350], // Matara
-        [points.mirissa.lat, points.mirissa.lng],
-        [points.weligama.lat, points.weligama.lng],
-        [6.0320, 80.2170], // Galle Fort
-        [6.1390, 80.1030], // Hikkaduwa
-        [6.4230, 79.9980], // Bentota
-        [6.5850, 79.9600], // Kalutara
-        [points.cmb_city.lat, points.cmb_city.lng],
-        [points.cmb.lat, points.cmb.lng]
-      ];
-      L.polyline(south_coast_road, slOverlandStyle).addTo(map);
-
-      /* 3. MARKER ERSTELLEN */
-      const markerGroup = L.featureGroup();
-
-      Object.keys(points).forEach(key => {
-        const p = points[key];
-        const pt = [p.lat, p.lng];
-
-        const isHub = ['wien', 'muc', 'bkk', 'cmb'].includes(key);
-        const isCity = ['bkk_city', 'cmb_city'].includes(key);
-        const isStopover = ['ruh', 'ist'].includes(key);
-
-        const popupContent = `
-          <div style="color: #0f172a; font-family: 'Plus Jakarta Sans', sans-serif; min-width: 200px;">
-            <h3 style="margin: 0 0 4px 0; font-size: 1.05rem; color: ${p.color}; border-bottom: 1px solid #cbd5e1; padding-bottom: 4px;">📍 ${p.name}</h3>
-            <span class="popup-date-badge">📅 ${p.date}</span>
-            <div style="font-size: 0.85rem; color: #334155; margin-top: 4px;">${p.desc}</div>
-          </div>
-        `;
-
-        const marker = L.circleMarker(pt, {
-          color: p.color,
-          fillColor: p.color,
-          fillOpacity: 0.9,
-          radius: isHub ? 8 : (isCity ? 7 : (isStopover ? 6 : 6)),
-          weight: isHub ? 3 : 2
-        }).bindPopup(popupContent);
-
-        markerGroup.addLayer(marker);
-
-        markers[p.name] = { marker, lat: p.lat, lng: p.lng };
-        markers[key] = { marker, lat: p.lat, lng: p.lng };
+      map = new maplibregl.Map({
+        container: 'map',
+        style: 'https://tiles.openfreemap.org/styles/liberty', // OpenSource Vektor Style ohne Key
+        center: [98.5, 12.0], // [lng, lat]
+        zoom: 2.2,
+        pitch: 0,
+        projection: 'globe' // 🌍 3D Globus einschalten
       });
 
-      markerGroup.addTo(map);
+      map.addControl(new maplibregl.NavigationControl(), 'top-right');
 
-      /* 4. EINKLAPPBARE LEGENDE UNTEN RECHTS */
-      const legend = L.control({ position: 'bottomright' });
-      legend.onAdd = function() {
-        const div = L.DomUtil.create('div', 'custom-legend');
-        div.innerHTML = `
-          <div class="legend-header" onclick="toggleLegendBody()">
-            <span>📌 Routen-Legende</span>
-            <span id="legendToggleIcon">▲</span>
-          </div>
-          <div class="legend-body" id="legendBody">
-            <div class="legend-item"><span class="legend-color" style="background:#15803d;"></span> Nord-Thailand (Minivan Pass)</div>
-            <div class="legend-item"><span class="legend-color" style="background:#6b21a8;"></span> Bangkok & Colombo Zentrum</div>
-            <div class="legend-item"><span class="legend-color" style="background:#0d9488;"></span> Thailand Inseln & Bus/Fähre</div>
-            <div class="legend-item"><span class="legend-color" style="background:#b45309;"></span> Sri Lanka Bus & Küste</div>
-            <div class="legend-item"><span class="legend-line" style="border-top: 3px dashed #dc2626;"></span> Zug Kandy ➔ Ella (Gebirge)</div>
-            <div class="legend-item"><span class="legend-line" style="border-top: 2px dashed #059669;"></span> Flüge & Zwischenstopps</div>
-          </div>
-        `;
-        L.DomEvent.disableClickPropagation(div);
-        return div;
-      };
-      legend.addTo(map);
+      map.on('load', () => {
+        // HINTERGRUND & OZEAN ANPASSEN FÜR GLOBUS
+        if (map.setFog) {
+          map.setFog({
+            'range': [0.8, 8],
+            'color': '#0b111e',
+            'horizon-blend': 0.1,
+            'space-color': '#000005',
+            'star-intensity': 0.8
+          });
+        }
 
-      // STARTANSICHT AUF THAILAND & SRI LANKA FOKUSSIEREN
-      map.fitBounds(targetFocusBounds, { padding: [20, 20] });
+        // POI PUNKT-DATEN
+        const points = {
+          wien: { name: "Flughafen Wien (VIE)", date: "01.01. & 23.02.2027", lat: 48.1103, lng: 16.5697, desc: "<b>Start & Endpunkt der Reise</b><br>✈️ 01.01.2027: Abflug nach BKK (15:30)<br>✈️ 23.02.2027: Ankunft aus CMB (17:35)", color: "#15803d" },
+          muc: { name: "Flughafen München (MUC)", date: "29.01.2027", lat: 48.3537, lng: 11.7861, desc: "<b>Zielort Stefan</b><br>✈️ 29.01.2027: Ankunft TG926 Direktflug aus Bangkok (18:55 Uhr)", color: "#15803d" },
+          ruh: { name: "Flughafen Riad (RUH)", date: "01.01.2027", lat: 24.9576, lng: 46.6988, desc: "<b>✈️ Zwischenstopp Hinflug (01.01.2027)</b><br>Saudia SV152 aus VIE ➔ Umstieg ➔ Saudia SV846 nach BKK", color: "#059669" },
+          ist: { name: "Flughafen Istanbul (IST)", date: "23.02.2027", lat: 41.2753, lng: 28.7519, desc: "<b>✈️ Zwischenstopp Rückflug (23.02.2027)</b><br>TK1131 aus CMB (Ankunft 15:45) ➔ Weiterflug TK1887 nach VIE (17:15)", color: "#059669" },
+          
+          bkk: { name: "Flughafen Bangkok (BKK)", date: "01.-02.01. | 12.01. | 27.-29.01.2027", lat: 13.6900, lng: 100.7501, desc: "<b>🇹🇭 Drehkreuz Flughafen Suvarnabhumi:</b><ul class=\"bkk-popup-list\"><li><strong>1. Stopp (01.-02.01.):</strong> Ankunft VIE ➔ Weiterflug Udon Thani</li><li><strong>2. Stopp (12.01.):</strong> Ankunft CEI ➔ Transfer in die Stadt</li><li><strong>3. Stopp (29.01.):</strong> Heimflug Stefan (MUC) / Weiterflug Ines (CMB)</li></ul>", color: "#6b21a8" },
+          bkk_city: { name: "Bangkok Stadtzentrum", date: "12.01. – 15.01. & 27.01. – 29.01.2027", lat: 13.7563, lng: 100.5018, desc: "<b>🇹🇭 Aufenthalt & Kultur in der Metropole:</b><br>Grand Palace, Wat Pho, Chinatown, Sukhumvit & Rooftop Bars", color: "#6b21a8" },
+
+          cmb: { name: "Flughafen Colombo (CMB)", date: "29.01. | 02.02. | 23.02.2027", lat: 7.1808, lng: 79.8841, desc: "<b>🇱🇰 Bandaranaike International Airport</b><br>✈️ 29.01.: Ankunft Ines aus BKK<br>✈️ 02.02.: Ankunft Anna aus VIE<br>✈️ 23.02.: Rückflug Ines & Anna nach VIE", color: "#059669" },
+          cmb_city: { name: "Colombo Stadtzentrum", date: "21.02. – 23.02.2027", lat: 6.9344, lng: 79.8428, desc: "<b>🇱🇰 Sri Lankas Hauptstadt erkunden:</b><br>Vibe der Stadt, Pettah Market, Rooftop Bars & Galle Face Green Promenade", color: "#6b21a8" },
+
+          uth: { name: "Udon Thani", date: "02.01. – 05.01.2027", lat: 17.4138, lng: 102.7872, desc: "Isan & Red Lotus Lake", color: "#15803d" },
+          cnx: { name: "Chiang Mai", date: "05.01. – 08.01.2027", lat: 18.7883, lng: 98.9853, desc: "Norden, Doi Inthanon & Tempel", color: "#15803d" },
+          pai: { name: "Pai", date: "08.01. – 11.01.2027", lat: 19.3582, lng: 98.4402, desc: "Canyon, Hot Springs & Night Market", color: "#15803d" },
+          cei: { name: "Chiang Rai", date: "11.01. – 12.01.2027", lat: 19.9105, lng: 99.8406, desc: "Weißer Tempel & Kultur", color: "#15803d" },
+          phiphi: { name: "Ko Phi Phi", date: "15.01. – 18.01.2027", lat: 7.7407, lng: 98.7784, desc: "Maya Bay, Long Beach & Viewpoint", color: "#0d9488" },
+          krabi: { name: "Krabi / Railay", date: "18.01. – 21.01.2027", lat: 8.0863, lng: 98.9063, desc: "Railay Beach, Hong Island & Klettern", color: "#0d9488" },
+          tao: { name: "Koh Tao", date: "21.01. – 24.01.2027", lat: 10.1018, lng: 99.8383, desc: "Schnorcheln & Tanote Bay", color: "#0d9488" },
+          phangan: { name: "Ko Pha-ngan", date: "22.01.2027", lat: 9.7319, lng: 100.0136, desc: "Vollmond Party", color: "#0d9488" },
+          samui: { name: "Koh Samui", date: "24.01. – 27.01.2027", lat: 9.5120, lng: 99.9360, desc: "Ang Thong Marine Park & Fisherman's Village", color: "#0d9488" },
+          
+          anuradhapura: { name: "Anuradhapura", date: "03.02. – 06.02.2027", lat: 8.3114, lng: 80.4037, desc: "Kulturdreieck & UNESCO Radtour", color: "#b45309" },
+          dambulla: { name: "Dambulla", date: "06.02. – 09.02.2027", lat: 7.8731, lng: 80.6517, desc: "Sigiriya Rock, Pidurangala & Elefantensafari", color: "#b45309" },
+          kandy: { name: "Kandy", date: "09.02. – 11.02.2027", lat: 7.2906, lng: 80.6337, desc: "Zahntempel & Start berühmte Zugfahrt", color: "#15803d" },
+          ella: { name: "Ella", date: "11.02. – 15.02.2027", lat: 6.8667, lng: 81.0466, desc: "Nine Arch Bridge, Little Adam's Peak & Wasserfälle", color: "#15803d" },
+          tangalle: { name: "Tangalle", date: "15.02. – 17.02.2027", lat: 6.0243, lng: 80.7941, desc: "Traumstrände an der Südküste", color: "#0d9488" },
+          mirissa: { name: "Mirissa", date: "17.02. – 19.02.2027", lat: 5.9483, lng: 80.4716, desc: "Whale Watching & Coconut Tree Hill", color: "#0d9488" },
+          weligama: { name: "Weligama", date: "19.02. – 21.02.2027", lat: 5.9722, lng: 80.4289, desc: "Surfen & Beach Vibes", color: "#0d9488" }
+        };
+
+        // ROUTEN ALS VEKTOR-LINES HINZUFÜGEN
+        const routes = [
+          // FLÜGE
+          { id: 'flight-1', coords: [[points.wien.lng, points.wien.lat], [points.ruh.lng, points.ruh.lat], [points.bkk.lng, points.bkk.lat]], color: '#059669', dash: [4, 4] },
+          { id: 'flight-2', coords: [[points.bkk.lng, points.bkk.lat], [points.uth.lng, points.uth.lat]], color: '#059669', dash: [4, 4] },
+          { id: 'flight-3', coords: [[points.uth.lng, points.uth.lat], [points.cnx.lng, points.cnx.lat]], color: '#059669', dash: [4, 4] },
+          { id: 'flight-4', coords: [[points.cei.lng, points.cei.lat], [points.bkk.lng, points.bkk.lat]], color: '#059669', dash: [4, 4] },
+          { id: 'flight-5', coords: [[points.bkk.lng, points.bkk.lat], [points.phiphi.lng, points.phiphi.lat]], color: '#059669', dash: [4, 4] },
+          { id: 'flight-6', coords: [[points.samui.lng, points.samui.lat], [points.bkk.lng, points.bkk.lat]], color: '#059669', dash: [4, 4] },
+          { id: 'flight-7', coords: [[points.bkk.lng, points.bkk.lat], [points.muc.lng, points.muc.lat]], color: '#059669', dash: [4, 4] },
+          { id: 'flight-8', coords: [[points.bkk.lng, points.bkk.lat], [points.cmb.lng, points.cmb.lat]], color: '#059669', dash: [4, 4] },
+          { id: 'flight-9', coords: [[points.cmb.lng, points.cmb.lat], [points.ist.lng, points.ist.lat], [points.wien.lng, points.wien.lat]], color: '#059669', dash: [4, 4] },
+
+          // TRANSFERS
+          { id: 'transfer-bkk', coords: [[points.bkk.lng, points.bkk.lat], [100.650, 13.725], [points.bkk_city.lng, points.bkk_city.lat]], color: '#6b21a8', dash: [2, 2] },
+          { id: 'transfer-cmb', coords: [[points.cmb.lng, points.cmb.lat], [79.890, 7.080], [points.cmb_city.lng, points.cmb_city.lat]], color: '#6b21a8', dash: [2, 2] },
+
+          // LANDWEGE THAILAND
+          { id: 'th-road-1', coords: [[points.cnx.lng, points.cnx.lat], [98.9450, 18.9150], [98.8970, 19.0850], [98.6920, 19.1450], [98.4900, 19.3020], [points.pai.lng, points.pai.lat], [98.4900, 19.3020], [98.6920, 19.1450], [98.8970, 19.0850], [99.2000, 19.0500], [99.5020, 19.3510], [99.5510, 19.6480], [points.cei.lng, points.cei.lat]], color: '#0d9488' },
+          { id: 'th-road-2', coords: [[points.krabi.lng, points.krabi.lat], [99.2300, 8.5300], [99.3300, 9.1400], [99.6920, 9.3180], [100.0136, 9.7319], [points.tao.lng, points.tao.lat]], color: '#0d9488' },
+          { id: 'th-ferry-1', coords: [[points.phiphi.lng, points.phiphi.lat], [points.krabi.lng, points.krabi.lat]], color: '#0d9488' },
+          { id: 'th-ferry-2', coords: [[points.tao.lng, points.tao.lat], [points.phangan.lng, points.phangan.lat], [points.samui.lng, points.samui.lat]], color: '#0d9488' },
+
+          // LANDWEGE SRI LANKA
+          { id: 'sl-road-1', coords: [[points.cmb.lng, points.cmb.lat], [79.8600, 7.2900], [79.9800, 7.3600], [80.3650, 7.4860], [80.3010, 7.8120], [80.3200, 8.0300], [points.anuradhapura.lng, points.anuradhapura.lat]], color: '#b45309' },
+          { id: 'sl-road-2', coords: [[points.anuradhapura.lng, points.anuradhapura.lat], [80.5870, 8.0410], [points.dambulla.lng, points.dambulla.lat], [80.6230, 7.4670], [points.kandy.lng, points.kandy.lat]], color: '#b45309' },
+          { id: 'sl-train', coords: [[points.kandy.lng, points.kandy.lat], [80.5950, 7.2600], [80.5600, 7.1500], [80.5350, 7.0500], [80.5980, 6.8920], [80.6800, 6.8700], [80.7410, 6.9270], [80.8120, 6.8770], [80.8800, 6.8120], [80.9570, 6.7680], [80.9980, 6.8330], [points.ella.lng, points.ella.lat]], color: '#dc2626', dash: [3, 3] },
+          { id: 'sl-road-3', coords: [[points.ella.lng, points.ella.lat], [81.1030, 6.7370], [81.1340, 6.4380], [81.0240, 6.1230], [points.tangalle.lng, points.tangalle.lat]], color: '#b45309' },
+          { id: 'sl-road-4', coords: [[points.tangalle.lng, points.tangalle.lat], [80.5350, 5.9480], [points.mirissa.lng, points.mirissa.lat], [points.weligama.lng, points.weligama.lat], [80.2170, 6.0320], [80.1030, 6.1390], [79.9980, 6.4230], [79.9600, 6.5850], [points.cmb_city.lng, points.cmb_city.lat], [points.cmb.lng, points.cmb.lat]], color: '#b45309' }
+        ];
+
+        routes.forEach(r => {
+          map.addSource(r.id, {
+            'type': 'geojson',
+            'data': {
+              'type': 'Feature',
+              'properties': {},
+              'geometry': { 'type': 'LineString', 'coordinates': r.coords }
+            }
+          });
+
+          map.addLayer({
+            'id': r.id,
+            'type': 'line',
+            'source': r.id,
+            'layout': { 'line-join': 'round', 'line-cap': 'round' },
+            'paint': {
+              'line-color': r.color,
+              'line-width': r.dash ? 2 : 3,
+              'line-dasharray': r.dash ? r.dash : [1]
+            }
+          });
+        });
+
+        // MARKER ERZEUGEN
+        Object.keys(points).forEach(key => {
+          const p = points[key];
+          
+          const popupContent = `
+            <div style="color: #0f172a; min-width: 190px;">
+              <h3 style="margin: 0 0 4px 0; font-size: 0.98rem; color: ${p.color}; border-bottom: 1px solid #cbd5e1; padding-bottom: 3px;">📍 ${p.name}</h3>
+              <span class="popup-date-badge">📅 ${p.date}</span>
+              <div style="font-size: 0.82rem; color: #334155; margin-top: 4px;">${p.desc}</div>
+            </div>
+          `;
+
+          const popup = new maplibregl.Popup({ offset: 12 }).setHTML(popupContent);
+
+          const el = document.createElement('div');
+          el.style.width = '14px';
+          el.style.height = '14px';
+          el.style.backgroundColor = p.color;
+          el.style.borderRadius = '50%';
+          el.style.border = '2px solid white';
+          el.style.boxShadow = '0 2px 6px rgba(0,0,0,0.3)';
+          el.style.cursor = 'pointer';
+
+          const marker = new maplibregl.Marker({ element: el })
+            .setLngLat([p.lng, p.lat])
+            .setPopup(popup)
+            .addTo(map);
+
+          markers[p.name] = { marker, lat: p.lat, lng: p.lng };
+          markers[key] = { marker, lat: p.lat, lng: p.lng };
+        });
+      });
     }
 
     function toggleLegendBody() {
@@ -1541,8 +1447,14 @@
       else targetMarker = markers[locationName];
 
       if (targetMarker) {
-        map.flyTo([targetMarker.lat, targetMarker.lng], 10, { duration: 1.2 });
-        targetMarker.marker.openPopup();
+        map.flyTo({
+          center: [targetMarker.lng, targetMarker.lat],
+          zoom: 9,
+          essential: true,
+          duration: 1800
+        });
+        
+        targetMarker.marker.togglePopup();
         document.querySelector('.map-section').scrollIntoView({ behavior: 'smooth' });
       }
     }
@@ -1715,6 +1627,8 @@
       });
     }
 
+
+
     function togglePacked(idx) { packlist[idx].packed = !packlist[idx].packed; savePacklist(); }
     function toggleWorn(idx) { packlist[idx].worn = !packlist[idx].worn; savePacklist(); }
     function changeQty(idx, delta) { packlist[idx].qty = Math.max(1, (packlist[idx].qty || 1) + delta); savePacklist(); }
@@ -1750,7 +1664,7 @@
       document.querySelectorAll('.tab-btn').forEach(tb => tb.classList.remove('active'));
       document.getElementById(tabId).classList.add('active');
       btn.classList.add('active');
-      if (tabId === 'routeTab' && map) setTimeout(() => { map.invalidateSize(); }, 150);
+      if (tabId === 'routeTab' && map) setTimeout(() => { map.resize(); }, 150);
     }
 
     window.addEventListener('DOMContentLoaded', () => {
