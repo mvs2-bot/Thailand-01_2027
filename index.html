@@ -16,9 +16,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- MapLibre GL JS (Vektor-Karte mit 3D Globus, vollkommen kostenlos & ohne API-Key) -->
-  <link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet" />
-  <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+  <!-- CesiumJS (Garantierter 3D-Globus ohne API-Key) -->
+  <link href="https://cesium.com/downloads/cesiumjs/releases/1.114/Widgets/widgets.css" rel="stylesheet">
+  <script src="https://cesium.com/downloads/cesiumjs/releases/1.114/Cesium.js"></script>
 
   <style>
     :root {
@@ -41,7 +41,6 @@
       --inseln: #0d9488;       
       --danger: #dc2626;
 
-      /* Sri Lanka Regionen-Farben */
       --sl-westkueste: #059669;
       --sl-kulturdreieck: #b45309;
       --sl-hochland: #15803d;
@@ -128,7 +127,6 @@
       color: var(--primary);
     }
 
-    /* Tab Navigation */
     .nav-tabs {
       display: flex;
       gap: 8px;
@@ -165,7 +163,6 @@
       display: block;
     }
 
-    /* Kartenansicht & Fullscreen Overlay */
     .map-section {
       margin-bottom: 16px;
       background: var(--card-bg);
@@ -232,13 +229,13 @@
     }
 
     #map {
-      height: 460px;
+      height: 480px;
       width: 100%;
       border-radius: 6px;
       z-index: 1;
       border: 1px solid var(--border);
-      transition: height 0.3s ease;
-      background-color: #0b111e;
+      overflow: hidden;
+      background: #000;
     }
 
     .map-section.fullscreen #map {
@@ -246,15 +243,14 @@
       min-height: 400px;
     }
 
-    /* Custom MapLibre Popups */
-    .maplibregl-popup-content {
-      padding: 10px 12px;
-      border-radius: 6px;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    /* Cesium UI Elements ausblenden */
+    .cesium-viewer-bottom, 
+    .cesium-viewer-animationContainer, 
+    .cesium-viewer-timelineContainer,
+    .cesium-viewer-toolbar {
+      display: none !important;
     }
 
-    /* Einklappbare Legende auf der Karte */
     .custom-legend {
       position: absolute;
       bottom: 25px;
@@ -309,7 +305,6 @@
       flex-shrink: 0;
     }
 
-    /* Länder Switcher direkt unterhalb der Karte */
     .country-switcher {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -347,7 +342,6 @@
       box-shadow: 0 2px 8px rgba(21, 128, 61, 0.25);
     }
 
-    /* Filter & Suche */
     .controls {
       display: flex;
       flex-wrap: wrap;
@@ -394,7 +388,6 @@
       color: #ffffff;
     }
 
-    /* Tabellen Styling */
     .table-wrapper {
       background: var(--card-bg);
       border: 1px solid var(--border);
@@ -459,7 +452,6 @@
       white-space: nowrap;
     }
 
-    /* Personen-Badges */
     .group-badge-ines-stefan {
       display: inline-block;
       font-size: 0.68rem;
@@ -496,7 +488,6 @@
       white-space: nowrap;
     }
 
-    /* Region Tags */
     .tag-region {
       display: inline-block;
       padding: 1px 5px;
@@ -512,7 +503,6 @@
     .tag-inseln { background: #ccfbf1; color: var(--inseln); }
     .tag-default { background: #f1f5f9; color: var(--text-muted); }
 
-    /* Sri Lanka spezifische Regionen Tags */
     .tag-sl-westkueste { background: #d1fae5; color: var(--sl-westkueste); }
     .tag-sl-kulturdreieck { background: #fef3c7; color: var(--sl-kulturdreieck); }
     .tag-sl-hochland { background: #dcfce7; color: var(--sl-hochland); }
@@ -552,19 +542,6 @@
       color: #166534;
     }
 
-    .popup-date-badge {
-      display: inline-block;
-      background: #f1f5f9;
-      color: var(--primary);
-      border: 1px solid var(--border);
-      font-size: 0.78rem;
-      font-weight: 800;
-      padding: 2px 6px;
-      border-radius: 4px;
-      margin-bottom: 4px;
-    }
-
-    /* Interaktive Packliste Styles */
     .info-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
@@ -590,7 +567,6 @@
       margin: 0;
     }
 
-    /* Flugliste Styling */
     .flight-list {
       list-style: none;
       padding: 0;
@@ -789,26 +765,6 @@
       padding: 4px 8px !important;
     }
 
-    .bkk-popup-list {
-      font-size: 0.8rem;
-      line-height: 1.35;
-      margin-top: 5px;
-      padding-left: 0;
-      list-style: none;
-    }
-
-    .bkk-popup-list li {
-      margin-bottom: 4px;
-      padding-bottom: 4px;
-      border-bottom: 1px dashed #cbd5e1;
-    }
-
-    .bkk-popup-list li:last-child {
-      border-bottom: none;
-      margin-bottom: 0;
-      padding-bottom: 0;
-    }
-
     @media (max-width: 860px) {
       .table-wrapper-responsive { display: none; }
       .mobile-cards { display: flex; flex-direction: column; gap: 8px; }
@@ -856,7 +812,7 @@
       <!-- Gesamte Karten-Sektion -->
       <div class="map-section" id="mapSection">
         <div class="map-header">
-          <h2>🗺️ 3D-Globus Gesamtkarte <span style="font-size:0.8rem; font-weight:500; color:var(--text-muted);">(Tabelle anklicken zum Zoomen)</span></h2>
+          <h2>🌍 Echter 3D-Globus <span style="font-size:0.8rem; font-weight:500; color:var(--text-muted);">(Tabelle anklicken zum Anfliegen)</span></h2>
           <button class="btn-fullscreen" onclick="toggleMapFullscreen()" id="fullscreenBtn">
             <span id="fullscreenIcon">🔍</span> <span id="fullscreenText">Vollbild</span>
           </button>
@@ -891,9 +847,7 @@
       </div>
 
       <!-- Suchfeld und Filter-Buttons -->
-      <div class="controls" id="filterControls">
-        <!-- Dynamisch aus JS befüllt -->
-      </div>
+      <div class="controls" id="filterControls"></div>
 
       <!-- Desktop Ansicht (Tabelle) -->
       <div class="table-wrapper table-wrapper-responsive">
@@ -908,9 +862,7 @@
               <th>Unterkunft</th>
             </tr>
           </thead>
-          <tbody id="planTableBody">
-            <!-- Dynamisch aus JS befüllt -->
-          </tbody>
+          <tbody id="planTableBody"></tbody>
         </table>
       </div>
 
@@ -979,9 +931,7 @@
                 <th style="width: 70px; text-align:center;">Aktionen</th>
               </tr>
             </thead>
-            <tbody id="packTableBody">
-              <!-- JS-befüllt -->
-            </tbody>
+            <tbody id="packTableBody"></tbody>
           </table>
         </div>
       </div>
@@ -1044,12 +994,9 @@
   <script>
     let currentCountry = 'thailand';
     let currentRegion = 'all';
-    let map;
+    let viewer;
     const markers = {};
 
-    /* ==========================================================================
-       VOLLBILD-KARTE FUNKTIONALITÄT
-       ========================================================================== */
     function toggleMapFullscreen() {
       const mapSec = document.getElementById('mapSection');
       const text = document.getElementById('fullscreenText');
@@ -1064,81 +1011,69 @@
         text.innerText = 'Vollbild';
         icon.innerText = '🔍';
       }
-
-      setTimeout(() => {
-        if (map) map.resize();
-      }, 300);
     }
 
-    /* ==========================================================================
-       DATEN: THAILAND & SRI LANKA
-       ========================================================================== */
     const thailandData = [
-      { day: "Tag 1", date: "01.01. (Fr)", groupTag: "Ines & Stefan", region: "Anreise", regTag: "tag-default", title: "Start Reise ab Flughafen Wien (VIE)", details: "Flug nach Bangkok (BKK) um 15:30 Uhr (Saudia SV152 + SV846, Stopp in Flughafen Riad RUH)", transport: "✈️ Saudia SV152", hotel: "✈️ Im Flugzeug", locName: "Flughafen Wien (VIE)", lat: 48.1103, lng: 16.5697, color: "#15803d" },
-      { day: "Tag 2", date: "02.01. (Sa)", groupTag: "Ines & Stefan", region: "Isan / Udon Thani", regTag: "tag-default", title: "Ankunft Bangkok ➔ Udon Thani", details: "Ankunft 13:40 am Flughafen BKK ➔ Weiterflug TG008 um 18:20 ➔ Ankunft UTH 19:30, Abholung OW", transport: "✈️ Thai TG008", hotel: "🏠 Bei OW?", locName: "Udon Thani", lat: 17.4138, lng: 102.7872, color: "#15803d" },
-      { day: "Tag 3", date: "03.01. (So)", groupTag: "Ines & Stefan", region: "Isan / Udon Thani", regTag: "tag-default", title: "Udon Thani", details: "Zeit mit OW – Ganzer Tag (Tipp: Red Lotus Lake)", transport: "🚗 Mietwagen/Taxi", hotel: "🏠 Bei OW?", locName: "Udon Thani", lat: 17.4138, lng: 102.7872, color: "#15803d" },
-      { day: "Tag 4", date: "04.01. (Mo)", groupTag: "Ines & Stefan", region: "Isan / Udon Thani", regTag: "tag-default", title: "Udon Thani", details: "Zeit mit OW – Ganzer Tag", transport: "🚗 Mietwagen/Taxi", hotel: "🏠 Bei OW?", locName: "Udon Thani", lat: 17.4138, lng: 102.7872, color: "#15803d" },
-      { day: "Tag 5", date: "05.01. (Di)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Udon Thani ➔ Chiang Mai", details: "Abreise Udon Thani (Nok Air DD703 16:30-17:35), Ankunft Chiang Mai, Altstadt & Street Food", transport: "✈️ Nok Air DD703", hotel: "🏨 EZ in Chiang Mai", locName: "Chiang Mai", lat: 18.7883, lng: 98.9853, color: "#15803d" },
-      { day: "Tag 6", date: "06.01. (Mi)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Chiang Mai / Umland", details: "Tempel-Tour (Wat Chedi Luang, Wat Phra Singh, Wat Phra That Doi Suthep)", transport: "🛵 Grab / Roller", hotel: "🏨 EZ in Chiang Mai", locName: "Chiang Mai", lat: 18.7883, lng: 98.9853, color: "#15803d" },
-      { day: "Tag 7", date: "07.01. (Do)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Chiang Mai / Umland", details: "Tagestour in den Doi Inthanon Nationalpark (Wandern & Wasserfälle - 2565 m)", transport: "🚐 Tagestour", hotel: "🏨 EZ in Chiang Mai", locName: "Chiang Mai", lat: 18.7883, lng: 98.9853, color: "#15803d" },
-      { day: "Tag 8", date: "08.01. (Fr)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Chiang Mai ➔ Pai", details: "Reise nach Pai – ca. 3 h Fahrt (762 Kurven)", transport: "🚐 Minivan (AYA)", hotel: "🏨 EZ in Pai", locName: "Pai", lat: 19.3582, lng: 98.4402, color: "#15803d" },
-      { day: "Tag 9", date: "09.01. (Sa)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Pai / Umland", details: "Wandern Pai Canyon, Land Split & Night Market", transport: "🛵 Roller", hotel: "🏨 EZ in Pai", locName: "Pai", lat: 19.3582, lng: 98.4402, color: "#15803d" },
-      { day: "Tag 10", date: "10.01. (So)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Pai / Umland", details: "Pai genießen: Lod Cave, Bamboo Bridge & Hot Springs", transport: "🛵 Roller", hotel: "🏨 EZ in Pai", locName: "Pai", lat: 19.3582, lng: 98.4402, color: "#15803d" },
-      { day: "Tag 11", date: "11.01. (Mo)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Pai ➔ Chiang Rai", details: "Weiterfahrt nach Chiang Rai, Weißer Tempel & Kultur", transport: "🚐 Minivan", hotel: "🏨 EZ in Chiang Rai", locName: "Chiang Rai", lat: 19.9105, lng: 99.8406, color: "#15803d" },
-      { day: "Tag 12", date: "12.01. (Di)", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Chiang Rai ➔ Bangkok Stadt", details: "Von Chiang Rai mit dem Flugzeug zurück nach Bangkok, Fahrt ins Zentrum", transport: "✈️ Flugzeug / Taxi", hotel: "🏨 EZ in Bangkok", locName: "Bangkok Stadtzentrum", lat: 13.7563, lng: 100.5018, color: "#6b21a8" },
-      { day: "Tag 13", date: "13.01. (Mi)", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Bangkok", details: "Kultur & Tempel (Grand Palace, Wat Pho, Wat Arun)", transport: "🚤 MRT / Boot", hotel: "🏨 EZ in Bangkok", locName: "Bangkok Stadtzentrum", lat: 13.7563, lng: 100.5018, color: "#6b21a8" },
-      { day: "Tag 14", date: "14.01. (Do)", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Bangkok", details: "Chinatown (Yaowarat), Sukhumvit, Rooftop-Bar", transport: "🚆 Skytrain / Grab", hotel: "🏨 EZ in Bangkok", locName: "Bangkok Stadtzentrum", lat: 13.7563, lng: 100.5018, color: "#6b21a8" },
-      { day: "Tag 15", date: "15.01. (Fr)", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Bangkok ➔ Ko Phi Phi", details: "Anreise & Ankommen, Sunset Viewpoint", transport: "✈️ Flug ➔ ⛴️ Fähre", hotel: "🏨 EZ auf Koh Phi Phi", locName: "Ko Phi Phi", lat: 7.7407, lng: 98.7784, color: "#0d9488" },
-      { day: "Tag 16", date: "16.01. (Sa)", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Ko Phi Phi", details: "Ausflug Maya Bay, Pileh Lagoon & Bamboo Island", transport: "🚤 Longtail-Boot", hotel: "🏨 EZ auf Koh Phi Phi", locName: "Ko Phi Phi", lat: 7.7407, lng: 98.7784, color: "#0d9488" },
-      { day: "Tag 17", date: "17.01. (So)", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Ko Phi Phi", details: "Schnorcheln, Entspannen am Long Beach", transport: "🚤 Roller / Wassertaxi", hotel: "🏨 EZ auf Koh Phi Phi", locName: "Ko Phi Phi", lat: 7.7407, lng: 98.7784, color: "#0d9488" },
-      { day: "Tag 18", date: "18.01. (Mo)", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Ko Phi Phi ➔ Krabi", details: "Nachmittags Railay Beach & Phra Nang Cave Beach", transport: "⛴️ Fähre (1.5 - 2 h)", hotel: "🏨 EZ auf Krabi", locName: "Krabi / Railay", lat: 8.0863, lng: 98.9063, color: "#0d9488" },
-      { day: "Tag 19", date: "19.01. (Di)", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Krabi", details: "Tagestrip nach Ko Hong (Lagune & Viewpoint)", transport: "🚤 Longtail-Tour", hotel: "🏨 EZ auf Krabi", locName: "Krabi / Railay", lat: 8.0863, lng: 98.9063, color: "#0d9488" },
-      { day: "Tag 20", date: "20.01. (Mi)", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Krabi", details: "Tiger Cave Temple (Aussicht) oder Mangroven-Kajaktour", transport: "🛵 Roller / Samlor", hotel: "🏨 EZ auf Krabi", locName: "Krabi / Railay", lat: 8.0863, lng: 98.9063, color: "#0d9488" },
-      { day: "Tag 21", date: "21.01. (Do)", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Krabi ➔ Koh Tao", details: "Vor Ort direkt Party-Speedboat-Ticket für 22.01. buchen", transport: "🚌 Fähre + Bus + Fähre", hotel: "🏨 EZ auf Koh Tao", locName: "Koh Tao", lat: 10.1018, lng: 99.8383, color: "#0d9488" },
-      { day: "Tag 22", date: "22.01. (Fr)", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Koh Tao ➔ Ko Pha-ngan ➔ Koh Tao", details: "Abends Vollmond Party auf Koh Pha-ngan", transport: "🚤 Party-Speedboat", hotel: "🏨 EZ auf Koh Tao", locName: "Ko Pha-ngan", lat: 9.7319, lng: 100.0136, color: "#0d9488" },
-      { day: "Tag 23", date: "23.01. (Sa)", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Koh Tao", details: "Ausschlafen, Entspannen, Schnorcheln Tanote Bay", transport: "🛵 Roller / Wassertaxi", hotel: "🏨 EZ auf Koh Tao", locName: "Koh Tao", lat: 10.1018, lng: 99.8383, color: "#0d9488" },
-      { day: "Tag 24", date: "24.01. (So)", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Koh Tao ➔ Ko Samui", details: "Vormittags Trip nach Ko Nang Yuan, nachmittags Überfahrt", transport: "⛴️ Fähre (1.5 - 2 h)", hotel: "🏨 EZ auf Koh Samui", locName: "Koh Samui", lat: 9.5120, lng: 99.9360, color: "#0d9488" },
-      { day: "Tag 25", date: "25.01. (Mo)", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Ko Samui", details: "Tagestrip Ang Thong Marine Nationalpark", transport: "🚤 Boot / Kajak-Tour", hotel: "🏨 EZ auf Koh Samui", locName: "Koh Samui", lat: 9.5120, lng: 99.9360, color: "#0d9488" },
-      { day: "Tag 26", date: "26.01. (Di)", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Ko Samui", details: "Bophut Fisherman's Village, Tempel & Beach Club", transport: "🛵 Roller / Songthaew", hotel: "🏨 EZ auf Koh Samui", locName: "Koh Samui", lat: 9.5120, lng: 99.9360, color: "#0d9488" },
-      { day: "Tag 27", date: "27.01. (Mi)", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Ko Samui ➔ Bangkok Stadt", details: "Transfertag: Rückreise nach Bangkok, Hotelbezug Stadtzentrum", transport: "✈️ Flugzeug (USM ➔ BKK)", hotel: "🏨 EZ in Bangkok", locName: "Bangkok Stadtzentrum", lat: 13.7563, lng: 100.5018, color: "#6b21a8" },
-      { day: "Tag 28", date: "28.01. (Do)", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Bangkok", details: "Entspannter Tag: Souvenirs, Thai-Massage & Lieblingsspots", transport: "🚆 Skytrain / Grab", hotel: "🏨 EZ in Bangkok", locName: "Bangkok Stadtzentrum", lat: 13.7563, lng: 100.5018, color: "#6b21a8" },
-      { day: "Tag 29", date: "29.01. (Fr)", groupTag: "Ines & Stefan", region: "Abschluss", regTag: "tag-default", title: "Bangkok Stadt ➔ Flughafen / Heim- & Weiterflug", details: "Stefan ➔ MUC (TG926 13:00 Direkt) | Ines ➔ CMB (UL405 13:50 Direkt)", transport: "✈️ Flugzeug", hotel: "✈️ Flug / Ceylon Glory", locName: "Flughafen Bangkok (BKK)", lat: 13.6900, lng: 100.7501, color: "#6b21a8" }
+      { day: "Tag 1", date: "01.01. (Fr)", groupTag: "Ines & Stefan", region: "Anreise", regTag: "tag-default", title: "Start Reise ab Flughafen Wien (VIE)", details: "Flug nach Bangkok (BKK) um 15:30 Uhr (Saudia SV152 + SV846, Stopp in Flughafen Riad RUH)", transport: "✈️ Saudia SV152", hotel: "✈️ Im Flugzeug", locName: "Flughafen Wien (VIE)", lat: 48.1103, lng: 16.5697 },
+      { day: "Tag 2", date: "02.01. (Sa)", groupTag: "Ines & Stefan", region: "Isan / Udon Thani", regTag: "tag-default", title: "Ankunft Bangkok ➔ Udon Thani", details: "Ankunft 13:40 am Flughafen BKK ➔ Weiterflug TG008 um 18:20 ➔ Ankunft UTH 19:30, Abholung OW", transport: "✈️ Thai TG008", hotel: "🏠 Bei OW?", locName: "Udon Thani", lat: 17.4138, lng: 102.7872 },
+      { day: "Tag 3", date: "03.01. (So)", groupTag: "Ines & Stefan", region: "Isan / Udon Thani", regTag: "tag-default", title: "Udon Thani", details: "Zeit mit OW – Ganzer Tag (Tipp: Red Lotus Lake)", transport: "🚗 Mietwagen/Taxi", hotel: "🏠 Bei OW?", locName: "Udon Thani", lat: 17.4138, lng: 102.7872 },
+      { day: "Tag 4", date: "04.01. (Mo)", groupTag: "Ines & Stefan", region: "Isan / Udon Thani", regTag: "tag-default", title: "Udon Thani", details: "Zeit mit OW – Ganzer Tag", transport: "🚗 Mietwagen/Taxi", hotel: "🏠 Bei OW?", locName: "Udon Thani", lat: 17.4138, lng: 102.7872 },
+      { day: "Tag 5", date: "05.01. (Di)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Udon Thani ➔ Chiang Mai", details: "Abreise Udon Thani (Nok Air DD703 16:30-17:35), Ankunft Chiang Mai, Altstadt & Street Food", transport: "✈️ Nok Air DD703", hotel: "🏨 EZ in Chiang Mai", locName: "Chiang Mai", lat: 18.7883, lng: 98.9853 },
+      { day: "Tag 6", date: "06.01. (Mi)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Chiang Mai / Umland", details: "Tempel-Tour (Wat Chedi Luang, Wat Phra Singh, Wat Phra That Doi Suthep)", transport: "🛵 Grab / Roller", hotel: "🏨 EZ in Chiang Mai", locName: "Chiang Mai", lat: 18.7883, lng: 98.9853 },
+      { day: "Tag 7", date: "07.01. (Do)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Chiang Mai / Umland", details: "Tagestour in den Doi Inthanon Nationalpark (Wandern & Wasserfälle - 2565 m)", transport: "🚐 Tagestour", hotel: "🏨 EZ in Chiang Mai", locName: "Chiang Mai", lat: 18.7883, lng: 98.9853 },
+      { day: "Tag 8", date: "08.01. (Fr)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Chiang Mai ➔ Pai", details: "Reise nach Pai – ca. 3 h Fahrt (762 Kurven)", transport: "🚐 Minivan (AYA)", hotel: "🏨 EZ in Pai", locName: "Pai", lat: 19.3582, lng: 98.4402 },
+      { day: "Tag 9", date: "09.01. (Sa)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Pai / Umland", details: "Wandern Pai Canyon, Land Split & Night Market", transport: "🛵 Roller", hotel: "🏨 EZ in Pai", locName: "Pai", lat: 19.3582, lng: 98.4402 },
+      { day: "Tag 10", date: "10.01. (So)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Pai / Umland", details: "Pai genießen: Lod Cave, Bamboo Bridge & Hot Springs", transport: "🛵 Roller", hotel: "🏨 EZ in Pai", locName: "Pai", lat: 19.3582, lng: 98.4402 },
+      { day: "Tag 11", date: "11.01. (Mo)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Pai ➔ Chiang Rai", details: "Weiterfahrt nach Chiang Rai, Weißer Tempel & Kultur", transport: "🚐 Minivan", hotel: "🏨 EZ in Chiang Rai", locName: "Chiang Rai", lat: 19.9105, lng: 99.8406 },
+      { day: "Tag 12", date: "12.01. (Di)", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Chiang Rai ➔ Bangkok Stadt", details: "Von Chiang Rai mit dem Flugzeug zurück nach Bangkok, Fahrt ins Zentrum", transport: "✈️ Flugzeug / Taxi", hotel: "🏨 EZ in Bangkok", locName: "Bangkok Stadtzentrum", lat: 13.7563, lng: 100.5018 },
+      { day: "Tag 13", date: "13.01. (Mi)", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Bangkok", details: "Kultur & Tempel (Grand Palace, Wat Pho, Wat Arun)", transport: "🚤 MRT / Boot", hotel: "🏨 EZ in Bangkok", locName: "Bangkok Stadtzentrum", lat: 13.7563, lng: 100.5018 },
+      { day: "Tag 14", date: "14.01. (Do)", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Bangkok", details: "Chinatown (Yaowarat), Sukhumvit, Rooftop-Bar", transport: "🚆 Skytrain / Grab", hotel: "🏨 EZ in Bangkok", locName: "Bangkok Stadtzentrum", lat: 13.7563, lng: 100.5018 },
+      { day: "Tag 15", date: "15.01. (Fr)", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Bangkok ➔ Ko Phi Phi", details: "Anreise & Ankommen, Sunset Viewpoint", transport: "✈️ Flug ➔ ⛴️ Fähre", hotel: "🏨 EZ auf Koh Phi Phi", locName: "Ko Phi Phi", lat: 7.7407, lng: 98.7784 },
+      { day: "Tag 16", date: "16.01. (Sa)", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Ko Phi Phi", details: "Ausflug Maya Bay, Pileh Lagoon & Bamboo Island", transport: "🚤 Longtail-Boot", hotel: "🏨 EZ auf Koh Phi Phi", locName: "Ko Phi Phi", lat: 7.7407, lng: 98.7784 },
+      { day: "Tag 17", date: "17.01. (So)", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Ko Phi Phi", details: "Schnorcheln, Entspannen am Long Beach", transport: "🚤 Roller / Wassertaxi", hotel: "🏨 EZ auf Koh Phi Phi", locName: "Ko Phi Phi", lat: 7.7407, lng: 98.7784 },
+      { day: "Tag 18", date: "18.01. (Mo)", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Ko Phi Phi ➔ Krabi", details: "Nachmittags Railay Beach & Phra Nang Cave Beach", transport: "⛴️ Fähre (1.5 - 2 h)", hotel: "🏨 EZ auf Krabi", locName: "Krabi / Railay", lat: 8.0863, lng: 98.9063 },
+      { day: "Tag 19", date: "19.01. (Di)", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Krabi", details: "Tagestrip nach Ko Hong (Lagune & Viewpoint)", transport: "🚤 Longtail-Tour", hotel: "🏨 EZ auf Krabi", locName: "Krabi / Railay", lat: 8.0863, lng: 98.9063 },
+      { day: "Tag 20", date: "20.01. (Mi)", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Krabi", details: "Tiger Cave Temple (Aussicht) oder Mangroven-Kajaktour", transport: "🛵 Roller / Samlor", hotel: "🏨 EZ auf Krabi", locName: "Krabi / Railay", lat: 8.0863, lng: 98.9063 },
+      { day: "Tag 21", date: "21.01. (Do)", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Krabi ➔ Koh Tao", details: "Vor Ort direkt Party-Speedboat-Ticket für 22.01. buchen", transport: "🚌 Fähre + Bus + Fähre", hotel: "🏨 EZ auf Koh Tao", locName: "Koh Tao", lat: 10.1018, lng: 99.8383 },
+      { day: "Tag 22", date: "22.01. (Fr)", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Koh Tao ➔ Ko Pha-ngan ➔ Koh Tao", details: "Abends Vollmond Party auf Koh Pha-ngan", transport: "🚤 Party-Speedboat", hotel: "🏨 EZ auf Koh Tao", locName: "Ko Pha-ngan", lat: 9.7319, lng: 100.0136 },
+      { day: "Tag 23", date: "23.01. (Sa)", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Koh Tao", details: "Ausschlafen, Entspannen, Schnorcheln Tanote Bay", transport: "🛵 Roller / Wassertaxi", hotel: "🏨 EZ auf Koh Tao", locName: "Koh Tao", lat: 10.1018, lng: 99.8383 },
+      { day: "Tag 24", date: "24.01. (So)", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Koh Tao ➔ Ko Samui", details: "Vormittags Trip nach Ko Nang Yuan, nachmittags Überfahrt", transport: "⛴️ Fähre (1.5 - 2 h)", hotel: "🏨 EZ auf Koh Samui", locName: "Koh Samui", lat: 9.5120, lng: 99.9360 },
+      { day: "Tag 25", date: "25.01. (Mo)", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Ko Samui", details: "Tagestrip Ang Thong Marine Nationalpark", transport: "🚤 Boot / Kajak-Tour", hotel: "🏨 EZ auf Koh Samui", locName: "Koh Samui", lat: 9.5120, lng: 99.9360 },
+      { day: "Tag 26", date: "26.01. (Di)", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Ko Samui", details: "Bophut Fisherman's Village, Tempel & Beach Club", transport: "🛵 Roller / Songthaew", hotel: "🏨 EZ auf Koh Samui", locName: "Koh Samui", lat: 9.5120, lng: 99.9360 },
+      { day: "Tag 27", date: "27.01. (Mi)", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Ko Samui ➔ Bangkok Stadt", details: "Transfertag: Rückreise nach Bangkok, Hotelbezug Stadtzentrum", transport: "✈️ Flugzeug (USM ➔ BKK)", hotel: "🏨 EZ in Bangkok", locName: "Bangkok Stadtzentrum", lat: 13.7563, lng: 100.5018 },
+      { day: "Tag 28", date: "28.01. (Do)", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Bangkok", details: "Entspannter Tag: Souvenirs, Thai-Massage & Lieblingsspots", transport: "🚆 Skytrain / Grab", hotel: "🏨 EZ in Bangkok", locName: "Bangkok Stadtzentrum", lat: 13.7563, lng: 100.5018 },
+      { day: "Tag 29", date: "29.01. (Fr)", groupTag: "Ines & Stefan", region: "Abschluss", regTag: "tag-default", title: "Bangkok Stadt ➔ Flughafen / Heim- & Weiterflug", details: "Stefan ➔ MUC (TG926 13:00 Direkt) | Ines ➔ CMB (UL405 13:50 Direkt)", transport: "✈️ Flugzeug", hotel: "✈️ Flug / Ceylon Glory", locName: "Flughafen Bangkok (BKK)", lat: 13.6900, lng: 100.7501 }
     ];
 
     const sriLankaData = [
-      // INES ALLEINE
-      { day: "Tag 1", date: "30.01. (Sa)", groupTag: "Ines alleine", region: "Westküste", regTag: "tag-sl-westkueste", title: "Negombo (Ines alleine)", details: "Akklimatisieren in Negombo, mögliche Aktivitäten auschecken, Strand.", transport: "🛵 TukTuk / Zu Fuß", hotel: "🏨 Ceylon Glory Hostel (gebucht)", locName: "Flughafen Colombo (CMB)", lat: 7.1808, lng: 79.8841, color: "#059669" },
-      { day: "Tag 2", date: "31.01. (So)", groupTag: "Ines alleine", region: "Westküste", regTag: "tag-sl-westkueste", title: "Negombo (Ines alleine)", details: "Aktivität & Entspannen am Strand.", transport: "🛵 TukTuk", hotel: "🏨 Ceylon Glory Hostel (gebucht)", locName: "Flughafen Colombo (CMB)", lat: 7.1808, lng: 79.8841, color: "#059669" },
-      { day: "Tag 3", date: "01.02. (Mo)", groupTag: "Ines alleine", region: "Westküste", regTag: "tag-sl-westkueste", title: "Negombo (Ines alleine)", details: "Zugfahrt Kandy ➔ Ella zwingend online buchen!", transport: "🛵 TukTuk", hotel: "🏨 noch offen", locName: "Flughafen Colombo (CMB)", lat: 7.1808, lng: 79.8841, color: "#059669" },
+      { day: "Tag 1", date: "30.01. (Sa)", groupTag: "Ines alleine", region: "Westküste", regTag: "tag-sl-westkueste", title: "Negombo (Ines alleine)", details: "Akklimatisieren in Negombo, mögliche Aktivitäten auschecken, Strand.", transport: "🛵 TukTuk / Zu Fuß", hotel: "🏨 Ceylon Glory Hostel (gebucht)", locName: "Flughafen Colombo (CMB)", lat: 7.1808, lng: 79.8841 },
+      { day: "Tag 2", date: "31.01. (So)", groupTag: "Ines alleine", region: "Westküste", regTag: "tag-sl-westkueste", title: "Negombo (Ines alleine)", details: "Aktivität & Entspannen am Strand.", transport: "🛵 TukTuk", hotel: "🏨 Ceylon Glory Hostel (gebucht)", locName: "Flughafen Colombo (CMB)", lat: 7.1808, lng: 79.8841 },
+      { day: "Tag 3", date: "01.02. (Mo)", groupTag: "Ines alleine", region: "Westküste", regTag: "tag-sl-westkueste", title: "Negombo (Ines alleine)", details: "Zugfahrt Kandy ➔ Ella zwingend online buchen!", transport: "🛵 TukTuk", hotel: "🏨 noch offen", locName: "Flughafen Colombo (CMB)", lat: 7.1808, lng: 79.8841 },
 
-      // INES MIT ANNA
-      { day: "Tag 1", date: "02.02. (Di)", groupTag: "Ines & Anna", region: "Westküste", regTag: "tag-sl-westkueste", title: "Negombo / Colombo (Ankunft Anna)", details: "Ankunft Anna (05:00-06:00). Gemütlicher Tag, Kaffee trinken, Planung.", transport: "🚕 Taxi / TukTuk", hotel: "🏨 noch offen", locName: "Flughafen Colombo (CMB)", lat: 7.1808, lng: 79.8841, color: "#059669" },
-      { day: "Tag 2", date: "03.02. (Mi)", groupTag: "Ines & Anna", region: "Kulturdreieck", regTag: "tag-sl-kulturdreieck", title: "Negombo/Colombo ➔ Anuradhapura", details: "Einchecken, Akklimatisieren, TukTuk nach Mihintale organisieren.", transport: "🚆 Zug (Direkt) / Bus", hotel: "🏨 noch offen", locName: "Anuradhapura", lat: 8.3114, lng: 80.4037, color: "#b45309" },
-      { day: "Tag 3", date: "04.02. (Do)", groupTag: "Ines & Anna", region: "Kulturdreieck", regTag: "tag-sl-kulturdreieck", title: "Anuradhapura", details: "Ancient Anuradhapura mit dem Fahrrad erkunden (UNESCO World Heritage).", transport: "🚲 Fahrrad", hotel: "🏨 noch offen", locName: "Anuradhapura", lat: 8.3114, lng: 80.4037, color: "#b45309" },
-      { day: "Tag 4", date: "05.02. (Fr)", groupTag: "Ines & Anna", region: "Kulturdreieck", regTag: "tag-sl-kulturdreieck", title: "Anuradhapura", details: "Vormittag Mihintale, Weiterreise planen.", transport: "🛺 TukTuk", hotel: "🏨 noch offen", locName: "Anuradhapura", lat: 8.3114, lng: 80.4037, color: "#b45309" },
-      { day: "Tag 5", date: "06.02. (Sa)", groupTag: "Ines & Anna", region: "Kulturdreieck", regTag: "tag-sl-kulturdreieck", title: "Anuradhapura ➔ Dambulla", details: "Sigiriya Rock (33€ p.P., Alternativ: Pidurangala Felsen ca. 3€).", transport: "🚌 Bus (ca. 1h 20m)", hotel: "🏨 noch offen", locName: "Dambulla", lat: 7.8731, lng: 80.6517, color: "#b45309" },
-      { day: "Tag 6", date: "07.02. (So)", groupTag: "Ines & Anna", region: "Kulturdreieck", regTag: "tag-sl-kulturdreieck", title: "Dambulla", details: "Elefantensafari z.B. im Hurulu Eco Park oder Minneriya NP.", transport: "🛺 Jeep Safari", hotel: "🏨 noch offen", locName: "Dambulla", lat: 7.8731, lng: 80.6517, color: "#b45309" },
-      { day: "Tag 7", date: "08.02. (Mo)", groupTag: "Ines & Anna", region: "Kulturdreieck", regTag: "tag-sl-kulturdreieck", title: "Dambulla", details: "Höhlentempel von Dambulla erkunden.", transport: "🛺 TukTuk", hotel: "🏨 noch offen", locName: "Dambulla", lat: 7.8731, lng: 80.6517, color: "#b45309" },
-      { day: "Tag 8", date: "09.02. (Di)", groupTag: "Ines & Anna", region: "Zentrales Hochland", regTag: "tag-sl-hochland", title: "Dambulla ➔ Kandy", details: "Weiterfahrt ins Hochland nach Kandy.", transport: "🛺 TukTuk / Bus (3h)", hotel: "🏨 noch offen", locName: "Kandy", lat: 7.2906, lng: 80.6337, color: "#15803d" },
-      { day: "Tag 9", date: "10.02. (Mi)", groupTag: "Ines & Anna", region: "Zentrales Hochland", regTag: "tag-sl-hochland", title: "Kandy", details: "Zahntempel (Sri Dalada Maligawa), Buddha Statue, Kandy Dance Show.", transport: "🛺 TukTuk", hotel: "🏨 noch offen", locName: "Kandy", lat: 7.2906, lng: 80.6337, color: "#15803d" },
-      { day: "Tag 10", date: "11.02. (Do)", groupTag: "Ines & Anna", region: "Zentrales Hochland", regTag: "tag-sl-hochland", title: "Kandy ➔ Ella", details: "Berühmte ZUGFAHRT Kandy ➔ Ella (ca. 7h durch die Teeplantagen)!", transport: "🚆 ZUGFAHRT (7h)", hotel: "🏨 noch offen", locName: "Ella", lat: 6.8667, lng: 81.0466, color: "#15803d" },
-      { day: "Tag 11", date: "12.02. (Fr)", groupTag: "Ines & Anna", region: "Zentrales Hochland", regTag: "tag-sl-hochland", title: "Ella", details: "Nine Arch Bridge mit dem Roller entdecken.", transport: "🛵 Scooter", hotel: "🏨 noch offen", locName: "Ella", lat: 6.8667, lng: 81.0466, color: "#15803d" },
-      { day: "Tag 12", date: "13.02. (Sa)", groupTag: "Ines & Anna", region: "Zentrales Hochland", regTag: "tag-sl-hochland", title: "Ella", details: "Little Adam's Peak zum Sonnenuntergang.", transport: "🛵 Scooter", hotel: "🏨 noch offen", locName: "Ella", lat: 6.8667, lng: 81.0466, color: "#15803d" },
-      { day: "Tag 13", date: "14.02. (So)", groupTag: "Ines & Anna", region: "Zentrales Hochland", regTag: "tag-sl-hochland", title: "Ella", details: "Ella Rock Wanderung, Ravana Wasserfall oder Diyaluma Falls.", transport: "🛵 Scooter", hotel: "🏨 noch offen", locName: "Ella", lat: 6.8667, lng: 81.0466, color: "#15803d" },
-      { day: "Tag 14", date: "15.02. (Mo)", groupTag: "Ines & Anna", region: "Südküste", regTag: "tag-sl-suedkueste", title: "Ella ➔ Tangalle", details: "Pekoe Trail Etappe 16 - Tageswanderung vor Fahrt an die Küste.", transport: "🚌 Bus (ca. 3.5h)", hotel: "🏨 noch offen", locName: "Tangalle", lat: 6.0243, lng: 80.7941, color: "#0d9488" },
-      { day: "Tag 15", date: "16.02. (Di)", groupTag: "Ines & Anna", region: "Südküste", regTag: "tag-sl-suedkueste", title: "Tangalle", details: "Traumstrände an der Südküste mit dem Scooter erkunden.", transport: "🛵 Scooter", hotel: "🏨 noch offen", locName: "Tangalle", lat: 6.0243, lng: 80.7941, color: "#0d9488" },
-      { day: "Tag 16", date: "17.02. (Mi)", groupTag: "Ines & Anna", region: "Südküste", regTag: "tag-sl-suedkueste", title: "Tangalle ➔ Mirissa", details: "Weiterfahrt entlang der Küste nach Mirissa.", transport: "🚌 Bus (ca. 3h)", hotel: "🏨 noch offen", locName: "Mirissa", lat: 5.9483, lng: 80.4716, color: "#0d9488" },
-      { day: "Tag 17", date: "18.02. (Do)", groupTag: "Ines & Anna", region: "Südküste", regTag: "tag-sl-suedkueste", title: "Mirissa", details: "Whale Watching Ausflug, Coconut Tree Hill Fotospot.", transport: "🛺 TukTuk", hotel: "🏨 noch offen", locName: "Mirissa", lat: 5.9483, lng: 80.4716, color: "#0d9488" },
-      { day: "Tag 18", date: "19.02. (Fr)", groupTag: "Ines & Anna", region: "Südküste", regTag: "tag-sl-suedkueste", title: "Mirissa ➔ Weligama", details: "Surfen für Anfängerinnen in Weligama Bay.", transport: "🛺 TukTuk (20 min)", hotel: "🏨 noch offen", locName: "Weligama", lat: 5.9722, lng: 80.4289, color: "#0d9488" },
-      { day: "Tag 19", date: "20.02. (Sa)", groupTag: "Ines & Anna", region: "Südküste", regTag: "tag-sl-suedkueste", title: "Weligama", details: "Strand- & Surftage im Süden ausklingen lassen.", transport: "🛵 Scooter", hotel: "🏨 noch offen", locName: "Weligama", lat: 5.9722, lng: 80.4289, color: "#0d9488" },
-      { day: "Tag 20", date: "21.02. (So)", groupTag: "Ines & Anna", region: "Colombo", regTag: "tag-sl-colombo", title: "Weligama ➔ Colombo Stadt", details: "Fahrt ins Zentrum: Vibe der Hauptstadt spüren, Rooftop Bars, Galle Face Promenade.", transport: "🚆 Zug (2.5h) / Bus", hotel: "🏨 Empfehlung: Bunkyard", locName: "Colombo Stadtzentrum", lat: 6.9344, lng: 79.8428, color: "#6b21a8" },
-      { day: "Tag 21", date: "22.02. (Mo)", groupTag: "Ines & Anna", region: "Colombo", regTag: "tag-sl-colombo", title: "Colombo Stadt", details: "Entspannter Tag in Colombo, Souvenirs & Café.", transport: "🛺 TukTuk", hotel: "🏨 Empfehlung: Bunkyard", locName: "Colombo Stadtzentrum", lat: 6.9344, lng: 79.8428, color: "#6b21a8" },
-      { day: "Tag 22", date: "23.02. (Di)", groupTag: "Ines & Anna", region: "Abreise", regTag: "tag-default", title: "Colombo ➔ Flughafen CMB ➔ Wien", details: "Fahrt zum Flughafen, Abflug CMB 09:15 ➔ IST 15:45 ➔ Ankunft Wien 17:35 Uhr (TK1131 & TK1887).", transport: "✈️ Turkish Airlines", hotel: "✈️ Im Flugzeug", locName: "Flughafen Colombo (CMB)", lat: 7.1808, lng: 79.8841, color: "#059669" }
+      { day: "Tag 1", date: "02.02. (Di)", groupTag: "Ines & Anna", region: "Westküste", regTag: "tag-sl-westkueste", title: "Negombo / Colombo (Ankunft Anna)", details: "Ankunft Anna (05:00-06:00). Gemütlicher Tag, Kaffee trinken, Planung.", transport: "🚕 Taxi / TukTuk", hotel: "🏨 noch offen", locName: "Flughafen Colombo (CMB)", lat: 7.1808, lng: 79.8841 },
+      { day: "Tag 2", date: "03.02. (Mi)", groupTag: "Ines & Anna", region: "Kulturdreieck", regTag: "tag-sl-kulturdreieck", title: "Negombo/Colombo ➔ Anuradhapura", details: "Einchecken, Akklimatisieren, TukTuk nach Mihintale organisieren.", transport: "🚆 Zug (Direkt) / Bus", hotel: "🏨 noch offen", locName: "Anuradhapura", lat: 8.3114, lng: 80.4037 },
+      { day: "Tag 3", date: "04.02. (Do)", groupTag: "Ines & Anna", region: "Kulturdreieck", regTag: "tag-sl-kulturdreieck", title: "Anuradhapura", details: "Ancient Anuradhapura mit dem Fahrrad erkunden (UNESCO World Heritage).", transport: "🚲 Fahrrad", hotel: "🏨 noch offen", locName: "Anuradhapura", lat: 8.3114, lng: 80.4037 },
+      { day: "Tag 4", date: "05.02. (Fr)", groupTag: "Ines & Anna", region: "Kulturdreieck", regTag: "tag-sl-kulturdreieck", title: "Anuradhapura", details: "Vormittag Mihintale, Weiterreise planen.", transport: "🛺 TukTuk", hotel: "🏨 noch offen", locName: "Anuradhapura", lat: 8.3114, lng: 80.4037 },
+      { day: "Tag 5", date: "06.02. (Sa)", groupTag: "Ines & Anna", region: "Kulturdreieck", regTag: "tag-sl-kulturdreieck", title: "Anuradhapura ➔ Dambulla", details: "Sigiriya Rock (33€ p.P., Alternativ: Pidurangala Felsen ca. 3€).", transport: "🚌 Bus (ca. 1h 20m)", hotel: "🏨 noch offen", locName: "Dambulla", lat: 7.8731, lng: 80.6517 },
+      { day: "Tag 6", date: "07.02. (So)", groupTag: "Ines & Anna", region: "Kulturdreieck", regTag: "tag-sl-kulturdreieck", title: "Dambulla", details: "Elefantensafari z.B. im Hurulu Eco Park oder Minneriya NP.", transport: "🛺 Jeep Safari", hotel: "🏨 noch offen", locName: "Dambulla", lat: 7.8731, lng: 80.6517 },
+      { day: "Tag 7", date: "08.02. (Mo)", groupTag: "Ines & Anna", region: "Kulturdreieck", regTag: "tag-sl-kulturdreieck", title: "Dambulla", details: "Höhlentempel von Dambulla erkunden.", transport: "🛺 TukTuk", hotel: "🏨 noch offen", locName: "Dambulla", lat: 7.8731, lng: 80.6517 },
+      { day: "Tag 8", date: "09.02. (Di)", groupTag: "Ines & Anna", region: "Zentrales Hochland", regTag: "tag-sl-hochland", title: "Dambulla ➔ Kandy", details: "Weiterfahrt ins Hochland nach Kandy.", transport: "🛺 TukTuk / Bus (3h)", hotel: "🏨 noch offen", locName: "Kandy", lat: 7.2906, lng: 80.6337 },
+      { day: "Tag 9", date: "10.02. (Mi)", groupTag: "Ines & Anna", region: "Zentrales Hochland", regTag: "tag-sl-hochland", title: "Kandy", details: "Zahntempel (Sri Dalada Maligawa), Buddha Statue, Kandy Dance Show.", transport: "🛺 TukTuk", hotel: "🏨 noch offen", locName: "Kandy", lat: 7.2906, lng: 80.6337 },
+      { day: "Tag 10", date: "11.02. (Do)", groupTag: "Ines & Anna", region: "Zentrales Hochland", regTag: "tag-sl-hochland", title: "Kandy ➔ Ella", details: "Berühmte ZUGFAHRT Kandy ➔ Ella (ca. 7h durch die Teeplantagen)!", transport: "🚆 ZUGFAHRT (7h)", hotel: "🏨 noch offen", locName: "Ella", lat: 6.8667, lng: 81.0466 },
+      { day: "Tag 11", date: "12.02. (Fr)", groupTag: "Ines & Anna", region: "Zentrales Hochland", regTag: "tag-sl-hochland", title: "Ella", details: "Nine Arch Bridge mit dem Roller entdecken.", transport: "🛵 Scooter", hotel: "🏨 noch offen", locName: "Ella", lat: 6.8667, lng: 81.0466 },
+      { day: "Tag 12", date: "13.02. (Sa)", groupTag: "Ines & Anna", region: "Zentrales Hochland", regTag: "tag-sl-hochland", title: "Ella", details: "Little Adam's Peak zum Sonnenuntergang.", transport: "🛵 Scooter", hotel: "🏨 noch offen", locName: "Ella", lat: 6.8667, lng: 81.0466 },
+      { day: "Tag 13", date: "14.02. (So)", groupTag: "Ines & Anna", region: "Zentrales Hochland", regTag: "tag-sl-hochland", title: "Ella", details: "Ella Rock Wanderung, Ravana Wasserfall oder Diyaluma Falls.", transport: "🛵 Scooter", hotel: "🏨 noch offen", locName: "Ella", lat: 6.8667, lng: 81.0466 },
+      { day: "Tag 14", date: "15.02. (Mo)", groupTag: "Ines & Anna", region: "Südküste", regTag: "tag-sl-suedkueste", title: "Ella ➔ Tangalle", details: "Pekoe Trail Etappe 16 - Tageswanderung vor Fahrt an die Küste.", transport: "🚌 Bus (ca. 3.5h)", hotel: "🏨 noch offen", locName: "Tangalle", lat: 6.0243, lng: 80.7941 },
+      { day: "Tag 15", date: "16.02. (Di)", groupTag: "Ines & Anna", region: "Südküste", regTag: "tag-sl-suedkueste", title: "Tangalle", details: "Traumstrände an der Südküste mit dem Scooter erkunden.", transport: "🛵 Scooter", hotel: "🏨 noch offen", locName: "Tangalle", lat: 6.0243, lng: 80.7941 },
+      { day: "Tag 16", date: "17.02. (Mi)", groupTag: "Ines & Anna", region: "Südküste", regTag: "tag-sl-suedkueste", title: "Tangalle ➔ Mirissa", details: "Weiterfahrt entlang der Küste nach Mirissa.", transport: "🚌 Bus (ca. 3h)", hotel: "🏨 noch offen", locName: "Mirissa", lat: 5.9483, lng: 80.4716 },
+      { day: "Tag 17", date: "18.02. (Do)", groupTag: "Ines & Anna", region: "Südküste", regTag: "tag-sl-suedkueste", title: "Mirissa", details: "Whale Watching Ausflug, Coconut Tree Hill Fotospot.", transport: "🛺 TukTuk", hotel: "🏨 noch offen", locName: "Mirissa", lat: 5.9483, lng: 80.4716 },
+      { day: "Tag 18", date: "19.02. (Fr)", groupTag: "Ines & Anna", region: "Südküste", regTag: "tag-sl-suedkueste", title: "Mirissa ➔ Weligama", details: "Surfen für Anfängerinnen in Weligama Bay.", transport: "🛺 TukTuk (20 min)", hotel: "🏨 noch offen", locName: "Weligama", lat: 5.9722, lng: 80.4289 },
+      { day: "Tag 19", date: "20.02. (Sa)", groupTag: "Ines & Anna", region: "Südküste", regTag: "tag-sl-suedkueste", title: "Weligama", details: "Strand- & Surftage im Süden ausklingen lassen.", transport: "🛵 Scooter", hotel: "🏨 noch offen", locName: "Weligama", lat: 5.9722, lng: 80.4289 },
+      { day: "Tag 20", date: "21.02. (So)", groupTag: "Ines & Anna", region: "Colombo", regTag: "tag-sl-colombo", title: "Weligama ➔ Colombo Stadt", details: "Fahrt ins Zentrum: Vibe der Hauptstadt spüren, Rooftop Bars, Galle Face Promenade.", transport: "🚆 Zug (2.5h) / Bus", hotel: "🏨 Empfehlung: Bunkyard", locName: "Colombo Stadtzentrum", lat: 6.9344, lng: 79.8428 },
+      { day: "Tag 21", date: "22.02. (Mo)", groupTag: "Ines & Anna", region: "Colombo", regTag: "tag-sl-colombo", title: "Colombo Stadt", details: "Entspannter Tag in Colombo, Souvenirs & Café.", transport: "🛺 TukTuk", hotel: "🏨 Empfehlung: Bunkyard", locName: "Colombo Stadtzentrum", lat: 6.9344, lng: 79.8428 },
+      { day: "Tag 22", date: "23.02. (Di)", groupTag: "Ines & Anna", region: "Abreise", regTag: "tag-default", title: "Colombo ➔ Flughafen CMB ➔ Wien", details: "Fahrt zum Flughafen, Abflug CMB 09:15 ➔ IST 15:45 ➔ Ankunft Wien 17:35 Uhr (TK1131 & TK1887).", transport: "✈️ Turkish Airlines", hotel: "✈️ Im Flugzeug", locName: "Flughafen Colombo (CMB)", lat: 7.1808, lng: 79.8841 }
     ];
 
-    /* ==========================================================================
-       UMSCHALTUNG LAND & FILTER
-       ========================================================================== */
     function switchCountry(country) {
       currentCountry = country;
       currentRegion = 'all';
@@ -1276,148 +1211,110 @@
     }
 
     /* ==========================================================================
-       MAP INITIALISIERUNG (MAPLIBRE GL JS 3D GLOBUS)
+       CESIUMJS INITIALISIERUNG (GARANTIERT ECHTER 3D-GLOBUS)
        ========================================================================== */
     function initMap() {
-      map = new maplibregl.Map({
-        container: 'map',
-        style: 'https://tiles.openfreemap.org/styles/liberty', // OpenSource Vektor Style ohne Key
-        center: [98.5, 12.0], // [lng, lat]
-        zoom: 2.2,
-        pitch: 0,
-        projection: 'globe' // 🌍 3D Globus einschalten
+      // Deaktiviere Ion Token Warnung & erstelle OpenStreetMap basierten Globus
+      Cesium.Ion.defaultAccessToken = '';
+      
+      viewer = new Cesium.Viewer('map', {
+        imageryProvider: new Cesium.OpenStreetMapImageryProvider({
+          url: 'https://a.tile.openstreetmap.org/'
+        }),
+        baseLayerPicker: false,
+        geocoder: false,
+        homeButton: false,
+        sceneModePicker: false,
+        navigationHelpButton: false,
+        animation: false,
+        timeline: false,
+        fullscreenButton: false,
+        vrButton: false,
+        infoBox: true,
+        selectionIndicator: true
       });
 
-      map.addControl(new maplibregl.NavigationControl(), 'top-right');
+      // Startkamera auf Thailand / Sri Lanka ausrichten
+      viewer.camera.setView({
+        destination: Cesium.Cartesian3.fromDegrees(100.0, 12.0, 6000000.0)
+      });
 
-      map.on('load', () => {
-        // HINTERGRUND & OZEAN ANPASSEN FÜR GLOBUS
-        if (map.setFog) {
-          map.setFog({
-            'range': [0.8, 8],
-            'color': '#0b111e',
-            'horizon-blend': 0.1,
-            'space-color': '#000005',
-            'star-intensity': 0.8
-          });
-        }
+      // POI DATEN MIT REELLEN CESIUM-PIN-MARKERN
+      const points = {
+        wien: { name: "Flughafen Wien (VIE)", date: "01.01. & 23.02.2027", lat: 48.1103, lng: 16.5697, color: Cesium.Color.DARKGREEN },
+        muc: { name: "Flughafen München (MUC)", date: "29.01.2027", lat: 48.3537, lng: 11.7861, color: Cesium.Color.DARKGREEN },
+        ruh: { name: "Flughafen Riad (RUH)", date: "01.01.2027", lat: 24.9576, lng: 46.6988, color: Cesium.Color.DARKGREEN },
+        ist: { name: "Flughafen Istanbul (IST)", date: "23.02.2027", lat: 41.2753, lng: 28.7519, color: Cesium.Color.DARKGREEN },
+        
+        bkk: { name: "Flughafen Bangkok (BKK)", date: "01.-02.01. | 12.01. | 27.-29.01.2027", lat: 13.6900, lng: 100.7501, color: Cesium.Color.PURPLE },
+        bkk_city: { name: "Bangkok Stadtzentrum", date: "12.01. – 15.01. & 27.01. – 29.01.2027", lat: 13.7563, lng: 100.5018, color: Cesium.Color.PURPLE },
 
-        // POI PUNKT-DATEN
-        const points = {
-          wien: { name: "Flughafen Wien (VIE)", date: "01.01. & 23.02.2027", lat: 48.1103, lng: 16.5697, desc: "<b>Start & Endpunkt der Reise</b><br>✈️ 01.01.2027: Abflug nach BKK (15:30)<br>✈️ 23.02.2027: Ankunft aus CMB (17:35)", color: "#15803d" },
-          muc: { name: "Flughafen München (MUC)", date: "29.01.2027", lat: 48.3537, lng: 11.7861, desc: "<b>Zielort Stefan</b><br>✈️ 29.01.2027: Ankunft TG926 Direktflug aus Bangkok (18:55 Uhr)", color: "#15803d" },
-          ruh: { name: "Flughafen Riad (RUH)", date: "01.01.2027", lat: 24.9576, lng: 46.6988, desc: "<b>✈️ Zwischenstopp Hinflug (01.01.2027)</b><br>Saudia SV152 aus VIE ➔ Umstieg ➔ Saudia SV846 nach BKK", color: "#059669" },
-          ist: { name: "Flughafen Istanbul (IST)", date: "23.02.2027", lat: 41.2753, lng: 28.7519, desc: "<b>✈️ Zwischenstopp Rückflug (23.02.2027)</b><br>TK1131 aus CMB (Ankunft 15:45) ➔ Weiterflug TK1887 nach VIE (17:15)", color: "#059669" },
-          
-          bkk: { name: "Flughafen Bangkok (BKK)", date: "01.-02.01. | 12.01. | 27.-29.01.2027", lat: 13.6900, lng: 100.7501, desc: "<b>🇹🇭 Drehkreuz Flughafen Suvarnabhumi:</b><ul class=\"bkk-popup-list\"><li><strong>1. Stopp (01.-02.01.):</strong> Ankunft VIE ➔ Weiterflug Udon Thani</li><li><strong>2. Stopp (12.01.):</strong> Ankunft CEI ➔ Transfer in die Stadt</li><li><strong>3. Stopp (29.01.):</strong> Heimflug Stefan (MUC) / Weiterflug Ines (CMB)</li></ul>", color: "#6b21a8" },
-          bkk_city: { name: "Bangkok Stadtzentrum", date: "12.01. – 15.01. & 27.01. – 29.01.2027", lat: 13.7563, lng: 100.5018, desc: "<b>🇹🇭 Aufenthalt & Kultur in der Metropole:</b><br>Grand Palace, Wat Pho, Chinatown, Sukhumvit & Rooftop Bars", color: "#6b21a8" },
+        cmb: { name: "Flughafen Colombo (CMB)", date: "29.01. | 02.02. | 23.02.2027", lat: 7.1808, lng: 79.8841, color: Cesium.Color.DARKGREEN },
+        cmb_city: { name: "Colombo Stadtzentrum", date: "21.02. – 23.02.2027", lat: 6.9344, lng: 79.8428, color: Cesium.Color.PURPLE },
 
-          cmb: { name: "Flughafen Colombo (CMB)", date: "29.01. | 02.02. | 23.02.2027", lat: 7.1808, lng: 79.8841, desc: "<b>🇱🇰 Bandaranaike International Airport</b><br>✈️ 29.01.: Ankunft Ines aus BKK<br>✈️ 02.02.: Ankunft Anna aus VIE<br>✈️ 23.02.: Rückflug Ines & Anna nach VIE", color: "#059669" },
-          cmb_city: { name: "Colombo Stadtzentrum", date: "21.02. – 23.02.2027", lat: 6.9344, lng: 79.8428, desc: "<b>🇱🇰 Sri Lankas Hauptstadt erkunden:</b><br>Vibe der Stadt, Pettah Market, Rooftop Bars & Galle Face Green Promenade", color: "#6b21a8" },
+        uth: { name: "Udon Thani", date: "02.01. – 05.01.2027", lat: 17.4138, lng: 102.7872, color: Cesium.Color.GREEN },
+        cnx: { name: "Chiang Mai", date: "05.01. – 08.01.2027", lat: 18.7883, lng: 98.9853, color: Cesium.Color.GREEN },
+        pai: { name: "Pai", date: "08.01. – 11.01.2027", lat: 19.3582, lng: 98.4402, color: Cesium.Color.GREEN },
+        cei: { name: "Chiang Rai", date: "11.01. – 12.01.2027", lat: 19.9105, lng: 99.8406, color: Cesium.Color.GREEN },
+        phiphi: { name: "Ko Phi Phi", date: "15.01. – 18.01.2027", lat: 7.7407, lng: 98.7784, color: Cesium.Color.TEAL },
+        krabi: { name: "Krabi / Railay", date: "18.01. – 21.01.2027", lat: 8.0863, lng: 98.9063, color: Cesium.Color.TEAL },
+        tao: { name: "Koh Tao", date: "21.01. – 24.01.2027", lat: 10.1018, lng: 99.8383, color: Cesium.Color.TEAL },
+        phangan: { name: "Ko Pha-ngan", date: "22.01.2027", lat: 9.7319, lng: 100.0136, color: Cesium.Color.TEAL },
+        samui: { name: "Koh Samui", date: "24.01. – 27.01.2027", lat: 9.5120, lng: 99.9360, color: Cesium.Color.TEAL },
+        
+        anuradhapura: { name: "Anuradhapura", date: "03.02. – 06.02.2027", lat: 8.3114, lng: 80.4037, color: Cesium.Color.SADDLEBROWN },
+        dambulla: { name: "Dambulla", date: "06.02. – 09.02.2027", lat: 7.8731, lng: 80.6517, color: Cesium.Color.SADDLEBROWN },
+        kandy: { name: "Kandy", date: "09.02. – 11.02.2027", lat: 7.2906, lng: 80.6337, color: Cesium.Color.GREEN },
+        ella: { name: "Ella", date: "11.02. – 15.02.2027", lat: 6.8667, lng: 81.0466, color: Cesium.Color.GREEN },
+        tangalle: { name: "Tangalle", date: "15.02. – 17.02.2027", lat: 6.0243, lng: 80.7941, color: Cesium.Color.TEAL },
+        mirissa: { name: "Mirissa", date: "17.02. – 19.02.2027", lat: 5.9483, lng: 80.4716, color: Cesium.Color.TEAL },
+        weligama: { name: "Weligama", date: "19.02. – 21.02.2027", lat: 5.9722, lng: 80.4289, color: Cesium.Color.TEAL }
+      };
 
-          uth: { name: "Udon Thani", date: "02.01. – 05.01.2027", lat: 17.4138, lng: 102.7872, desc: "Isan & Red Lotus Lake", color: "#15803d" },
-          cnx: { name: "Chiang Mai", date: "05.01. – 08.01.2027", lat: 18.7883, lng: 98.9853, desc: "Norden, Doi Inthanon & Tempel", color: "#15803d" },
-          pai: { name: "Pai", date: "08.01. – 11.01.2027", lat: 19.3582, lng: 98.4402, desc: "Canyon, Hot Springs & Night Market", color: "#15803d" },
-          cei: { name: "Chiang Rai", date: "11.01. – 12.01.2027", lat: 19.9105, lng: 99.8406, desc: "Weißer Tempel & Kultur", color: "#15803d" },
-          phiphi: { name: "Ko Phi Phi", date: "15.01. – 18.01.2027", lat: 7.7407, lng: 98.7784, desc: "Maya Bay, Long Beach & Viewpoint", color: "#0d9488" },
-          krabi: { name: "Krabi / Railay", date: "18.01. – 21.01.2027", lat: 8.0863, lng: 98.9063, desc: "Railay Beach, Hong Island & Klettern", color: "#0d9488" },
-          tao: { name: "Koh Tao", date: "21.01. – 24.01.2027", lat: 10.1018, lng: 99.8383, desc: "Schnorcheln & Tanote Bay", color: "#0d9488" },
-          phangan: { name: "Ko Pha-ngan", date: "22.01.2027", lat: 9.7319, lng: 100.0136, desc: "Vollmond Party", color: "#0d9488" },
-          samui: { name: "Koh Samui", date: "24.01. – 27.01.2027", lat: 9.5120, lng: 99.9360, desc: "Ang Thong Marine Park & Fisherman's Village", color: "#0d9488" },
-          
-          anuradhapura: { name: "Anuradhapura", date: "03.02. – 06.02.2027", lat: 8.3114, lng: 80.4037, desc: "Kulturdreieck & UNESCO Radtour", color: "#b45309" },
-          dambulla: { name: "Dambulla", date: "06.02. – 09.02.2027", lat: 7.8731, lng: 80.6517, desc: "Sigiriya Rock, Pidurangala & Elefantensafari", color: "#b45309" },
-          kandy: { name: "Kandy", date: "09.02. – 11.02.2027", lat: 7.2906, lng: 80.6337, desc: "Zahntempel & Start berühmte Zugfahrt", color: "#15803d" },
-          ella: { name: "Ella", date: "11.02. – 15.02.2027", lat: 6.8667, lng: 81.0466, desc: "Nine Arch Bridge, Little Adam's Peak & Wasserfälle", color: "#15803d" },
-          tangalle: { name: "Tangalle", date: "15.02. – 17.02.2027", lat: 6.0243, lng: 80.7941, desc: "Traumstrände an der Südküste", color: "#0d9488" },
-          mirissa: { name: "Mirissa", date: "17.02. – 19.02.2027", lat: 5.9483, lng: 80.4716, desc: "Whale Watching & Coconut Tree Hill", color: "#0d9488" },
-          weligama: { name: "Weligama", date: "19.02. – 21.02.2027", lat: 5.9722, lng: 80.4289, desc: "Surfen & Beach Vibes", color: "#0d9488" }
-        };
-
-        // ROUTEN ALS VEKTOR-LINES HINZUFÜGEN
-        const routes = [
-          // FLÜGE
-          { id: 'flight-1', coords: [[points.wien.lng, points.wien.lat], [points.ruh.lng, points.ruh.lat], [points.bkk.lng, points.bkk.lat]], color: '#059669', dash: [4, 4] },
-          { id: 'flight-2', coords: [[points.bkk.lng, points.bkk.lat], [points.uth.lng, points.uth.lat]], color: '#059669', dash: [4, 4] },
-          { id: 'flight-3', coords: [[points.uth.lng, points.uth.lat], [points.cnx.lng, points.cnx.lat]], color: '#059669', dash: [4, 4] },
-          { id: 'flight-4', coords: [[points.cei.lng, points.cei.lat], [points.bkk.lng, points.bkk.lat]], color: '#059669', dash: [4, 4] },
-          { id: 'flight-5', coords: [[points.bkk.lng, points.bkk.lat], [points.phiphi.lng, points.phiphi.lat]], color: '#059669', dash: [4, 4] },
-          { id: 'flight-6', coords: [[points.samui.lng, points.samui.lat], [points.bkk.lng, points.bkk.lat]], color: '#059669', dash: [4, 4] },
-          { id: 'flight-7', coords: [[points.bkk.lng, points.bkk.lat], [points.muc.lng, points.muc.lat]], color: '#059669', dash: [4, 4] },
-          { id: 'flight-8', coords: [[points.bkk.lng, points.bkk.lat], [points.cmb.lng, points.cmb.lat]], color: '#059669', dash: [4, 4] },
-          { id: 'flight-9', coords: [[points.cmb.lng, points.cmb.lat], [points.ist.lng, points.ist.lat], [points.wien.lng, points.wien.lat]], color: '#059669', dash: [4, 4] },
-
-          // TRANSFERS
-          { id: 'transfer-bkk', coords: [[points.bkk.lng, points.bkk.lat], [100.650, 13.725], [points.bkk_city.lng, points.bkk_city.lat]], color: '#6b21a8', dash: [2, 2] },
-          { id: 'transfer-cmb', coords: [[points.cmb.lng, points.cmb.lat], [79.890, 7.080], [points.cmb_city.lng, points.cmb_city.lat]], color: '#6b21a8', dash: [2, 2] },
-
-          // LANDWEGE THAILAND
-          { id: 'th-road-1', coords: [[points.cnx.lng, points.cnx.lat], [98.9450, 18.9150], [98.8970, 19.0850], [98.6920, 19.1450], [98.4900, 19.3020], [points.pai.lng, points.pai.lat], [98.4900, 19.3020], [98.6920, 19.1450], [98.8970, 19.0850], [99.2000, 19.0500], [99.5020, 19.3510], [99.5510, 19.6480], [points.cei.lng, points.cei.lat]], color: '#0d9488' },
-          { id: 'th-road-2', coords: [[points.krabi.lng, points.krabi.lat], [99.2300, 8.5300], [99.3300, 9.1400], [99.6920, 9.3180], [100.0136, 9.7319], [points.tao.lng, points.tao.lat]], color: '#0d9488' },
-          { id: 'th-ferry-1', coords: [[points.phiphi.lng, points.phiphi.lat], [points.krabi.lng, points.krabi.lat]], color: '#0d9488' },
-          { id: 'th-ferry-2', coords: [[points.tao.lng, points.tao.lat], [points.phangan.lng, points.phangan.lat], [points.samui.lng, points.samui.lat]], color: '#0d9488' },
-
-          // LANDWEGE SRI LANKA
-          { id: 'sl-road-1', coords: [[points.cmb.lng, points.cmb.lat], [79.8600, 7.2900], [79.9800, 7.3600], [80.3650, 7.4860], [80.3010, 7.8120], [80.3200, 8.0300], [points.anuradhapura.lng, points.anuradhapura.lat]], color: '#b45309' },
-          { id: 'sl-road-2', coords: [[points.anuradhapura.lng, points.anuradhapura.lat], [80.5870, 8.0410], [points.dambulla.lng, points.dambulla.lat], [80.6230, 7.4670], [points.kandy.lng, points.kandy.lat]], color: '#b45309' },
-          { id: 'sl-train', coords: [[points.kandy.lng, points.kandy.lat], [80.5950, 7.2600], [80.5600, 7.1500], [80.5350, 7.0500], [80.5980, 6.8920], [80.6800, 6.8700], [80.7410, 6.9270], [80.8120, 6.8770], [80.8800, 6.8120], [80.9570, 6.7680], [80.9980, 6.8330], [points.ella.lng, points.ella.lat]], color: '#dc2626', dash: [3, 3] },
-          { id: 'sl-road-3', coords: [[points.ella.lng, points.ella.lat], [81.1030, 6.7370], [81.1340, 6.4380], [81.0240, 6.1230], [points.tangalle.lng, points.tangalle.lat]], color: '#b45309' },
-          { id: 'sl-road-4', coords: [[points.tangalle.lng, points.tangalle.lat], [80.5350, 5.9480], [points.mirissa.lng, points.mirissa.lat], [points.weligama.lng, points.weligama.lat], [80.2170, 6.0320], [80.1030, 6.1390], [79.9980, 6.4230], [79.9600, 6.5850], [points.cmb_city.lng, points.cmb_city.lat], [points.cmb.lng, points.cmb.lat]], color: '#b45309' }
-        ];
-
-        routes.forEach(r => {
-          map.addSource(r.id, {
-            'type': 'geojson',
-            'data': {
-              'type': 'Feature',
-              'properties': {},
-              'geometry': { 'type': 'LineString', 'coordinates': r.coords }
-            }
-          });
-
-          map.addLayer({
-            'id': r.id,
-            'type': 'line',
-            'source': r.id,
-            'layout': { 'line-join': 'round', 'line-cap': 'round' },
-            'paint': {
-              'line-color': r.color,
-              'line-width': r.dash ? 2 : 3,
-              'line-dasharray': r.dash ? r.dash : [1]
-            }
-          });
+      // PIN-MARKER HINZUFÜGEN
+      Object.keys(points).forEach(key => {
+        const p = points[key];
+        const entity = viewer.entities.add({
+          name: p.name,
+          position: Cesium.Cartesian3.fromDegrees(p.lng, p.lat),
+          point: {
+            pixelSize: 10,
+            color: p.color,
+            outlineColor: Cesium.Color.WHITE,
+            outlineWidth: 2
+          },
+          description: `<b>📍 ${p.name}</b><br>📅 ${p.date}`
         });
 
-        // MARKER ERZEUGEN
-        Object.keys(points).forEach(key => {
-          const p = points[key];
-          
-          const popupContent = `
-            <div style="color: #0f172a; min-width: 190px;">
-              <h3 style="margin: 0 0 4px 0; font-size: 0.98rem; color: ${p.color}; border-bottom: 1px solid #cbd5e1; padding-bottom: 3px;">📍 ${p.name}</h3>
-              <span class="popup-date-badge">📅 ${p.date}</span>
-              <div style="font-size: 0.82rem; color: #334155; margin-top: 4px;">${p.desc}</div>
-            </div>
-          `;
+        markers[p.name] = entity;
+        markers[key] = entity;
+      });
 
-          const popup = new maplibregl.Popup({ offset: 12 }).setHTML(popupContent);
+      // BOGEN-RUNDUNGEN FÜR FLÜGE ÜBER DEN GLOBUS ERZEUGEN
+      const flights = [
+        [[points.wien.lng, points.wien.lat], [points.ruh.lng, points.ruh.lat], [points.bkk.lng, points.bkk.lat]],
+        [[points.bkk.lng, points.bkk.lat], [points.uth.lng, points.uth.lat]],
+        [[points.uth.lng, points.uth.lat], [points.cnx.lng, points.cnx.lat]],
+        [[points.cei.lng, points.cei.lat], [points.bkk.lng, points.bkk.lat]],
+        [[points.bkk.lng, points.bkk.lat], [points.phiphi.lng, points.phiphi.lat]],
+        [[points.samui.lng, points.samui.lat], [points.bkk.lng, points.bkk.lat]],
+        [[points.bkk.lng, points.bkk.lat], [points.muc.lng, points.muc.lat]],
+        [[points.bkk.lng, points.bkk.lat], [points.cmb.lng, points.cmb.lat]],
+        [[points.cmb.lng, points.cmb.lat], [points.ist.lng, points.ist.lat], [points.wien.lng, points.wien.lat]]
+      ];
 
-          const el = document.createElement('div');
-          el.style.width = '14px';
-          el.style.height = '14px';
-          el.style.backgroundColor = p.color;
-          el.style.borderRadius = '50%';
-          el.style.border = '2px solid white';
-          el.style.boxShadow = '0 2px 6px rgba(0,0,0,0.3)';
-          el.style.cursor = 'pointer';
-
-          const marker = new maplibregl.Marker({ element: el })
-            .setLngLat([p.lng, p.lat])
-            .setPopup(popup)
-            .addTo(map);
-
-          markers[p.name] = { marker, lat: p.lat, lng: p.lng };
-          markers[key] = { marker, lat: p.lat, lng: p.lng };
+      flights.forEach(f => {
+        const flatCoords = [];
+        f.forEach(pt => flatCoords.push(pt[0], pt[1]));
+        viewer.entities.add({
+          polyline: {
+            positions: Cesium.Cartesian3.fromDegreesArray(flatCoords),
+            width: 2,
+            material: new Cesium.PolylineDashMaterialProperty({
+              color: Cesium.Color.MEDIUMSEAGREEN
+            }),
+            arcType: Cesium.ArcType.GEODESIC
+          }
         });
       });
     }
@@ -1436,32 +1333,25 @@
     }
 
     function focusMap(locationName) {
-      let targetMarker = null;
+      let targetEntity = null;
 
-      if (locationName === "Bangkok Stadtzentrum") targetMarker = markers["bkk_city"];
-      else if (locationName.includes("Bangkok")) targetMarker = markers["Flughafen Bangkok (BKK)"];
-      else if (locationName === "Colombo Stadtzentrum") targetMarker = markers["cmb_city"];
-      else if (locationName.includes("Colombo") && locationName.includes("Flughafen")) targetMarker = markers["Flughafen Colombo (CMB)"];
-      else if (locationName.includes("Wien")) targetMarker = markers["Flughafen Wien (VIE)"];
-      else if (locationName.includes("Krabi")) targetMarker = markers["Krabi / Railay"];
-      else targetMarker = markers[locationName];
+      if (locationName === "Bangkok Stadtzentrum") targetEntity = markers["bkk_city"];
+      else if (locationName.includes("Bangkok")) targetEntity = markers["Flughafen Bangkok (BKK)"];
+      else if (locationName === "Colombo Stadtzentrum") targetEntity = markers["cmb_city"];
+      else if (locationName.includes("Colombo") && locationName.includes("Flughafen")) targetEntity = markers["Flughafen Colombo (CMB)"];
+      else if (locationName.includes("Wien")) targetEntity = markers["Flughafen Wien (VIE)"];
+      else if (locationName.includes("Krabi")) targetEntity = markers["Krabi / Railay"];
+      else targetEntity = markers[locationName];
 
-      if (targetMarker) {
-        map.flyTo({
-          center: [targetMarker.lng, targetMarker.lat],
-          zoom: 9,
-          essential: true,
-          duration: 1800
+      if (targetEntity && viewer) {
+        viewer.flyTo(targetEntity, {
+          duration: 2.0,
+          offset: new Cesium.HeadingPitchRange(0, Cesium.Math.toRadians(-45), 250000)
         });
-        
-        targetMarker.marker.togglePopup();
         document.querySelector('.map-section').scrollIntoView({ behavior: 'smooth' });
       }
     }
 
-    /* ==========================================================================
-       COUNTDOWN
-       ========================================================================== */
     function updateCountdown() {
       const flightTime = Date.UTC(2027, 0, 1, 14, 30, 0);
       const now = Date.now();
@@ -1482,9 +1372,6 @@
       }
     }
 
-    /* ==========================================================================
-       PACKLISTEN CODE
-       ========================================================================== */
     const rawItemsData = [
       ["Dokumente & Wertsachen", "Reisepass", 41, 1, true, false],
       ["Dokumente & Wertsachen", "Kopien Reisepass & Impfpass", 33, 1, true, false],
@@ -1627,8 +1514,6 @@
       });
     }
 
-
-
     function togglePacked(idx) { packlist[idx].packed = !packlist[idx].packed; savePacklist(); }
     function toggleWorn(idx) { packlist[idx].worn = !packlist[idx].worn; savePacklist(); }
     function changeQty(idx, delta) { packlist[idx].qty = Math.max(1, (packlist[idx].qty || 1) + delta); savePacklist(); }
@@ -1664,7 +1549,6 @@
       document.querySelectorAll('.tab-btn').forEach(tb => tb.classList.remove('active'));
       document.getElementById(tabId).classList.add('active');
       btn.classList.add('active');
-      if (tabId === 'routeTab' && map) setTimeout(() => { map.resize(); }, 150);
     }
 
     window.addEventListener('DOMContentLoaded', () => {
