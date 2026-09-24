@@ -20,6 +20,9 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
+  <!-- Chart.js für Diagramme -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   <style>
     :root {
       --bg: #f4f7f4;           
@@ -793,6 +796,55 @@
       padding-bottom: 0;
     }
 
+    /* GEWICHTSANALYSE STYLES */
+    .analysis-table-header-stefan {
+      background: #1e3a8a !important;
+      color: #ffffff !important;
+      text-align: right;
+    }
+    .analysis-table-header-ines {
+      background: #064e3b !important;
+      color: #ffffff !important;
+      text-align: right;
+    }
+    .analysis-table-header-total {
+      background: #0f172a !important;
+      color: #ffffff !important;
+      text-align: right;
+    }
+
+    .charts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .chart-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .chart-card h4 {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 10px;
+    }
+
+    .chart-container {
+      position: relative;
+      width: 100%;
+      max-width: 360px;
+      height: 320px;
+    }
+
     @media (max-width: 860px) {
       .table-wrapper-responsive { display: none; }
       .mobile-cards { display: flex; flex-direction: column; gap: 8px; }
@@ -804,6 +856,7 @@
         cursor: pointer;
       }
       .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+      .charts-grid { grid-template-columns: 1fr; }
     }
 
     @media (min-width: 861px) {
@@ -831,6 +884,7 @@
     <div class="nav-tabs">
       <button class="tab-btn active" onclick="switchTab('routeTab', this)">🗺️ Reiseroute & Karte</button>
       <button class="tab-btn" onclick="switchTab('packTab', this)">🎒 Interaktive Packliste</button>
+      <button class="tab-btn" onclick="switchTab('analysisTab', this)">📊 Gewichtsanalyse</button>
       <button class="tab-btn" onclick="switchTab('budgetTab', this)">✈️ Gebuchte Flüge</button>
     </div>
 
@@ -976,7 +1030,52 @@
       </div>
     </div>
 
-    <!-- TAB 3: FLUGÜBERSICHT -->
+    <!-- TAB 3: GEWICHTSANALYSE -->
+    <div id="analysisTab" class="tab-content">
+      <div class="info-card">
+        <div class="info-card-header">
+          <h3>📊 GEWICHTSANALYSE JE KATEGORIE</h3>
+          <span style="font-size: 0.82rem; color: var(--text-muted); font-weight: 600;">Vergleich des Gesamtgewichts pro Kategorie für Stefan und Ines</span>
+        </div>
+
+        <!-- Übersichtstabelle -->
+        <div class="table-wrapper" style="margin-bottom: 20px;">
+          <table id="analysisTable">
+            <thead>
+              <tr>
+                <th style="background: #0f172a; color: white;">Kategorie</th>
+                <th class="analysis-table-header-stefan" style="width: 130px;">Stefan Gewicht (g)</th>
+                <th class="analysis-table-header-stefan" style="width: 110px;">Stefan Anteil</th>
+                <th class="analysis-table-header-ines" style="width: 130px;">Ines Gewicht (g)</th>
+                <th class="analysis-table-header-ines" style="width: 110px;">Ines Anteil</th>
+                <th class="analysis-table-header-total" style="width: 140px;">Gesamt Paar (g)</th>
+              </tr>
+            </thead>
+            <tbody id="analysisTableBody">
+              <!-- JS-befüllt -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Kreisdiagramme -->
+        <div class="charts-grid">
+          <div class="chart-card">
+            <h4>Gewichtsverteilung Stefan</h4>
+            <div class="chart-container">
+              <canvas id="chartStefan"></canvas>
+            </div>
+          </div>
+          <div class="chart-card">
+            <h4>Gewichtsverteilung Ines</h4>
+            <div class="chart-container">
+              <canvas id="chartInes"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: FLUGÜBERSICHT -->
     <div id="budgetTab" class="tab-content">
       <div class="info-card">
         <h3>✈️ Gebuchte Flüge (Übersicht)</h3>
@@ -1035,6 +1134,8 @@
     let currentRegion = 'all';
     let map;
     const markers = {};
+    let chartStefanInstance = null;
+    let chartInesInstance = null;
 
     /* ==========================================================================
        VOLLBILD-KARTE FUNKTIONALITÄT
@@ -1783,11 +1884,13 @@
       packlists.ines = savedInes ? JSON.parse(savedInes) : JSON.parse(JSON.stringify(defaultInes));
 
       renderPacklist();
+      renderAnalysis();
     }
 
     function savePacklist() {
       localStorage.setItem(`thailand_packlist_${currentPerson}_v9`, JSON.stringify(packlists[currentPerson]));
       renderPacklist();
+      renderAnalysis();
     }
 
     function setAllPacked(status) {
@@ -1947,12 +2050,160 @@
       savePacklist();
     }
 
+    /* ==========================================================================
+       DYNAMISCHE GEWICHTSANALYSE UND CHARTS
+       ========================================================================== */
+    const allCategories = [
+      "Dokumente & Wertsachen",
+      "Rucksäcke & Gepäck",
+      "Elektronik & Ladekabel",
+      "Kleidung",
+      "Schuhe",
+      "Hygiene & Pflege",
+      "Gesundheit & Apotheke",
+      "Komfort & Schlafzubehör",
+      "Accessoires & Alltagshelfer",
+      "Organisation & Utensilien"
+    ];
+
+    const chartColors = [
+      '#3b82f6', // Dokumente - Blau
+      '#ef4444', // Rucksäcke - Rot
+      '#84cc16', // Elektronik - Hellgrün
+      '#a855f7', // Kleidung - Lila
+      '#06b6d4', // Schuhe - Cyan
+      '#f97316', // Hygiene - Orange
+      '#b91c1c', // Gesundheit - Dunkelrot
+      '#78350f', // Komfort - Braun
+      '#65a30d', // Accessoires - Oliv
+      '#4c1d95'  // Organisation - Dunkellila
+    ];
+
+    function renderAnalysis() {
+      const tbody = document.getElementById('analysisTableBody');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+
+      const stefanTotals = {}, inesTotals = {};
+      allCategories.forEach(cat => { stefanTotals[cat] = 0; inesTotals[cat] = 0; });
+
+      let sumStefan = 0, sumInes = 0;
+
+      // Stefan
+      packlists.stefan.forEach(item => {
+        const w = (item.weight || 0) * (item.qty || 1);
+        if (stefanTotals[item.cat] !== undefined) stefanTotals[item.cat] += w;
+        else stefanTotals[item.cat] = w;
+        sumStefan += w;
+      });
+
+      // Ines
+      packlists.ines.forEach(item => {
+        const w = (item.weight || 0) * (item.qty || 1);
+        if (inesTotals[item.cat] !== undefined) inesTotals[item.cat] += w;
+        else inesTotals[item.cat] = w;
+        sumInes += w;
+      });
+
+      const grandTotalPair = sumStefan + sumInes;
+
+      // Zeilen für jede Kategorie
+      allCategories.forEach(cat => {
+        const valS = stefanTotals[cat] || 0;
+        const valI = inesTotals[cat] || 0;
+        const pctS = sumStefan > 0 ? ((valS / sumStefan) * 100).toFixed(1) + '%' : '0.0%';
+        const pctI = sumInes > 0 ? ((valI / sumInes) * 100).toFixed(1) + '%' : '0.0%';
+        const totalCat = valS + valI;
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${cat}</strong></td>
+          <td style="text-align:right;">${valS.toLocaleString('de-DE')} g</td>
+          <td style="text-align:right; color:var(--text-muted);">${pctS}</td>
+          <td style="text-align:right;">${valI.toLocaleString('de-DE')} g</td>
+          <td style="text-align:right; color:var(--text-muted);">${pctI}</td>
+          <td style="text-align:right; font-weight:700;">${totalCat.toLocaleString('de-DE')} g</td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      // Summenzeile
+      const trTotal = document.createElement('tr');
+      trTotal.style.background = '#f1f5f9';
+      trTotal.style.borderTop = '2px solid var(--border)';
+      trTotal.innerHTML = `
+        <td><strong style="font-size:0.9rem;">Gesamtsumme</strong></td>
+        <td style="text-align:right; font-weight:800; color:#1e3a8a; font-size:0.9rem;">${sumStefan.toLocaleString('de-DE')} g</td>
+        <td style="text-align:right; font-weight:800; color:#1e3a8a; font-size:0.9rem;">100,0%</td>
+        <td style="text-align:right; font-weight:800; color:#064e3b; font-size:0.9rem;">${sumInes.toLocaleString('de-DE')} g</td>
+        <td style="text-align:right; font-weight:800; color:#064e3b; font-size:0.9rem;">100,0%</td>
+        <td style="text-align:right; font-weight:800; color:var(--text-main); font-size:0.95rem;">${grandTotalPair.toLocaleString('de-DE')} g</td>
+      `;
+      tbody.appendChild(trTotal);
+
+      // Charts aktualisieren
+      updateCharts(stefanTotals, inesTotals);
+    }
+
+    function updateCharts(stefanData, inesData) {
+      const labels = allCategories;
+      const dataS = labels.map(c => stefanData[c] || 0);
+      const dataI = labels.map(c => inesData[c] || 0);
+
+      // Stefan Chart
+      const ctxS = document.getElementById('chartStefan');
+      if (ctxS) {
+        if (chartStefanInstance) chartStefanInstance.destroy();
+        chartStefanInstance = new Chart(ctxS, {
+          type: 'pie',
+          data: {
+            labels: labels,
+            datasets: [{
+              data: dataS,
+              backgroundColor: chartColors
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 10 } } }
+            }
+          }
+        });
+      }
+
+      // Ines Chart
+      const ctxI = document.getElementById('chartInes');
+      if (ctxI) {
+        if (chartInesInstance) chartInesInstance.destroy();
+        chartInesInstance = new Chart(ctxI, {
+          type: 'pie',
+          data: {
+            labels: labels,
+            datasets: [{
+              data: dataI,
+              backgroundColor: chartColors
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 10 } } }
+            }
+          }
+        });
+      }
+    }
+
     function switchTab(tabId, btn) {
       document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
       document.querySelectorAll('.tab-btn').forEach(tb => tb.classList.remove('active'));
       document.getElementById(tabId).classList.add('active');
       btn.classList.add('active');
       if (tabId === 'routeTab' && map) setTimeout(() => { map.invalidateSize(); }, 150);
+      if (tabId === 'analysisTab') renderAnalysis();
     }
 
     window.addEventListener('DOMContentLoaded', () => {
