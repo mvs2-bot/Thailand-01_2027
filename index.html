@@ -741,22 +741,25 @@
       padding: 1px 2px;
     }
 
-    .badge-pill {
-      display: inline-block;
-      font-size: 0.7rem;
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-weight: 600;
-      background: #f1f5f9;
-      color: var(--text-muted);
+    /* Tabellen-Select-Menüs für Gewichtstyp & Packort */
+    .table-select {
+      background: #f8fafc;
       border: 1px solid var(--border);
-      white-space: nowrap;
+      color: var(--text-main);
+      border-radius: 4px;
+      padding: 2px 4px;
+      font-size: 0.75rem;
+      font-family: inherit;
+      font-weight: 600;
+      outline: none;
+      cursor: pointer;
     }
 
-    .badge-am-koerper {
+    .table-select.select-am-koerper {
       background: #fef3c7;
       color: #92400e;
       border-color: #fde68a;
+      font-weight: 700;
     }
 
     .pack-table-category {
@@ -945,7 +948,7 @@
           <select id="newItemLoc">
             <option value="Aufgabegepäck">Aufgabegepäck</option>
             <option value="Handgepäck">Handgepäck</option>
-            <option value="Umgängetasche">Umgängetasche</option>
+            <option value="Umhängetasche">Umhängetasche</option>
             <option value="Am Körper">Am Körper</option>
           </select>
           <button class="btn-add" onclick="addPackItem()">+ Hinzufügen</button>
@@ -957,8 +960,8 @@
               <tr>
                 <th style="width: 35px; text-align:center;">Packen</th>
                 <th>Gegenstand</th>
-                <th style="width: 90px;">Gewichtstyp</th>
-                <th style="width: 100px;">Packort</th>
+                <th style="width: 110px;">Gewichtstyp</th>
+                <th style="width: 120px;">Packort</th>
                 <th style="width: 75px; text-align:center;">Anzahl</th>
                 <th style="width: 80px; text-align:right;">Stk (g)</th>
                 <th style="width: 85px; text-align:right;">Gesamt (g)</th>
@@ -1570,22 +1573,22 @@
        ========================================================================== */
     let currentPerson = 'stefan';
 
-    // Aktualisierte Liste Stefan
+    // Korrigierte Liste Stefan (Rechtschreibung "Umhängetasche" durchgehend korrigiert)
     const rawItemsStefan = [
-      ["Dokumente & Wertsachen", "Reisepass", 1, 41, "Am Körper", "Umgängetasche"],
+      ["Dokumente & Wertsachen", "Reisepass", 1, 41, "Am Körper", "Umhängetasche"],
       ["Dokumente & Wertsachen", "Kopien Reisepass & Impfpass", 1, 33, "Basis", "Handgepäck"],
-      ["Dokumente & Wertsachen", "Geldbörse & Kreditkarten", 1, 99, "Am Körper", "Umgängetasche"],
-      ["Dokumente & Wertsachen", "Internationaler Führerschein", 1, 37, "Am Körper", "Umgängetasche"],
+      ["Dokumente & Wertsachen", "Geldbörse & Kreditkarten", 1, 99, "Am Körper", "Umhängetasche"],
+      ["Dokumente & Wertsachen", "Internationaler Führerschein", 1, 37, "Am Körper", "Umhängetasche"],
       ["Dokumente & Wertsachen", "Reisetagebuch", 1, 99, "Basis", "Handgepäck"],
       ["Rucksäcke & Gepäck", "Rucksack - Forclaz Travel 900 (50+6 Liter)", 1, 2300, "Basis", "Aufgabegepäck"],
       ["Rucksäcke & Gepäck", "Reisehülle Rucksack Aufgabegepäck (Ikea Tasche)", 1, 300, "Basis", "Aufgabegepäck"],
       ["Rucksäcke & Gepäck", "Kleiner Rucksack - Forclaz Travel (25 Liter)", 1, 300, "Basis", "Handgepäck"],
-      ["Rucksäcke & Gepäck", "Umhängetasche Cotopaxi", 1, 200, "Am Körper", "Umgängetasche"],
+      ["Rucksäcke & Gepäck", "Umhängetasche Cotopaxi", 1, 200, "Am Körper", "Umhängetasche"],
       ["Rucksäcke & Gepäck", "Tages-Rucksack aus Nylon", 1, 99, "Basis", "Aufgabegepäck"],
-      ["Elektronik & Ladekabel", "Smartphone", 1, 233, "Am Körper", "Umgängetasche"],
-      ["Elektronik & Ladekabel", "Kindle", 1, 165, "Am Körper", "Umgängetasche"],
+      ["Elektronik & Ladekabel", "Smartphone", 1, 233, "Am Körper", "Umhängetasche"],
+      ["Elektronik & Ladekabel", "Kindle", 1, 165, "Am Körper", "Umhängetasche"],
       ["Elektronik & Ladekabel", "Zip Beutel für Elektrozeug", 1, 12, "Basis", "Handgepäck"],
-      ["Elektronik & Ladekabel", "Kopfhörer Jabra", 1, 45, "Am Körper", "Umgängetasche"],
+      ["Elektronik & Ladekabel", "Kopfhörer Jabra", 1, 45, "Am Körper", "Umhängetasche"],
       ["Elektronik & Ladekabel", "Stirnlampe", 1, 38, "Basis", "Handgepäck"],
       ["Elektronik & Ladekabel", "Mini Taschenlampe von Aliexpress", 1, 40, "Basis", "Handgepäck"],
       ["Elektronik & Ladekabel", "Mobiler Akku 20.000 mAh", 1, 360, "Basis", "Handgepäck"],
@@ -1649,7 +1652,7 @@
       ["Hygiene & Pflege", "Gesichtscreme Tigel Glas", 1, 103, "Verbrauch", "Aufgabegepäck"],
       ["Hygiene & Pflege", "Zahnseide sticks", 1, 37, "Verbrauch", "Aufgabegepäck"],
       ["Gesundheit & Apotheke", "Medikamentenkit", 1, 62, "Basis", "Handgepäck"],
-      ["Gesundheit & Apotheke", "Lippenbalsam", 1, 9, "Am Körper", "Umgängetasche"],
+      ["Gesundheit & Apotheke", "Lippenbalsam", 1, 9, "Am Körper", "Umhängetasche"],
       ["Gesundheit & Apotheke", "Tempo Packungen", 3, 18, "Verbrauch", "Aufgabegepäck"],
       ["Gesundheit & Apotheke", "Elektrolyte", 10, 5, "Verbrauch", "Aufgabegepäck"],
       ["Gesundheit & Apotheke", "Kreatin", 29, 5, "Verbrauch", "Aufgabegepäck"],
@@ -1662,7 +1665,7 @@
       ["Komfort & Schlafzubehör", "Nackenkissen für Flugzeug und so", 1, 65, "Basis", "Handgepäck"],
       ["Komfort & Schlafzubehör", "Ohrstöpsel", 1, 15, "Basis", "Handgepäck"],
       ["Komfort & Schlafzubehör", "Schlafmaske", 1, 20, "Basis", "Handgepäck"],
-      ["Accessoires & Alltagshelfer", "Sonnenbrille Ray Ban", 1, 30, "Am Körper", "Umgängetasche"],
+      ["Accessoires & Alltagshelfer", "Sonnenbrille Ray Ban", 1, 30, "Am Körper", "Umhängetasche"],
       ["Accessoires & Alltagshelfer", "Etui Sonnenbrille Ray Ban", 1, 48, "Basis", "Handgepäck"],
       ["Accessoires & Alltagshelfer", "Campingbesteck für Notfall", 1, 11, "Basis", "Aufgabegepäck"],
       ["Accessoires & Alltagshelfer", "Taschenmesser klein Handgepäck", 1, 22, "Basis", "Handgepäck"],
@@ -1674,7 +1677,7 @@
       ["Organisation & Utensilien", "Drybag Osprey für getragene Wäsche", 1, 82, "Basis", "Aufgabegepäck"],
       ["Organisation & Utensilien", "Müllbeutel grau", 1, 92, "Basis", "Aufgabegepäck"],
       ["Organisation & Utensilien", "Zip Beutel RESERVE", 2, 20, "Basis", "Aufgabegepäck"],
-      ["Organisation & Utensilien", "Kugelschreiber", 1, 38, "Am Körper", "Umgängetasche"],
+      ["Organisation & Utensilien", "Kugelschreiber", 1, 38, "Am Körper", "Umhängetasche"],
       ["Organisation & Utensilien", "Thermometer", 1, 28, "Basis", "Handgepäck"],
       ["Organisation & Utensilien", "Wäscheklammern", 4, 12, "Basis", "Aufgabegepäck"],
       ["Organisation & Utensilien", "Kabelbinder", 1, 12, "Basis", "Aufgabegepäck"],
@@ -1772,9 +1775,9 @@
     }
 
     function loadPacklist() {
-      // Key v7 für neue aktualisierte Daten
-      const savedStefan = localStorage.getItem('thailand_packlist_stefan_v7');
-      const savedInes = localStorage.getItem('thailand_packlist_ines_v7');
+      // Key v9 für bereinigte Daten
+      const savedStefan = localStorage.getItem('thailand_packlist_stefan_v9');
+      const savedInes = localStorage.getItem('thailand_packlist_ines_v9');
 
       packlists.stefan = savedStefan ? JSON.parse(savedStefan) : JSON.parse(JSON.stringify(defaultStefan));
       packlists.ines = savedInes ? JSON.parse(savedInes) : JSON.parse(JSON.stringify(defaultInes));
@@ -1783,7 +1786,7 @@
     }
 
     function savePacklist() {
-      localStorage.setItem(`thailand_packlist_${currentPerson}_v7`, JSON.stringify(packlists[currentPerson]));
+      localStorage.setItem(`thailand_packlist_${currentPerson}_v9`, JSON.stringify(packlists[currentPerson]));
       renderPacklist();
     }
 
@@ -1866,15 +1869,28 @@
           const tr = document.createElement('tr');
 
           const isWorn = item.type === "Am Körper" || item.loc === "Am Körper";
-          const typeClass = isWorn ? "badge-pill badge-am-koerper" : "badge-pill";
+          const typeSelectClass = isWorn ? "table-select select-am-koerper" : "table-select";
 
           tr.innerHTML = `
             <td style="text-align:center;">
               <input type="checkbox" ${item.packed ? 'checked' : ''} onchange="togglePacked(${idx})" style="accent-color: var(--primary); width:14px; height:14px; cursor:pointer;">
             </td>
             <td><strong style="color: ${item.packed ? 'var(--text-main)' : 'var(--text-muted)'}; ${!item.packed ? 'text-decoration: line-through;' : ''}">${item.name}</strong></td>
-            <td><span class="${typeClass}">${item.type}</span></td>
-            <td><span class="badge-pill">${item.loc}</span></td>
+            <td>
+              <select class="${typeSelectClass}" onchange="changeType(${idx}, this.value)">
+                <option value="Basis" ${item.type === 'Basis' ? 'selected' : ''}>Basis</option>
+                <option value="Am Körper" ${item.type === 'Am Körper' ? 'selected' : ''}>Am Körper</option>
+                <option value="Verbrauch" ${item.type === 'Verbrauch' ? 'selected' : ''}>Verbrauch</option>
+              </select>
+            </td>
+            <td>
+              <select class="table-select" onchange="changeLoc(${idx}, this.value)">
+                <option value="Aufgabegepäck" ${item.loc === 'Aufgabegepäck' ? 'selected' : ''}>Aufgabegepäck</option>
+                <option value="Handgepäck" ${item.loc === 'Handgepäck' ? 'selected' : ''}>Handgepäck</option>
+                <option value="Umhängetasche" ${item.loc === 'Umhängetasche' ? 'selected' : ''}>Umhängetasche</option>
+                <option value="Am Körper" ${item.loc === 'Am Körper' ? 'selected' : ''}>Am Körper</option>
+              </select>
+            </td>
             <td style="text-align:center;">
               <div class="qty-controls">
                 <button class="qty-btn" onclick="changeQty(${idx}, -1)">-</button>
@@ -1896,6 +1912,8 @@
 
     function togglePacked(idx) { packlists[currentPerson][idx].packed = !packlists[currentPerson][idx].packed; savePacklist(); }
     function changeQty(idx, delta) { packlists[currentPerson][idx].qty = Math.max(1, (packlists[currentPerson][idx].qty || 1) + delta); savePacklist(); }
+    function changeType(idx, val) { packlists[currentPerson][idx].type = val; savePacklist(); }
+    function changeLoc(idx, val) { packlists[currentPerson][idx].loc = val; savePacklist(); }
 
     function addPackItem() {
       const name = document.getElementById('newItemName').value.trim();
