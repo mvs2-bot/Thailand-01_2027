@@ -1292,12 +1292,7 @@ function initMap() {
     maxZoom: 17,
     attribution: '&copy; OpenTopoMap'
   });
-  
-  // Wikimedia Maps (Klar, schnell & lateinische Schrift)
-  const wikiMap = L.tileLayer('https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; <a href="https://wikimediafoundation.org/wiki/Maps_Terms_of_Use">Wikimedia</a>'
-  });
+
 
   
   // 2. Karte mit dem neuen Standard "OSM Deutschland" initialisieren:
@@ -1309,8 +1304,7 @@ function initMap() {
     "🌏 OSM Standard (NUR Landessprache)": osmMap,
     "🗺️ Esri Street (Englisch)": esriStreet,
     "⛰️ Topografisch (CyclOSM)": topoMap,
-    "⛰️ OpenTopoMap (Gelände)": openTopo,
-    "🌐 Wikimedia (Global)": wikiMap
+    "⛰️ OpenTopoMap (Gelände)": openTopo
   }, null, { collapsed: true, position: 'topright' }).addTo(map);
 
   // ... (Hier folgt der restliche Marker- & Routen-Code deiner initMap)
