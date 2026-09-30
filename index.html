@@ -27,7 +27,7 @@
 
 <style>
 /* ==========================================================================
-   1. CSS-VARIABLEN & GLOBALE STYLES (EXAKT CODE 3 LOGIK)
+   1. CSS-VARIABLEN & GLOBALE STYLES
    ========================================================================== */
 :root {
   /* Farbpalette */
@@ -45,7 +45,7 @@
   --accent: #0d9488;      /* Teal / Türkis Akzent */
   --danger: #dc2626;
 
-  /* Personenspezifische Akzentfarben (analog Code 3) */
+  /* Personenspezifische Akzentfarben */
   --S: #2563eb;           /* Stefan (Blau) */
   --I: #16a34a;           /* Ines (Grün) */
 
@@ -59,7 +59,7 @@
   --sl-suedkueste: #0d9488;
   --sl-colombo: #6b21a8;
 
-  /* Radien & Schatten aus Code 3 */
+  /* Radien & Schatten */
   --radius: 12px;
   --shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
 }
@@ -103,7 +103,7 @@ button {
 }
 
 /* ==========================================================================
-   2. HEADER & PERSONEN-STATISTIKEN (EXAKT CODE 3 OPTIK)
+   2. HEADER & PERSONEN-STATISTIKEN
    ========================================================================== */
 header {
   display: grid;
@@ -446,7 +446,7 @@ tr.row:last-child td {
   border-bottom: 0;
 }
 
-/* Badges & Pills aus Code 3 */
+/* Badges & Pills */
 .dn {
   display: inline-block;
   background: var(--p1);
@@ -657,7 +657,7 @@ ul.fl-list li { background: #f8fafc; border: 1px solid var(--line); border-left:
 .fl-price { display: inline-block; margin-top: 3px; font-size: .75rem; font-weight: 700; background: #dcfce7; color: #15803d; padding: 2px 6px; border-radius: 4px; }
 
 /* ==========================================================================
-   10. RESPONSIVE ANPASSUNGEN (EXAKT AUS CODE 3)
+   10. RESPONSIVE ANPASSUNGEN
    ========================================================================== */
 @media (max-width: 860px) {
   body { padding: 12px 8px 22px; }
@@ -702,7 +702,7 @@ ul.fl-list li { background: #f8fafc; border: 1px solid var(--line); border-left:
 <body>
 <div class="wrap">
 
-  <!-- HEADERBEREICH MIT TITEL & PERSONEN-STATISTIKEN (ANALOG CODE 3) -->
+  <!-- HEADERBEREICH MIT TITEL & PERSONEN-STATISTIKEN -->
   <header>
     <div>
       <h1>🌏 Thailand & Sri Lanka 2027</h1>
@@ -710,11 +710,11 @@ ul.fl-list li { background: #f8fafc; border: 1px solid var(--line); border-left:
       <div id="countdown">⏳ Countdown wird berechnet...</div>
     </div>
     <div class="stats" id="stats">
-      <!-- Dynamisch gerendert analog Code 3 -->
+      <!-- Dynamisch gerendert -->
     </div>
   </header>
 
-  <!-- HAUPT-TAB-NAVIGATION (ANALYSE-TAB DAHINGEEND ENTFERNT) -->
+  <!-- HAUPT-TAB-NAVIGATION -->
   <div class="tabs" role="tablist">
     <button class="tab on" data-t="route">🗺️ Reiseroute</button>
     <button class="tab" data-t="acc">🏨 Unterkünfte</button>
@@ -732,7 +732,7 @@ ul.fl-list li { background: #f8fafc; border: 1px solid var(--line); border-left:
       <div id="map"></div>
     </div>
 
-    <!-- Länder-Umschalter (KÜRZEL ENTFERNT) -->
+    <!-- Länder-Umschalter -->
     <div class="switch">
       <button class="ph on" id="btnThailand" onclick="switchCountry('thailand')">🇹🇭 THAILAND<small>01.01. – 29.01. · Udon Thani, Chiang Mai, Pai, Krabi, Koh Tao, Bangkok</small></button>
       <button class="ph" id="btnSriLanka" onclick="switchCountry('srilanka')">🇱🇰 SRI LANKA<small>29.01. – 23.02. · Kulturdreieck, Hochlandzug, Ella, Südküste, Colombo</small></button>
@@ -783,7 +783,7 @@ ul.fl-list li { background: #f8fafc; border: 1px solid var(--line); border-left:
           <tbody>
             <tr><td><strong>1. Udon Thani</strong></td><td>02.01. – 05.01.</td><td><span class="stay-badge">3 Nächte</span></td><td>🏠 Bei OW <span class="status-booked">geplant</span></td><td><span class="travel-time-pill">✈️ ca. 1 Std. 05 Min.</span> Inlandsflug Nok Air DD703 nach Chiang Mai</td></tr>
             <tr><td><strong>2. Chiang Mai</strong></td><td>05.01. – 08.01.</td><td><span class="stay-badge">3 Nächte</span></td><td>🏨 Sylvis Hostel Chiangmai <span class="status-booked">gebucht</span></td><td><span class="travel-time-pill">🚐 ca. 3 Std. 00 Min.</span> Minivan (AYA) über 762 Kurven nach Pai</td></tr>
-            <tr><td><strong>3. Pai</strong></td><td>08.01. – 13.01.</td><td><span class="stay-badge">5 Nächte</span></td><td>🏨 Bueng Pai Farm <span class="status-booked">gebucht</span></td><td><span class="travel-time-pill">🚐✈️ ca. 6–7 Std. Gesamt</span> Minivan via Chiang Mai ➔ Flug/Bus nach Krabi</td></tr>
+            <tr><td><strong>3. Pai</strong></td><td>08.01. – 13.01.</td><td><span class="stay-badge">5 Nächte</span></td><td>🏨 Bueng Pai Farm <span class="status-booked">gebucht</span></td><td><span class="travel-time-pill">🚐✈️️ ca. 6–7 Std. Gesamt</span> Minivan via Chiang Mai ➔ Flug/Bus nach Krabi</td></tr>
             <tr><td><strong>4. Krabi / Railay</strong></td><td>13.01. – 16.01.</td><td><span class="stay-badge">3 Nächte</span></td><td>🏨 EZ auf Krabi <span class="status-open">offen</span></td><td><span class="travel-time-pill">⛴️ ca. 1 Std. 30 Min.</span> Fähre von Krabi nach Ko Phi Phi</td></tr>
             <tr><td><strong>5. Ko Phi Phi</strong></td><td>16.01. – 19.01.</td><td><span class="stay-badge">3 Nächte</span></td><td>🏨 EZ auf Koh Phi Phi <span class="status-open">offen</span></td><td><span class="travel-time-pill">⛴️🚌⛴️ ca. 7–8 Std. Gesamt</span> Fähre zum Festland + Bus & Fähre nach Koh Tao</td></tr>
             <tr><td><strong>6. Koh Tao</strong></td><td>19.01. – 25.01.</td><td><span class="stay-badge">6 Nächte</span></td><td>🏨 EZ auf Koh Tao <span class="status-open">offen</span></td><td><span class="travel-time-pill">⛴️🚌 / ✈️ ca. 8 Std. Gesamt</span> Katamaran + Bus / Flug via Surat Thani/Samui nach Bangkok</td></tr>
@@ -893,7 +893,7 @@ ul.fl-list li { background: #f8fafc; border: 1px solid var(--line); border-left:
       </div>
     </div>
 
-    <!-- GEWICHTSANALYSE UND CHARTS DIREKT UNTERHALB DER PACKLISTE INTEGRATED -->
+    <!-- GEWICHTSANALYSE UND CHARTS -->
     <div class="box" style="margin-top: 24px;">
       <h3>📊 Gewichtsanalyse je Kategorie</h3>
       <p class="note" style="margin-bottom:14px;">Vergleich des Gesamtgewichts pro Kategorie für Stefan und Ines.</p>
@@ -981,13 +981,11 @@ ul.fl-list li { background: #f8fafc; border: 1px solid var(--line); border-left:
    1. DATENSTRUKTUREN & KONSTANTEN
    ========================================================================== */
 
-// Personenkonfiguration analog Code 3 für Statistiken oben rechts
 const P = {
   S: { n: 'Stefan', c: '#2563eb', s: '01-01', e: '01-29' },
   I: { n: 'Ines',   c: '#16a34a', s: '01-01', e: '02-23' }
 };
 
-// Startdatum der Gesamtreise als UTC-Timestamp (01. Januar 2027)
 const D0 = Date.UTC(2027, 0, 1);
 const ts = md => { const [m, d] = md.split('-'); return Date.UTC(2027, m - 1, d); };
 const dn = md => Math.round((ts(md) - D0) / 864e5) + 1;
@@ -1003,7 +1001,6 @@ let chartInesInstance = null;
 
 const $ = s => document.querySelector(s);
 
-// Rendert die Statistiken der Teilnehmer im Header (EXAKT CODE 3 PATTERN)
 function renderStats() {
   $('#stats').innerHTML = Object.entries(P).map(([k, p]) => {
     const n = dn(p.e) - dn(p.s) + 1;
@@ -1014,12 +1011,12 @@ function renderStats() {
 /* ---------- Routendaten Thailand & Sri Lanka ---------- */
 const thailandData = [
   { day: "Tag 1", date: "01.01. (Fr)", groupTag: "Ines & Stefan", region: "Anreise", regTag: "tag-default", title: "Start Reise ab Flughafen Wien (VIE)", details: "Flug nach Bangkok (BKK) um 15:30 Uhr (Saudia SV152 + SV846, Stopp in Flughafen Riad RUH)", transport: "✈️ Saudia SV152", hotel: "✈️ Im Flugzeug", locName: "Flughafen Wien (VIE)", lat: 48.1103, lng: 16.5697 },
-  { day: "Tag 2", date: "02.01. (Sa)", groupTag: "Ines & Stefan", region: "Isan / Udon Thani", regTag: "tag-default", title: "Ankunft Bangkok ➔ Udon Thani", details: "Ankunft 13:40 am Flughafen BKK ➔ Weiterflug TG008 um 18:20 ➔ Ankunft UTH 19:30, Abholung OW", transport: "✈️ Thai TG008", hotel: "🏠 Bei OW", locName: "Udon Thani", lat: 17.4138, lng: 102.7872 },
-  { day: "Tag 3", date: "03.01. (So)", groupTag: "Ines & Stefan", region: "Isan / Udon Thani", regTag: "tag-default", title: "Udon Thani", details: "Zeit mit OW – Ganzer Tag (Tipp: Red Lotus Lake)", transport: "🚗 Mietwagen/Taxi", hotel: "🏠 Bei OW", locName: "Udon Thani", lat: 17.4138, lng: 102.7872 },
-  { day: "Tag 4", date: "04.01. (Mo)", groupTag: "Ines & Stefan", region: "Isan / Udon Thani", regTag: "tag-default", title: "Udon Thani", details: "Zeit mit OW – Ganzer Tag", transport: "🚗 Mietwagen/Taxi", hotel: "🏠 Bei OW", locName: "Udon Thani", lat: 17.4138, lng: 102.7872 },
-  { day: "Tag 5", date: "05.01. (Di)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Udon Thani ➔ Chiang Mai", details: "Abreise Udon Thani (Nok Air DD703 16:30-17:35), Ankunft Chiang Mai, Altstadt & Street Food", transport: "✈️ Nok Air DD703", hotel: "🏨 Sylvis Hostel Chiangmai", locName: "Chiang Mai", lat: 18.7883, lng: 98.9853 },
-  { day: "Tag 6", date: "06.01. (Mi)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Chiang Mai / Umland", details: "Tempel-Tour (Wat Chedi Luang, Wat Phra Singh, Wat Phra That Doi Suthep)", transport: "🛵 Grab / Roller", hotel: "🏨 Sylvis Hostel Chiangmai", locName: "Chiang Mai", lat: 18.7883, lng: 98.9853 },
-  { day: "Tag 7", date: "07.01. (Do)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Chiang Mai / Umland", details: "Tagestour in den Doi Inthanon Nationalpark (Wandern & Wasserfälle - 2565 m)", transport: "🚐 Tagestour", hotel: "🏨 Sylvis Hostel Chiangmai", locName: "Chiang Mai", lat: 18.7883, lng: 98.9853 },
+  { day: "Tag 2", date: "02.01. (Sa)", groupTag: "Ines & Stefan", region: "Isan / Udon Thani", regTag: "tag-default", title: "Ankunft Bangkok ➔ Udon Thani", details: "Ankunft 13:40 am Flughafen BKK ➔ Weiterflug TG008 um 18:20 ➔ Ankunft UTH 19:30, Abholung OW", transport: "✈️ Thai TG008", hotel: "🏠 Bei OW", locName: "Udon Thani (UTH)", lat: 17.3861, lng: 102.7881 },
+  { day: "Tag 3", date: "03.01. (So)", groupTag: "Ines & Stefan", region: "Isan / Udon Thani", regTag: "tag-default", title: "Udon Thani", details: "Zeit mit OW – Ganzer Tag (Tipp: Red Lotus Lake)", transport: "🚗 Mietwagen/Taxi", hotel: "🏠 Bei OW", locName: "Udon Thani (UTH)", lat: 17.3861, lng: 102.7881 },
+  { day: "Tag 4", date: "04.01. (Mo)", groupTag: "Ines & Stefan", region: "Isan / Udon Thani", regTag: "tag-default", title: "Udon Thani", details: "Zeit mit OW – Ganzer Tag", transport: "🚗 Mietwagen/Taxi", hotel: "🏠 Bei OW", locName: "Udon Thani (UTH)", lat: 17.3861, lng: 102.7881 },
+  { day: "Tag 5", date: "05.01. (Di)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Udon Thani ➔ Chiang Mai", details: "Abreise Udon Thani (Nok Air DD703 16:30-17:35), Ankunft Chiang Mai, Altstadt & Street Food", transport: "✈️ Nok Air DD703", hotel: "🏨 Sylvis Hostel Chiangmai", locName: "Chiang Mai (CNX)", lat: 18.7677, lng: 98.9640 },
+  { day: "Tag 6", date: "06.01. (Mi)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Chiang Mai / Umland", details: "Tempel-Tour (Wat Chedi Luang, Wat Phra Singh, Wat Phra That Doi Suthep)", transport: "🛵 Grab / Roller", hotel: "🏨 Sylvis Hostel Chiangmai", locName: "Chiang Mai (CNX)", lat: 18.7677, lng: 98.9640 },
+  { day: "Tag 7", date: "07.01. (Do)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Chiang Mai / Umland", details: "Tagestour in den Doi Inthanon Nationalpark (Wandern & Wasserfälle - 2565 m)", transport: "🚐 Tagestour", hotel: "🏨 Sylvis Hostel Chiangmai", locName: "Chiang Mai (CNX)", lat: 18.7677, lng: 98.9640 },
   { day: "Tag 8", date: "08.01. (Fr)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Chiang Mai ➔ Pai", details: "Reise nach Pai – ca. 3 h Fahrt (762 Kurven)", transport: "🚐 Minivan (AYA)", hotel: "🏨 Bueng Pai Farm", locName: "Pai", lat: 19.3582, lng: 98.4402 },
   { day: "Tag 9", date: "09.01. (Sa)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Pai / Umland", details: "Wandern Pai Canyon, Land Split & Night Market", transport: "🛵 Roller", hotel: "🏨 Bueng Pai Farm", locName: "Pai", lat: 19.3582, lng: 98.4402 },
   { day: "Tag 10", date: "10.01. (So)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Pai / Umland", details: "Pai genießen: Lod Cave, Bamboo Bridge & Hot Springs", transport: "🛵 Roller", hotel: "🏨 Bueng Pai Farm", locName: "Pai", lat: 19.3582, lng: 98.4402 },
@@ -1375,7 +1372,7 @@ function renderMobileCards() {
 }
 
 /* ==========================================================================
-   3. INTERAKTIVE LEAFLET-KARTE
+   3. INTERAKTIVE LEAFLET-KARTE (MIT REALISTISCHEM STRASSEN- & FLUG-ROUTING)
    ========================================================================== */
 function initMap() {
   const createLayer = (url, attribution, maxZoom = 19) => L.tileLayer(url, { maxZoom, attribution });
@@ -1389,10 +1386,9 @@ function initMap() {
   };
 
   map = L.map('map', { layers: [baseLayers["🇩🇪 OSM Deutsch (Deutsch / Landessprache)"]] });
-
   L.control.layers(baseLayers, null, { collapsed: true, position: 'topright' }).addTo(map);
-   
 
+  // Ergänzte Flughäfen für exakte Flugverbindungen
   const points = {
     wien: { name: "Flughafen Wien (VIE)", date: "01.01. & 23.02.2027", lat: 48.1103, lng: 16.5697, desc: "Start & Endpunkt der Reise", color: "#15803d" },
     muc: { name: "Flughafen München (MUC)", date: "29.01.2027", lat: 48.3537, lng: 11.7861, desc: "Zielort Stefan (TG926)", color: "#15803d" },
@@ -1400,15 +1396,19 @@ function initMap() {
     ist: { name: "Flughafen Istanbul (IST)", date: "23.02.2027", lat: 41.2753, lng: 28.7519, desc: "Zwischenstopp Rückflug", color: "#059669" },
     bkk: { name: "Flughafen Bangkok (BKK)", date: "01.-02.01. | 25.-29.01.2027", lat: 13.6900, lng: 100.7501, desc: "Drehkreuz Suvarnabhumi", color: "#6b21a8" },
     bkk_city: { name: "Bangkok Stadtzentrum", date: "25.01. – 29.01.2027", lat: 13.7563, lng: 100.5018, desc: "Kultur, Tempel & Rooftop-Bars", color: "#6b21a8" },
-    cmb: { name: "Flughafen Colombo (CMB)", date: "29.01. | 02.02. | 23.02.2027", lat: 7.1808, lng: 79.8841, desc: "Bandaranaike Airport", color: "#059669" },
-    cmb_city: { name: "Colombo Stadtzentrum", date: "21.02. – 23.02.2027", lat: 6.9344, lng: 79.8428, desc: "Hauptstadt Vibe & Galle Face Promenade", color: "#6b21a8" },
-    uth: { name: "Udon Thani", date: "02.01. – 05.01.2027", lat: 17.4138, lng: 102.7872, desc: "Isan & Red Lotus Lake", color: "#15803d" },
-    cnx: { name: "Chiang Mai", date: "05.01. – 08.01.2027", lat: 18.7883, lng: 98.9853, desc: "Norden & Doi Inthanon", color: "#15803d" },
+    uth: { name: "Udon Thani (UTH)", date: "02.01. – 05.01.2027", lat: 17.3861, lng: 102.7881, desc: "Isan & Flughafen UTH", color: "#15803d" },
+    cnx: { name: "Chiang Mai (CNX)", date: "05.01. – 08.01.2027", lat: 18.7677, lng: 98.9640, desc: "Norden & Flughafen CNX", color: "#15803d" },
     pai: { name: "Pai", date: "08.01. – 13.01.2027", lat: 19.3582, lng: 98.4402, desc: "Canyon, Hot Springs & Night Market", color: "#15803d" },
+    kbv: { name: "Flughafen Krabi (KBV)", date: "13.01.2027", lat: 8.0988, lng: 98.9862, desc: "Flughafen Krabi", color: "#0d9488" },
     krabi: { name: "Krabi / Railay", date: "13.01. – 16.01.2027", lat: 8.0863, lng: 98.9063, desc: "Railay Beach & Hong Island", color: "#0d9488" },
     phiphi: { name: "Ko Phi Phi", date: "16.01. – 19.01.2027", lat: 7.7407, lng: 98.7784, desc: "Maya Bay & Long Beach", color: "#0d9488" },
+    surat: { name: "Flughafen Surat Thani (URT)", date: "25.01.2027", lat: 9.1326, lng: 99.1356, desc: "Flughafen Festland Samui-Region", color: "#0d9488" },
     tao: { name: "Koh Tao", date: "19.01. – 25.01.2027", lat: 10.1018, lng: 99.8383, desc: "Schnorcheln & Vollmond Party", color: "#0d9488" },
     phangan: { name: "Ko Pha-ngan", date: "22.01.2027", lat: 9.7319, lng: 100.0136, desc: "Vollmond Party Speedboot", color: "#0d9488" },
+    
+    // Sri Lanka
+    cmb: { name: "Flughafen Colombo (CMB)", date: "29.01. | 02.02. | 23.02.2027", lat: 7.1808, lng: 79.8841, desc: "Bandaranaike Airport", color: "#059669" },
+    cmb_city: { name: "Colombo Stadtzentrum", date: "21.02. – 23.02.2027", lat: 6.9344, lng: 79.8428, desc: "Hauptstadt Vibe & Galle Face Promenade", color: "#6b21a8" },
     anuradhapura: { name: "Anuradhapura", date: "03.02. – 06.02.2027", lat: 8.3114, lng: 80.4037, desc: "Kulturdreieck UNESCO Radtour", color: "#b45309" },
     dambulla: { name: "Dambulla", date: "06.02. – 09.02.2027", lat: 7.8731, lng: 80.6517, desc: "Sigiriya Rock & Safari", color: "#b45309" },
     kandy: { name: "Kandy", date: "09.02. – 11.02.2027", lat: 7.2906, lng: 80.6337, desc: "Zahntempel & Start Zugfahrt", color: "#15803d" },
@@ -1418,31 +1418,75 @@ function initMap() {
     weligama: { name: "Weligama", date: "19.02. – 21.02.2027", lat: 5.9722, lng: 80.4289, desc: "Surfen & Beach Vibes", color: "#0d9488" }
   };
 
-  const flightStyle = { color: '#059669', weight: 2, opacity: 0.85, dashArray: '5, 5' };
-  const thOverlandStyle = { color: '#0d9488', weight: 3, opacity: 0.9 };
-  const slOverlandStyle = { color: '#b45309', weight: 3, opacity: 0.9 };
-  const trainStyle = { color: '#dc2626', weight: 3.5, opacity: 1, dashArray: '4, 4' };
+  // Styles
+  const flightStyle = { color: '#059669', weight: 2.5, opacity: 0.85, dashArray: '6, 6' };
+  const thOverlandStyle = { color: '#0d9488', weight: 3.5, opacity: 0.9 };
+  const slOverlandStyle = { color: '#b45309', weight: 3.5, opacity: 0.9 };
+  const trainStyle = { color: '#dc2626', weight: 3.5, opacity: 0.9, dashArray: '4, 4' };
 
-  // Flugrouten & Verbindungen
+  // Funktion zur automatischen Berechnung der Straßenroute via OSRM API
+  function drawRoadRoute(startPoint, endPoint, style, profile = 'driving') {
+    const url = `https://router.project-osrm.org/route/v1/${profile}/${startPoint.lng},${startPoint.lat};${endPoint.lng},${endPoint.lat}?overview=full&geometries=geojson`;
+
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        if (data.routes && data.routes.length > 0) {
+          const coordinates = data.routes[0].geometry.coordinates.map(coord => [coord[1], coord[0]]);
+          L.polyline(coordinates, style).addTo(map);
+        } else {
+          // Fallback zur geraden Linie, falls kein Routing gefunden wird
+          L.polyline([[startPoint.lat, startPoint.lng], [endPoint.lat, endPoint.lng]], style).addTo(map);
+        }
+      })
+      .catch(() => {
+        L.polyline([[startPoint.lat, startPoint.lng], [endPoint.lat, endPoint.lng]], style).addTo(map);
+      });
+  }
+
+  /* -------------------------------------------------------------------------
+     A) FLÜGE (Gestrichelt, exakt von Flughafen zu Flughafen)
+     ------------------------------------------------------------------------- */
+  // Langstreckenflüge
   L.polyline([[points.wien.lat, points.wien.lng], [points.ruh.lat, points.ruh.lng], [points.bkk.lat, points.bkk.lng]], flightStyle).addTo(map);
-  L.polyline([[points.bkk.lat, points.bkk.lng], [points.uth.lat, points.uth.lng]], flightStyle).addTo(map);
-  L.polyline([[points.uth.lat, points.uth.lng], [points.cnx.lat, points.cnx.lng]], flightStyle).addTo(map);
   L.polyline([[points.bkk.lat, points.bkk.lng], [points.muc.lat, points.muc.lng]], flightStyle).addTo(map);
   L.polyline([[points.bkk.lat, points.bkk.lng], [points.cmb.lat, points.cmb.lng]], flightStyle).addTo(map);
   L.polyline([[points.cmb.lat, points.cmb.lng], [points.ist.lat, points.ist.lng], [points.wien.lat, points.wien.lng]], flightStyle).addTo(map);
 
-  L.polyline([[points.cnx.lat, points.cnx.lng], [points.pai.lat, points.pai.lng]], thOverlandStyle).addTo(map);
-  L.polyline([[points.pai.lat, points.pai.lng], [points.krabi.lat, points.krabi.lng]], thOverlandStyle).addTo(map);
+  // Inlandsflüge Thailand (von/zu den nächstgelegenen Flughäfen)
+  L.polyline([[points.bkk.lat, points.bkk.lng], [points.uth.lat, points.uth.lng]], flightStyle).addTo(map); // BKK -> UTH
+  L.polyline([[points.uth.lat, points.uth.lng], [points.cnx.lat, points.cnx.lng]], flightStyle).addTo(map); // UTH -> CNX
+  L.polyline([[points.cnx.lat, points.cnx.lng], [points.kbv.lat, points.kbv.lng]], flightStyle).addTo(map); // CNX -> KBV (Krabi)
+  L.polyline([[points.surat.lat, points.surat.lng], [points.bkk.lat, points.bkk.lng]], flightStyle).addTo(map); // Surat Thani -> BKK
+
+  /* -------------------------------------------------------------------------
+     B) STRASSEN- & LANDVERBINDUNGEN (Realistisch am Straßennetz mit OSRM)
+     ------------------------------------------------------------------------- */
+  // Thailand Transfers
+  drawRoadRoute(points.cnx, points.pai, thOverlandStyle);         // Chiang Mai -> Pai (762 Kurven)
+  drawRoadRoute(points.kbv, points.krabi, thOverlandStyle);       // Flughafen Krabi -> Railay/Ao Nang
+  drawRoadRoute(points.tao, points.surat, thOverlandStyle);       // Koh Tao -> Surat Thani (Fähre + Land)
+  drawRoadRoute(points.bkk, points.bkk_city, thOverlandStyle);   // Flughafen BKK -> Stadtzentrum
+
+  // Sri Lanka Transfers
+  drawRoadRoute(points.cmb, points.anuradhapura, slOverlandStyle);
+  drawRoadRoute(points.anuradhapura, points.dambulla, slOverlandStyle);
+  drawRoadRoute(points.dambulla, points.kandy, slOverlandStyle);
+  drawRoadRoute(points.kandy, points.ella, trainStyle);           // Panoramazug Kandy -> Ella
+  drawRoadRoute(points.ella, points.tangalle, slOverlandStyle);
+  drawRoadRoute(points.tangalle, points.mirissa, slOverlandStyle);
+  drawRoadRoute(points.mirissa, points.weligama, slOverlandStyle);
+  drawRoadRoute(points.weligama, points.cmb_city, slOverlandStyle);
+  drawRoadRoute(points.cmb_city, points.cmb, slOverlandStyle);
+
+  // Fähren & Seewege (Inselverbindungen)
   L.polyline([[points.krabi.lat, points.krabi.lng], [points.phiphi.lat, points.phiphi.lng]], thOverlandStyle).addTo(map);
   L.polyline([[points.phiphi.lat, points.phiphi.lng], [points.tao.lat, points.tao.lng]], thOverlandStyle).addTo(map);
-  L.polyline([[points.tao.lat, points.tao.lng], [points.bkk_city.lat, points.bkk_city.lng]], thOverlandStyle).addTo(map);
+  L.polyline([[points.tao.lat, points.tao.lng], [points.phangan.lat, points.phangan.lng]], thOverlandStyle).addTo(map);
 
-  L.polyline([[points.cmb.lat, points.cmb.lng], [points.anuradhapura.lat, points.anuradhapura.lng]], slOverlandStyle).addTo(map);
-  L.polyline([[points.anuradhapura.lat, points.anuradhapura.lng], [points.dambulla.lat, points.dambulla.lng], [points.kandy.lat, points.kandy.lng]], slOverlandStyle).addTo(map);
-  L.polyline([[points.kandy.lat, points.kandy.lng], [points.ella.lat, points.ella.lng]], trainStyle).addTo(map);
-  L.polyline([[points.ella.lat, points.ella.lng], [points.tangalle.lat, points.tangalle.lng], [points.mirissa.lat, points.mirissa.lng], [points.weligama.lat, points.weligama.lng], [points.cmb_city.lat, points.cmb_city.lng]], slOverlandStyle).addTo(map);
-
-  // Marker platzieren
+  /* -------------------------------------------------------------------------
+     C) MARKER PLATZIEREN
+     ------------------------------------------------------------------------- */
   Object.keys(points).forEach(key => {
     const p = points[key];
     const marker = L.circleMarker([p.lat, p.lng], {
@@ -1457,19 +1501,21 @@ function initMap() {
     markers[key] = { marker, lat: p.lat, lng: p.lng };
   });
 
-  // Legende
+  /* -------------------------------------------------------------------------
+     D) LEGENDE
+     ------------------------------------------------------------------------- */
   const lg = L.control({ position: 'bottomright' });
   lg.onAdd = () => {
     const d = L.DomUtil.create('div', 'legend');
     d.innerHTML = `
       <div class="lh" style="cursor:pointer;font-weight:800">📌 Legende <span>▼</span></div>
       <div class="lb" style="display:none; margin-top:4px;">
-        <span style="color:#15803d">━</span> Nord-Thailand<br>
-        <span style="color:#6b21a8">━</span> Bangkok / Colombo<br>
-        <span style="color:#0d9488">━</span> Thailand Inseln<br>
-        <span style="color:#b45309">━</span> Sri Lanka Route<br>
-        <span style="color:#dc2626">┅</span> Zug Kandy ➔ Ella<br>
-        <span style="color:#059669">┅</span> Flüge
+        <span style="color:#15803d">━</span> Nord-Thailand (Straße)<br>
+        <span style="color:#6b21a8">━</span> Stadt-Transfers<br>
+        <span style="color:#0d9488">━</span> Inseln & Fährverbindungen<br>
+        <span style="color:#b45309">━</span> Sri Lanka Route (Straße)<br>
+        <span style="color:#dc2626">┅</span> Panoramazug Kandy ➔ Ella<br>
+        <span style="color:#059669">┅</span> Flüge (Flughafen zu Flughafen)
       </div>
     `;
     L.DomEvent.disableClickPropagation(d);
@@ -1643,7 +1689,7 @@ function renderPacklist() {
         <td style="text-align:right;">${item.weight || 0} g</td>
         <td style="text-align:right; font-weight:700; color:var(--p1);">${totalItemWeight} g</td>
         <td style="text-align:center;">
-          <button style="border:none; background:none; cursor:pointer;" onclick="editPackItem(${idx})">✏️️</button>
+          <button style="border:none; background:none; cursor:pointer;" onclick="editPackItem(${idx})">✏</button>
           <button style="border:none; background:none; cursor:pointer;" onclick="deletePackItem(${idx})">🗑️</button>
         </td>
       `;
