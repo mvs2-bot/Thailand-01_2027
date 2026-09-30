@@ -928,7 +928,7 @@
 
     <!-- TAB NAVIGATION -->
     <div class="nav-tabs">
-      <button class="tab-btn active" onclick="switchTab('routeTab', this)">🗺️ Reiseroute & Karte</button>
+      <button class="tab-btn active" onclick="switchTab('routeTab', this)">🗺️️ Reiseroute & Karte</button>
       <button class="tab-btn" onclick="switchTab('accommodationTab', this)">🏨 Unterkünfte & Reisezeiten</button>
       <button class="tab-btn" onclick="switchTab('packTab', this)">🎒 Interaktive Packliste</button>
       <button class="tab-btn" onclick="switchTab('analysisTab', this)">📊 Gewichtsanalyse</button>
@@ -987,7 +987,7 @@
       <div class="mobile-cards" id="mobileCards"></div>
     </div>
 
-    <!-- TAB 2: UNTERKÜNFTE & REISEZEITEN (NEUER BEREICH) -->
+    <!-- TAB 2: UNTERKÜNFTE & REISEZEITEN -->
     <div id="accommodationTab" class="tab-content">
       <div class="info-card">
         <div class="info-card-header">
@@ -1019,14 +1019,14 @@
                 <td><strong>2. Chiang Mai</strong></td>
                 <td>05.01. – 08.01.</td>
                 <td><span class="stay-badge">3 Nächte</span></td>
-                <td>🏨 EZ in Chiang Mai <span class="status-pill-open">offen</span></td>
+                <td>🏨 Sylvis Hostel Chiangmai <span class="status-pill-booked">gebucht</span></td>
                 <td><span class="travel-time-pill">🚐 ca. 3 Std. 00 Min.</span> Minivan (AYA) über 762 Kurven nach Pai</td>
               </tr>
               <tr>
                 <td><strong>3. Pai</strong></td>
                 <td>08.01. – 13.01.</td>
                 <td><span class="stay-badge">5 Nächte</span></td>
-                <td>🏨 EZ in Pai <span class="status-pill-open">offen</span></td>
+                <td>🏨 Bueng Pai Farm <span class="status-pill-booked">gebucht</span></td>
                 <td><span class="travel-time-pill">🚐✈️ ca. 6–7 Std. Gesamt</span> Minivan via Chiang Mai ➔ Flug/Bus nach Krabi</td>
               </tr>
               <tr>
@@ -1368,17 +1368,17 @@
        ========================================================================== */
     const thailandData = [
       { day: "Tag 1", date: "01.01. (Fr)", groupTag: "Ines & Stefan", region: "Anreise", regTag: "tag-default", title: "Start Reise ab Flughafen Wien (VIE)", details: "Flug nach Bangkok (BKK) um 15:30 Uhr (Saudia SV152 + SV846, Stopp in Flughafen Riad RUH)", transport: "✈️ Saudia SV152", hotel: "✈️ Im Flugzeug", locName: "Flughafen Wien (VIE)", lat: 48.1103, lng: 16.5697, color: "#15803d" },
-      { day: "Tag 2", date: "02.01. (Sa)", groupTag: "Ines & Stefan", region: "Isan / Udon Thani", regTag: "tag-default", title: "Ankunft Bangkok ➔ Udon Thani", details: "Ankunft 13:40 am Flughafen BKK ➔ Weiterflug TG008 um 18:20 ➔ Ankunft UTH 19:30, Abholung OW", transport: "✈️ Thai TG008", hotel: "🏠 Bei OW?", locName: "Udon Thani", lat: 17.4138, lng: 102.7872, color: "#15803d" },
-      { day: "Tag 3", date: "03.01. (So)", groupTag: "Ines & Stefan", region: "Isan / Udon Thani", regTag: "tag-default", title: "Udon Thani", details: "Zeit mit OW – Ganzer Tag (Tipp: Red Lotus Lake)", transport: "🚗 Mietwagen/Taxi", hotel: "🏠 Bei OW?", locName: "Udon Thani", lat: 17.4138, lng: 102.7872, color: "#15803d" },
-      { day: "Tag 4", date: "04.01. (Mo)", groupTag: "Ines & Stefan", region: "Isan / Udon Thani", regTag: "tag-default", title: "Udon Thani", details: "Zeit mit OW – Ganzer Tag", transport: "🚗 Mietwagen/Taxi", hotel: "🏠 Bei OW?", locName: "Udon Thani", lat: 17.4138, lng: 102.7872, color: "#15803d" },
-      { day: "Tag 5", date: "05.01. (Di)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Udon Thani ➔ Chiang Mai", details: "Abreise Udon Thani (Nok Air DD703 16:30-17:35), Ankunft Chiang Mai, Altstadt & Street Food", transport: "✈️ Nok Air DD703", hotel: "🏨 EZ in Chiang Mai", locName: "Chiang Mai", lat: 18.7883, lng: 98.9853, color: "#15803d" },
-      { day: "Tag 6", date: "06.01. (Mi)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Chiang Mai / Umland", details: "Tempel-Tour (Wat Chedi Luang, Wat Phra Singh, Wat Phra That Doi Suthep)", transport: "🛵 Grab / Roller", hotel: "🏨 EZ in Chiang Mai", locName: "Chiang Mai", lat: 18.7883, lng: 98.9853, color: "#15803d" },
-      { day: "Tag 7", date: "07.01. (Do)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Chiang Mai / Umland", details: "Tagestour in den Doi Inthanon Nationalpark (Wandern & Wasserfälle - 2565 m)", transport: "🚐 Tagestour", hotel: "🏨 EZ in Chiang Mai", locName: "Chiang Mai", lat: 18.7883, lng: 98.9853, color: "#15803d" },
-      { day: "Tag 8", date: "08.01. (Fr)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Chiang Mai ➔ Pai", details: "Reise nach Pai – ca. 3 h Fahrt (762 Kurven)", transport: "🚐 Minivan (AYA)", hotel: "🏨 EZ in Pai", locName: "Pai", lat: 19.3582, lng: 98.4402, color: "#15803d" },
-      { day: "Tag 9", date: "09.01. (Sa)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Pai / Umland", details: "Wandern Pai Canyon, Land Split & Night Market", transport: "🛵 Roller", hotel: "🏨 EZ in Pai", locName: "Pai", lat: 19.3582, lng: 98.4402, color: "#15803d" },
-      { day: "Tag 10", date: "10.01. (So)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Pai / Umland", details: "Pai genießen: Lod Cave, Bamboo Bridge & Hot Springs", transport: "🛵 Roller", hotel: "🏨 EZ in Pai", locName: "Pai", lat: 19.3582, lng: 98.4402, color: "#15803d" },
-      { day: "Tag 11", date: "11.01. (Mo)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Pai / Umland", details: "Erkundung Tag 4 in Pai: Aussichtspunkte, Cafés & entspannen", transport: "🛵 Roller", hotel: "🏨 EZ in Pai", locName: "Pai", lat: 19.3582, lng: 98.4402, color: "#15803d" },
-      { day: "Tag 12", date: "12.01. (Di)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Pai / Umland", details: "Erkundung Tag 5 in Pai: Letzter Tag im Hochland", transport: "🛵 Roller", hotel: "🏨 EZ in Pai", locName: "Pai", lat: 19.3582, lng: 98.4402, color: "#15803d" },
+      { day: "Tag 2", date: "02.01. (Sa)", groupTag: "Ines & Stefan", region: "Isan / Udon Thani", regTag: "tag-default", title: "Ankunft Bangkok ➔ Udon Thani", details: "Ankunft 13:40 am Flughafen BKK ➔ Weiterflug TG008 um 18:20 ➔ Ankunft UTH 19:30, Abholung OW", transport: "✈️ Thai TG008", hotel: "🏠 Bei OW", locName: "Udon Thani", lat: 17.4138, lng: 102.7872, color: "#15803d" },
+      { day: "Tag 3", date: "03.01. (So)", groupTag: "Ines & Stefan", region: "Isan / Udon Thani", regTag: "tag-default", title: "Udon Thani", details: "Zeit mit OW – Ganzer Tag (Tipp: Red Lotus Lake)", transport: "🚗 Mietwagen/Taxi", hotel: "🏠 Bei OW", locName: "Udon Thani", lat: 17.4138, lng: 102.7872, color: "#15803d" },
+      { day: "Tag 4", date: "04.01. (Mo)", groupTag: "Ines & Stefan", region: "Isan / Udon Thani", regTag: "tag-default", title: "Udon Thani", details: "Zeit mit OW – Ganzer Tag", transport: "🚗 Mietwagen/Taxi", hotel: "🏠 Bei OW", locName: "Udon Thani", lat: 17.4138, lng: 102.7872, color: "#15803d" },
+      { day: "Tag 5", date: "05.01. (Di)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Udon Thani ➔ Chiang Mai", details: "Abreise Udon Thani (Nok Air DD703 16:30-17:35), Ankunft Chiang Mai, Altstadt & Street Food", transport: "✈️ Nok Air DD703", hotel: "🏨 Sylvis Hostel Chiangmai", locName: "Chiang Mai", lat: 18.7883, lng: 98.9853, color: "#15803d" },
+      { day: "Tag 6", date: "06.01. (Mi)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Chiang Mai / Umland", details: "Tempel-Tour (Wat Chedi Luang, Wat Phra Singh, Wat Phra That Doi Suthep)", transport: "🛵 Grab / Roller", hotel: "🏨 Sylvis Hostel Chiangmai", locName: "Chiang Mai", lat: 18.7883, lng: 98.9853, color: "#15803d" },
+      { day: "Tag 7", date: "07.01. (Do)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Chiang Mai / Umland", details: "Tagestour in den Doi Inthanon Nationalpark (Wandern & Wasserfälle - 2565 m)", transport: "🚐 Tagestour", hotel: "🏨 Sylvis Hostel Chiangmai", locName: "Chiang Mai", lat: 18.7883, lng: 98.9853, color: "#15803d" },
+      { day: "Tag 8", date: "08.01. (Fr)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Chiang Mai ➔ Pai", details: "Reise nach Pai – ca. 3 h Fahrt (762 Kurven)", transport: "🚐 Minivan (AYA)", hotel: "🏨 Bueng Pai Farm", locName: "Pai", lat: 19.3582, lng: 98.4402, color: "#15803d" },
+      { day: "Tag 9", date: "09.01. (Sa)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Pai / Umland", details: "Wandern Pai Canyon, Land Split & Night Market", transport: "🛵 Roller", hotel: "🏨 Bueng Pai Farm", locName: "Pai", lat: 19.3582, lng: 98.4402, color: "#15803d" },
+      { day: "Tag 10", date: "10.01. (So)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Pai / Umland", details: "Pai genießen: Lod Cave, Bamboo Bridge & Hot Springs", transport: "🛵 Roller", hotel: "🏨 Bueng Pai Farm", locName: "Pai", lat: 19.3582, lng: 98.4402, color: "#15803d" },
+      { day: "Tag 11", date: "11.01. (Mo)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Pai / Umland", details: "Erkundung Tag 4 in Pai: Aussichtspunkte, Cafés & entspannen", transport: "🛵 Roller", hotel: "🏨 Bueng Pai Farm", locName: "Pai", lat: 19.3582, lng: 98.4402, color: "#15803d" },
+      { day: "Tag 12", date: "12.01. (Di)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Pai / Umland", details: "Erkundung Tag 5 in Pai: Letzter Tag im Hochland", transport: "🛵 Roller", hotel: "🏨 Bueng Pai Farm", locName: "Pai", lat: 19.3582, lng: 98.4402, color: "#15803d" },
       { day: "Tag 13", date: "13.01. (Mi)", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Pai ➔ Krabi", details: "Direkter Transfer von Pai auf dem besten Weg nach Krabi", transport: "🚐 Minivan / Flug", hotel: "🏨 EZ auf Krabi", locName: "Krabi / Railay", lat: 8.0863, lng: 98.9063, color: "#0d9488" },
       { day: "Tag 14", date: "14.01. (Do)", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Krabi", details: "Railay Beach & Phra Nang Cave Beach", transport: "🚤 Longtail-Boot", hotel: "🏨 EZ auf Krabi", locName: "Krabi / Railay", lat: 8.0863, lng: 98.9063, color: "#0d9488" },
       { day: "Tag 15", date: "15.01. (Fr)", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Krabi", details: "Tagestrip nach Ko Hong (Lagune & Viewpoint)", transport: "🚤 Longtail-Tour", hotel: "🏨 EZ auf Krabi", locName: "Krabi / Railay", lat: 8.0863, lng: 98.9063, color: "#0d9488" },
@@ -1395,17 +1395,17 @@
       { day: "Tag 26", date: "26.01. (Di)", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Bangkok", details: "Kultur & Tempel (Grand Palace, Wat Pho, Wat Arun)", transport: "🚤 MRT / Boot", hotel: "🏨 EZ in Bangkok", locName: "Bangkok Stadtzentrum", lat: 13.7563, lng: 100.5018, color: "#6b21a8" },
       { day: "Tag 27", date: "27.01. (Mi)", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Bangkok", details: "Chinatown (Yaowarat), Sukhumvit, Rooftop-Bar", transport: "🚆 Skytrain / Grab", hotel: "🏨 EZ in Bangkok", locName: "Bangkok Stadtzentrum", lat: 13.7563, lng: 100.5018, color: "#6b21a8" },
       { day: "Tag 28", date: "28.01. (Do)", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Bangkok", details: "Entspannter Tag: Souvenirs, Thai-Massage & Lieblingsspots", transport: "🚆 Skytrain / Grab", hotel: "🏨 EZ in Bangkok", locName: "Bangkok Stadtzentrum", lat: 13.7563, lng: 100.5018, color: "#6b21a8" },
-      { day: "Tag 29", date: "29.01. (Fr)", groupTag: "Ines & Stefan", region: "Abschluss", regTag: "tag-default", title: "Bangkok Stadt ➔ Flughafen / Heim- & Weiterflug", details: "Stefan ➔ MUC (TG926 13:00 Direkt) | Ines ➔ CMB (UL405 13:50 Direkt)", transport: "✈️ Flugzeug", hotel: "✈️️ Flug / Ceylon Glory", locName: "Flughafen Bangkok (BKK)", lat: 13.6900, lng: 100.7501, color: "#6b21a8" }
+      { day: "Tag 29", date: "29.01. (Fr)", groupTag: "Ines & Stefan", region: "Abschluss", regTag: "tag-default", title: "Bangkok Stadt ➔ Flughafen / Heim- & Weiterflug", details: "Stefan ➔ MUC (TG926 13:00 Direkt) | Ines ➔ CMB (UL405 13:50 Direkt)", transport: "✈️ Flugzeug", hotel: "✈ Flug / Ceylon Glory", locName: "Flughafen Bangkok (BKK)", lat: 13.6900, lng: 100.7501, color: "#6b21a8" }
     ];
 
     const sriLankaData = [
       // INES ALLEINE
       { day: "Tag 1", date: "30.01. (Sa)", groupTag: "Ines alleine", region: "Westküste", regTag: "tag-sl-westkueste", title: "Negombo (Ines alleine)", details: "Akklimatisieren in Negombo, mögliche Aktivitäten auschecken, Strand.", transport: "🛵 TukTuk / Zu Fuß", hotel: "🏨 Ceylon Glory Hostel (gebucht)", locName: "Flughafen Colombo (CMB)", lat: 7.1808, lng: 79.8841, color: "#059669" },
       { day: "Tag 2", date: "31.01. (So)", groupTag: "Ines alleine", region: "Westküste", regTag: "tag-sl-westkueste", title: "Negombo (Ines alleine)", details: "Aktivität & Entspannen am Strand.", transport: "🛵 TukTuk", hotel: "🏨 Ceylon Glory Hostel (gebucht)", locName: "Flughafen Colombo (CMB)", lat: 7.1808, lng: 79.8841, color: "#059669" },
-      { day: "Tag 3", date: "01.02. (Mo)", groupTag: "Ines alleine", region: "Westküste", regTag: "tag-sl-westkueste", title: "Negombo (Ines alleine)", details: "Zugfahrt Kandy ➔ Ella zwingend online buchen!", transport: "🛵 TukTuk", hotel: "🏨 noch offen", locName: "Flughafen Colombo (CMB)", lat: 7.1808, lng: 79.8841, color: "#059669" },
+      { day: "Tag 3", date: "01.02. (Mo)", groupTag: "Ines alleine", region: "Westküste", regTag: "tag-sl-westkueste", title: "Negombo (Ines alleine)", details: "Zugfahrt Kandy ➔ Ella zwingend online buchen!", transport: "🛵 TukTuk", hotel: "🏨 Ceylon Glory Hostel (gebucht)", locName: "Flughafen Colombo (CMB)", lat: 7.1808, lng: 79.8841, color: "#059669" },
 
       // INES MIT ANNA
-      { day: "Tag 1", date: "02.02. (Di)", groupTag: "Ines & Anna", region: "Westküste", regTag: "tag-sl-westkueste", title: "Negombo / Colombo (Ankunft Anna)", details: "Ankunft Anna (05:00-06:00). Gemütlicher Tag, Kaffee trinken, Planung.", transport: "🚕 Taxi / TukTuk", hotel: "🏨 noch offen", locName: "Flughafen Colombo (CMB)", lat: 7.1808, lng: 79.8841, color: "#059669" },
+      { day: "Tag 1", date: "02.02. (Di)", groupTag: "Ines & Anna", region: "Westküste", regTag: "tag-sl-westkueste", title: "Negombo / Colombo (Ankunft Anna)", details: "Ankunft Anna (05:00-06:00). Gemütlicher Tag, Kaffee trinken, Planung.", transport: "🚕 Taxi / TukTuk", hotel: "🏨 Ceylon Glory Hostel (gebucht)", locName: "Flughafen Colombo (CMB)", lat: 7.1808, lng: 79.8841, color: "#059669" },
       { day: "Tag 2", date: "03.02. (Mi)", groupTag: "Ines & Anna", region: "Kulturdreieck", regTag: "tag-sl-kulturdreieck", title: "Negombo/Colombo ➔ Anuradhapura", details: "Einchecken, Akklimatisieren, TukTuk nach Mihintale organisieren.", transport: "🚆 Zug (Direkt) / Bus", hotel: "🏨 noch offen", locName: "Anuradhapura", lat: 8.3114, lng: 80.4037, color: "#b45309" },
       { day: "Tag 3", date: "04.02. (Do)", groupTag: "Ines & Anna", region: "Kulturdreieck", regTag: "tag-sl-kulturdreieck", title: "Anuradhapura", details: "Ancient Anuradhapura mit dem Fahrrad erkunden (UNESCO World Heritage).", transport: "🚲 Fahrrad", hotel: "🏨 noch offen", locName: "Anuradhapura", lat: 8.3114, lng: 80.4037, color: "#b45309" },
       { day: "Tag 4", date: "05.02. (Fr)", groupTag: "Ines & Anna", region: "Kulturdreieck", regTag: "tag-sl-kulturdreieck", title: "Anuradhapura", details: "Vormittag Mihintale, Weiterreise planen.", transport: "🛺 TukTuk", hotel: "🏨 noch offen", locName: "Anuradhapura", lat: 8.3114, lng: 80.4037, color: "#b45309" },
@@ -1610,7 +1610,7 @@
       // WEG-, ZWISCHENSTOPP- & FLUGPUNKTE
       const points = {
         wien: { name: "Flughafen Wien (VIE)", date: "01.01. & 23.02.2027", lat: 48.1103, lng: 16.5697, desc: "<b>Start & Endpunkt der Reise</b><br>✈️ 01.01.2027: Abflug nach BKK (15:30)<br>✈️ 23.02.2027: Ankunft aus CMB (17:35)", color: "#15803d" },
-        muc: { name: "Flughafen München (MUC)", date: "29.01.2027", lat: 48.3537, lng: 11.7861, desc: "<b>Zielort Stefan</b><br>✈️ 29.01.2027: Ankunft TG926 Direktflug aus Bangkok (18:55 Uhr)", color: "#15803d" },
+        muc: { name: "Flughafen München (MUC)", date: "29.01.2027", lat: 48.3537, lng: 11.7861, desc: "<b>Zielort Stefan</b><br>✈️️ 29.01.2027: Ankunft TG926 Direktflug aus Bangkok (18:55 Uhr)", color: "#15803d" },
         ruh: { name: "Flughafen Riad (RUH)", date: "01.01.2027", lat: 24.9576, lng: 46.6988, desc: "<b>✈️ Zwischenstopp Hinflug (01.01.2027)</b><br>Saudia SV152 aus VIE ➔ Umstieg ➔ Saudia SV846 nach BKK", color: "#059669" },
         ist: { name: "Flughafen Istanbul (IST)", date: "23.02.2027", lat: 41.2753, lng: 28.7519, desc: "<b>✈️ Zwischenstopp Rückflug (23.02.2027)</b><br>TK1131 aus CMB (Ankunft 15:45) ➔ Weiterflug TK1887 nach VIE (17:15)", color: "#059669" },
         
@@ -1653,8 +1653,8 @@
         },
 
         uth: { name: "Udon Thani", date: "02.01. – 05.01.2027", lat: 17.4138, lng: 102.7872, desc: "Isan & Red Lotus Lake", color: "#15803d" },
-        cnx: { name: "Chiang Mai", date: "05.01. – 08.01.2027", lat: 18.7883, lng: 98.9853, desc: "Norden, Doi Inthanon & Tempel", color: "#15803d" },
-        pai: { name: "Pai", date: "08.01. – 13.01.2027", lat: 19.3582, lng: 98.4402, desc: "Canyon, Hot Springs & Night Market (5 Nächte)", color: "#15803d" },
+        cnx: { name: "Chiang Mai", date: "05.01. – 08.01.2027", lat: 18.7883, lng: 98.9853, desc: "Norden, Doi Inthanon & Tempel (Unterkunft: Sylvis Hostel)", color: "#15803d" },
+        pai: { name: "Pai", date: "08.01. – 13.01.2027", lat: 19.3582, lng: 98.4402, desc: "Canyon, Hot Springs & Night Market (Unterkunft: Bueng Pai Farm)", color: "#15803d" },
         krabi: { name: "Krabi / Railay", date: "13.01. – 16.01.2027", lat: 8.0863, lng: 98.9063, desc: "Railay Beach, Hong Island & Klettern (3 Nächte)", color: "#0d9488" },
         phiphi: { name: "Ko Phi Phi", date: "16.01. – 19.01.2027", lat: 7.7407, lng: 98.7784, desc: "Maya Bay, Long Beach & Viewpoint (3 Nächte)", color: "#0d9488" },
         tao: { name: "Koh Tao", date: "19.01. – 25.01.2027", lat: 10.1018, lng: 99.8383, desc: "Schnorcheln, Tanote Bay & Vollmond Party (6 Nächte)", color: "#0d9488" },
