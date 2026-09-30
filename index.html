@@ -1378,36 +1378,22 @@ function renderMobileCards() {
    3. INTERAKTIVE LEAFLET-KARTE
    ========================================================================== */
 function initMap() {
-      const osmDe = L.tileLayer('https://tile.openstreetmap.de/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> (Deutscher Stil)'
-      });
-      const osmMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { 
-        maxZoom: 19, 
-        attribution: '&copy; OpenStreetMap' 
-      });
-      const esriStreet = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
-        maxZoom: 19,
-        attribution: 'Tiles &copy; Esri'
-      });
-      const topoMap = L.tileLayer('https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png', { 
-        maxZoom: 18, 
-        attribution: '&copy; OpenStreetMap / CyclOSM' 
-      });
-      const openTopo = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-        maxZoom: 17,
-        attribution: '&copy; OpenTopoMap'
-      });
+  const createLayer = (url, attribution, maxZoom = 19) => L.tileLayer(url, { maxZoom, attribution });
 
-      map = L.map('map', { layers: [osmDe] });
+  const baseLayers = {
+    "🇩🇪 OSM Deutsch (Deutsch / Landessprache)": createLayer('https://tile.openstreetmap.de/{z}/{x}/{y}.png', '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> (Deutscher Stil)'),
+    "🌏 OSM Standard (NUR Landessprache)": createLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', '&copy; OpenStreetMap'),
+    "🗺️ Esri Street (Englisch)": createLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', 'Tiles &copy; Esri'),
+    "⛰️ Topografisch (CyclOSM)": createLayer('https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png', '&copy; OpenStreetMap / CyclOSM', 18),
+    "⛰️ OpenTopoMap (Gelände)": createLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', '&copy; OpenTopoMap', 17)
+  };
 
-      L.control.layers({
-        "🇩🇪 OSM Deutsch (Deutsch / Landessprache)": osmDe,
-        "🌏 OSM Standard (NUR Landessprache)": osmMap,
-        "🗺️ Esri Street (Englisch)": esriStreet,
-        "⛰️ Topografisch (CyclOSM)": topoMap,
-        "⛰️ OpenTopoMap (Gelände)": openTopo
-      }, null, { collapsed: true, position: 'topright' }).addTo(map);
+  map = L.map('map', { layers: [baseLayers["🇩🇪 OSM Deutsch (Deutsch / Landessprache)"]] });
+
+  L.control.layers(baseLayers, null, { collapsed: true, position: 'topright' }).addTo(map);
+}
+
+   
 
   const points = {
     wien: { name: "Flughafen Wien (VIE)", date: "01.01. & 23.02.2027", lat: 48.1103, lng: 16.5697, desc: "Start & Endpunkt der Reise", color: "#15803d" },
