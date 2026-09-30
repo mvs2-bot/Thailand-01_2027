@@ -2,674 +2,149 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<!-- Responsive Viewport für mobile Endgeräte -->
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- Verhindert die Indizierung durch Suchmaschinen -->
-<meta name="robots" content="noindex, nofollow">
-<!-- Theme-Farbe für mobile Browser-Titelleisten -->
-<meta name="theme-color" content="#15803d">
+<meta name="viewport" content="width=device-width, initial-scale=1"><!-- Mobil-Skalierung -->
+<meta name="robots" content="noindex, nofollow"><!-- Nicht in Suchmaschinen -->
+<meta name="theme-color" content="#15803d"><!-- Farbe der Browserleiste am Handy -->
 <title>Thailand & Sri Lanka Reise 2027</title>
 
-<!-- Elefanten-Favicon -->
+<!-- Elefanten-Emoji als Favicon -->
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐘</text></svg>">
 
-<!-- Externe Schriftarten (Google Fonts: Plus Jakarta Sans) -->
+<!-- Schriftart (identisch mit der Südamerika-Seite) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-<!-- Leaflet CSS & JavaScript für die interaktive Karte -->
+<!-- Leaflet (Karte) und Chart.js (Gewichts-Diagramme) -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-<!-- Chart.js für Gewichtsanalysen -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
-/* ==========================================================================
-   1. CSS-VARIABLEN & GLOBALE STYLES
-   ========================================================================== */
+/* ===== 1. Design-Variablen (auf beiden Seiten identisch) ===== */
 :root {
-  /* Farbpalette */
-  --bg: #f4f7f4;          /* Haupthintergrund */
-  --card: #ffffff;        /* Karten- & Boxenhintergrund */
-  --hover: #f0fdf4;       /* Hover-Effekt */
-  --line: #cbd5e1;        /* Rahmen- und Trennlinien */
-  --ink: #0f172a;         /* Haupt-Textfarbe (Dunkel) */
-  --text: #334155;        /* Normaler Text */
-  --mute: #64748b;        /* Dezent-grauer Text */
-
-  /* Primärfarben & Akzente */
-  --p1: #15803d;          /* Haupt-Grün */
-  --primary-hover: #166534;
-  --accent: #0d9488;      /* Teal / Türkis Akzent */
-  --danger: #dc2626;
-
-  /* Personenspezifische Akzentfarben */
-  --S: #2563eb;           /* Stefan (Blau) */
-  --I: #16a34a;           /* Ines (Grün) */
-
-  /* Thailand & Sri Lanka Regionen-Farben */
-  --norden: #15803d;
-  --bangkok: #6b21a8;
-  --inseln: #0d9488;
-  --sl-westkueste: #059669;
-  --sl-kulturdreieck: #b45309;
-  --sl-hochland: #15803d;
-  --sl-suedkueste: #0d9488;
-  --sl-colombo: #6b21a8;
-
-  /* Radien & Schatten */
-  --radius: 12px;
-  --shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+  --bg: #f4f7f4; --card: #fff; --hover: #f0fdf4; --line: #cbd5e1;
+  --ink: #0f172a; --text: #334155; --mute: #64748b;
+  --p1: #15803d; --p2: #7c3aed; --accent: #0d9488; --danger: #dc2626;
+  --radius: 12px; --shadow: 0 4px 12px rgba(15,23,42,.05);
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+/* ===== 2. Grundlayout ===== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; padding: 32px 24px 48px; }
+button, input, select { font: inherit; }
+button { cursor: pointer; }
+.wrap { max-width: 1280px; margin: 0 auto; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 
-html {
-  scroll-behavior: smooth;
-}
+/* ===== 3. Kopfbereich: Titel, Countdown, Personen-Kacheln ===== */
+header { display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: end; gap: 32px; border-bottom: 3px solid var(--p1); padding: 0 2px 20px; margin-bottom: 24px; }
+h1 { font-size: clamp(1.65rem, 2.5vw, 2.2rem); line-height: 1.15; font-weight: 800; letter-spacing: -.025em; color: var(--ink); }
+header p { font-size: .92rem; font-weight: 600; color: var(--mute); margin-top: 6px; }
+#countdown { display: inline-block; margin-top: 10px; background: #dcfce7; border: 1px solid #86efac; color: var(--p1); padding: 5px 14px; border-radius: 999px; font-size: .82rem; font-weight: 800; }
+.stats { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px,1fr)); gap: 10px; width: 680px; max-width: 100%; }
+.stat { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 9px 12px; font-size: .76rem; font-weight: 600; color: var(--ink); box-shadow: var(--shadow); }
+.stat b { display: block; font-weight: 800; margin-top: 2px; font-size: .82rem; }
 
-body {
-  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.5;
-  padding: 32px 24px 48px; /* Desktop-Optimiertes Außen-Padding */
-}
+/* ===== 4. Navigation: Tabs, Länder-Umschalter, Filter ===== */
+.tabs { display: grid; grid-template-columns: repeat(var(--tab-count,3), 1fr); gap: 12px; margin-bottom: 24px; }
+.sub-tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+.tab, .ph, .f, .btn-action { background: var(--card); border: 1px solid var(--line); color: var(--text); border-radius: 8px; font-weight: 700; }
+.tab { min-height: 44px; padding: 10px 12px; font-size: .88rem; white-space: nowrap; text-align: center; transition: background .15s, border-color .15s, color .15s, transform .15s; }
+.tab.on, .tab:hover, .f.on, .f:hover { background: var(--p1); border-color: var(--p1); color: #fff; }
+.tab:hover { transform: translateY(-1px); }
+.pane { display: none; } .pane.on { display: block; }
+.switch { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px; }
+.ph { padding: 12px 16px; border-width: 2px; text-align: center; color: var(--ink); font-weight: 800; font-size: .9rem; line-height: 1.35; transition: background .15s, border-color .15s, transform .15s; }
+.ph small { display: block; font-size: .73rem; line-height: 1.35; font-weight: 600; opacity: .85; margin-top: 3px; }
+.ph:hover { background: var(--hover); transform: translateY(-1px); }
+.ph.on { background: var(--p1); border-color: var(--p1); color: #fff; }
+.controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 14px; }
+#q { flex: 1 1 300px; min-width: 240px; background: var(--card); border: 1px solid var(--line); border-radius: 7px; padding: 9px 13px; font-size: .84rem; color: var(--ink); }
+#q:focus { border-color: #86efac; outline: 3px solid rgba(13,148,136,.15); }
+.f { padding: 7px 12px; font-size: .76rem; }
 
-button, input, select {
-  font: inherit;
-}
+/* ===== 5. Boxen & Karte ===== */
+.box { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; margin-bottom: 20px; box-shadow: var(--shadow); }
+.box.map { border-top: 4px solid var(--p1); padding-top: 16px; }
+.box.full { position: fixed; inset: 0; z-index: 9999; border-radius: 0; margin: 0; overflow: auto; background: var(--bg); padding: 20px; } /* Vollbild */
+.mh { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 14px; }
+.mh h2, .box h3, .box h4 { font-size: 1.1rem; line-height: 1.25; font-weight: 800; color: var(--ink); }
+.mh button { flex: 0 0 auto; font-size: .8rem; font-weight: 700; color: var(--p1); background: var(--card); border: 1px solid var(--line); border-radius: 7px; padding: 7px 12px; }
+.mh button:hover { background: var(--hover); border-color: #86efac; }
+.note { font-size: .8rem; color: var(--mute); margin-bottom: 14px; }
+#map { height: 540px; width: 100%; border-radius: 8px; border: 1px solid var(--line); overflow: hidden; position: relative; }
+.box.full #map { height: calc(100vh - 86px); }
+.legend { background: #fff; border: 1px solid var(--line); border-radius: 7px; padding: 8px 12px; font-size: .78rem; color: var(--ink); line-height: 1.6; box-shadow: 0 2px 6px rgba(15,23,42,.1); max-width: 250px; }
+.legend .lh { font: inherit; color: inherit; background: none; border: 0; padding: 0; width: 100%; text-align: left; }
 
-button {
-  cursor: pointer;
-}
-
-/* Haupt-Container Zentrierung & Max-Breite */
-.wrap {
-  max-width: 1280px;
-  margin: 0 auto;
-}
-
-/* Fokus-Rahmen für Barrierefreiheit */
-:focus-visible {
-  outline: 3px solid #0d9488;
-  outline-offset: 2px;
-}
-
-/* ==========================================================================
-   2. HEADER & PERSONEN-STATISTIKEN
-   ========================================================================== */
-header {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: end;
-  gap: 32px;
-  border-bottom: 3px solid var(--p1);
-  padding: 0 2px 20px;
-  margin-bottom: 24px;
-}
-
-h1 {
-  font-size: clamp(1.65rem, 2.5vw, 2.2rem);
-  line-height: 1.15;
-  font-weight: 800;
-  letter-spacing: -.025em;
-  color: var(--ink);
-}
-
-header p {
-  font-size: .92rem;
-  font-weight: 600;
-  color: var(--mute);
-  margin-top: 6px;
-}
-
-/* Live-Countdown Badge */
-#countdown {
-  display: inline-block;
-  margin-top: 10px;
-  background: #dcfce7;
-  border: 1px solid #86efac;
-  color: var(--p1);
-  padding: 5px 14px;
-  border-radius: 999px;
-  font-size: .82rem;
-  font-weight: 800;
-}
-
-/* Stat-Karten oben rechts */
-.stats {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(140px, 1fr));
-  gap: 10px;
-  max-width: 420px;
-}
-
-.stat {
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 9px 12px;
-  font-size: .76rem;
-  font-weight: 600;
-  color: var(--ink);
-  box-shadow: var(--shadow);
-}
-
-.stat b {
-  display: block;
-  font-weight: 800;
-  margin-top: 2px;
-  font-size: .82rem;
-}
-
-/* ==========================================================================
-   3. HAUPT-NAVIGATION (TABS & SUB-TABS)
-   ========================================================================== */
-.tabs {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-  margin-bottom: 24px;
-}
-
-.sub-tabs {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 16px;
-}
-
-.tab, .ph, .f, .btn-action {
-  font: inherit;
-  cursor: pointer;
-  background: var(--card);
-  border: 1px solid var(--line);
-  color: var(--text);
-  border-radius: 8px;
-  font-weight: 700;
-}
-
-.tab {
-  min-height: 44px;
-  padding: 10px 12px;
-  font-size: .88rem;
-  white-space: nowrap;
-  text-align: center;
-  transition: background .15s, border-color .15s, color .15s, transform .15s;
-}
-
-.tab.on, .tab:hover, .f.on, .f:hover {
-  background: var(--p1);
-  border-color: var(--p1);
-  color: #fff;
-}
-
-.tab:hover {
-  transform: translateY(-1px);
-}
-
-/* Pane-Steuerung (Tabs ein-/ausblenden) */
-.pane {
-  display: none;
-}
-.pane.on {
-  display: block;
-}
-
-/* ==========================================================================
-   4. INHALTS-CONTAINER (BOXEN)
-   ========================================================================== */
-.box {
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: var(--shadow);
-}
-
-.box.map {
-  border-top: 4px solid var(--p1);
-  padding-top: 16px;
-}
-
-/* Vollbild-Modus für die Karte */
-.box.full {
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  border-radius: 0;
-  margin: 0;
-  overflow: auto;
-  background: var(--bg);
-  padding: 20px;
-}
-
-.mh {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 14px;
-}
-
-.mh h2, .box h3, .box h4 {
-  font-size: 1.1rem;
-  line-height: 1.25;
-  font-weight: 800;
-  color: var(--ink);
-}
-
-.mh button {
-  flex: 0 0 auto;
-  font: inherit;
-  font-size: .8rem;
-  font-weight: 700;
-  color: var(--p1);
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: 7px;
-  padding: 7px 12px;
-  cursor: pointer;
-}
-
-.mh button:hover {
-  background: var(--hover);
-  border-color: #86efac;
-}
-
-/* ==========================================================================
-   5. KARTEN-STYLING (LEAFLET CUSTOMISATIONS)
-   ========================================================================== */
-#map {
-  height: 540px;
-  border-radius: 8px;
-  border: 1px solid var(--line);
-  overflow: hidden;
-}
-
-.box.full #map {
-  height: calc(100vh - 86px);
-}
-
-/* Kartenlegende unten rechts */
-.legend {
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: 7px;
-  padding: 8px 12px;
-  font-size: .78rem;
-  color: var(--ink);
-  line-height: 1.6;
-  box-shadow: 0 2px 6px rgba(15,23,42,.1);
-  max-width: 250px;
-}
-
-.legend .lh {
-  font: inherit;
-  color: inherit;
-  background: none;
-  border: 0;
-  padding: 0;
-  width: 100%;
-  text-align: left;
-}
-
-/* ==========================================================================
-   6. BEREICHS-SWITCHER (LÄNDER)
-   ========================================================================== */
-.switch {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin: 0 0 18px;
-}
-
-.ph {
-  padding: 12px 16px;
-  border-width: 2px;
-  text-align: center;
-  color: var(--ink);
-  font-weight: 800;
-  font-size: .9rem;
-  line-height: 1.35;
-  transition: background .15s, border-color .15s, transform .15s;
-}
-
-.ph small {
-  display: block;
-  font-size: .73rem;
-  line-height: 1.35;
-  font-weight: 600;
-  opacity: .85;
-  margin-top: 3px;
-}
-
-.ph:hover {
-  background: var(--hover);
-  transform: translateY(-1px);
-}
-
-.ph.on {
-  background: var(--p1);
-  border-color: var(--p1);
-  color: #fff;
-}
-
-/* ==========================================================================
-   7. SUCHE & FILTER-BUTTONS
-   ========================================================================== */
-.controls {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  align-items: center;
-  margin-bottom: 14px;
-}
-
-#q {
-  flex: 1 1 300px;
-  min-width: 240px;
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: 7px;
-  padding: 9px 13px;
-  font: inherit;
-  font-size: .84rem;
-  color: var(--ink);
-}
-
-#q:focus {
-  border-color: #86efac;
-  outline: 3px solid rgba(13,148,136,.15);
-}
-
-.f {
-  padding: 7px 12px;
-  font-size: .76rem;
-  font-weight: 700;
-}
-
-/* ==========================================================================
-   8. DESKTOP TABELLEN & BADGES
-   ========================================================================== */
-.tw {
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  overflow-x: auto;
-  box-shadow: var(--shadow);
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: .83rem;
-  text-align: left;
-}
-
-th {
-  position: sticky;
-  top: 0;
-  background: #e2e8f0;
-  color: var(--ink);
-  font-size: .72rem;
-  font-weight: 800;
-  padding: 10px 12px;
-  border-bottom: 2px solid var(--line);
-  white-space: nowrap;
-  z-index: 1;
-}
-
-td {
-  padding: 10px 12px;
-  border-bottom: 1px solid #e2e8f0;
-  vertical-align: top;
-  color: var(--ink);
-}
-
-tr.row {
-  cursor: pointer;
-}
-
-tr.row:hover td {
-  background: var(--hover);
-}
-
-tr.row:last-child td {
-  border-bottom: 0;
-}
-
-/* Badges & Pills */
-.dn {
-  display: inline-block;
-  background: var(--p1);
-  color: #fff;
-  font-weight: 800;
-  font-size: .72rem;
-  border-radius: 5px;
-  padding: 2px 7px;
-  white-space: nowrap;
-}
-
-.dt {
-  font-size: .71rem;
-  color: var(--mute);
-  font-weight: 600;
-  margin-top: 3px;
-}
-
-.group-badge {
-  display: inline-block;
-  font-size: .67rem;
-  font-weight: 700;
-  padding: 2px 6px;
-  border-radius: 4px;
-  margin-top: 4px;
-  white-space: nowrap;
-}
-
+/* ===== 6. Tabellen, Badges, mobile Karten ===== */
+.tw { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); overflow-x: auto; box-shadow: var(--shadow); }
+table { width: 100%; border-collapse: collapse; font-size: .83rem; text-align: left; }
+th { position: sticky; top: 0; z-index: 1; background: #e2e8f0; color: var(--ink); font-size: .72rem; font-weight: 800; padding: 10px 12px; border-bottom: 2px solid var(--line); white-space: nowrap; }
+td { padding: 10px 12px; border-bottom: 1px solid #e2e8f0; vertical-align: top; color: var(--ink); }
+tr.row { cursor: pointer; } tr.row:hover td { background: var(--hover); } tr.row:last-child td { border-bottom: 0; }
+.dn { display: inline-block; background: var(--p1); color: #fff; font-weight: 800; font-size: .72rem; border-radius: 5px; padding: 2px 7px; white-space: nowrap; }
+.dt { font-size: .71rem; color: var(--mute); font-weight: 600; margin-top: 3px; }
+.tt { font-weight: 700; }
+.pill { display: inline-block; font-size: .72rem; font-weight: 600; background: #f8fafc; border: 1px solid var(--line); border-radius: 5px; padding: 3px 6px; margin: 1px 0; }
+.hotel-pill { background: #f0fdf4; border-color: #bbf7d0; color: #166534; }
+.group-badge { display: inline-block; font-size: .67rem; font-weight: 700; padding: 2px 6px; border-radius: 4px; margin-top: 4px; white-space: nowrap; }
 .group-ines-stefan { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
 .group-ines-alleine { background: #f3e8ff; color: #6b21a8; border: 1px solid #e9d5ff; }
-.group-ines-anna    { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+.group-ines-anna { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+.rg { display: inline-block; font-size: .68rem; font-weight: 700; border-radius: 4px; padding: 2px 6px; white-space: nowrap; margin-bottom: 2px; }
+.tag-norden { background: #dcfce7; color: #15803d; } .tag-bangkok { background: #f3e8ff; color: #6b21a8; }
+.tag-inseln { background: #ccfbf1; color: #0d9488; } .tag-default { background: #f1f5f9; color: var(--mute); }
+.tag-sl-westkueste { background: #d1fae5; color: #059669; } .tag-sl-kulturdreieck { background: #fef3c7; color: #b45309; }
+.tag-sl-hochland { background: #dcfce7; color: #15803d; } .tag-sl-suedkueste { background: #ccfbf1; color: #0d9488; }
+.tag-sl-colombo { background: #f3e8ff; color: #6b21a8; }
+.cards { display: none; flex-direction: column; gap: 8px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 12px; cursor: pointer; font-size: .8rem; box-shadow: var(--shadow); }
+.card:hover { background: var(--hover); } .card .tt { font-size: .85rem; } .card .pill { font-size: .69rem; }
 
-.rg {
-  display: inline-block;
-  font-size: .68rem;
-  font-weight: 700;
-  border-radius: 4px;
-  padding: 2px 6px;
-  white-space: nowrap;
-}
-
-.tag-norden { background: #dcfce7; color: var(--norden); }
-.tag-bangkok { background: #f3e8ff; color: var(--bangkok); }
-.tag-inseln { background: #ccfbf1; color: var(--inseln); }
-.tag-default { background: #f1f5f9; color: var(--mute); }
-.tag-sl-westkueste { background: #d1fae5; color: var(--sl-westkueste); }
-.tag-sl-kulturdreieck { background: #fef3c7; color: var(--sl-kulturdreieck); }
-.tag-sl-hochland { background: #dcfce7; color: var(--sl-hochland); }
-.tag-sl-suedkueste { background: #ccfbf1; color: var(--sl-suedkueste); }
-.tag-sl-colombo { background: #f3e8ff; color: var(--sl-colombo); }
-
-.tt { font-weight: 700; }
-
-.pill {
-  display: inline-block;
-  font-size: .72rem;
-  font-weight: 600;
-  background: #f8fafc;
-  border: 1px solid var(--line);
-  border-radius: 5px;
-  padding: 3px 6px;
-  margin: 1px 0;
-}
-
-.hotel-pill {
-  background: #f0fdf4;
-  border-color: #bbf7d0;
-  color: #166534;
-}
-
-/* Mobil-Karten (standardmäßig auf Desktop verborgen) */
-.cards {
-  display: none;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.card {
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 12px;
-  cursor: pointer;
-  font-size: .8rem;
-  box-shadow: var(--shadow);
-}
-
-.card:hover { background: var(--hover); }
-.card .tt { font-size: .85rem; }
-.card .pill { font-size: .69rem; }
-
-/* ==========================================================================
-   9. UNTERKÜNFTE, PACKLISTE & CHARTS STYLING
-   ========================================================================== */
-.stay-badge {
-  display: inline-block;
-  padding: 2px 8px;
-  border-radius: 12px;
-  font-size: .75rem;
-  font-weight: 800;
-  background: #dcfce7;
-  color: #15803d;
-  border: 1px solid #86efac;
-}
-
-.travel-time-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  background: #fef3c7;
-  color: #92400e;
-  border: 1px solid #fde68a;
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: .72rem;
-  font-weight: 700;
-}
-
-.status-booked { background: #dcfce7; color: #15803d; border: 1px solid #86efac; padding: 2px 6px; border-radius: 4px; font-size: .7rem; font-weight: 700; }
-.status-open   { background: #fee2e2; color: #dc2626; border: 1px solid #fca5a5; padding: 2px 6px; border-radius: 4px; font-size: .7rem; font-weight: 700; }
-
-.pack-summary {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 12px;
-  background: #f0fdf4;
-  border: 1px solid #bbf7d0;
-  padding: 12px 16px;
-  border-radius: 8px;
-  margin-bottom: 16px;
-}
-
+/* ===== 7. Unterkünfte, Packliste, Charts ===== */
+.stay-badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: .75rem; font-weight: 800; background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+.travel-time-pill { display: inline-flex; align-items: center; gap: 4px; background: #fef3c7; color: #92400e; border: 1px solid #fde68a; padding: 2px 6px; border-radius: 4px; font-size: .72rem; font-weight: 700; }
+.status-booked, .status-open { padding: 2px 6px; border-radius: 4px; font-size: .7rem; font-weight: 700; }
+.status-booked { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+.status-open { background: #fee2e2; color: #dc2626; border: 1px solid #fca5a5; }
+.pack-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap: 12px; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px 16px; border-radius: 8px; margin-bottom: 16px; }
 .pack-stat-val { font-size: 1.15rem; font-weight: 800; color: var(--p1); }
 .pack-stat-lbl { font-size: .75rem; color: var(--mute); font-weight: 600; }
-
-.pack-add-form {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-bottom: 16px;
-  background: #f1f5f9;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid var(--line);
-}
-
-.pack-add-form input, .pack-add-form select {
-  background: var(--card);
-  border: 1px solid var(--line);
-  color: var(--ink);
-  padding: 6px 10px;
-  border-radius: 6px;
-  font-size: .8rem;
-}
-
+.pack-add-form { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; background: #f1f5f9; padding: 10px; border-radius: 8px; border: 1px solid var(--line); }
+.pack-add-form input, .pack-add-form select, .table-select { background: var(--card); border: 1px solid var(--line); color: var(--ink); padding: 6px 10px; border-radius: 6px; font-size: .8rem; }
 .pack-add-form input[type="text"] { flex: 2; min-width: 140px; }
 .pack-add-form select { flex: 1.2; min-width: 130px; }
 .pack-add-form input[type="number"] { width: 85px; }
-
-.table-select {
-  background: #f8fafc;
-  border: 1px solid var(--line);
-  color: var(--ink);
-  border-radius: 5px;
-  padding: 2px 5px;
-  font-size: .75rem;
-  font-weight: 600;
-}
-
+.table-select { padding: 2px 5px; font-size: .75rem; font-weight: 600; }
 .table-select.select-am-koerper { background: #fef3c7; color: #92400e; border-color: #fde68a; font-weight: 700; }
-
-.pack-table-cat {
-  background: #f1f5f9;
-  color: var(--p1);
-  font-weight: 800;
-  font-size: .75rem;
-  text-transform: uppercase;
-  border-left: 3px solid var(--p1);
-  padding: 6px 10px !important;
-}
-
-.charts-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin-top: 16px;
-}
-
-.chart-card {
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 16px;
-  box-shadow: var(--shadow);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
+.pack-table-cat { background: #f1f5f9; color: var(--p1); font-weight: 800; font-size: .75rem; text-transform: uppercase; border-left: 3px solid var(--p1); padding: 6px 10px !important; }
+.charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+.chart-card { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 16px; box-shadow: var(--shadow); display: flex; flex-direction: column; align-items: center; }
 .chart-container { position: relative; width: 100%; max-width: 360px; height: 300px; }
 
-/* Flugliste Styling */
+/* ===== 8. Flugliste ===== */
 ul.fl-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
 ul.fl-list li { background: #f8fafc; border: 1px solid var(--line); border-left: 4px solid var(--p1); border-radius: 8px; padding: 10px 14px; }
-.fl-date { font-size: .75rem; font-weight: 800; color: var(--p1); text-transform: uppercase; }
+.fl-date { display: block; font-size: .75rem; font-weight: 800; color: var(--p1); text-transform: uppercase; margin-bottom: 2px; }
 .fl-route { font-size: .9rem; font-weight: 700; color: var(--ink); }
 .fl-details { font-size: .8rem; color: var(--text); }
 .fl-price { display: inline-block; margin-top: 3px; font-size: .75rem; font-weight: 700; background: #dcfce7; color: #15803d; padding: 2px 6px; border-radius: 4px; }
 
-/* ==========================================================================
-   10. RESPONSIVE ANPASSUNGEN
-   ========================================================================== */
+/* ===== 9. Mobilansicht (identisch zur Südamerika-Seite) ===== */
 @media (max-width: 860px) {
   body { padding: 12px 8px 22px; }
   header { grid-template-columns: 1fr; gap: 9px; padding: 0 1px 11px; margin-bottom: 12px; }
   h1 { font-size: 1.38rem; }
   header p { font-size: .74rem; line-height: 1.35; margin-top: 4px; }
   #countdown { font-size: .7rem; padding: 3px 8px; margin-top: 6px; }
-  .stats { width: 100%; max-width: none; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 5px; }
+  .stats { width: 100%; grid-template-columns: repeat(auto-fit, minmax(0,1fr)); gap: 5px; }
   .stat { padding: 5px 4px; text-align: center; font-size: .65rem; border-radius: 7px; }
   .stat b { font-size: .72rem; }
-  .tabs { grid-template-columns: repeat(2, 1fr); gap: 5px; margin-bottom: 12px; }
-  .tab { min-height: 36px; padding: 6px 4px; font-size: .69rem; }
+  .tabs { gap: 5px; margin-bottom: 12px; }
+  .tab { min-height: 36px; padding: 6px 4px; font-size: .69rem; white-space: normal; line-height: 1.2; }
   .box { padding: 10px; margin-bottom: 10px; border-radius: 8px; }
   .box.map { padding-top: 8px; }
   .mh { margin-bottom: 8px; }
@@ -682,11 +157,12 @@ ul.fl-list li { background: #f8fafc; border: 1px solid var(--line); border-left:
   .controls { gap: 5px; margin-bottom: 8px; }
   #q { flex: 1 1 100%; min-width: 0; padding: 7px 9px; font-size: .75rem; }
   .f { padding: 5px 7px; font-size: .67rem; }
-  .tw { display: none; }
+  /* KORREKTUR: Nur die Reiseplan-Tabelle wird durch Karten ersetzt.
+     Unterkünfte, Packliste und Analyse bleiben sichtbar (seitlich scrollbar). */
+  #route .tw { display: none; }
   .cards { display: flex; }
   .charts-grid { grid-template-columns: 1fr; }
 }
-
 @media (max-width: 420px) {
   body { padding: 9px 6px 18px; }
   h1 { font-size: 1.22rem; }
@@ -702,84 +178,61 @@ ul.fl-list li { background: #f8fafc; border: 1px solid var(--line); border-left:
 <body>
 <div class="wrap">
 
-  <!-- HEADERBEREICH MIT TITEL & PERSONEN-STATISTIKEN -->
+  <!-- ===== KOPFBEREICH ===== -->
   <header>
     <div>
       <h1>🌏 Thailand & Sri Lanka 2027</h1>
       <p>01.01. – 23.02.2027 · Ines & Stefan</p>
       <div id="countdown">⏳ Countdown wird berechnet...</div>
     </div>
-    <div class="stats" id="stats">
-      <!-- Dynamisch gerendert -->
-    </div>
+    <div class="stats" id="stats"></div><!-- Personen-Kacheln, per JS -->
   </header>
 
-  <!-- HAUPT-TAB-NAVIGATION -->
-  <div class="tabs" role="tablist">
+  <!-- ===== HAUPT-TABS ===== -->
+  <div class="tabs" style="--tab-count:4" role="tablist">
     <button class="tab on" data-t="route">🗺️ Reiseroute</button>
     <button class="tab" data-t="acc">🏨 Unterkünfte</button>
     <button class="tab" data-t="pack">🎒 Packliste & Gewicht</button>
     <button class="tab" data-t="flights">✈️ Flüge</button>
   </div>
 
-  <!-- TAB 1: REISEROUTE & KARTE -->
+  <!-- ===== TAB 1: REISEROUTE & KARTE ===== -->
   <div id="route" class="pane on">
     <div class="box map" id="mapBox">
-      <div class="mh">
-        <h2>Karte</h2>
-        <button id="fs">🔍 Vollbild</button>
-      </div>
+      <div class="mh"><h2>Karte</h2><button id="fs">🔍 Vollbild</button></div>
       <div id="map"></div>
     </div>
 
-    <!-- Länder-Umschalter -->
+    <!-- Umschalter Thailand / Sri Lanka -->
     <div class="switch">
       <button class="ph on" id="btnThailand" onclick="switchCountry('thailand')">🇹🇭 THAILAND<small>01.01. – 29.01. · Udon Thani, Chiang Mai, Pai, Krabi, Koh Tao, Bangkok</small></button>
       <button class="ph" id="btnSriLanka" onclick="switchCountry('srilanka')">🇱🇰 SRI LANKA<small>29.01. – 23.02. · Kulturdreieck, Hochlandzug, Ella, Südküste, Colombo</small></button>
     </div>
 
-    <!-- Suchfeld & Filter -->
+    <!-- Suche & Filter (per JS je nach Land) -->
     <div class="controls" id="filterControls"></div>
 
-    <!-- Desktop Tabellenansicht -->
+    <!-- Desktop: Tabelle -->
     <div class="tw">
       <table>
-        <thead>
-          <tr>
-            <th>Tag / Datum</th>
-            <th>Region</th>
-            <th>Ort & Aktivität</th>
-            <th>Details & Programm</th>
-            <th>Transportmittel</th>
-            <th>Unterkunft</th>
-          </tr>
-        </thead>
+        <thead><tr><th>Tag / Datum</th><th>Region</th><th>Ort & Aktivität</th><th>Details & Programm</th><th>Transportmittel</th><th>Unterkunft</th></tr></thead>
         <tbody id="planTableBody"></tbody>
       </table>
     </div>
-
-    <!-- Mobile Kartenansicht -->
+    <!-- Mobil: Karten -->
     <div class="cards" id="mobileCards"></div>
   </div>
 
-  <!-- TAB 2: UNTERKÜNFTE & REISEZEITEN -->
+  <!-- ===== TAB 2: UNTERKÜNFTE & REISEZEITEN ===== -->
   <div id="acc" class="pane">
     <div class="box">
       <h3>🏨 Unterkunfts- & Reisezeitübersicht</h3>
-      <p class="note" style="margin-bottom:14px;">Schnellübersicht über Aufenthaltsdauern, Status und Transferzeiten.</p>
-      
-      <h4 style="margin: 12px 0 8px; color: var(--p1);">🇹🇭 THAILAND (01.01. – 29.01.2027)</h4>
-      <div class="tw" style="margin-bottom: 20px;">
+      <p class="note">Schnellübersicht über Aufenthaltsdauern, Status und Transferzeiten.</p>
+
+      <h4 style="margin:12px 0 8px;color:var(--p1)">🇹🇭 THAILAND (01.01. – 29.01.2027)</h4>
+      <div class="tw" style="margin-bottom:20px">
         <table>
-          <thead>
-            <tr>
-              <th>Station / Ort</th>
-              <th>Zeitraum</th>
-              <th>Dauer</th>
-              <th>Unterkunft / Status</th>
-              <th>Nächster Transfer / Reisezeit</th>
-            </tr>
-          </thead>
+          <thead><tr><th>Station / Ort</th><th>Zeitraum</th><th>Dauer</th><th>Unterkunft / Status</th><th>Nächster Transfer / Reisezeit</th></tr></thead>
           <tbody>
             <tr><td><strong>1. Udon Thani</strong></td><td>02.01. – 05.01.</td><td><span class="stay-badge">3 Nächte</span></td><td>🏠 Bei OW <span class="status-booked">geplant</span></td><td><span class="travel-time-pill">✈️ ca. 1 Std. 05 Min.</span> Inlandsflug Nok Air DD703 nach Chiang Mai</td></tr>
             <tr><td><strong>2. Chiang Mai</strong></td><td>05.01. – 08.01.</td><td><span class="stay-badge">3 Nächte</span></td><td>🏨 Sylvis Hostel Chiangmai <span class="status-booked">gebucht</span></td><td><span class="travel-time-pill">🚐 ca. 3 Std. 00 Min.</span> Minivan (AYA) über 762 Kurven nach Pai</td></tr>
@@ -792,18 +245,10 @@ ul.fl-list li { background: #f8fafc; border: 1px solid var(--line); border-left:
         </table>
       </div>
 
-      <h4 style="margin: 16px 0 8px; color: var(--p1);">🇱🇰 SRI LANKA (29.01. – 23.02.2027)</h4>
+      <h4 style="margin:16px 0 8px;color:var(--p1)">🇱🇰 SRI LANKA (29.01. – 23.02.2027)</h4>
       <div class="tw">
         <table>
-          <thead>
-            <tr>
-              <th>Station / Ort</th>
-              <th>Zeitraum</th>
-              <th>Dauer</th>
-              <th>Unterkunft / Status</th>
-              <th>Nächster Transfer / Reisezeit</th>
-            </tr>
-          </thead>
+          <thead><tr><th>Station / Ort</th><th>Zeitraum</th><th>Dauer</th><th>Unterkunft / Status</th><th>Nächster Transfer / Reisezeit</th></tr></thead>
           <tbody>
             <tr><td><strong>1. Negombo</strong> (Ines & Anna)</td><td>29.01. – 03.02.</td><td><span class="stay-badge">5 Nächte</span></td><td>🏨 Ceylon Glory Hostel <span class="status-booked">gebucht</span></td><td><span class="travel-time-pill">🚆 ca. 3 Std. 30 Min.</span> Direktzug oder Bus nach Anuradhapura</td></tr>
             <tr><td><strong>2. Anuradhapura</strong></td><td>03.02. – 06.02.</td><td><span class="stay-badge">3 Nächte</span></td><td>🏨 noch offen <span class="status-open">offen</span></td><td><span class="travel-time-pill">🚌 ca. 1 Std. 20 Min.</span> Lokalbus nach Dambulla</td></tr>
@@ -820,9 +265,10 @@ ul.fl-list li { background: #f8fafc; border: 1px solid var(--line); border-left:
     </div>
   </div>
 
-  <!-- TAB 3: PACKLISTE UND GEWICHTSANALYSE -->
+  <!-- ===== TAB 3: PACKLISTE & GEWICHTSANALYSE ===== -->
   <div id="pack" class="pane">
     <div class="box">
+      <!-- Person wählen -->
       <div class="sub-tabs">
         <button id="btnPackStefan" class="tab on" onclick="switchPerson('stefan')">🎒 Packliste Stefan</button>
         <button id="btnPackInes" class="tab" onclick="switchPerson('ines')">🎒 Packliste Ines</button>
@@ -830,14 +276,15 @@ ul.fl-list li { background: #f8fafc; border: 1px solid var(--line); border-left:
 
       <div class="mh">
         <h3 id="packlistTitle">🎒 Interaktive Packliste (Stefan)</h3>
-        <div style="display:flex; gap:6px; flex-wrap:wrap;">
-          <button class="btn-action" style="color:#15803d; background:#dcfce7;" onclick="setAllPacked(true)">✅ Alle einpacken</button>
-          <button class="btn-action" style="color:#dc2626; background:#fee2e2;" onclick="setAllPacked(false)">❌ Alle auspacken</button>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <button class="btn-action" style="color:#15803d;background:#dcfce7" onclick="setAllPacked(true)">✅ Alle einpacken</button>
+          <button class="btn-action" style="color:#dc2626;background:#fee2e2" onclick="setAllPacked(false)">❌ Alle auspacken</button>
           <button class="btn-action" onclick="exportPacklistCSV()">📊 CSV Export</button>
-          <button class="btn-action" style="color:var(--danger);" onclick="resetPacklist()">🔄 Reset</button>
+          <button class="btn-action" style="color:var(--danger)" onclick="resetPacklist()">🔄 Reset</button>
         </div>
       </div>
 
+      <!-- Gewichts-Zusammenfassung -->
       <div class="pack-summary">
         <div><span class="pack-stat-val" id="packWeightKg">0.00 kg</span><div class="pack-stat-lbl">Gepäck (Rucksack/Taschen)</div></div>
         <div><span class="pack-stat-val" id="wornWeightKg">0.00 kg</span><div class="pack-stat-lbl">Am Körper getragen</div></div>
@@ -845,6 +292,7 @@ ul.fl-list li { background: #f8fafc; border: 1px solid var(--line); border-left:
         <div><span class="pack-stat-val" id="totalPackedItems">0 / 0</span><div class="pack-stat-lbl">Gegenstände ausgewählt</div></div>
       </div>
 
+      <!-- Formular: neuen Gegenstand hinzufügen -->
       <div class="pack-add-form">
         <input type="text" id="newItemName" placeholder="Neuer Gegenstand">
         <select id="newItemCat">
@@ -860,147 +308,75 @@ ul.fl-list li { background: #f8fafc; border: 1px solid var(--line); border-left:
           <option value="Organisation & Utensilien">Organisation & Utensilien</option>
         </select>
         <input type="number" id="newItemWeight" placeholder="Gramm/Stk" min="1">
-        <select id="newItemType">
-          <option value="Basis">Basis</option>
-          <option value="Am Körper">Am Körper</option>
-          <option value="Verbrauch">Verbrauch</option>
-        </select>
-        <select id="newItemLoc">
-          <option value="Aufgabegepäck">Aufgabegepäck</option>
-          <option value="Handgepäck">Handgepäck</option>
-          <option value="Umhängetasche">Umhängetasche</option>
-          <option value="Am Körper">Am Körper</option>
-        </select>
+        <select id="newItemType"><option value="Basis">Basis</option><option value="Am Körper">Am Körper</option><option value="Verbrauch">Verbrauch</option></select>
+        <select id="newItemLoc"><option value="Aufgabegepäck">Aufgabegepäck</option><option value="Handgepäck">Handgepäck</option><option value="Umhängetasche">Umhängetasche</option><option value="Am Körper">Am Körper</option></select>
         <button class="f on" onclick="addPackItem()">+ Hinzufügen</button>
       </div>
 
+      <!-- Packlisten-Tabelle -->
       <div class="tw">
         <table>
           <thead>
-            <tr>
-              <th style="text-align:center;">Packen</th>
-              <th>Gegenstand</th>
-              <th>Gewichtstyp</th>
-              <th>Packort</th>
-              <th style="text-align:center;">Anzahl</th>
-              <th style="text-align:right;">Stk (g)</th>
-              <th style="text-align:right;">Gesamt (g)</th>
-              <th style="text-align:center;">Aktionen</th>
-            </tr>
+            <tr><th style="text-align:center">Packen</th><th>Gegenstand</th><th>Gewichtstyp</th><th>Packort</th><th style="text-align:center">Anzahl</th><th style="text-align:right">Stk (g)</th><th style="text-align:right">Gesamt (g)</th><th style="text-align:center">Aktionen</th></tr>
           </thead>
           <tbody id="packTableBody"></tbody>
         </table>
       </div>
     </div>
 
-    <!-- GEWICHTSANALYSE UND CHARTS -->
-    <div class="box" style="margin-top: 24px;">
+    <!-- Gewichtsanalyse & Diagramme -->
+    <div class="box" style="margin-top:24px">
       <h3>📊 Gewichtsanalyse je Kategorie</h3>
-      <p class="note" style="margin-bottom:14px;">Vergleich des Gesamtgewichts pro Kategorie für Ines und Stefan.</p>
-
-      <div class="tw" style="margin-bottom: 20px;">
+      <p class="note">Vergleich des Gesamtgewichts pro Kategorie für Ines und Stefan.</p>
+      <div class="tw" style="margin-bottom:20px">
         <table>
-          <thead>
-            <tr>
-              <th>Kategorie</th>
-              <th style="text-align:right;">Stefan Gewicht (g)</th>
-              <th style="text-align:right;">Stefan Anteil</th>
-              <th style="text-align:right;">Ines Gewicht (g)</th>
-              <th style="text-align:right;">Ines Anteil</th>
-              <th style="text-align:right;">Gesamt Paar (g)</th>
-            </tr>
-          </thead>
+          <thead><tr><th>Kategorie</th><th style="text-align:right">Stefan Gewicht (g)</th><th style="text-align:right">Stefan Anteil</th><th style="text-align:right">Ines Gewicht (g)</th><th style="text-align:right">Ines Anteil</th><th style="text-align:right">Gesamt Paar (g)</th></tr></thead>
           <tbody id="analysisTableBody"></tbody>
         </table>
       </div>
-
       <div class="charts-grid">
-        <div class="chart-card">
-          <h4 style="margin-bottom:10px;">Gewichtsverteilung Stefan</h4>
-          <div class="chart-container"><canvas id="chartStefan"></canvas></div>
-        </div>
-        <div class="chart-card">
-          <h4 style="margin-bottom:10px;">Gewichtsverteilung Ines</h4>
-          <div class="chart-container"><canvas id="chartInes"></canvas></div>
-        </div>
+        <div class="chart-card"><h4 style="margin-bottom:10px">Gewichtsverteilung Stefan</h4><div class="chart-container"><canvas id="chartStefan"></canvas></div></div>
+        <div class="chart-card"><h4 style="margin-bottom:10px">Gewichtsverteilung Ines</h4><div class="chart-container"><canvas id="chartInes"></canvas></div></div>
       </div>
     </div>
   </div>
 
-  <!-- TAB 4: FLUGÜBERSICHT -->
+  <!-- ===== TAB 4: FLÜGE ===== -->
   <div id="flights" class="pane">
     <div class="box">
       <h3>✈️ Gebuchte Flüge (Übersicht)</h3>
-      <p class="note" style="margin-bottom:14px;">Alle gebuchten Flugverbindungen und Zwischenstopps im Detail:</p>
-      
+      <p class="note">Alle gebuchten Flugverbindungen und Zwischenstopps im Detail:</p>
       <ul class="fl-list">
-        <li>
-          <div class="fl-date">01.01.2027 • Hinflug Thailand</div>
-          <div class="fl-route">Wien (VIE) ➔ Riad (RUH) ➔ Bangkok (BKK)</div>
-          <div class="fl-details">Saudia Airlines (SV152 & SV846) • Abflug VIE: 15:30 Uhr • Stopp Riad • Ankunft BKK: 02.01. um 13:40 Uhr</div>
-          <div class="fl-price">349,90 € p.P. (Ines & Stefan)</div>
-        </li>
-        <li>
-          <div class="fl-date">02.01.2027 • Inlandsflug Thailand</div>
-          <div class="fl-route">Bangkok (BKK) ➔ Udon Thani (UTH)</div>
-          <div class="fl-details">Thai Airways (TG008) • 18:20 Uhr – 19:30 Uhr</div>
-          <div class="fl-price">54,99 € p.P. (Ines & Stefan)</div>
-        </li>
-        <li>
-          <div class="fl-date">05.01.2027 • Inlandsflug Thailand</div>
-          <div class="fl-route">Udon Thani (UTH) ➔ Chiang Mai (CNX)</div>
-          <div class="fl-details">Nok Air (DD703) • 16:30 Uhr – 17:35 Uhr</div>
-          <div class="fl-price">98,06 € p.P. (Ines & Stefan)</div>
-        </li>
-        <li>
-          <div class="fl-date">29.01.2027 • Rückflug Deutschland (Stefan)</div>
-          <div class="fl-route">Bangkok (BKK) ➔ München (MUC)</div>
-          <div class="fl-details">Thai Airways (TG926 Direktflug) • 13:00 Uhr – 18:55 Uhr</div>
-          <div class="fl-price">424,13 € (Stefan)</div>
-        </li>
-        <li>
-          <div class="fl-date">29.01.2027 • Weiterflug Sri Lanka (Ines)</div>
-          <div class="fl-route">Bangkok (BKK) ➔ Colombo (CMB)</div>
-          <div class="fl-details">SriLankan Airlines (UL405 Direktflug) • 13:50 Uhr – 15:50 Uhr</div>
-          <div class="fl-price">175,00 € (Ines)</div>
-        </li>
-        <li>
-          <div class="fl-date">23.02.2027 • Rückflug Österreich (Ines & Anna)</div>
-          <div class="fl-route">Colombo (CMB) ➔ Istanbul (IST) ➔ Wien (VIE)</div>
-          <div class="fl-details">Turkish Airlines (TK1131 & TK1887) • Abflug CMB: 09:15 Uhr • Stopp IST: 15:45 - 17:15 Uhr • Ankunft VIE: 17:35 Uhr</div>
-          <div class="fl-price">Gebucht (Ines & Anna)</div>
-        </li>
+        <li><div class="fl-date">01.01.2027 • Hinflug Thailand</div><div class="fl-route">Wien (VIE) ➔ Riad (RUH) ➔ Bangkok (BKK)</div><div class="fl-details">Saudia Airlines (SV152 & SV846) • Abflug VIE: 15:30 Uhr • Stopp Riad • Ankunft BKK: 02.01. um 13:40 Uhr</div><div class="fl-price">349,90 € p.P. (Ines & Stefan)</div></li>
+        <li><div class="fl-date">02.01.2027 • Inlandsflug Thailand</div><div class="fl-route">Bangkok (BKK) ➔ Udon Thani (UTH)</div><div class="fl-details">Thai Airways (TG008) • 18:20 Uhr – 19:30 Uhr</div><div class="fl-price">54,99 € p.P. (Ines & Stefan)</div></li>
+        <li><div class="fl-date">05.01.2027 • Inlandsflug Thailand</div><div class="fl-route">Udon Thani (UTH) ➔ Chiang Mai (CNX)</div><div class="fl-details">Nok Air (DD703) • 16:30 Uhr – 17:35 Uhr</div><div class="fl-price">98,06 € p.P. (Ines & Stefan)</div></li>
+        <li><div class="fl-date">29.01.2027 • Rückflug Deutschland (Stefan)</div><div class="fl-route">Bangkok (BKK) ➔ München (MUC)</div><div class="fl-details">Thai Airways (TG926 Direktflug) • 13:00 Uhr – 18:55 Uhr</div><div class="fl-price">424,13 € (Stefan)</div></li>
+        <li><div class="fl-date">29.01.2027 • Weiterflug Sri Lanka (Ines)</div><div class="fl-route">Bangkok (BKK) ➔ Colombo (CMB)</div><div class="fl-details">SriLankan Airlines (UL405 Direktflug) • 13:50 Uhr – 15:50 Uhr</div><div class="fl-price">175,00 € (Ines)</div></li>
+        <li><div class="fl-date">23.02.2027 • Rückflug Österreich (Ines & Anna)</div><div class="fl-route">Colombo (CMB) ➔ Istanbul (IST) ➔ Wien (VIE)</div><div class="fl-details">Turkish Airlines (TK1131 & TK1887) • Abflug CMB: 09:15 Uhr • Stopp IST: 15:45 - 17:15 Uhr • Ankunft VIE: 17:35 Uhr</div><div class="fl-price">Gebucht (Ines & Anna)</div></li>
       </ul>
     </div>
   </div>
-
 </div>
 
 <script>
 /* ==========================================================================
-   1. DATENSTRUKTUREN & KONSTANTEN
+   1. PERSONEN & DATUMS-HILFSFUNKTIONEN
    ========================================================================== */
-
 const P = {
   S: { n: 'Stefan', c: '#2563eb', s: '01-01', e: '01-29' },
   I: { n: 'Ines',   c: '#16a34a', s: '01-01', e: '02-23' }
 };
-
-const D0 = Date.UTC(2027, 0, 1);
-const ts = md => { const [m, d] = md.split('-'); return Date.UTC(2027, m - 1, d); };
-const dn = md => Math.round((ts(md) - D0) / 864e5) + 1;
+const D0 = Date.UTC(2027, 0, 1);   // Tag 1 der Reise
+const ts  = md => { const [m, d] = md.split('-'); return Date.UTC(2027, m - 1, d); };
+const dn  = md => Math.round((ts(md) - D0) / 864e5) + 1;
 const fmt = md => md.slice(3) + '.' + md.slice(0, 2) + '.';
 
-let currentCountry = 'thailand';
-let currentRegion = 'all';
-let currentPerson = 'stefan';
-let map;
-const markers = {};
-let chartStefanInstance = null;
-let chartInesInstance = null;
-
+let currentCountry = 'thailand', currentRegion = 'all', currentPerson = 'stefan', map;
+const markers = {};                              // Karten-Marker
+let chartStefanInstance = null, chartInesInstance = null;
 const $ = s => document.querySelector(s);
 
+// Personen-Kacheln im Kopf
 function renderStats() {
   $('#stats').innerHTML = Object.entries(P).map(([k, p]) => {
     const n = dn(p.e) - dn(p.s) + 1;
@@ -1008,7 +384,9 @@ function renderStats() {
   }).join('');
 }
 
-/* ---------- Routendaten Thailand & Sri Lanka ---------- */
+/* ==========================================================================
+   2. REISEPLAN-DATEN (je Tag ein Eintrag)
+   ========================================================================== */
 const thailandData = [
   { day: "Tag 1", date: "01.01. (Fr)", groupTag: "Ines & Stefan", region: "Anreise", regTag: "tag-default", title: "Start Reise ab Flughafen Wien (VIE)", details: "Flug nach Bangkok (BKK) um 15:30 Uhr (Saudia SV152 + SV846, Stopp in Flughafen Riad RUH)", transport: "✈️ Saudia SV152", hotel: "✈️ Im Flugzeug", locName: "Flughafen Wien (VIE)", lat: 48.1103, lng: 16.5697 },
   { day: "Tag 2", date: "02.01. (Sa)", groupTag: "Ines & Stefan", region: "Isan / Udon Thani", regTag: "tag-default", title: "Ankunft Bangkok ➔ Udon Thani", details: "Ankunft 13:40 am Flughafen BKK ➔ Weiterflug TG008 um 18:20 ➔ Ankunft UTH 19:30, Abholung OW", transport: "✈️ Thai TG008", hotel: "🏠 Bei OW", locName: "Udon Thani (UTH)", lat: 17.3861, lng: 102.7881 },
@@ -1069,7 +447,10 @@ const sriLankaData = [
   { day: "Tag 22", date: "23.02. (Di)", groupTag: "Ines & Anna", region: "Abreise", regTag: "tag-default", title: "Colombo ➔ Flughafen CMB ➔ Wien", details: "Fahrt zum Flughafen, Abflug CMB 09:15 ➔ IST 15:45 ➔ Ankunft Wien 17:35 Uhr (TK1131 & TK1887).", transport: "✈️ Turkish Airlines", hotel: "✈️ Im Flugzeug", locName: "Flughafen Colombo (CMB)", lat: 7.1808, lng: 79.8841 }
 ];
 
-/* ---------- Packlisten Stammdaten ---------- */
+/* ==========================================================================
+   3. PACKLISTEN-STAMMDATEN
+   Eintrag = [Kategorie, Name, Anzahl, Gewicht pro Stück (g), Gewichtstyp, Packort]
+   ========================================================================== */
 const rawItemsStefan = [
   ["Dokumente & Wertsachen", "Reisepass", 1, 41, "Am Körper", "Umhängetasche"],
   ["Dokumente & Wertsachen", "Kopien Reisepass & Impfpass", 1, 33, "Basis", "Handgepäck"],
@@ -1236,52 +617,33 @@ const rawItemsInes = [
   ["Organisation & Utensilien", "Wäschebeutel", 1, 100, "Basis", "Aufgabegepäck"]
 ];
 
-const defaultStefan = rawItemsStefan.map(item => ({ cat: item[0], name: item[1], qty: item[2], weight: item[3], type: item[4], loc: item[5], packed: true }));
-const defaultInes = rawItemsInes.map(item => ({ cat: item[0], name: item[1], qty: item[2], weight: item[3], type: item[4], loc: item[5], packed: true }));
-
+// Arrays in Objekte umwandeln (alle zunächst "gepackt")
+const toItems = raw => raw.map(i => ({ cat: i[0], name: i[1], qty: i[2], weight: i[3], type: i[4], loc: i[5], packed: true }));
+const defaultStefan = toItems(rawItemsStefan);
+const defaultInes = toItems(rawItemsInes);
 let packlists = { stefan: [], ines: [] };
 
 /* ==========================================================================
-   2. REISE- & ROUTEN-LOGIK
+   4. REISEROUTE: Land-Umschalter, Filter, Tabelle, mobile Karten
    ========================================================================== */
+// Zwischen Thailand und Sri Lanka wechseln
 function switchCountry(country) {
-  currentCountry = country;
-  currentRegion = 'all';
-
+  currentCountry = country; currentRegion = 'all';
   $('#btnThailand').classList.toggle('on', country === 'thailand');
   $('#btnSriLanka').classList.toggle('on', country === 'srilanka');
-
-  renderFilters();
-  renderTableAndCards();
+  renderFilters(); renderTableAndCards();
 }
 
+// Suchfeld + Filter-Buttons (je nach Land unterschiedlich)
 function renderFilters() {
-  const controls = $('#filterControls');
-  const placeholderText = "Nach Ort, Aktivität, Flug oder Transport suchen...";
-
-  if (currentCountry === 'thailand') {
-    controls.innerHTML = `
-      <input type="search" id="q" placeholder="${placeholderText}" onkeyup="filterPlan()">
-      <button class="f on" onclick="setFilter('all', this)">Alle</button>
-      <button class="f" onclick="setFilter('Udon Thani', this)">Udon Thani</button>
-      <button class="f" onclick="setFilter('Norden', this)">Norden</button>
-      <button class="f" onclick="setFilter('Bangkok', this)">Bangkok</button>
-      <button class="f" onclick="setFilter('Andamanen', this)">Andamanensee</button>
-      <button class="f" onclick="setFilter('Samui', this)">Samui-Archipel</button>
-    `;
-  } else {
-    controls.innerHTML = `
-      <input type="search" id="q" placeholder="${placeholderText}" onkeyup="filterPlan()">
-      <button class="f on" onclick="setFilter('all', this)">Alle</button>
-      <button class="f" onclick="setFilter('Ines alleine', this)">Ines alleine</button>
-      <button class="f" onclick="setFilter('Ines & Anna', this)">Ines & Anna</button>
-      <button class="f" onclick="setFilter('Kulturdreieck', this)">Kulturdreieck</button>
-      <button class="f" onclick="setFilter('Hochland', this)">Hochland & Zug</button>
-      <button class="f" onclick="setFilter('Südküste', this)">Südküste</button>
-    `;
-  }
+  const search = `<input type="search" id="q" placeholder="Nach Ort, Aktivität, Flug oder Transport suchen..." onkeyup="filterPlan()">`;
+  const btn = (val, label, on) => `<button class="f${on ? ' on' : ''}" onclick="setFilter('${val}', this)">${label}</button>`;
+  $('#filterControls').innerHTML = currentCountry === 'thailand'
+    ? search + btn('all', 'Alle', true) + btn('Udon Thani', 'Udon Thani') + btn('Norden', 'Norden') + btn('Bangkok', 'Bangkok') + btn('Andamanen', 'Andamanensee') + btn('Samui', 'Samui-Archipel')
+    : search + btn('all', 'Alle', true) + btn('Ines alleine', 'Ines alleine') + btn('Ines & Anna', 'Ines & Anna') + btn('Kulturdreieck', 'Kulturdreieck') + btn('Hochland', 'Hochland & Zug') + btn('Südküste', 'Südküste');
 }
 
+// Tabellenzeilen aufbauen
 function renderTableAndCards() {
   const data = currentCountry === 'thailand' ? thailandData : sriLankaData;
   const tbody = $('#planTableBody');
@@ -1290,35 +652,29 @@ function renderTableAndCards() {
   data.forEach(item => {
     const tr = document.createElement('tr');
     tr.className = 'row';
-    tr.setAttribute('data-region', item.region);
+    tr.setAttribute('data-region', item.region);   // für Filter
     tr.setAttribute('data-group', item.groupTag || '');
-    tr.setAttribute('data-location', item.locName);
+    tr.setAttribute('data-location', item.locName); // für Karten-Zoom
     tr.onclick = () => focusMap(item.locName);
 
     let groupClass = 'group-ines-stefan';
     if (item.groupTag === 'Ines alleine') groupClass = 'group-ines-alleine';
     if (item.groupTag === 'Ines & Anna') groupClass = 'group-ines-anna';
-
-    const groupBadgeHtml = item.groupTag ? `<span class="group-badge ${groupClass}">${item.groupTag}</span>` : '';
+    const groupBadge = item.groupTag ? `<span class="group-badge ${groupClass}">${item.groupTag}</span>` : '';
 
     tr.innerHTML = `
-      <td>
-        <span class="dn">${item.day}</span>
-        <div class="dt">${item.date}</div>
-        ${groupBadgeHtml}
-      </td>
+      <td><span class="dn">${item.day}</span><div class="dt">${item.date}</div>${groupBadge}</td>
       <td><span class="rg ${item.regTag}">${item.region}</span></td>
       <td><div class="tt">${item.title}</div></td>
       <td>${item.details}</td>
       <td><span class="pill">${item.transport}</span></td>
-      <td><span class="pill hotel-pill">${item.hotel}</span></td>
-    `;
+      <td><span class="pill hotel-pill">${item.hotel}</span></td>`;
     tbody.appendChild(tr);
   });
-
   filterPlan();
 }
 
+// Filter-Button aktivieren
 function setFilter(filterVal, btn) {
   currentRegion = filterVal;
   document.querySelectorAll('.controls .f').forEach(b => b.classList.remove('on'));
@@ -1326,69 +682,54 @@ function setFilter(filterVal, btn) {
   filterPlan();
 }
 
+// Zeilen nach Suchtext und Filter ein-/ausblenden
 function filterPlan() {
-  const qInput = $('#q');
-  const q = qInput ? qInput.value.toLowerCase() : '';
-  const rows = document.querySelectorAll('#planTableBody tr');
-
-  rows.forEach(row => {
-    const text = row.innerText.toLowerCase();
-    const region = row.getAttribute('data-region') || '';
-    const group = row.getAttribute('data-group') || '';
-    const matchesSearch = text.includes(q);
-    const matchesFilter = currentRegion === 'all' || region.includes(currentRegion) || group.includes(currentRegion);
-
-    row.style.display = (matchesSearch && matchesFilter) ? '' : 'none';
+  const q = $('#q') ? $('#q').value.toLowerCase() : '';
+  document.querySelectorAll('#planTableBody tr').forEach(row => {
+    const okSearch = row.innerText.toLowerCase().includes(q);
+    const okFilter = currentRegion === 'all' || (row.getAttribute('data-region') || '').includes(currentRegion) || (row.getAttribute('data-group') || '').includes(currentRegion);
+    row.style.display = (okSearch && okFilter) ? '' : 'none';
   });
-
   renderMobileCards();
 }
 
+// Mobile Karten aus den sichtbaren Tabellenzeilen erzeugen
 function renderMobileCards() {
   const container = $('#mobileCards');
   container.innerHTML = '';
-  const visibleRows = document.querySelectorAll('#planTableBody tr');
-
-  visibleRows.forEach(row => {
+  document.querySelectorAll('#planTableBody tr').forEach(row => {
     if (row.style.display === 'none') return;
-
-    const cells = row.querySelectorAll('td');
-    const locName = row.getAttribute('data-location');
+    const c = row.querySelectorAll('td'), loc = row.getAttribute('data-location');
     const card = document.createElement('div');
     card.className = 'card';
-    card.onclick = () => focusMap(locName);
-
+    card.onclick = () => focusMap(loc);
     card.innerHTML = `
-      <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:6px;">
-        <div>${cells[0].innerHTML}</div>
-        <div>${cells[1].innerHTML}</div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:6px">
+        <div>${c[0].innerHTML}</div><div>${c[1].innerHTML}</div>
       </div>
-      <div class="tt" style="margin:6px 0 2px; color:var(--ink);">${cells[2].innerText}</div>
-      <div style="margin-bottom:6px;">${cells[3].innerHTML}</div>
-      <div>${cells[4].innerHTML} ${cells[5].innerHTML}</div>
-    `;
+      <div class="tt" style="margin:6px 0 2px;color:var(--ink)">${c[2].innerText}</div>
+      <div style="margin-bottom:6px">${c[3].innerHTML}</div>
+      <div>${c[4].innerHTML} ${c[5].innerHTML}</div>`;
     container.appendChild(card);
   });
 }
 
 /* ==========================================================================
-   3. INTERAKTIVE LEAFLET-KARTE (MIT REALISTISCHEM STRASSEN- & FLUG-ROUTING)
+   5. KARTE (Leaflet): Punkte, Flüge, Straßen (OSRM), Fähren, Legende
    ========================================================================== */
 function initMap() {
-  const createLayer = (url, attribution, maxZoom = 15) => L.tileLayer(url, { maxZoom, attribution });
-
+  const layer = (url, attr, maxZoom = 15) => L.tileLayer(url, { maxZoom, attribution: attr });
   const baseLayers = {
-    "🇩🇪 OSM Deutsch (Deutsch / Landessprache)": createLayer('https://tile.openstreetmap.de/{z}/{x}/{y}.png', '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> (Deutscher Stil)'),
-    "🌏 OSM Standard (NUR Landessprache)": createLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', '&copy; OpenStreetMap'),
-    "🗺️ Esri Street (Englisch)": createLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', 'Tiles &copy; Esri'),
-    "⛰️ Topografisch (CyclOSM)": createLayer('https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png', '&copy; OpenStreetMap / CyclOSM', 18),
-    "⛰️ OpenTopoMap (Gelände)": createLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', '&copy; OpenTopoMap', 17)
+    '🇩🇪 OSM Deutsch (Deutsch / Landessprache)': layer('https://tile.openstreetmap.de/{z}/{x}/{y}.png', '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> (Deutscher Stil)'),
+    '🌏 OSM Standard (NUR Landessprache)': layer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', '&copy; OpenStreetMap'),
+    '🗺️ Esri Street (Englisch)': layer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', 'Tiles &copy; Esri'),
+    '⛰️ Topografisch (CyclOSM)': layer('https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png', '&copy; OpenStreetMap / CyclOSM', 18),
+    '⛰️ OpenTopoMap (Gelände)': layer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', '&copy; OpenTopoMap', 17)
   };
-
-  map = L.map('map', { layers: [baseLayers["🇩🇪 OSM Deutsch (Deutsch / Landessprache)"]] });
+  map = L.map('map', { layers: [baseLayers['🇩🇪 OSM Deutsch (Deutsch / Landessprache)']] });
   L.control.layers(baseLayers, null, { collapsed: true, position: 'topright' }).addTo(map);
 
-  // Ergänzte Flughäfen für exakte Flugverbindungen
+  // Alle Orte und Flughäfen (Farbe = Region)
   const points = {
     wien: { name: "Flughafen Wien (VIE)", date: "01.01. & 23.02.2027", lat: 48.1103, lng: 16.5697, desc: "Start & Endpunkt der Reise", color: "#15803d" },
     muc: { name: "Flughafen München (MUC)", date: "29.01.2027", lat: 48.3537, lng: 11.7861, desc: "Zielort Stefan (TG926)", color: "#15803d" },
@@ -1405,7 +746,6 @@ function initMap() {
     surat: { name: "Flughafen Surat Thani (URT)", date: "25.01.2027", lat: 9.1326, lng: 99.1356, desc: "Flughafen Festland Samui-Region", color: "#0d9488" },
     tao: { name: "Koh Tao", date: "19.01. – 25.01.2027", lat: 10.1018, lng: 99.8383, desc: "Schnorcheln & Vollmond Party", color: "#0d9488" },
     phangan: { name: "Ko Pha-ngan", date: "22.01.2027", lat: 9.7319, lng: 100.0136, desc: "Vollmond Party Speedboot", color: "#0d9488" },
-    
     // Sri Lanka
     cmb: { name: "Flughafen Colombo (CMB)", date: "29.01. | 02.02. | 23.02.2027", lat: 7.1808, lng: 79.8841, desc: "Bandaranaike Airport", color: "#059669" },
     cmb_city: { name: "Colombo Stadtzentrum", date: "21.02. – 23.02.2027", lat: 6.9344, lng: 79.8428, desc: "Hauptstadt Vibe & Galle Face Promenade", color: "#6b21a8" },
@@ -1418,238 +758,191 @@ function initMap() {
     weligama: { name: "Weligama", date: "19.02. – 21.02.2027", lat: 5.9722, lng: 80.4289, desc: "Surfen & Beach Vibes", color: "#0d9488" }
   };
 
-  // Styles
-  const flightStyle = { color: '#059669', weight: 2.5, opacity: 0.85, dashArray: '6, 6' };
-  const thOverlandStyle = { color: '#0d9488', weight: 3.5, opacity: 0.9 };
-  const slOverlandStyle = { color: '#b45309', weight: 3.5, opacity: 0.9 };
-  const trainStyle = { color: '#dc2626', weight: 3.5, opacity: 0.9, dashArray: '4, 4' };
+  // Linien-Stile
+  const flightStyle = { color: '#059669', weight: 2.5, opacity: .85, dashArray: '6, 6' };
+  const thStyle = { color: '#0d9488', weight: 3.5, opacity: .9 };
+  const slStyle = { color: '#b45309', weight: 3.5, opacity: .9 };
+  const trainStyle = { color: '#dc2626', weight: 3.5, opacity: .9, dashArray: '4, 4' };
+  const line = (pts, style) => L.polyline(pts.map(k => [points[k].lat, points[k].lng]), style).addTo(map);
 
-  // Funktion zur automatischen Berechnung der Straßenroute via OSRM API
-  function drawRoadRoute(startPoint, endPoint, style, profile = 'driving') {
-    const url = `https://router.project-osrm.org/route/v1/${profile}/${startPoint.lng},${startPoint.lat};${endPoint.lng},${endPoint.lat}?overview=full&geometries=geojson`;
-
-    fetch(url)
-      .then(response => response.json())
-      .then(data => {
-        if (data.routes && data.routes.length > 0) {
-          const coordinates = data.routes[0].geometry.coordinates.map(coord => [coord[1], coord[0]]);
-          L.polyline(coordinates, style).addTo(map);
-        } else {
-          // Fallback zur geraden Linie, falls kein Routing gefunden wird
-          L.polyline([[startPoint.lat, startPoint.lng], [endPoint.lat, endPoint.lng]], style).addTo(map);
-        }
-      })
-      .catch(() => {
-        L.polyline([[startPoint.lat, startPoint.lng], [endPoint.lat, endPoint.lng]], style).addTo(map);
-      });
+  // Straßenroute über OSRM, bei Fehler gerade Linie
+  function drawRoadRoute(a, b, style) {
+    const url = `https://router.project-osrm.org/route/v1/driving/${a.lng},${a.lat};${b.lng},${b.lat}?overview=full&geometries=geojson`;
+    const fallback = () => L.polyline([[a.lat, a.lng], [b.lat, b.lng]], style).addTo(map);
+    fetch(url).then(r => r.json()).then(d => {
+      if (d.routes && d.routes.length) L.polyline(d.routes[0].geometry.coordinates.map(c => [c[1], c[0]]), style).addTo(map);
+      else fallback();
+    }).catch(fallback);
   }
 
-  /* -------------------------------------------------------------------------
-     A) FLÜGE (Gestrichelt, exakt von Flughafen zu Flughafen)
-     ------------------------------------------------------------------------- */
-  // Langstreckenflüge
-  L.polyline([[points.wien.lat, points.wien.lng], [points.ruh.lat, points.ruh.lng], [points.bkk.lat, points.bkk.lng]], flightStyle).addTo(map);
-  L.polyline([[points.bkk.lat, points.bkk.lng], [points.muc.lat, points.muc.lng]], flightStyle).addTo(map);
-  L.polyline([[points.bkk.lat, points.bkk.lng], [points.cmb.lat, points.cmb.lng]], flightStyle).addTo(map);
-  L.polyline([[points.cmb.lat, points.cmb.lng], [points.ist.lat, points.ist.lng], [points.wien.lat, points.wien.lng]], flightStyle).addTo(map);
+  // A) Flüge (gestrichelt, Flughafen zu Flughafen)
+  line(['wien', 'ruh', 'bkk'], flightStyle);
+  line(['bkk', 'muc'], flightStyle);
+  line(['bkk', 'cmb'], flightStyle);
+  line(['cmb', 'ist', 'wien'], flightStyle);
+  line(['bkk', 'uth'], flightStyle);
+  line(['uth', 'cnx'], flightStyle);
+  line(['cnx', 'kbv'], flightStyle);
+  line(['surat', 'bkk'], flightStyle);
 
-  // Inlandsflüge Thailand (von/zu den nächstgelegenen Flughäfen)
-  L.polyline([[points.bkk.lat, points.bkk.lng], [points.uth.lat, points.uth.lng]], flightStyle).addTo(map); // BKK -> UTH
-  L.polyline([[points.uth.lat, points.uth.lng], [points.cnx.lat, points.cnx.lng]], flightStyle).addTo(map); // UTH -> CNX
-  L.polyline([[points.cnx.lat, points.cnx.lng], [points.kbv.lat, points.kbv.lng]], flightStyle).addTo(map); // CNX -> KBV (Krabi)
-  L.polyline([[points.surat.lat, points.surat.lng], [points.bkk.lat, points.bkk.lng]], flightStyle).addTo(map); // Surat Thani -> BKK
+  // B) Straßen & Bahn (realistisch über OSRM)
+  drawRoadRoute(points.cnx, points.pai, thStyle);
+  drawRoadRoute(points.kbv, points.krabi, thStyle);
+  drawRoadRoute(points.tao, points.surat, thStyle);
+  drawRoadRoute(points.bkk, points.bkk_city, thStyle);
+  drawRoadRoute(points.cmb, points.anuradhapura, slStyle);
+  drawRoadRoute(points.anuradhapura, points.dambulla, slStyle);
+  drawRoadRoute(points.dambulla, points.kandy, slStyle);
+  drawRoadRoute(points.kandy, points.ella, trainStyle);   // Panoramazug
+  drawRoadRoute(points.ella, points.tangalle, slStyle);
+  drawRoadRoute(points.tangalle, points.mirissa, slStyle);
+  drawRoadRoute(points.mirissa, points.weligama, slStyle);
+  drawRoadRoute(points.weligama, points.cmb_city, slStyle);
+  drawRoadRoute(points.cmb_city, points.cmb, slStyle);
 
-  /* -------------------------------------------------------------------------
-     B) STRASSEN- & LANDVERBINDUNGEN (Realistisch am Straßennetz mit OSRM)
-     ------------------------------------------------------------------------- */
-  // Thailand Transfers
-  drawRoadRoute(points.cnx, points.pai, thOverlandStyle);         // Chiang Mai -> Pai (762 Kurven)
-  drawRoadRoute(points.kbv, points.krabi, thOverlandStyle);       // Flughafen Krabi -> Railay/Ao Nang
-  drawRoadRoute(points.tao, points.surat, thOverlandStyle);       // Koh Tao -> Surat Thani (Fähre + Land)
-  drawRoadRoute(points.bkk, points.bkk_city, thOverlandStyle);   // Flughafen BKK -> Stadtzentrum
+  // C) Fähren / Seewege
+  line(['krabi', 'phiphi'], thStyle);
+  line(['phiphi', 'tao'], thStyle);
+  line(['tao', 'phangan'], thStyle);
 
-  // Sri Lanka Transfers
-  drawRoadRoute(points.cmb, points.anuradhapura, slOverlandStyle);
-  drawRoadRoute(points.anuradhapura, points.dambulla, slOverlandStyle);
-  drawRoadRoute(points.dambulla, points.kandy, slOverlandStyle);
-  drawRoadRoute(points.kandy, points.ella, trainStyle);           // Panoramazug Kandy -> Ella
-  drawRoadRoute(points.ella, points.tangalle, slOverlandStyle);
-  drawRoadRoute(points.tangalle, points.mirissa, slOverlandStyle);
-  drawRoadRoute(points.mirissa, points.weligama, slOverlandStyle);
-  drawRoadRoute(points.weligama, points.cmb_city, slOverlandStyle);
-  drawRoadRoute(points.cmb_city, points.cmb, slOverlandStyle);
-
-  // Fähren & Seewege (Inselverbindungen)
-  L.polyline([[points.krabi.lat, points.krabi.lng], [points.phiphi.lat, points.phiphi.lng]], thOverlandStyle).addTo(map);
-  L.polyline([[points.phiphi.lat, points.phiphi.lng], [points.tao.lat, points.tao.lng]], thOverlandStyle).addTo(map);
-  L.polyline([[points.tao.lat, points.tao.lng], [points.phangan.lat, points.phangan.lng]], thOverlandStyle).addTo(map);
-
-  /* -------------------------------------------------------------------------
-     C) MARKER PLATZIEREN
-     ------------------------------------------------------------------------- */
+  // D) Marker mit Popup
   Object.keys(points).forEach(key => {
     const p = points[key];
-    const marker = L.circleMarker([p.lat, p.lng], {
-      color: p.color,
-      fillColor: p.color,
-      fillOpacity: 0.9,
-      radius: 6
-    }).bindPopup(`<b style="color:${p.color}">📍 ${p.name}</b><br><small>📅 ${p.date}</small><br>${p.desc}`);
-
+    const marker = L.circleMarker([p.lat, p.lng], { color: p.color, fillColor: p.color, fillOpacity: .9, radius: 6 })
+      .bindPopup(`<b style="color:${p.color}">📍 ${p.name}</b><br><small>📅 ${p.date}</small><br>${p.desc}`);
     marker.addTo(map);
-    markers[p.name] = { marker, lat: p.lat, lng: p.lng };
-    markers[key] = { marker, lat: p.lat, lng: p.lng };
+    markers[p.name] = { marker, lat: p.lat, lng: p.lng };   // Zugriff über Namen …
+    markers[key] = { marker, lat: p.lat, lng: p.lng };      // … und über Kurzschlüssel
   });
 
-  /* -------------------------------------------------------------------------
-     D) LEGENDE
-     ------------------------------------------------------------------------- */
+  // E) Einklappbare Legende
   const lg = L.control({ position: 'bottomright' });
   lg.onAdd = () => {
     const d = L.DomUtil.create('div', 'legend');
     d.innerHTML = `
       <div class="lh" style="cursor:pointer;font-weight:800">📌 Legende <span>▼</span></div>
-      <div class="lb" style="display:none; margin-top:4px;">
+      <div class="lb" style="display:none;margin-top:4px">
         <span style="color:#15803d">━</span> Nord-Thailand (Straße)<br>
         <span style="color:#6b21a8">━</span> Stadt-Transfers<br>
         <span style="color:#0d9488">━</span> Inseln & Fährverbindungen<br>
         <span style="color:#b45309">━</span> Sri Lanka Route (Straße)<br>
         <span style="color:#dc2626">┅</span> Panoramazug Kandy ➔ Ella<br>
         <span style="color:#059669">┅</span> Flüge (Flughafen zu Flughafen)
-      </div>
-    `;
+      </div>`;
     L.DomEvent.disableClickPropagation(d);
     d.querySelector('.lh').onclick = () => {
-      const b = d.querySelector('.lb'), o = b.style.display === 'none';
-      b.style.display = o ? 'block' : 'none';
-      d.querySelector('span').textContent = o ? '▲' : '▼';
+      const b = d.querySelector('.lb'), open = b.style.display === 'none';
+      b.style.display = open ? 'block' : 'none';
+      d.querySelector('span').textContent = open ? '▲' : '▼';
     };
     return d;
   };
   lg.addTo(map);
-
   map.fitBounds([[4.0, 78.0], [21.0, 106.0]], { padding: [20, 20] });
 }
 
-function focusMap(locationName) {
-  let targetMarker = null;
-  if (locationName === "Bangkok Stadtzentrum") targetMarker = markers["bkk_city"];
-  else if (locationName.includes("Bangkok")) targetMarker = markers["Flughafen Bangkok (BKK)"];
-  else if (locationName === "Colombo Stadtzentrum") targetMarker = markers["cmb_city"];
-  else if (locationName.includes("Colombo")) targetMarker = markers["Flughafen Colombo (CMB)"];
-  else if (locationName.includes("Wien")) targetMarker = markers["Flughafen Wien (VIE)"];
-  else if (locationName.includes("Krabi")) targetMarker = markers["Krabi / Railay"];
-  else targetMarker = markers[locationName];
-
-  if (targetMarker) {
-    map.flyTo([targetMarker.lat, targetMarker.lng], 10, { duration: 1.2 });
-    targetMarker.marker.openPopup();
+// Auf Klick in Tabelle/Karte zum passenden Marker zoomen
+function focusMap(name) {
+  let t;
+  if (name === "Bangkok Stadtzentrum") t = markers["bkk_city"];
+  else if (name.includes("Bangkok")) t = markers["Flughafen Bangkok (BKK)"];
+  else if (name === "Colombo Stadtzentrum") t = markers["cmb_city"];
+  else if (name.includes("Colombo")) t = markers["Flughafen Colombo (CMB)"];
+  else if (name.includes("Wien")) t = markers["Flughafen Wien (VIE)"];
+  else if (name.includes("Krabi")) t = markers["Krabi / Railay"];
+  else t = markers[name];
+  if (t) {
+    map.flyTo([t.lat, t.lng], 10, { duration: 1.2 });
+    t.marker.openPopup();
     $('#mapBox').scrollIntoView({ behavior: 'smooth' });
   }
 }
 
 /* ==========================================================================
-   4. COUNTDOWN
+   6. COUNTDOWN bis zum Abflug (01.01.2027, 15:30 Uhr Wiener Zeit = 14:30 UTC)
    ========================================================================== */
 function updateCountdown() {
-  const flightTime = Date.UTC(2027, 0, 1, 14, 30, 0);
-  const diff = flightTime - Date.now();
-  const el = $('#countdown');
-
+  const diff = Date.UTC(2027, 0, 1, 14, 30, 0) - Date.now(), el = $('#countdown');
   if (!el) return;
-
-  if (diff > 0) {
-    const totalSecs = Math.floor(diff / 1000);
-    const secs = totalSecs % 60;
-    const mins = Math.floor(totalSecs / 60) % 60;
-    const hours = Math.floor(totalSecs / 3600) % 24;
-    const days = Math.floor(totalSecs / 86400);
-    el.innerHTML = `⏳ Noch <b>${days}</b> Tage, <b>${hours}</b> Std., <b>${mins}</b> Min. & <b>${secs}</b> Sek.`;
-  } else {
-    el.innerHTML = `🎉 Gute Reise! Der Trip läuft!`;
-  }
+  if (diff <= 0) { el.innerHTML = '🎉 Gute Reise! Der Trip läuft!'; return; }
+  const t = Math.floor(diff / 1000);
+  el.innerHTML = `⏳ Noch <b>${Math.floor(t / 86400)}</b> Tage, <b>${Math.floor(t / 3600) % 24}</b> Std., <b>${Math.floor(t / 60) % 60}</b> Min. & <b>${t % 60}</b> Sek.`;
 }
 
 /* ==========================================================================
-   5. PACKLISTEN- & ANALYSE-LOGIK
+   7. PACKLISTE (Speicherung im Browser per localStorage)
    ========================================================================== */
+const personName = () => currentPerson === 'stefan' ? 'Stefan' : 'Ines';
+const clone = o => JSON.parse(JSON.stringify(o));
+
+// Person wechseln
 function switchPerson(person) {
   currentPerson = person;
   $('#btnPackStefan').classList.toggle('on', person === 'stefan');
   $('#btnPackInes').classList.toggle('on', person === 'ines');
-  $('#packlistTitle').innerText = `🎒 Interaktive Packliste (${person === 'stefan' ? 'Stefan' : 'Ines'})`;
+  $('#packlistTitle').innerText = `🎒 Interaktive Packliste (${personName()})`;
   renderPacklist();
 }
 
+// Gespeicherte Listen laden, sonst Standardlisten
 function loadPacklist() {
-  const savedStefan = localStorage.getItem('thailand_packlist_stefan_v9');
-  const savedInes = localStorage.getItem('thailand_packlist_ines_v9');
-
-  packlists.stefan = savedStefan ? JSON.parse(savedStefan) : JSON.parse(JSON.stringify(defaultStefan));
-  packlists.ines = savedInes ? JSON.parse(savedInes) : JSON.parse(JSON.stringify(defaultInes));
-
-  renderPacklist();
-  renderAnalysis();
+  const s = localStorage.getItem('thailand_packlist_stefan_v9'), i = localStorage.getItem('thailand_packlist_ines_v9');
+  packlists.stefan = s ? JSON.parse(s) : clone(defaultStefan);
+  packlists.ines = i ? JSON.parse(i) : clone(defaultInes);
+  renderPacklist(); renderAnalysis();
 }
 
+// Aktuelle Liste speichern und alles neu zeichnen
 function savePacklist() {
   localStorage.setItem(`thailand_packlist_${currentPerson}_v9`, JSON.stringify(packlists[currentPerson]));
-  renderPacklist();
-  renderAnalysis();
+  renderPacklist(); renderAnalysis();
 }
 
-function setAllPacked(status) {
-  packlists[currentPerson].forEach(item => item.packed = status);
-  savePacklist();
-}
+function setAllPacked(status) { packlists[currentPerson].forEach(i => i.packed = status); savePacklist(); }
 
+// CSV-Export (Excel-tauglich, Semikolon-getrennt)
 function exportPacklistCSV() {
-  const list = packlists[currentPerson];
   let csv = "Kategorie;Gegenstand;Anzahl;Gewicht / Stk. (g);Gesamtgewicht (g);Gewichtstyp;Packort;Gepackt\n";
-  list.forEach(item => {
-    const total = (item.weight || 0) * (item.qty || 1);
-    csv += `"${item.cat}";"${item.name}";${item.qty || 1};${item.weight || 0};${total};"${item.type}";"${item.loc}";${item.packed ? "Ja" : "Nein"}\n`;
+  packlists[currentPerson].forEach(i => {
+    csv += `"${i.cat}";"${i.name}";${i.qty || 1};${i.weight || 0};${(i.weight || 0) * (i.qty || 1)};"${i.type}";"${i.loc}";${i.packed ? "Ja" : "Nein"}\n`;
   });
-  const blob = new Blob(["\ufeff" + csv], { type: 'text/csv;charset=utf-8;' });
   const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
+  a.href = URL.createObjectURL(new Blob(["\ufeff" + csv], { type: 'text/csv;charset=utf-8;' }));
   a.download = `packliste_${currentPerson}_2027.csv`;
   a.click();
 }
 
 function resetPacklist() {
-  if (confirm(`Packliste von ${currentPerson === 'stefan' ? 'Stefan' : 'Ines'} zurücksetzen?`)) {
-    packlists[currentPerson] = currentPerson === 'stefan' ? JSON.parse(JSON.stringify(defaultStefan)) : JSON.parse(JSON.stringify(defaultInes));
+  if (confirm(`Packliste von ${personName()} zurücksetzen?`)) {
+    packlists[currentPerson] = clone(currentPerson === 'stefan' ? defaultStefan : defaultInes);
     savePacklist();
   }
 }
 
+// Packlisten-Tabelle + Gewichts-Zusammenfassung
 function renderPacklist() {
   const tbody = $('#packTableBody');
   if (!tbody) return;
   tbody.innerHTML = '';
-
-  const list = packlists[currentPerson];
-  let packWeightG = 0, wornWeightG = 0, packedCount = 0;
-  const categories = {};
+  const list = packlists[currentPerson], categories = {};
+  let packG = 0, wornG = 0, packedCount = 0;
 
   list.forEach((item, index) => {
     item._origIndex = index;
-    if (!categories[item.cat]) categories[item.cat] = [];
-    categories[item.cat].push(item);
-
+    (categories[item.cat] = categories[item.cat] || []).push(item);
     if (item.packed) {
-      const itemTotal = (item.weight || 0) * (item.qty || 1);
-      if (item.type === "Am Körper" || item.loc === "Am Körper") wornWeightG += itemTotal;
-      else packWeightG += itemTotal;
+      const w = (item.weight || 0) * (item.qty || 1);
+      if (item.type === "Am Körper" || item.loc === "Am Körper") wornG += w; else packG += w;
       packedCount++;
     }
   });
 
-  $('#packWeightKg').innerText = `${(packWeightG / 1000).toFixed(2)} kg`;
-  $('#wornWeightKg').innerText = `${(wornWeightG / 1000).toFixed(2)} kg`;
-  $('#grandTotalKg').innerText = `${((packWeightG + wornWeightG) / 1000).toFixed(2)} kg`;
+  $('#packWeightKg').innerText = `${(packG / 1000).toFixed(2)} kg`;
+  $('#wornWeightKg').innerText = `${(wornG / 1000).toFixed(2)} kg`;
+  $('#grandTotalKg').innerText = `${((packG + wornG) / 1000).toFixed(2)} kg`;
   $('#totalPackedItems').innerText = `${packedCount} / ${list.length}`;
+
+  const sel = (val, opts) => opts.map(o => `<option value="${o}" ${val === o ? 'selected' : ''}>${o}</option>`).join('');
 
   Object.keys(categories).forEach(cat => {
     const catRow = document.createElement('tr');
@@ -1657,184 +950,135 @@ function renderPacklist() {
     tbody.appendChild(catRow);
 
     categories[cat].forEach(item => {
-      const idx = item._origIndex;
-      const totalItemWeight = (item.weight || 0) * (item.qty || 1);
-      const tr = document.createElement('tr');
-
+      const idx = item._origIndex, total = (item.weight || 0) * (item.qty || 1), tr = document.createElement('tr');
       tr.innerHTML = `
-        <td style="text-align:center;">
-          <input type="checkbox" ${item.packed ? 'checked' : ''} onchange="togglePacked(${idx})" style="accent-color: var(--p1); width:14px; height:14px; cursor:pointer;">
-        </td>
-        <td><strong style="color: ${item.packed ? 'var(--ink)' : 'var(--mute)'}; ${!item.packed ? 'text-decoration: line-through;' : ''}">${item.name}</strong></td>
-        <td>
-          <select class="table-select ${item.type === 'Am Körper' ? 'select-am-koerper' : ''}" onchange="changeType(${idx}, this.value)">
-            <option value="Basis" ${item.type === 'Basis' ? 'selected' : ''}>Basis</option>
-            <option value="Am Körper" ${item.type === 'Am Körper' ? 'selected' : ''}>Am Körper</option>
-            <option value="Verbrauch" ${item.type === 'Verbrauch' ? 'selected' : ''}>Verbrauch</option>
-          </select>
-        </td>
-        <td>
-          <select class="table-select" onchange="changeLoc(${idx}, this.value)">
-            <option value="Aufgabegepäck" ${item.loc === 'Aufgabegepäck' ? 'selected' : ''}>Aufgabegepäck</option>
-            <option value="Handgepäck" ${item.loc === 'Handgepäck' ? 'selected' : ''}>Handgepäck</option>
-            <option value="Umhängetasche" ${item.loc === 'Umhängetasche' ? 'selected' : ''}>Umhängetasche</option>
-            <option value="Am Körper" ${item.loc === 'Am Körper' ? 'selected' : ''}>Am Körper</option>
-          </select>
-        </td>
-        <td style="text-align:center;">
-          <button style="border:none; background:none; font-weight:bold; cursor:pointer;" onclick="changeQty(${idx}, -1)">-</button>
+        <td style="text-align:center"><input type="checkbox" ${item.packed ? 'checked' : ''} onchange="togglePacked(${idx})" style="accent-color:var(--p1);width:14px;height:14px;cursor:pointer"></td>
+        <td><strong style="color:${item.packed ? 'var(--ink)' : 'var(--mute)'};${!item.packed ? 'text-decoration:line-through;' : ''}">${item.name}</strong></td>
+        <td><select class="table-select ${item.type === 'Am Körper' ? 'select-am-koerper' : ''}" onchange="changeType(${idx}, this.value)">${sel(item.type, ['Basis', 'Am Körper', 'Verbrauch'])}</select></td>
+        <td><select class="table-select" onchange="changeLoc(${idx}, this.value)">${sel(item.loc, ['Aufgabegepäck', 'Handgepäck', 'Umhängetasche', 'Am Körper'])}</select></td>
+        <td style="text-align:center">
+          <button style="border:none;background:none;font-weight:bold" onclick="changeQty(${idx}, -1)">-</button>
           <span>${item.qty || 1}</span>
-          <button style="border:none; background:none; font-weight:bold; cursor:pointer;" onclick="changeQty(${idx}, 1)">+</button>
+          <button style="border:none;background:none;font-weight:bold" onclick="changeQty(${idx}, 1)">+</button>
         </td>
-        <td style="text-align:right;">${item.weight || 0} g</td>
-        <td style="text-align:right; font-weight:700; color:var(--p1);">${totalItemWeight} g</td>
-        <td style="text-align:center;">
-          <button style="border:none; background:none; cursor:pointer;" onclick="editPackItem(${idx})">✏</button>
-          <button style="border:none; background:none; cursor:pointer;" onclick="deletePackItem(${idx})">🗑️</button>
-        </td>
-      `;
+        <td style="text-align:right">${item.weight || 0} g</td>
+        <td style="text-align:right;font-weight:700;color:var(--p1)">${total} g</td>
+        <td style="text-align:center">
+          <button style="border:none;background:none" onclick="editPackItem(${idx})">✏</button>
+          <button style="border:none;background:none" onclick="deletePackItem(${idx})">🗑️</button>
+        </td>`;
       tbody.appendChild(tr);
     });
   });
 }
 
-function togglePacked(idx) { packlists[currentPerson][idx].packed = !packlists[currentPerson][idx].packed; savePacklist(); }
-function changeQty(idx, delta) { packlists[currentPerson][idx].qty = Math.max(1, (packlists[currentPerson][idx].qty || 1) + delta); savePacklist(); }
-function changeType(idx, val) { packlists[currentPerson][idx].type = val; savePacklist(); }
-function changeLoc(idx, val) { packlists[currentPerson][idx].loc = val; savePacklist(); }
+// Kleine Änderungs-Funktionen (idx = Position in der Liste)
+function togglePacked(idx) { const i = packlists[currentPerson][idx]; i.packed = !i.packed; savePacklist(); }
+function changeQty(idx, d) { const i = packlists[currentPerson][idx]; i.qty = Math.max(1, (i.qty || 1) + d); savePacklist(); }
+function changeType(idx, v) { packlists[currentPerson][idx].type = v; savePacklist(); }
+function changeLoc(idx, v) { packlists[currentPerson][idx].loc = v; savePacklist(); }
 
+// Neuen Gegenstand hinzufügen
 function addPackItem() {
   const name = $('#newItemName').value.trim();
-  const cat = $('#newItemCat').value;
-  const weight = parseInt($('#newItemWeight').value) || 0;
-  const type = $('#newItemType').value;
-  const loc = $('#newItemLoc').value;
-
   if (!name) return alert("Bitte Name eingeben!");
-  packlists[currentPerson].push({ name, cat, weight, qty: 1, type, loc, packed: true });
-  $('#newItemName').value = '';
-  $('#newItemWeight').value = '';
+  packlists[currentPerson].push({
+    name, cat: $('#newItemCat').value, weight: parseInt($('#newItemWeight').value) || 0,
+    qty: 1, type: $('#newItemType').value, loc: $('#newItemLoc').value, packed: true
+  });
+  $('#newItemName').value = ''; $('#newItemWeight').value = '';
   savePacklist();
 }
 
 function deletePackItem(idx) {
-  if (confirm(`"${packlists[currentPerson][idx].name}" löschen?`)) {
-    packlists[currentPerson].splice(idx, 1);
-    savePacklist();
-  }
+  if (confirm(`"${packlists[currentPerson][idx].name}" löschen?`)) { packlists[currentPerson].splice(idx, 1); savePacklist(); }
 }
 
+// Name und Gewicht per Eingabefenster ändern
 function editPackItem(idx) {
   const item = packlists[currentPerson][idx];
-  const newName = prompt("Name des Gegenstands:", item.name);
-  if (newName === null) return;
-  const newWeightStr = prompt("Gewicht in Gramm (Stück):", item.weight);
-  if (newWeightStr === null) return;
-  item.name = newName.trim() || item.name;
-  item.weight = parseInt(newWeightStr) || 0;
+  const name = prompt("Name des Gegenstands:", item.name); if (name === null) return;
+  const w = prompt("Gewicht in Gramm (Stück):", item.weight); if (w === null) return;
+  item.name = name.trim() || item.name;
+  item.weight = parseInt(w) || 0;
   savePacklist();
 }
 
-/* ---------- Gewichts-Analyse & Charts ---------- */
+/* ==========================================================================
+   8. GEWICHTSANALYSE & DIAGRAMME (Chart.js)
+   ========================================================================== */
 const allCategories = ["Dokumente & Wertsachen", "Rucksäcke & Gepäck", "Elektronik & Ladekabel", "Kleidung", "Schuhe", "Hygiene & Pflege", "Gesundheit & Apotheke", "Komfort & Schlafzubehör", "Accessoires & Alltagshelfer", "Organisation & Utensilien"];
 const chartColors = ['#3b82f6', '#ef4444', '#84cc16', '#a855f7', '#06b6d4', '#f97316', '#b91c1c', '#78350f', '#65a30d', '#4c1d95'];
 
+// Gewicht je Kategorie summieren und Vergleichstabelle füllen
 function renderAnalysis() {
   const tbody = $('#analysisTableBody');
   if (!tbody) return;
   tbody.innerHTML = '';
-
-  const stefanTotals = {}, inesTotals = {};
-  allCategories.forEach(cat => { stefanTotals[cat] = 0; inesTotals[cat] = 0; });
-
-  let sumStefan = 0, sumInes = 0;
-
-  packlists.stefan.forEach(item => {
-    const w = (item.weight || 0) * (item.qty || 1);
-    stefanTotals[item.cat] = (stefanTotals[item.cat] || 0) + w;
-    sumStefan += w;
-  });
-
-  packlists.ines.forEach(item => {
-    const w = (item.weight || 0) * (item.qty || 1);
-    inesTotals[item.cat] = (inesTotals[item.cat] || 0) + w;
-    sumInes += w;
-  });
+  const sum = list => { const t = {}; let all = 0; allCategories.forEach(c => t[c] = 0);
+    list.forEach(i => { const w = (i.weight || 0) * (i.qty || 1); t[i.cat] = (t[i.cat] || 0) + w; all += w; }); return [t, all]; };
+  const [sT, sumS] = sum(packlists.stefan), [iT, sumI] = sum(packlists.ines);
+  const pct = (v, total) => total > 0 ? ((v / total) * 100).toFixed(1) + '%' : '0.0%';
+  const g = v => v.toLocaleString('de-DE') + ' g';
 
   allCategories.forEach(cat => {
-    const valS = stefanTotals[cat] || 0;
-    const valI = inesTotals[cat] || 0;
-    const pctS = sumStefan > 0 ? ((valS / sumStefan) * 100).toFixed(1) + '%' : '0.0%';
-    const pctI = sumInes > 0 ? ((valI / sumInes) * 100).toFixed(1) + '%' : '0.0%';
-
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td><strong>${cat}</strong></td>
-      <td style="text-align:right;">${valS.toLocaleString('de-DE')} g</td>
-      <td style="text-align:right; color:var(--mute);">${pctS}</td>
-      <td style="text-align:right;">${valI.toLocaleString('de-DE')} g</td>
-      <td style="text-align:right; color:var(--mute);">${pctI}</td>
-      <td style="text-align:right; font-weight:700;">${(valS + valI).toLocaleString('de-DE')} g</td>
-    `;
+      <td style="text-align:right">${g(sT[cat] || 0)}</td><td style="text-align:right;color:var(--mute)">${pct(sT[cat] || 0, sumS)}</td>
+      <td style="text-align:right">${g(iT[cat] || 0)}</td><td style="text-align:right;color:var(--mute)">${pct(iT[cat] || 0, sumI)}</td>
+      <td style="text-align:right;font-weight:700">${g((sT[cat] || 0) + (iT[cat] || 0))}</td>`;
     tbody.appendChild(tr);
   });
-
-  updateCharts(stefanTotals, inesTotals);
+  updateCharts(sT, iT);
 }
 
+// Tortendiagramme neu zeichnen
 function updateCharts(stefanData, inesData) {
-  const labels = allCategories;
-  const ctxS = $('#chartStefan');
-  if (ctxS) {
-    if (chartStefanInstance) chartStefanInstance.destroy();
-    chartStefanInstance = new Chart(ctxS, {
+  if (typeof Chart === 'undefined') return;   // Chart.js nicht geladen -> Diagramme überspringen
+  const make = (canvasId, old, data) => {
+    const ctx = $(canvasId); if (!ctx) return old;
+    if (old) old.destroy();
+    return new Chart(ctx, {
       type: 'pie',
-      data: { labels, datasets: [{ data: labels.map(c => stefanData[c] || 0), backgroundColor: chartColors }] },
+      data: { labels: allCategories, datasets: [{ data: allCategories.map(c => data[c] || 0), backgroundColor: chartColors }] },
       options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 9 } } } } }
     });
-  }
-
-  const ctxI = $('#chartInes');
-  if (ctxI) {
-    if (chartInesInstance) chartInesInstance.destroy();
-    chartInesInstance = new Chart(ctxI, {
-      type: 'pie',
-      data: { labels, datasets: [{ data: labels.map(c => inesData[c] || 0), backgroundColor: chartColors }] },
-      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 9 } } } } }
-    });
-  }
+  };
+  chartStefanInstance = make('#chartStefan', chartStefanInstance, stefanData);
+  chartInesInstance = make('#chartInes', chartInesInstance, inesData);
 }
 
 /* ==========================================================================
-   6. UI DOM-REFERENZEN & EVENT-HANDLER
+   9. EVENT-HANDLER (Tabs, Vollbild)
    ========================================================================== */
 document.querySelectorAll('.tabs .tab').forEach(b => b.onclick = () => {
   document.querySelectorAll('.tabs .tab').forEach(x => x.classList.toggle('on', x === b));
   document.querySelectorAll('.pane').forEach(x => x.classList.toggle('on', x.id === b.dataset.t));
-  if (b.dataset.t === 'route' && map) setTimeout(() => map.invalidateSize(), 100);
+  if (b.dataset.t === 'route' && map) setTimeout(() => map.invalidateSize(), 100);  // Karte neu berechnen
 });
 
-// Vollbild-Modus Karte
+// Vollbild der Karte (Esc beendet es)
 $('#fs').onclick = () => {
   const f = $('#mapBox').classList.toggle('full');
   $('#fs').textContent = f ? '❌ Verkleinern' : '🔍 Vollbild';
   setTimeout(() => map.invalidateSize(), 200);
 };
-
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape' && $('#mapBox').classList.contains('full')) $('#fs').click();
-});
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && $('#mapBox').classList.contains('full')) $('#fs').click(); });
 
 /* ==========================================================================
-   7. INITIALISIERUNG
+   10. START
    ========================================================================== */
+// Jeder Schritt läuft einzeln abgesichert: Schlägt einer fehl (z. B. weil Leaflet oder
+// Chart.js nicht geladen werden konnte), laufen alle anderen trotzdem weiter.
+const safe = fn => { try { fn(); } catch (err) { console.error('Startfehler in', fn.name || 'Schritt', err); } };
+
 window.addEventListener('DOMContentLoaded', () => {
-  renderStats();
-  switchCountry('thailand');
-  initMap();
-  loadPacklist();
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
+  safe(() => { updateCountdown(); setInterval(updateCountdown, 1000); }); // Countdown ZUERST
+  safe(renderStats);
+  safe(() => switchCountry('thailand'));
+  safe(initMap);
+  safe(loadPacklist);
 });
 </script>
 </body>
