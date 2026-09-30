@@ -845,6 +845,52 @@
       height: 320px;
     }
 
+    /* STYLES FÜR UNTERKUNFTS- & REISEZEIT-ÜBERSICHT */
+    .stay-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      background: #dcfce7;
+      color: #15803d;
+      border: 1px solid #86efac;
+      white-space: nowrap;
+    }
+
+    .travel-time-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fde68a;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .status-pill-booked {
+      background: #dcfce7;
+      color: #15803d;
+      border: 1px solid #86efac;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+
+    .status-pill-open {
+      background: #fee2e2;
+      color: #dc2626;
+      border: 1px solid #fca5a5;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+
     @media (max-width: 860px) {
       .table-wrapper-responsive { display: none; }
       .mobile-cards { display: flex; flex-direction: column; gap: 8px; }
@@ -883,6 +929,7 @@
     <!-- TAB NAVIGATION -->
     <div class="nav-tabs">
       <button class="tab-btn active" onclick="switchTab('routeTab', this)">🗺️ Reiseroute & Karte</button>
+      <button class="tab-btn" onclick="switchTab('accommodationTab', this)">🏨 Unterkünfte & Reisezeiten</button>
       <button class="tab-btn" onclick="switchTab('packTab', this)">🎒 Interaktive Packliste</button>
       <button class="tab-btn" onclick="switchTab('analysisTab', this)">📊 Gewichtsanalyse</button>
       <button class="tab-btn" onclick="switchTab('budgetTab', this)">✈️ Gebuchte Flüge</button>
@@ -940,7 +987,163 @@
       <div class="mobile-cards" id="mobileCards"></div>
     </div>
 
-    <!-- TAB 2: PACKLISTE MIT UNTERBEREICHEN -->
+    <!-- TAB 2: UNTERKÜNFTE & REISEZEITEN (NEUER BEREICH) -->
+    <div id="accommodationTab" class="tab-content">
+      <div class="info-card">
+        <div class="info-card-header">
+          <h3>🏨 UNTERKUNFTS- & REISEZEITÜBERSICHT</h3>
+          <span style="font-size: 0.82rem; color: var(--text-muted); font-weight: 600;">Schnellübersicht über Aufenthaltsdauern & Transferzeiten</span>
+        </div>
+
+        <h4 style="margin: 12px 0 8px 0; color: var(--primary);">🇹🇭 THAILAND (01.01. – 29.01.2027)</h4>
+        <div class="table-wrapper" style="margin-bottom: 20px;">
+          <table>
+            <thead>
+              <tr>
+                <th>Station / Ort</th>
+                <th>Zeitraum & Datum</th>
+                <th>Dauer</th>
+                <th>Unterkunft / Status</th>
+                <th>Nächster Transfer / Reisezeit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>1. Udon Thani</strong></td>
+                <td>02.01. – 05.01.</td>
+                <td><span class="stay-badge">3 Nächte</span></td>
+                <td>🏠 Bei OW <span class="status-pill-booked">geplant</span></td>
+                <td><span class="travel-time-pill">✈️ ca. 1 Std. 05 Min.</span> Inlandsflug Nok Air DD703 nach Chiang Mai</td>
+              </tr>
+              <tr>
+                <td><strong>2. Chiang Mai</strong></td>
+                <td>05.01. – 08.01.</td>
+                <td><span class="stay-badge">3 Nächte</span></td>
+                <td>🏨 EZ in Chiang Mai <span class="status-pill-open">offen</span></td>
+                <td><span class="travel-time-pill">🚐 ca. 3 Std. 00 Min.</span> Minivan (AYA) über 762 Kurven nach Pai</td>
+              </tr>
+              <tr>
+                <td><strong>3. Pai</strong></td>
+                <td>08.01. – 13.01.</td>
+                <td><span class="stay-badge">5 Nächte</span></td>
+                <td>🏨 EZ in Pai <span class="status-pill-open">offen</span></td>
+                <td><span class="travel-time-pill">🚐✈️ ca. 6–7 Std. Gesamt</span> Minivan via Chiang Mai ➔ Flug/Bus nach Krabi</td>
+              </tr>
+              <tr>
+                <td><strong>4. Krabi / Railay</strong></td>
+                <td>13.01. – 16.01.</td>
+                <td><span class="stay-badge">3 Nächte</span></td>
+                <td>🏨 EZ auf Krabi <span class="status-pill-open">offen</span></td>
+                <td><span class="travel-time-pill">⛴️ ca. 1 Std. 30 Min.</span> Fähre von Krabi nach Ko Phi Phi</td>
+              </tr>
+              <tr>
+                <td><strong>5. Ko Phi Phi</strong></td>
+                <td>16.01. – 19.01.</td>
+                <td><span class="stay-badge">3 Nächte</span></td>
+                <td>🏨 EZ auf Koh Phi Phi <span class="status-pill-open">offen</span></td>
+                <td><span class="travel-time-pill">⛴️🚌⛴️ ca. 7–8 Std. Gesamt</span> Fähre zum Festland + Bus & Fähre nach Koh Tao</td>
+              </tr>
+              <tr>
+                <td><strong>6. Koh Tao</strong></td>
+                <td>19.01. – 25.01.</td>
+                <td><span class="stay-badge">6 Nächte</span></td>
+                <td>🏨 EZ auf Koh Tao <span class="status-pill-open">offen</span></td>
+                <td><span class="travel-time-pill">⛴️🚌 / ✈️ ca. 8 Std. Gesamt</span> Katamaran + Bus / Flug via Surat Thani/Samui nach Bangkok</td>
+              </tr>
+              <tr>
+                <td><strong>7. Bangkok Stadt</strong></td>
+                <td>25.01. – 29.01.</td>
+                <td><span class="stay-badge">4 Nächte</span></td>
+                <td>🏨 EZ in Bangkok <span class="status-pill-open">offen</span></td>
+                <td><span class="travel-time-pill">✈️ Rückflug / Weiterflug</span> Transfer BKK Flughafen (ca. 45 Min.)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h4 style="margin: 16px 0 8px 0; color: var(--primary);">🇱🇰 SRI LANKA (29.01. – 23.02.2027)</h4>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Station / Ort</th>
+                <th>Zeitraum & Datum</th>
+                <th>Dauer</th>
+                <th>Unterkunft / Status</th>
+                <th>Nächster Transfer / Reisezeit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>1. Negombo</strong> (Ines & Anna)</td>
+                <td>29.01. – 03.02.</td>
+                <td><span class="stay-badge">5 Nächte</span></td>
+                <td>🏨 Ceylon Glory Hostel <span class="status-pill-booked">gebucht</span></td>
+                <td><span class="travel-time-pill">🚆 ca. 3 Std. 30 Min.</span> Direktzug oder Bus nach Anuradhapura</td>
+              </tr>
+              <tr>
+                <td><strong>2. Anuradhapura</strong></td>
+                <td>03.02. – 06.02.</td>
+                <td><span class="stay-badge">3 Nächte</span></td>
+                <td>🏨 noch offen <span class="status-pill-open">offen</span></td>
+                <td><span class="travel-time-pill">🚌 ca. 1 Std. 20 Min.</span> Lokalbus nach Dambulla</td>
+              </tr>
+              <tr>
+                <td><strong>3. Dambulla / Sigiriya</strong></td>
+                <td>06.02. – 09.02.</td>
+                <td><span class="stay-badge">3 Nächte</span></td>
+                <td>🏨 noch offen <span class="status-pill-open">offen</span></td>
+                <td><span class="travel-time-pill">🛺🚌 ca. 2 Std. 30 Min.</span> Bus/TukTuk ins Hochland nach Kandy</td>
+              </tr>
+              <tr>
+                <td><strong>4. Kandy</strong></td>
+                <td>09.02. – 11.02.</td>
+                <td><span class="stay-badge">2 Nächte</span></td>
+                <td>🏨 noch offen <span class="status-pill-open">offen</span></td>
+                <td><span class="travel-time-pill">🚆 ca. 7 Std. 00 Min.</span> Panoramazugfahrt Kandy ➔ Ella durch die Teeberge</td>
+              </tr>
+              <tr>
+                <td><strong>5. Ella</strong></td>
+                <td>11.02. – 15.02.</td>
+                <td><span class="stay-badge">4 Nächte</span></td>
+                <td>🏨 noch offen <span class="status-pill-open">offen</span></td>
+                <td><span class="travel-time-pill">🚌 ca. 3 Std. 30 Min.</span> Bus vom Hochland runter an die Südküste (Tangalle)</td>
+              </tr>
+              <tr>
+                <td><strong>6. Tangalle</strong></td>
+                <td>15.02. – 17.02.</td>
+                <td><span class="stay-badge">2 Nächte</span></td>
+                <td>🏨 noch offen <span class="status-pill-open">offen</span></td>
+                <td><span class="travel-time-pill">🚌 ca. 1 Std. 15 Min.</span> Küstenbus nach Mirissa</td>
+              </tr>
+              <tr>
+                <td><strong>7. Mirissa</strong></td>
+                <td>17.02. – 19.02.</td>
+                <td><span class="stay-badge">2 Nächte</span></td>
+                <td>🏨 noch offen <span class="status-pill-open">offen</span></td>
+                <td><span class="travel-time-pill">🛺 ca. 20 Min.</span> Kurzer TukTuk-Transfer nach Weligama</td>
+              </tr>
+              <tr>
+                <td><strong>8. Weligama</strong></td>
+                <td>19.02. – 21.02.</td>
+                <td><span class="stay-badge">2 Nächte</span></td>
+                <td>🏨 noch offen <span class="status-pill-open">offen</span></td>
+                <td><span class="travel-time-pill">🚆 ca. 2 Std. 30 Min.</span> Küstenzug oder Expressbus nach Colombo Stadt</td>
+              </tr>
+              <tr>
+                <td><strong>9. Colombo Stadt</strong></td>
+                <td>21.02. – 23.02.</td>
+                <td><span class="stay-badge">2 Nächte</span></td>
+                <td>🏨 Empfehlung: Bunkyard <span class="status-pill-open">offen</span></td>
+                <td><span class="travel-time-pill">✈️ Rückflug nach VIE</span> Taxi zum Flughafen CMB (ca. 45 Min.)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: PACKLISTE MIT UNTERBEREICHEN -->
     <div id="packTab" class="tab-content">
       
       <!-- Unterbereich-Navigation -->
@@ -1030,7 +1233,7 @@
       </div>
     </div>
 
-    <!-- TAB 3: GEWICHTSANALYSE -->
+    <!-- TAB 4: GEWICHTSANALYSE -->
     <div id="analysisTab" class="tab-content">
       <div class="info-card">
         <div class="info-card-header">
@@ -1075,7 +1278,7 @@
       </div>
     </div>
 
-    <!-- TAB 4: FLUGÜBERSICHT -->
+    <!-- TAB 5: FLUGÜBERSICHT -->
     <div id="budgetTab" class="tab-content">
       <div class="info-card">
         <h3>✈️ Gebuchte Flüge (Übersicht)</h3>
@@ -1161,7 +1364,7 @@
     }
 
     /* ==========================================================================
-       DATEN: THAILAND & SRI LANKA (NEUE ROUTE)
+       DATEN: THAILAND & SRI LANKA
        ========================================================================== */
     const thailandData = [
       { day: "Tag 1", date: "01.01. (Fr)", groupTag: "Ines & Stefan", region: "Anreise", regTag: "tag-default", title: "Start Reise ab Flughafen Wien (VIE)", details: "Flug nach Bangkok (BKK) um 15:30 Uhr (Saudia SV152 + SV846, Stopp in Flughafen Riad RUH)", transport: "✈️ Saudia SV152", hotel: "✈️ Im Flugzeug", locName: "Flughafen Wien (VIE)", lat: 48.1103, lng: 16.5697, color: "#15803d" },
@@ -1192,7 +1395,7 @@
       { day: "Tag 26", date: "26.01. (Di)", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Bangkok", details: "Kultur & Tempel (Grand Palace, Wat Pho, Wat Arun)", transport: "🚤 MRT / Boot", hotel: "🏨 EZ in Bangkok", locName: "Bangkok Stadtzentrum", lat: 13.7563, lng: 100.5018, color: "#6b21a8" },
       { day: "Tag 27", date: "27.01. (Mi)", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Bangkok", details: "Chinatown (Yaowarat), Sukhumvit, Rooftop-Bar", transport: "🚆 Skytrain / Grab", hotel: "🏨 EZ in Bangkok", locName: "Bangkok Stadtzentrum", lat: 13.7563, lng: 100.5018, color: "#6b21a8" },
       { day: "Tag 28", date: "28.01. (Do)", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Bangkok", details: "Entspannter Tag: Souvenirs, Thai-Massage & Lieblingsspots", transport: "🚆 Skytrain / Grab", hotel: "🏨 EZ in Bangkok", locName: "Bangkok Stadtzentrum", lat: 13.7563, lng: 100.5018, color: "#6b21a8" },
-      { day: "Tag 29", date: "29.01. (Fr)", groupTag: "Ines & Stefan", region: "Abschluss", regTag: "tag-default", title: "Bangkok Stadt ➔ Flughafen / Heim- & Weiterflug", details: "Stefan ➔ MUC (TG926 13:00 Direkt) | Ines ➔ CMB (UL405 13:50 Direkt)", transport: "✈️ Flugzeug", hotel: "✈️ Flug / Ceylon Glory", locName: "Flughafen Bangkok (BKK)", lat: 13.6900, lng: 100.7501, color: "#6b21a8" }
+      { day: "Tag 29", date: "29.01. (Fr)", groupTag: "Ines & Stefan", region: "Abschluss", regTag: "tag-default", title: "Bangkok Stadt ➔ Flughafen / Heim- & Weiterflug", details: "Stefan ➔ MUC (TG926 13:00 Direkt) | Ines ➔ CMB (UL405 13:50 Direkt)", transport: "✈️ Flugzeug", hotel: "✈️️ Flug / Ceylon Glory", locName: "Flughafen Bangkok (BKK)", lat: 13.6900, lng: 100.7501, color: "#6b21a8" }
     ];
 
     const sriLankaData = [
@@ -1400,7 +1603,7 @@
         "🇩🇪 OSM Deutsch (Deutsch / Landessprache)": osmDe,
         "🌏 OSM Standard (NUR Landessprache)": osmMap,
         "🗺️ Esri Street (Englisch)": esriStreet,
-        "⛰️️ Topografisch (CyclOSM)": topoMap,
+        "⛰️ Topografisch (CyclOSM)": topoMap,
         "⛰️ OpenTopoMap (Gelände)": openTopo
       }, null, { collapsed: true, position: 'topright' }).addTo(map);
 
@@ -1437,7 +1640,7 @@
           date: "29.01. | 02.02. | 23.02.2027",
           lat: 7.1808,
           lng: 79.8841,
-          desc: "<b>🇱🇰 Bandaranaike International Airport</b><br>✈️ 29.01.: Ankunft Ines aus BKK<br>✈️ 02.02.: Ankunft Anna aus VIE<br>✈️️ 23.02.: Rückflug Ines & Anna nach VIE",
+          desc: "<b>🇱🇰 Bandaranaike International Airport</b><br>✈️ 29.01.: Ankunft Ines aus BKK<br>✈️ 02.02.: Ankunft Anna aus VIE<br>✈️ 23.02.: Rückflug Ines & Anna nach VIE",
           color: "#059669"
         },
         cmb_city: {
