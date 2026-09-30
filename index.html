@@ -726,7 +726,7 @@ ul.fl-list li { background: #f8fafc; border: 1px solid var(--line); border-left:
   <div id="route" class="pane on">
     <div class="box map" id="mapBox">
       <div class="mh">
-        <h2>Karte: Route & Highlights</h2>
+        <h2>Karte</h2>
         <button id="fs">🔍 Vollbild</button>
       </div>
       <div id="map"></div>
@@ -1375,23 +1375,39 @@ function renderMobileCards() {
 }
 
 /* ==========================================================================
-   3. LEAFLET KARTE (ALLE KARTENEBENEN AUS CODE 2 WIEDERHERGESTELLT)
+   3. INTERAKTIVE LEAFLET-KARTE
    ========================================================================== */
 function initMap() {
-  const osmStandard = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; OpenStreetMap' });
-  const osmDe = L.tileLayer('https://tile.openstreetmap.de/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; OpenStreetMap' });
-  const openTopo = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', { maxZoom: 17, attribution: '&copy; OpenTopoMap' });
-  const cyclOSM = L.tileLayer('https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '&copy; CyclOSM' });
+      const osmDe = L.tileLayer('https://tile.openstreetmap.de/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> (Deutscher Stil)'
+      });
+      const osmMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { 
+        maxZoom: 19, 
+        attribution: '&copy; OpenStreetMap' 
+      });
+      const esriStreet = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+        maxZoom: 19,
+        attribution: 'Tiles &copy; Esri'
+      });
+      const topoMap = L.tileLayer('https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png', { 
+        maxZoom: 18, 
+        attribution: '&copy; OpenStreetMap / CyclOSM' 
+      });
+      const openTopo = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+        maxZoom: 17,
+        attribution: '&copy; OpenTopoMap'
+      });
 
-  map = L.map('map', { layers: [osmDe] });
+      map = L.map('map', { layers: [osmDe] });
 
-  // Alle Auswahlmöglichkeiten der Kartenebenen vollständig integriert:
-  L.control.layers({
-    "🇩🇪 OSM Deutsch": osmDe,
-    "🌐 OpenStreetMap Standard": osmStandard,
-    "⛰️ OpenTopoMap": openTopo,
-    "🚲 CyclOSM": cyclOSM
-  }, null, { collapsed: true, position: 'topright' }).addTo(map);
+      L.control.layers({
+        "🇩🇪 OSM Deutsch (Deutsch / Landessprache)": osmDe,
+        "🌏 OSM Standard (NUR Landessprache)": osmMap,
+        "🗺️ Esri Street (Englisch)": esriStreet,
+        "⛰️ Topografisch (CyclOSM)": topoMap,
+        "⛰️ OpenTopoMap (Gelände)": openTopo
+      }, null, { collapsed: true, position: 'topright' }).addTo(map);
 
   const points = {
     wien: { name: "Flughafen Wien (VIE)", date: "01.01. & 23.02.2027", lat: 48.1103, lng: 16.5697, desc: "Start & Endpunkt der Reise", color: "#15803d" },
@@ -1462,7 +1478,7 @@ function initMap() {
   lg.onAdd = () => {
     const d = L.DomUtil.create('div', 'legend');
     d.innerHTML = `
-      <div class="lh" style="cursor:pointer;font-weight:800">📌 Routen-Legende <span>▼</span></div>
+      <div class="lh" style="cursor:pointer;font-weight:800">📌 Legende <span>▼</span></div>
       <div class="lb" style="display:none; margin-top:4px;">
         <span style="color:#15803d">━</span> Nord-Thailand<br>
         <span style="color:#6b21a8">━</span> Bangkok / Colombo<br>
