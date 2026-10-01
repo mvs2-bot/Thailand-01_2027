@@ -125,6 +125,8 @@ tr.row { cursor: pointer; } tr.row:hover td { background: var(--hover); } tr.row
 .chart-card { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 16px; box-shadow: var(--shadow); display: flex; flex-direction: column; align-items: center; }
 .chart-container { position: relative; width: 100%; max-width: 360px; height: 300px; }
 
+#acc .status-mobile { display: none; } /* nur in der mobilen Kartenansicht sichtbar */
+
 /* ===== 8. Flugliste ===== */
 ul.fl-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
 ul.fl-list li { background: #f8fafc; border: 1px solid var(--line); border-left: 4px solid var(--p1); border-radius: 8px; padding: 10px 14px; }
@@ -170,7 +172,9 @@ ul.fl-list li { background: #f8fafc; border: 1px solid var(--line); border-left:
   #acc td { border: 0; padding: 0; font-size: .78rem; min-width: 0; }
   #acc td:first-child { grid-column: 1 / -1; font-size: .92rem; padding-bottom: 6px; margin-bottom: 2px; border-bottom: 1px solid #e2e8f0; }
   #acc td:nth-child(4), #acc td:nth-child(5) { grid-column: 1 / -1; }
-  #acc td:nth-child(3) { text-align: right; }
+  #acc td:nth-child(3) { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+  #acc td:nth-child(3) .status-mobile { display: inline-block; }
+  #acc td:nth-child(4) .status-booked, #acc td:nth-child(4) .status-open { display: none; } /* Original-Status ausblenden, steht jetzt oben rechts */
   #acc td:not(:first-child)::before { content: attr(data-label); display: block; font-size: .62rem; font-weight: 800; text-transform: uppercase; letter-spacing: .03em; color: var(--mute); margin-bottom: 2px; }
   #acc td:nth-child(3)::before { display: none; } /* Dauer-Badge braucht kein Label */
   #acc .travel-time-pill { margin-bottom: 3px; }
@@ -366,7 +370,7 @@ ul.fl-list li { background: #f8fafc; border: 1px solid var(--line); border-left:
         <li><div class="fl-date">05.01.2027 • Inlandsflug Thailand</div><div class="fl-route">Udon Thani (UTH) ➔ Chiang Mai (CNX)</div><div class="fl-details">Nok Air (DD703) • 16:30 Uhr – 17:35 Uhr</div><div class="fl-price">98,06 € p.P. (Ines & Stefan)</div></li>
         <li><div class="fl-date">29.01.2027 • Rückflug Deutschland (Stefan)</div><div class="fl-route">Bangkok (BKK) ➔ München (MUC)</div><div class="fl-details">Thai Airways (TG926 Direktflug) • 13:00 Uhr – 18:55 Uhr</div><div class="fl-price">424,13 € (Stefan)</div></li>
         <li><div class="fl-date">29.01.2027 • Weiterflug Sri Lanka (Ines)</div><div class="fl-route">Bangkok (BKK) ➔ Colombo (CMB)</div><div class="fl-details">SriLankan Airlines (UL405 Direktflug) • 13:50 Uhr – 15:50 Uhr</div><div class="fl-price">175,00 € (Ines)</div></li>
-        <li><div class="fl-date">23.02.2027 • Rückflug Österreich (Ines & Anna)</div><div class="fl-route">Colombo (CMB) ➔ Istanbul (IST) ➔ Wien (VIE)</div><div class="fl-details">Turkish Airlines (TK1131 & TK1887) • Abflug CMB: 09:15 Uhr • Stopp IST: 15:45 - 17:15 Uhr • Ankunft VIE: 17:35 Uhr</div><div class="fl-price">534,56 € (Ines) & (Anna)</div></li>
+        <li><div class="fl-date">23.02.2027 • Rückflug Österreich (Ines & Anna)</div><div class="fl-route">Colombo (CMB) ➔ Istanbul (IST) ➔ Wien (VIE)</div><div class="fl-details">Turkish Airlines (TK1131 & TK1887) • Abflug CMB: 09:15 Uhr • Stopp IST: 15:45 - 17:15 Uhr • Ankunft VIE: 17:35 Uhr</div><div class="fl-price">534,56 € (Ines) & ??? € (Anna)</div></li>
       </ul>
     </div>
   </div>
@@ -1086,8 +1090,17 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape' && $('#mapBox
 function labelAccTables() {
   document.querySelectorAll('#acc table').forEach(t => {
     const heads = [...t.querySelectorAll('thead th')].map(th => th.textContent.trim());
-    t.querySelectorAll('tbody tr').forEach(tr =>
-      [...tr.children].forEach((td, i) => td.setAttribute('data-label', heads[i] || '')));
+    t.querySelectorAll('tbody tr').forEach(tr => {
+      [...tr.children].forEach((td, i) => td.setAttribute('data-label', heads[i] || ''));
+      // Status-Badge (geplant / gebucht / offen) zusätzlich in die Dauer-Zelle kopieren,
+      // damit er mobil rechts oben unter den Nächten steht
+      const status = tr.children[3] && tr.children[3].querySelector('.status-booked, .status-open');
+      if (status && tr.children[2]) {
+        const copy = status.cloneNode(true);
+        copy.classList.add('status-mobile');
+        tr.children[2].appendChild(copy);
+      }
+    });
   });
 }
 
