@@ -48,7 +48,7 @@ header p { font-size: .92rem; font-weight: 600; color: var(--mute); margin-top: 
 .stat b { display: block; font-weight: 800; margin-top: 2px; font-size: .82rem; }
 
 /* ===== 4. Navigation: Tabs, Länder-Umschalter, Filter ===== */
-.tabs { display: grid; grid-template-columns: repeat(var(--tab-count,3), 1fr); gap: 12px; margin-bottom: 24px; }
+.tabs { display: grid; grid-template-columns: repeat(var(--tab-count,5), 1fr); gap: 12px; margin-bottom: 24px; }
 .sub-tabs { display: flex; gap: 8px; margin-bottom: 16px; }
 .tab, .ph, .f, .btn-action { background: var(--card); border: 1px solid var(--line); color: var(--text); border-radius: 8px; font-weight: 700; }
 .tab { min-height: 44px; padding: 10px 12px; font-size: .88rem; white-space: nowrap; text-align: center; transition: background .15s, border-color .15s, color .15s, transform .15s; }
@@ -104,15 +104,15 @@ tr.row { cursor: pointer; } tr.row:hover td { background: var(--hover); } tr.row
 .card { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 12px; cursor: pointer; font-size: .8rem; box-shadow: var(--shadow); }
 .card:hover { background: var(--hover); } .card .tt { font-size: .85rem; } .card .pill { font-size: .69rem; }
 
-/* ===== 7. Unterkünfte, Packliste, Charts ===== */
+/* ===== 7. Unterkünfte, Packliste, Charts & Sonstiges ===== */
 .stay-badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: .75rem; font-weight: 800; background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
 .travel-time-pill { display: inline-flex; align-items: center; gap: 4px; background: #fef3c7; color: #92400e; border: 1px solid #fde68a; padding: 2px 6px; border-radius: 4px; font-size: .72rem; font-weight: 700; }
 .status-booked, .status-open { padding: 2px 6px; border-radius: 4px; font-size: .7rem; font-weight: 700; }
 .status-booked { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
 .status-open { background: #fee2e2; color: #dc2626; border: 1px solid #fca5a5; }
-.pack-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap: 12px; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px 16px; border-radius: 8px; margin-bottom: 16px; }
-.pack-stat-val { font-size: 1.15rem; font-weight: 800; color: var(--p1); }
-.pack-stat-lbl { font-size: .75rem; color: var(--mute); font-weight: 600; }
+.pack-summary, .work-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap: 12px; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px 16px; border-radius: 8px; margin-bottom: 16px; }
+.pack-stat-val, .work-stat-val { font-size: 1.15rem; font-weight: 800; color: var(--p1); }
+.pack-stat-lbl, .work-stat-lbl { font-size: .75rem; color: var(--mute); font-weight: 600; }
 .pack-add-form { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; background: #f1f5f9; padding: 10px; border-radius: 8px; border: 1px solid var(--line); }
 .pack-add-form input, .pack-add-form select, .table-select { background: var(--card); border: 1px solid var(--line); color: var(--ink); padding: 6px 10px; border-radius: 6px; font-size: .8rem; }
 .pack-add-form input[type="text"] { flex: 2; min-width: 140px; }
@@ -125,7 +125,18 @@ tr.row { cursor: pointer; } tr.row:hover td { background: var(--hover); } tr.row
 .chart-card { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 16px; box-shadow: var(--shadow); display: flex; flex-direction: column; align-items: center; }
 .chart-container { position: relative; width: 100%; max-width: 360px; height: 300px; }
 
-#acc .status-mobile { display: none; } /* nur in der mobilen Kartenansicht sichtbar */
+/* To-Do Liste Styling */
+.todo-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.todo-item { display: flex; align-items: center; justify-content: space-between; background: #f8fafc; border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; transition: background .15s; }
+.todo-item:hover { background: var(--hover); }
+.todo-item label { display: flex; align-items: center; gap: 10px; cursor: pointer; flex: 1; font-size: .88rem; font-weight: 600; color: var(--ink); }
+.todo-item input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--p1); cursor: pointer; }
+.todo-item.done label { text-decoration: line-through; color: var(--mute); }
+.todo-tag { font-size: .7rem; font-weight: 700; padding: 2px 6px; border-radius: 4px; background: #e2e8f0; color: var(--text); }
+.todo-tag.tag-th { background: #dcfce7; color: #15803d; }
+.todo-tag.tag-sl { background: #fef3c7; color: #b45309; }
+
+#acc .status-mobile { display: none; }
 
 /* ===== 8. Flugliste ===== */
 ul.fl-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
@@ -135,7 +146,7 @@ ul.fl-list li { background: #f8fafc; border: 1px solid var(--line); border-left:
 .fl-details { font-size: .8rem; color: var(--text); }
 .fl-price { display: inline-block; margin-top: 3px; font-size: .75rem; font-weight: 700; background: #dcfce7; color: #15803d; padding: 2px 6px; border-radius: 4px; }
 
-/* ===== 9. Mobilansicht (identisch zur Südamerika-Seite) ===== */
+/* ===== 9. Mobilansicht ===== */
 @media (max-width: 860px) {
   body { padding: 12px 8px 22px; }
   header { grid-template-columns: 1fr; gap: 9px; padding: 0 1px 11px; margin-bottom: 12px; }
@@ -159,28 +170,22 @@ ul.fl-list li { background: #f8fafc; border: 1px solid var(--line); border-left:
   .controls { gap: 5px; margin-bottom: 8px; }
   #q { flex: 1 1 100%; min-width: 0; padding: 7px 9px; font-size: .75rem; }
   .f { padding: 5px 7px; font-size: .67rem; }
-  /* KORREKTUR: Nur die Reiseplan-Tabelle wird durch Karten ersetzt.
-     Packliste und Analyse bleiben sichtbar (seitlich scrollbar). */
   #route .tw { display: none; }
   .cards { display: flex; }
 
-  /* Unterkünfte: Tabellen werden zu übersichtlichen Karten */
   #acc .tw { background: none; border: 0; box-shadow: none; overflow: visible; }
   #acc thead { display: none; }
   #acc table, #acc tbody { display: block; width: 100%; }
   #acc tr { display: grid; grid-template-columns: 1fr auto; column-gap: 10px; row-gap: 0; background: var(--card); border: 1px solid var(--line); border-left: 5px solid var(--p1); border-radius: 10px; padding: 12px 12px 10px; margin-bottom: 12px; box-shadow: var(--shadow); }
   #acc tr.is-open { border-left-color: var(--danger); }
   #acc td { border: 0; padding: 0; font-size: .8rem; min-width: 0; }
-  /* Kopf: Ort + Zeitraum links, Nächte + Status rechts */
   #acc td:nth-child(1) { grid-column: 1; grid-row: 1; font-size: 1rem; line-height: 1.25; }
   #acc td:nth-child(2) { grid-column: 1; grid-row: 2; margin-top: 3px; color: var(--mute); font-weight: 600; font-size: .78rem; }
   #acc td:nth-child(2)::before { content: "📅 "; }
   #acc td:nth-child(3) { grid-column: 2; grid-row: 1 / span 2; display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
   #acc td:nth-child(3) .status-mobile { display: inline-block; }
-  #acc td:nth-child(4) .status-booked, #acc td:nth-child(4) .status-open { display: none; } /* steht schon oben rechts */
-  /* Unterkunft */
+  #acc td:nth-child(4) .status-booked, #acc td:nth-child(4) .status-open { display: none; }
   #acc td:nth-child(4) { grid-column: 1 / -1; grid-row: 3; margin-top: 10px; padding-top: 10px; border-top: 1px solid #e2e8f0; font-weight: 600; color: var(--ink); }
-  /* Transfer als eigene, hervorgehobene Box */
   #acc td:nth-child(5) { grid-column: 1 / -1; grid-row: 4; margin-top: 10px; padding: 8px 10px; background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; line-height: 1.4; }
   #acc td:nth-child(4)::before, #acc td:nth-child(5)::before { content: attr(data-label); display: block; font-size: .62rem; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; color: var(--mute); margin-bottom: 4px; }
   #acc td:nth-child(5)::before { color: #92400e; }
@@ -212,12 +217,13 @@ ul.fl-list li { background: #f8fafc; border: 1px solid var(--line); border-left:
     <div class="stats" id="stats"></div><!-- Personen-Kacheln, per JS -->
   </header>
 
-  <!-- ===== HAUPT-TABS ===== -->
-  <div class="tabs" style="--tab-count:4" role="tablist">
+  <!-- ===== HAUPT-TABS (NEUE REIHENFOLGE) ===== -->
+  <div class="tabs" style="--tab-count:5" role="tablist">
     <button class="tab on" data-t="route">🗺️ Reiseroute</button>
     <button class="tab" data-t="acc">🏨 Unterkünfte</button>
-    <button class="tab" data-t="pack">🎒 Packliste & Gewicht</button>
     <button class="tab" data-t="flights">✈️ Flüge</button>
+    <button class="tab" data-t="misc">📌 Sonstiges</button>
+    <button class="tab" data-t="pack">🎒 Packliste & Gewicht</button>
   </div>
 
   <!-- ===== TAB 1: REISEROUTE & KARTE ===== -->
@@ -229,11 +235,11 @@ ul.fl-list li { background: #f8fafc; border: 1px solid var(--line); border-left:
 
     <!-- Umschalter Thailand / Sri Lanka -->
     <div class="switch">
-      <button class="ph on" id="btnThailand" onclick="switchCountry('thailand')">🇹🇭 THAILAND<small>01.01. – 29.01. · Udon Thani, Chiang Mai, Pai, Krabi, Koh Tao, Bangkok</small></button>
+      <button class="ph on" id="btnThailand" onclick="switchCountry('thailand')">🇹🇭 THAILAND<small>01.01. – 29.01. · Udon Thani, Chiang Mai, Pai, Krabi, Koh Tao (Tauchen), Bangkok</small></button>
       <button class="ph" id="btnSriLanka" onclick="switchCountry('srilanka')">🇱🇰 SRI LANKA<small>29.01. – 23.02. · Kulturdreieck, Hochlandzug, Ella, Südküste, Colombo</small></button>
     </div>
 
-    <!-- Suche & Filter (per JS je nach Land) -->
+    <!-- Suche & Filter -->
     <div class="controls" id="filterControls"></div>
 
     <!-- Desktop: Tabelle -->
@@ -260,11 +266,11 @@ ul.fl-list li { background: #f8fafc; border: 1px solid var(--line); border-left:
           <tbody>
             <tr><td><strong>1. Udon Thani</strong></td><td>02.01. – 05.01.</td><td><span class="stay-badge">3 Nächte</span></td><td>🏠 Bei OW <span class="status-booked">geplant</span></td><td><span class="travel-time-pill">✈️ ca. 1 Std. 05 Min.</span> Inlandsflug Nok Air DD703 nach Chiang Mai</td></tr>
             <tr><td><strong>2. Chiang Mai</strong></td><td>05.01. – 08.01.</td><td><span class="stay-badge">3 Nächte</span></td><td>🏨 Sylvis Hostel Chiangmai <span class="status-booked">gebucht</span></td><td><span class="travel-time-pill">🚐 ca. 3 Std. 00 Min.</span> Minivan (AYA) über 762 Kurven nach Pai</td></tr>
-            <tr><td><strong>3. Pai</strong></td><td>08.01. – 13.01.</td><td><span class="stay-badge">5 Nächte</span></td><td>🏨 Bueng Pai Farm <span class="status-booked">gebucht</span></td><td><span class="travel-time-pill">🚐✈️️ ca. 6–7 Std. Gesamt</span> Minivan via Chiang Mai ➔ Flug/Bus nach Krabi</td></tr>
+            <tr><td><strong>3. Pai</strong></td><td>08.01. – 13.01.</td><td><span class="stay-badge">5 Nächte</span></td><td>🏨 Bueng Pai Farm <span class="status-booked">gebucht</span></td><td><span class="travel-time-pill">🚐✈ ca. 6–7 Std. Gesamt</span> Minivan via Chiang Mai ➔ Flug/Bus nach Krabi</td></tr>
             <tr><td><strong>4. Krabi / Railay</strong></td><td>13.01. – 16.01.</td><td><span class="stay-badge">3 Nächte</span></td><td>🏨 EZ auf Krabi <span class="status-open">offen</span></td><td><span class="travel-time-pill">⛴️ ca. 1 Std. 30 Min.</span> Fähre von Krabi nach Ko Phi Phi</td></tr>
             <tr><td><strong>5. Ko Phi Phi</strong></td><td>16.01. – 19.01.</td><td><span class="stay-badge">3 Nächte</span></td><td>🏨 EZ auf Koh Phi Phi <span class="status-open">offen</span></td><td><span class="travel-time-pill">⛴️🚌⛴️ ca. 7–8 Std. Gesamt</span> Fähre zum Festland + Bus & Fähre nach Koh Tao</td></tr>
-            <tr><td><strong>6. Koh Tao</strong></td><td>19.01. – 25.01.</td><td><span class="stay-badge">6 Nächte</span></td><td>🏨 EZ auf Koh Tao <span class="status-open">offen</span></td><td><span class="travel-time-pill">⛴️🚌 / ✈️ ca. 8 Std. Gesamt</span> Katamaran + Bus / Flug via Surat Thani/Samui nach Bangkok</td></tr>
-            <tr><td><strong>7. Bangkok Stadt</strong></td><td>25.01. – 29.01.</td><td><span class="stay-badge">4 Nächte</span></td><td>🏨 EZ in Bangkok <span class="status-open">offen</span></td><td><span class="travel-time-pill">✈️ Rückflug / Weiterflug</span> Transfer BKK Flughafen (ca. 45 Min.)</td></tr>
+            <tr><td><strong>6. Koh Tao</strong></td><td>19.01. – 25./26.01.</td><td><span class="stay-badge">6–7 Nächte</span></td><td>🏨 EZ auf Koh Tao <span class="status-open">offen</span></td><td><span class="travel-time-pill">⛴️🚌 / ✈️ ca. 8 Std. Gesamt</span> Katamaran + Bus / Flug via Surat Thani/Samui nach Bangkok</td></tr>
+            <tr><td><strong>7. Bangkok Stadt</strong></td><td>25./26.01. – 29.01.</td><td><span class="stay-badge">3–4 Nächte</span></td><td>🏨 EZ in Bangkok <span class="status-open">offen</span></td><td><span class="travel-time-pill">✈️ Rückflug / Weiterflug</span> Transfer BKK Flughafen (ca. 45 Min.)</td></tr>
           </tbody>
         </table>
       </div>
@@ -289,7 +295,77 @@ ul.fl-list li { background: #f8fafc; border: 1px solid var(--line); border-left:
     </div>
   </div>
 
-  <!-- ===== TAB 3: PACKLISTE & GEWICHTSANALYSE ===== -->
+  <!-- ===== TAB 3: FLÜGE ===== -->
+  <div id="flights" class="pane">
+    <div class="box">
+      <h3>✈️ Gebuchte Flüge (Übersicht)</h3>
+      <p class="note">Alle gebuchten Flugverbindungen und Zwischenstopps im Detail:</p>
+      <ul class="fl-list">
+        <li><div class="fl-date">01.01.2027 • Hinflug Thailand</div><div class="fl-route">Wien (VIE) ➔ Riad (RUH) ➔ Bangkok (BKK)</div><div class="fl-details">Saudia Airlines (SV152 & SV846) • Abflug VIE: 15:30 Uhr • Stopp Riad • Ankunft BKK: 02.01. um 13:40 Uhr</div><div class="fl-price">349,90 € p.P. (Ines & Stefan)</div></li>
+        <li><div class="fl-date">02.01.2027 • Inlandsflug Thailand</div><div class="fl-route">Bangkok (BKK) ➔ Udon Thani (UTH)</div><div class="fl-details">Thai Airways (TG008) • 18:20 Uhr – 19:30 Uhr</div><div class="fl-price">54,99 € p.P. (Ines & Stefan)</div></li>
+        <li><div class="fl-date">05.01.2027 • Inlandsflug Thailand</div><div class="fl-route">Udon Thani (UTH) ➔ Chiang Mai (CNX)</div><div class="fl-details">Nok Air (DD703) • 16:30 Uhr – 17:35 Uhr</div><div class="fl-price">98,06 € p.P. (Ines & Stefan)</div></li>
+        <li><div class="fl-date">29.01.2027 • Rückflug Deutschland (Stefan)</div><div class="fl-route">Bangkok (BKK) ➔ München (MUC)</div><div class="fl-details">Thai Airways (TG926 Direktflug) • 13:00 Uhr – 18:55 Uhr</div><div class="fl-price">424,13 € (Stefan)</div></li>
+        <li><div class="fl-date">29.01.2027 • Weiterflug Sri Lanka (Ines)</div><div class="fl-route">Bangkok (BKK) ➔ Colombo (CMB)</div><div class="fl-details">SriLankan Airlines (UL405 Direktflug) • 13:50 Uhr – 15:50 Uhr</div><div class="fl-price">175,00 € (Ines)</div></li>
+        <li><div class="fl-date">23.02.2027 • Rückflug Österreich (Ines & Anna)</div><div class="fl-route">Colombo (CMB) ➔ Istanbul (IST) ➔ Wien (VIE)</div><div class="fl-details">Turkish Airlines (TK1131 & TK1887) • Abflug CMB: 09:15 Uhr • Stopp IST: 15:45 - 17:15 Uhr • Ankunft VIE: 17:35 Uhr</div><div class="fl-price">534,56 € (Ines) & ??? € (Anna)</div></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== TAB 4: SONSTIGES (NEU!) ===== -->
+  <div id="misc" class="pane">
+    <!-- 1. Offene Arbeitstage -->
+    <div class="box">
+      <h3>💼 Verbleibende Arbeitstage bis Abflug</h3>
+      <p class="note">Verbleibende Werktage (Mo–Fr) ab heute bis zum Abflug am 01.01.2027. Gesetzliche Feiertage sind bereits abgezogen (ohne persönliche Urlaubstage).</p>
+      
+      <div class="work-summary">
+        <div>
+          <span class="work-stat-val" id="workDaysBayern">0 Tage</span>
+          <div class="work-stat-lbl">Arbeitstage Bayern</div>
+        </div>
+        <div>
+          <span class="work-stat-val" id="workDaysWien">0 Tage</span>
+          <div class="work-stat-lbl">Arbeitstage Wien</div>
+        </div>
+      </div>
+      <small style="font-size:.72rem;color:var(--mute)">* Berücksichtigte Feiertage in diesem Zeitraum: Tag der Dt. Einheit, Allerheiligen, Maria Empfängnis (AT), 1. & 2. Weihnachtsfeiertag, Neujahr.</small>
+    </div>
+
+    <!-- 2. Reise-To-Do-Liste -->
+    <div class="box">
+      <div class="mh">
+        <h3>✅ Reise To-Do & Vorbereitungen</h3>
+        <span id="todoProgress" style="font-size:.8rem;font-weight:700;color:var(--p1)">0/0 erledigt</span>
+      </div>
+      <p class="note">Wichtige Erledigungen für Einreise, Gesundheit & Dokumente.</p>
+
+      <ul class="todo-list" id="todoList"></ul>
+
+      <!-- Formular: Eigene To-Do hinzufügen -->
+      <div class="pack-add-form" style="margin-top:16px">
+        <input type="text" id="newTodoText" placeholder="Neuer To-Do Punkt...">
+        <select id="newTodoTag">
+          <option value="Allgemein">Allgemein</option>
+          <option value="Thailand">Thailand</option>
+          <option value="Sri Lanka">Sri Lanka</option>
+        </select>
+        <button class="f on" onclick="addTodoItem()">+ Hinzufügen</button>
+      </div>
+    </div>
+
+    <!-- 3. Weitere Ideen / Notizen -->
+    <div class="box">
+      <h3>💡 Wichtige Infos & Hinweise</h3>
+      <ul style="padding-left:18px;font-size:.85rem;line-height:1.7">
+        <li><strong>Visum Thailand:</strong> Deutsche & österreichische Staatsbürger benötigen für Aufenthalte bis 60 Tage kein Visum vorab.</li>
+        <li><strong>Arrival Card Thailand (TD-6):</strong> Muss vor der Einreise online/digital ausgefüllt werden.</li>
+        <li><strong>Visum Sri Lanka (ETA):</strong> Vorab online beantragen (ETA – Electronic Travel Authorization).</li>
+        <li><strong>Führerschein:</strong> Für das Mieten von Rollern wird in beiden Ländern zwingend der <i>internationale Führerschein</i> nach dem Abkommen von 1968 benötigt.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== TAB 5: PACKLISTE & GEWICHTSANALYSE ===== -->
   <div id="pack" class="pane">
     <div class="box">
       <!-- Person wählen -->
@@ -364,22 +440,6 @@ ul.fl-list li { background: #f8fafc; border: 1px solid var(--line); border-left:
       </div>
     </div>
   </div>
-
-  <!-- ===== TAB 4: FLÜGE ===== -->
-  <div id="flights" class="pane">
-    <div class="box">
-      <h3>✈️ Gebuchte Flüge (Übersicht)</h3>
-      <p class="note">Alle gebuchten Flugverbindungen und Zwischenstopps im Detail:</p>
-      <ul class="fl-list">
-        <li><div class="fl-date">01.01.2027 • Hinflug Thailand</div><div class="fl-route">Wien (VIE) ➔ Riad (RUH) ➔ Bangkok (BKK)</div><div class="fl-details">Saudia Airlines (SV152 & SV846) • Abflug VIE: 15:30 Uhr • Stopp Riad • Ankunft BKK: 02.01. um 13:40 Uhr</div><div class="fl-price">349,90 € p.P. (Ines & Stefan)</div></li>
-        <li><div class="fl-date">02.01.2027 • Inlandsflug Thailand</div><div class="fl-route">Bangkok (BKK) ➔ Udon Thani (UTH)</div><div class="fl-details">Thai Airways (TG008) • 18:20 Uhr – 19:30 Uhr</div><div class="fl-price">54,99 € p.P. (Ines & Stefan)</div></li>
-        <li><div class="fl-date">05.01.2027 • Inlandsflug Thailand</div><div class="fl-route">Udon Thani (UTH) ➔ Chiang Mai (CNX)</div><div class="fl-details">Nok Air (DD703) • 16:30 Uhr – 17:35 Uhr</div><div class="fl-price">98,06 € p.P. (Ines & Stefan)</div></li>
-        <li><div class="fl-date">29.01.2027 • Rückflug Deutschland (Stefan)</div><div class="fl-route">Bangkok (BKK) ➔ München (MUC)</div><div class="fl-details">Thai Airways (TG926 Direktflug) • 13:00 Uhr – 18:55 Uhr</div><div class="fl-price">424,13 € (Stefan)</div></li>
-        <li><div class="fl-date">29.01.2027 • Weiterflug Sri Lanka (Ines)</div><div class="fl-route">Bangkok (BKK) ➔ Colombo (CMB)</div><div class="fl-details">SriLankan Airlines (UL405 Direktflug) • 13:50 Uhr – 15:50 Uhr</div><div class="fl-price">175,00 € (Ines)</div></li>
-        <li><div class="fl-date">23.02.2027 • Rückflug Österreich (Ines & Anna)</div><div class="fl-route">Colombo (CMB) ➔ Istanbul (IST) ➔ Wien (VIE)</div><div class="fl-details">Turkish Airlines (TK1131 & TK1887) • Abflug CMB: 09:15 Uhr • Stopp IST: 15:45 - 17:15 Uhr • Ankunft VIE: 17:35 Uhr</div><div class="fl-price">534,56 € (Ines) & ??? € (Anna)</div></li>
-      </ul>
-    </div>
-  </div>
 </div>
 
 <script>
@@ -409,7 +469,7 @@ function renderStats() {
 }
 
 /* ==========================================================================
-   2. REISEPLAN-DATEN (je Tag ein Eintrag)
+   2. REISEROUTE-DATEN
    ========================================================================== */
 const thailandData = [
   { day: "Tag 1", date: "01.01. (Fr)", groupTag: "Ines & Stefan", region: "Anreise", regTag: "tag-default", title: "Start Reise ab Flughafen Wien (VIE)", details: "Flug nach Bangkok (BKK) um 15:30 Uhr (Saudia SV152 + SV846, Stopp in Flughafen Riad RUH)", transport: "✈️ Saudia SV152", hotel: "✈️ Im Flugzeug", locName: "Flughafen Wien (VIE)", lat: 48.1103, lng: 16.5697 },
@@ -430,14 +490,14 @@ const thailandData = [
   { day: "Tag 16", date: "16.01. (Sa)", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Krabi ➔ Ko Phi Phi", details: "Überfahrt nach Ko Phi Phi, Sunset Viewpoint", transport: "⛴️ Fähre (1.5 - 2 h)", hotel: "🏨 EZ auf Koh Phi Phi", locName: "Ko Phi Phi", lat: 7.7407, lng: 98.7784 },
   { day: "Tag 17", date: "17.01. (So)", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Ko Phi Phi", details: "Ausflug Maya Bay, Pileh Lagoon & Bamboo Island", transport: "🚤 Longtail-Boot", hotel: "🏨 EZ auf Koh Phi Phi", locName: "Ko Phi Phi", lat: 7.7407, lng: 98.7784 },
   { day: "Tag 18", date: "18.01. (Mo)", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Ko Phi Phi", details: "Schnorcheln, Entspannen am Long Beach", transport: "🚤 Wassertaxi", hotel: "🏨 EZ auf Koh Phi Phi", locName: "Ko Phi Phi", lat: 7.7407, lng: 98.7784 },
-  { day: "Tag 19", date: "19.01. (Di)", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Ko Phi Phi ➔ Koh Tao", details: "Überfahrt an die Ostküste nach Koh Tao", transport: "⛴️ Fähre + Bus", hotel: "🏨 EZ auf Koh Tao", locName: "Koh Tao", lat: 10.1018, lng: 99.8383 },
-  { day: "Tag 20", date: "20.01. (Mi)", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Koh Tao", details: "Schnorcheln & Entspannen an der Tanote Bay", transport: "🛵 Roller / Wassertaxi", hotel: "🏨 EZ auf Koh Tao", locName: "Koh Tao", lat: 10.1018, lng: 99.8383 },
-  { day: "Tag 21", date: "21.01. (Do)", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Koh Tao", details: "Vorbereitung Vollmond Party, entspannter Tag am Strand", transport: "🛵 Roller", hotel: "🏨 EZ auf Koh Tao", locName: "Koh Tao", lat: 10.1018, lng: 99.8383 },
-  { day: "Tag 22", date: "22.01. (Fr)", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Koh Tao ➔ Ko Pha-ngan ➔ Koh Tao", details: "Mit dem Party-Speedboat zur Vollmond Party auf Ko Pha-ngan & zurück", transport: "🚤 Party-Speedboat", hotel: "🏨 EZ auf Koh Tao", locName: "Ko Pha-ngan", lat: 9.7319, lng: 100.0136 },
-  { day: "Tag 23", date: "23.01. (Sa)", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Koh Tao", details: "Ausschlafen und Erholen nach der Party", transport: "🛵 Roller", hotel: "🏨 EZ auf Koh Tao", locName: "Koh Tao", lat: 10.1018, lng: 99.8383 },
-  { day: "Tag 24", date: "24.01. (So)", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Koh Tao", details: "Letzter entspannter Tag auf Koh Tao, Trip nach Ko Nang Yuan", transport: "🚤 Bootsausflug", hotel: "🏨 EZ auf Koh Tao", locName: "Koh Tao", lat: 10.1018, lng: 99.8383 },
-  { day: "Tag 25", date: "25.01. (Mo)", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Koh Tao ➔ Bangkok Stadt", details: "Rückreise vom Archipel ins Zentrum von Bangkok", transport: "⛴️ Fähre + Bus / Flug", hotel: "🏨 EZ in Bangkok", locName: "Bangkok Stadtzentrum", lat: 13.7563, lng: 100.5018 },
-  { day: "Tag 26", date: "26.01. (Di)", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Bangkok", details: "Kultur & Tempel (Grand Palace, Wat Pho, Wat Arun)", transport: "🚤 MRT / Boot", hotel: "🏨 EZ in Bangkok", locName: "Bangkok Stadtzentrum", lat: 13.7563, lng: 100.5018 },
+  { day: "Tag 19", date: "19.01. (Di)", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Ko Phi Phi ➔ Koh Tao", details: "Überfahrt nach Koh Tao, Ankunft & Einchecken", transport: "⛴️ Fähre + Bus", hotel: "🏨 EZ auf Koh Tao", locName: "Koh Tao", lat: 10.1018, lng: 99.8383 },
+  { day: "Tag 20", date: "20.01. (Mi)", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Koh Tao • Tauchkurs Tag 1", details: "Start Open Water Diver Kurs bei Rainbow Fish Divers (Theorie & Pool)", transport: "🛵 Roller / Zu Fuß", hotel: "🏨 EZ auf Koh Tao", locName: "Koh Tao", lat: 10.1018, lng: 99.8383 },
+  { day: "Tag 21", date: "21.01. (Do)", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Koh Tao • Tauchkurs Tag 2", details: "Open Water Diver Kurs (Erste Tauchgänge im Freiwasser)", transport: "🤿 Tauchboot", hotel: "🏨 EZ auf Koh Tao", locName: "Koh Tao", lat: 10.1018, lng: 99.8383 },
+  { day: "Tag 22", date: "22.01. (Fr)", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Koh Tao • Tauchkurs Tag 3", details: "Open Water Diver Kurs (Freiwassertauchgänge & Vertiefung)", transport: "🤿 Tauchboot", hotel: "🏨 EZ auf Koh Tao", locName: "Koh Tao", lat: 10.1018, lng: 99.8383 },
+  { day: "Tag 23", date: "23.01. (Sa)", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Koh Tao • Kursabschluss & Option Advanced", details: "Abschluss Open Water Kurs (mittags fertig). Spontane Entscheidung: Start Advanced Kurs (Tag 1/2) oder Insel genießen", transport: "🛵 Roller / Boot", hotel: "🏨 EZ auf Koh Tao", locName: "Koh Tao", lat: 10.1018, lng: 99.8383 },
+  { day: "Tag 24", date: "24.01. (So)", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Koh Tao • Advanced Kurs / Inseltag", details: "Option Advanced Kurs Tag 2 ODER entspannter Inseltag (Sausage Beach, Viewpoints, Schnorcheln)", transport: "🛵 Roller / Boot", hotel: "🏨 EZ auf Koh Tao", locName: "Koh Tao", lat: 10.1018, lng: 99.8383 },
+  { day: "Tag 25", date: "25.01. (Mo)", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Koh Tao ➔ Bangkok (oder Advanced Abschluss)", details: "Abschluss Advanced Kurs (mittags) & Abreise ODER bereits Tagesreise von Koh Tao nach Bangkok", transport: "⛴️ Fähre + Bus / Flug", hotel: "🏨 EZ in Bangkok", locName: "Bangkok Stadtzentrum", lat: 13.7563, lng: 100.5018 },
+  { day: "Tag 26", date: "26.01. (Di)", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Bangkok (Späteste Anreise / Erkundung)", details: "Späteste Ankunft in BKK / Erkundung Culture & Tempel (Grand Palace, Wat Pho, Wat Arun)", transport: "🚤 MRT / Boot", hotel: "🏨 EZ in Bangkok", locName: "Bangkok Stadtzentrum", lat: 13.7563, lng: 100.5018 },
   { day: "Tag 27", date: "27.01. (Mi)", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Bangkok", details: "Chinatown (Yaowarat), Sukhumvit, Rooftop-Bar", transport: "🚆 Skytrain / Grab", hotel: "🏨 EZ in Bangkok", locName: "Bangkok Stadtzentrum", lat: 13.7563, lng: 100.5018 },
   { day: "Tag 28", date: "28.01. (Do)", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Bangkok", details: "Entspannter Tag: Souvenirs, Thai-Massage & Lieblingsspots", transport: "🚆 Skytrain / Grab", hotel: "🏨 EZ in Bangkok", locName: "Bangkok Stadtzentrum", lat: 13.7563, lng: 100.5018 },
   { day: "Tag 29", date: "29.01. (Fr)", groupTag: "Ines & Stefan", region: "Abschluss", regTag: "tag-default", title: "Bangkok Stadt ➔ Flughafen / Heim- & Weiterflug", details: "Stefan ➔ MUC (TG926 13:00 Direkt) | Ines ➔ CMB (UL405 13:50 Direkt)", transport: "✈️ Flugzeug", hotel: "✈ Flug / Ceylon Glory", locName: "Flughafen Bangkok (BKK)", lat: 13.6900, lng: 100.7501 }
@@ -473,7 +533,6 @@ const sriLankaData = [
 
 /* ==========================================================================
    3. PACKLISTEN-STAMMDATEN
-   Eintrag = [Kategorie, Name, Anzahl, Gewicht pro Stück (g), Gewichtstyp, Packort]
    ========================================================================== */
 const rawItemsStefan = [
   ["Dokumente & Wertsachen", "Reisepass", 1, 41, "Am Körper", "Umhängetasche"],
@@ -641,7 +700,6 @@ const rawItemsInes = [
   ["Organisation & Utensilien", "Wäschebeutel", 1, 100, "Basis", "Aufgabegepäck"]
 ];
 
-// Arrays in Objekte umwandeln (alle zunächst "gepackt")
 const toItems = raw => raw.map(i => ({ cat: i[0], name: i[1], qty: i[2], weight: i[3], type: i[4], loc: i[5], packed: true }));
 const defaultStefan = toItems(rawItemsStefan);
 const defaultInes = toItems(rawItemsInes);
@@ -650,7 +708,6 @@ let packlists = { stefan: [], ines: [] };
 /* ==========================================================================
    4. REISEROUTE: Land-Umschalter, Filter, Tabelle, mobile Karten
    ========================================================================== */
-// Zwischen Thailand und Sri Lanka wechseln
 function switchCountry(country) {
   currentCountry = country; currentRegion = 'all';
   $('#btnThailand').classList.toggle('on', country === 'thailand');
@@ -658,7 +715,6 @@ function switchCountry(country) {
   renderFilters(); renderTableAndCards();
 }
 
-// Suchfeld + Filter-Buttons (je nach Land unterschiedlich)
 function renderFilters() {
   const search = `<input type="search" id="q" placeholder="Nach Ort, Aktivität, Flug oder Transport suchen..." onkeyup="filterPlan()">`;
   const btn = (val, label, on) => `<button class="f${on ? ' on' : ''}" onclick="setFilter('${val}', this)">${label}</button>`;
@@ -667,7 +723,6 @@ function renderFilters() {
     : search + btn('all', 'Alle', true) + btn('Ines alleine', 'Ines alleine') + btn('Ines & Anna', 'Ines & Anna') + btn('Kulturdreieck', 'Kulturdreieck') + btn('Hochland', 'Hochland & Zug') + btn('Südküste', 'Südküste');
 }
 
-// Tabellenzeilen aufbauen
 function renderTableAndCards() {
   const data = currentCountry === 'thailand' ? thailandData : sriLankaData;
   const tbody = $('#planTableBody');
@@ -676,9 +731,9 @@ function renderTableAndCards() {
   data.forEach(item => {
     const tr = document.createElement('tr');
     tr.className = 'row';
-    tr.setAttribute('data-region', item.region);   // für Filter
+    tr.setAttribute('data-region', item.region);
     tr.setAttribute('data-group', item.groupTag || '');
-    tr.setAttribute('data-location', item.locName); // für Karten-Zoom
+    tr.setAttribute('data-location', item.locName);
     tr.onclick = () => focusMap(item.locName);
 
     let groupClass = 'group-ines-stefan';
@@ -698,7 +753,6 @@ function renderTableAndCards() {
   filterPlan();
 }
 
-// Filter-Button aktivieren
 function setFilter(filterVal, btn) {
   currentRegion = filterVal;
   document.querySelectorAll('.controls .f').forEach(b => b.classList.remove('on'));
@@ -706,7 +760,6 @@ function setFilter(filterVal, btn) {
   filterPlan();
 }
 
-// Zeilen nach Suchtext und Filter ein-/ausblenden
 function filterPlan() {
   const q = $('#q') ? $('#q').value.toLowerCase() : '';
   document.querySelectorAll('#planTableBody tr').forEach(row => {
@@ -717,7 +770,6 @@ function filterPlan() {
   renderMobileCards();
 }
 
-// Mobile Karten aus den sichtbaren Tabellenzeilen erzeugen
 function renderMobileCards() {
   const container = $('#mobileCards');
   container.innerHTML = '';
@@ -739,7 +791,7 @@ function renderMobileCards() {
 }
 
 /* ==========================================================================
-   5. KARTE (Leaflet): Punkte, Flüge, Straßen (OSRM), Fähren, Legende
+   5. KARTE (Leaflet)
    ========================================================================== */
 function initMap() {
   const layer = (url, attr, maxZoom = 15) => L.tileLayer(url, { maxZoom, attribution: attr });
@@ -753,7 +805,6 @@ function initMap() {
   map = L.map('map', { layers: [baseLayers['🇩🇪 OSM Deutsch (Deutsch / Landessprache)']] });
   L.control.layers(baseLayers, null, { collapsed: true, position: 'topright' }).addTo(map);
 
-  // Alle Orte und Flughäfen (Farbe = Region)
   const points = {
     wien: { name: "Flughafen Wien (VIE)", date: "01.01. & 23.02.2027", lat: 48.1103, lng: 16.5697, desc: "Start & Endpunkt der Reise", color: "#15803d" },
     muc: { name: "Flughafen München (MUC)", date: "29.01.2027", lat: 48.3537, lng: 11.7861, desc: "Zielort Stefan (TG926)", color: "#15803d" },
@@ -768,9 +819,7 @@ function initMap() {
     krabi: { name: "Krabi / Railay", date: "13.01. – 16.01.2027", lat: 8.0863, lng: 98.9063, desc: "Railay Beach & Hong Island", color: "#0d9488" },
     phiphi: { name: "Ko Phi Phi", date: "16.01. – 19.01.2027", lat: 7.7407, lng: 98.7784, desc: "Maya Bay & Long Beach", color: "#0d9488" },
     surat: { name: "Flughafen Surat Thani (URT)", date: "25.01.2027", lat: 9.1326, lng: 99.1356, desc: "Flughafen Festland Samui-Region", color: "#0d9488" },
-    tao: { name: "Koh Tao", date: "19.01. – 25.01.2027", lat: 10.1018, lng: 99.8383, desc: "Schnorcheln & Vollmond Party", color: "#0d9488" },
-    phangan: { name: "Ko Pha-ngan", date: "22.01.2027", lat: 9.7319, lng: 100.0136, desc: "Vollmond Party Speedboot", color: "#0d9488" },
-    // Sri Lanka
+    tao: { name: "Koh Tao", date: "19.01. – 25./26.01.2027", lat: 10.1018, lng: 99.8383, desc: "Tauchkurs Rainbow Fish Divers", color: "#0d9488" },
     cmb: { name: "Flughafen Colombo (CMB)", date: "29.01. | 02.02. | 23.02.2027", lat: 7.1808, lng: 79.8841, desc: "Bandaranaike Airport", color: "#059669" },
     cmb_city: { name: "Colombo Stadtzentrum", date: "21.02. – 23.02.2027", lat: 6.9344, lng: 79.8428, desc: "Hauptstadt Vibe & Galle Face Promenade", color: "#6b21a8" },
     anuradhapura: { name: "Anuradhapura", date: "03.02. – 06.02.2027", lat: 8.3114, lng: 80.4037, desc: "Kulturdreieck UNESCO Radtour", color: "#b45309" },
@@ -782,14 +831,12 @@ function initMap() {
     weligama: { name: "Weligama", date: "19.02. – 21.02.2027", lat: 5.9722, lng: 80.4289, desc: "Surfen & Beach Vibes", color: "#0d9488" }
   };
 
-  // Linien-Stile
   const flightStyle = { color: '#059669', weight: 2.5, opacity: .85, dashArray: '6, 6' };
   const thStyle = { color: '#0d9488', weight: 3.5, opacity: .9 };
   const slStyle = { color: '#b45309', weight: 3.5, opacity: .9 };
   const trainStyle = { color: '#dc2626', weight: 3.5, opacity: .9, dashArray: '4, 4' };
   const line = (pts, style) => L.polyline(pts.map(k => [points[k].lat, points[k].lng]), style).addTo(map);
 
-  // Straßenroute über OSRM, bei Fehler gerade Linie
   function drawRoadRoute(a, b, style) {
     const url = `https://router.project-osrm.org/route/v1/driving/${a.lng},${a.lat};${b.lng},${b.lat}?overview=full&geometries=geojson`;
     const fallback = () => L.polyline([[a.lat, a.lng], [b.lat, b.lng]], style).addTo(map);
@@ -799,7 +846,6 @@ function initMap() {
     }).catch(fallback);
   }
 
-  // A) Flüge (gestrichelt, Flughafen zu Flughafen)
   line(['wien', 'ruh', 'bkk'], flightStyle);
   line(['bkk', 'muc'], flightStyle);
   line(['bkk', 'cmb'], flightStyle);
@@ -809,7 +855,6 @@ function initMap() {
   line(['cnx', 'kbv'], flightStyle);
   line(['surat', 'bkk'], flightStyle);
 
-  // B) Straßen & Bahn (realistisch über OSRM)
   drawRoadRoute(points.cnx, points.pai, thStyle);
   drawRoadRoute(points.kbv, points.krabi, thStyle);
   drawRoadRoute(points.tao, points.surat, thStyle);
@@ -817,29 +862,25 @@ function initMap() {
   drawRoadRoute(points.cmb, points.anuradhapura, slStyle);
   drawRoadRoute(points.anuradhapura, points.dambulla, slStyle);
   drawRoadRoute(points.dambulla, points.kandy, slStyle);
-  drawRoadRoute(points.kandy, points.ella, trainStyle);   // Panoramazug
+  drawRoadRoute(points.kandy, points.ella, trainStyle);
   drawRoadRoute(points.ella, points.tangalle, slStyle);
   drawRoadRoute(points.tangalle, points.mirissa, slStyle);
   drawRoadRoute(points.mirissa, points.weligama, slStyle);
   drawRoadRoute(points.weligama, points.cmb_city, slStyle);
   drawRoadRoute(points.cmb_city, points.cmb, slStyle);
 
-  // C) Fähren / Seewege
   line(['krabi', 'phiphi'], thStyle);
   line(['phiphi', 'tao'], thStyle);
-  line(['tao', 'phangan'], thStyle);
 
-  // D) Marker mit Popup
   Object.keys(points).forEach(key => {
     const p = points[key];
     const marker = L.circleMarker([p.lat, p.lng], { color: p.color, fillColor: p.color, fillOpacity: .9, radius: 6 })
       .bindPopup(`<b style="color:${p.color}">📍 ${p.name}</b><br><small>📅 ${p.date}</small><br>${p.desc}`);
     marker.addTo(map);
-    markers[p.name] = { marker, lat: p.lat, lng: p.lng };   // Zugriff über Namen …
-    markers[key] = { marker, lat: p.lat, lng: p.lng };      // … und über Kurzschlüssel
+    markers[p.name] = { marker, lat: p.lat, lng: p.lng };
+    markers[key] = { marker, lat: p.lat, lng: p.lng };
   });
 
-  // E) Einklappbare Legende
   const lg = L.control({ position: 'bottomright' });
   lg.onAdd = () => {
     const d = L.DomUtil.create('div', 'legend');
@@ -865,7 +906,6 @@ function initMap() {
   map.fitBounds([[4.0, 78.0], [21.0, 106.0]], { padding: [20, 20] });
 }
 
-// Auf Klick in Tabelle/Karte zum passenden Marker zoomen
 function focusMap(name) {
   let t;
   if (name === "Bangkok Stadtzentrum") t = markers["bkk_city"];
@@ -883,7 +923,7 @@ function focusMap(name) {
 }
 
 /* ==========================================================================
-   6. COUNTDOWN bis zum Abflug (01.01.2027, 15:30 Uhr Wiener Zeit = 14:30 UTC)
+   6. COUNTDOWN & ARBEITSTAGE-BERECHNUNG
    ========================================================================== */
 function updateCountdown() {
   const diff = Date.UTC(2027, 0, 1, 14, 30, 0) - Date.now(), el = $('#countdown');
@@ -893,13 +933,120 @@ function updateCountdown() {
   el.innerHTML = `⏳ Noch <b>${Math.floor(t / 86400)}</b> Tage, <b>${Math.floor(t / 3600) % 24}</b> Std., <b>${Math.floor(t / 60) % 60}</b> Min. & <b>${t % 60}</b> Sek.`;
 }
 
+// Berechnung Arbeitstage (Mo-Fr) ohne Feiertage
+function calculateWorkDays() {
+  const start = new Date(); start.setHours(0,0,0,0);
+  const end = new Date(2027, 0, 1); // 01.01.2027
+
+  if (start >= end) {
+    $('#workDaysBayern').innerText = '0 Tage';
+    $('#workDaysWien').innerText = '0 Tage';
+    return;
+  }
+
+  // Feiertage YYYY-MM-DD
+  const holidaysBayern = ['2026-10-03', '2026-11-01', '2026-12-25', '2026-12-26', '2027-01-01'];
+  const holidaysWien   = ['2026-10-26', '2026-11-01', '2026-12-08', '2026-12-25', '2026-12-26', '2027-01-01'];
+
+  let countBayern = 0, countWien = 0;
+  let cur = new Date(start);
+
+  while (cur < end) {
+    const dayOfWeek = cur.getDay(); // 0 = So, 6 = Sa
+    if (dayOfWeek !== 0 && dayOfWeek !== 6) {
+      const iso = cur.toISOString().split('T')[0];
+      if (!holidaysBayern.includes(iso)) countBayern++;
+      if (!holidaysWien.includes(iso)) countWien++;
+    }
+    cur.setDate(cur.getDate() + 1);
+  }
+
+  $('#workDaysBayern').innerText = `${countBayern} Tage`;
+  $('#workDaysWien').innerText = `${countWien} Tage`;
+}
+
 /* ==========================================================================
-   7. PACKLISTE (Speicherung im Browser per localStorage)
+   7. TAB SONSTIGES: TO-DO LISTE
+   ========================================================================== */
+const defaultTodos = [
+  { text: "Reisepässe Gültigkeit prüfen (mind. 6 Monate ab Einreise)", tag: "Allgemein", done: true },
+  { text: "Internationalen Führerschein beantragen/prüfen", tag: "Allgemein", done: false },
+  { text: "Impfungen prüfen (Hepatitis A/B, Tollwut, Typhus)", tag: "Allgemein", done: false },
+  { text: "Kreditkarten für Thailand & Sri Lanka freischalten", tag: "Allgemein", done: false },
+  { text: "Auslandskrankenversicherung abschließen/bestätigen", tag: "Allgemein", done: false },
+  { text: "Thailand TD-6 Arrival Card online ausfüllen (kurz vor Abflug)", tag: "Thailand", done: false },
+  { text: "Sri Lanka Visum (ETA) online beantragen", tag: "Sri Lanka", done: false },
+  { text: "Zugfahrt Kandy ➔ Ella online reservieren (ca. 30 Tage vorher)", tag: "Sri Lanka", done: false }
+];
+
+let todoList = [];
+
+function loadTodos() {
+  const s = localStorage.getItem('thailand_todos_v1');
+  todoList = s ? JSON.parse(s) : defaultTodos;
+  renderTodos();
+}
+
+function saveTodos() {
+  localStorage.setItem('thailand_todos_v1', JSON.stringify(todoList));
+  renderTodos();
+}
+
+function renderTodos() {
+  const ul = $('#todoList');
+  if (!ul) return;
+  ul.innerHTML = '';
+
+  let doneCount = 0;
+  todoList.forEach((item, idx) => {
+    if (item.done) doneCount++;
+    const li = document.createElement('li');
+    li.className = `todo-item ${item.done ? 'done' : ''}`;
+    
+    let tagClass = '';
+    if (item.tag === 'Thailand') tagClass = 'tag-th';
+    if (item.tag === 'Sri Lanka') tagClass = 'tag-sl';
+
+    li.innerHTML = `
+      <label>
+        <input type="checkbox" ${item.done ? 'checked' : ''} onchange="toggleTodo(${idx})">
+        <span>${item.text}</span>
+      </label>
+      <span class="todo-tag ${tagClass}">${item.tag}</span>
+      <button style="border:none;background:none;margin-left:8px;cursor:pointer" onclick="deleteTodo(${idx})">🗑️</button>
+    `;
+    ul.appendChild(li);
+  });
+
+  const pct = todoList.length > 0 ? Math.round((doneCount / todoList.length) * 100) : 0;
+  $('#todoProgress').innerText = `${doneCount}/${todoList.length} erledigt (${pct}%)`;
+}
+
+function toggleTodo(idx) {
+  todoList[idx].done = !todoList[idx].done;
+  saveTodos();
+}
+
+function addTodoItem() {
+  const text = $('#newTodoText').value.trim();
+  if (!text) return alert("Bitte Text eingeben!");
+  const tag = $('#newTodoTag').value;
+  todoList.push({ text, tag, done: false });
+  $('#newTodoText').value = '';
+  saveTodos();
+}
+
+function deleteTodo(idx) {
+  todoList.splice(idx, 1);
+  saveTodos();
+}
+
+/* ==========================================================================
+   8. PACKLISTE
    ========================================================================== */
 const personName = () => currentPerson === 'stefan' ? 'Stefan' : 'Ines';
 const clone = o => JSON.parse(JSON.stringify(o));
 
-// Person wechseln
 function switchPerson(person) {
   currentPerson = person;
   $('#btnPackStefan').classList.toggle('on', person === 'stefan');
@@ -908,7 +1055,6 @@ function switchPerson(person) {
   renderPacklist();
 }
 
-// Gespeicherte Listen laden, sonst Standardlisten
 function loadPacklist() {
   const s = localStorage.getItem('thailand_packlist_stefan_v9'), i = localStorage.getItem('thailand_packlist_ines_v9');
   packlists.stefan = s ? JSON.parse(s) : clone(defaultStefan);
@@ -916,7 +1062,6 @@ function loadPacklist() {
   renderPacklist(); renderAnalysis();
 }
 
-// Aktuelle Liste speichern und alles neu zeichnen
 function savePacklist() {
   localStorage.setItem(`thailand_packlist_${currentPerson}_v9`, JSON.stringify(packlists[currentPerson]));
   renderPacklist(); renderAnalysis();
@@ -924,7 +1069,6 @@ function savePacklist() {
 
 function setAllPacked(status) { packlists[currentPerson].forEach(i => i.packed = status); savePacklist(); }
 
-// CSV-Export (Excel-tauglich, Semikolon-getrennt)
 function exportPacklistCSV() {
   let csv = "Kategorie;Gegenstand;Anzahl;Gewicht / Stk. (g);Gesamtgewicht (g);Gewichtstyp;Packort;Gepackt\n";
   packlists[currentPerson].forEach(i => {
@@ -943,7 +1087,6 @@ function resetPacklist() {
   }
 }
 
-// Packlisten-Tabelle + Gewichts-Zusammenfassung
 function renderPacklist() {
   const tbody = $('#packTableBody');
   if (!tbody) return;
@@ -996,13 +1139,11 @@ function renderPacklist() {
   });
 }
 
-// Kleine Änderungs-Funktionen (idx = Position in der Liste)
 function togglePacked(idx) { const i = packlists[currentPerson][idx]; i.packed = !i.packed; savePacklist(); }
 function changeQty(idx, d) { const i = packlists[currentPerson][idx]; i.qty = Math.max(1, (i.qty || 1) + d); savePacklist(); }
 function changeType(idx, v) { packlists[currentPerson][idx].type = v; savePacklist(); }
 function changeLoc(idx, v) { packlists[currentPerson][idx].loc = v; savePacklist(); }
 
-// Neuen Gegenstand hinzufügen
 function addPackItem() {
   const name = $('#newItemName').value.trim();
   if (!name) return alert("Bitte Name eingeben!");
@@ -1018,7 +1159,6 @@ function deletePackItem(idx) {
   if (confirm(`"${packlists[currentPerson][idx].name}" löschen?`)) { packlists[currentPerson].splice(idx, 1); savePacklist(); }
 }
 
-// Name und Gewicht per Eingabefenster ändern
 function editPackItem(idx) {
   const item = packlists[currentPerson][idx];
   const name = prompt("Name des Gegenstands:", item.name); if (name === null) return;
@@ -1029,12 +1169,11 @@ function editPackItem(idx) {
 }
 
 /* ==========================================================================
-   8. GEWICHTSANALYSE & DIAGRAMME (Chart.js)
+   9. GEWICHTSANALYSE & DIAGRAMME (Chart.js)
    ========================================================================== */
 const allCategories = ["Dokumente & Wertsachen", "Rucksäcke & Gepäck", "Elektronik & Ladekabel", "Kleidung", "Schuhe", "Hygiene & Pflege", "Gesundheit & Apotheke", "Komfort & Schlafzubehör", "Accessoires & Alltagshelfer", "Organisation & Utensilien"];
 const chartColors = ['#3b82f6', '#ef4444', '#84cc16', '#a855f7', '#06b6d4', '#f97316', '#b91c1c', '#78350f', '#65a30d', '#4c1d95'];
 
-// Gewicht je Kategorie summieren und Vergleichstabelle füllen
 function renderAnalysis() {
   const tbody = $('#analysisTableBody');
   if (!tbody) return;
@@ -1057,9 +1196,8 @@ function renderAnalysis() {
   updateCharts(sT, iT);
 }
 
-// Tortendiagramme neu zeichnen
 function updateCharts(stefanData, inesData) {
-  if (typeof Chart === 'undefined') return;   // Chart.js nicht geladen -> Diagramme überspringen
+  if (typeof Chart === 'undefined') return;
   const make = (canvasId, old, data) => {
     const ctx = $(canvasId); if (!ctx) return old;
     if (old) old.destroy();
@@ -1074,15 +1212,14 @@ function updateCharts(stefanData, inesData) {
 }
 
 /* ==========================================================================
-   9. EVENT-HANDLER (Tabs, Vollbild)
+   10. EVENT-HANDLER (Tabs, Vollbild)
    ========================================================================== */
 document.querySelectorAll('.tabs .tab').forEach(b => b.onclick = () => {
   document.querySelectorAll('.tabs .tab').forEach(x => x.classList.toggle('on', x === b));
   document.querySelectorAll('.pane').forEach(x => x.classList.toggle('on', x.id === b.dataset.t));
-  if (b.dataset.t === 'route' && map) setTimeout(() => map.invalidateSize(), 100);  // Karte neu berechnen
+  if (b.dataset.t === 'route' && map) setTimeout(() => map.invalidateSize(), 100);
 });
 
-// Vollbild der Karte (Esc beendet es)
 $('#fs').onclick = () => {
   const f = $('#mapBox').classList.toggle('full');
   $('#fs').textContent = f ? '❌ Verkleinern' : '🔍 Vollbild';
@@ -1091,15 +1228,13 @@ $('#fs').onclick = () => {
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && $('#mapBox').classList.contains('full')) $('#fs').click(); });
 
 /* ==========================================================================
-   9b. UNTERKÜNFTE: Spaltenüberschriften als Beschriftung für die mobile Kartenansicht
+   10b. UNTERKÜNFTE: Spaltenüberschriften für Mobilansicht
    ========================================================================== */
 function labelAccTables() {
   document.querySelectorAll('#acc table').forEach(t => {
     const heads = [...t.querySelectorAll('thead th')].map(th => th.textContent.trim());
     t.querySelectorAll('tbody tr').forEach(tr => {
       [...tr.children].forEach((td, i) => td.setAttribute('data-label', heads[i] || ''));
-      // Status-Badge (geplant / gebucht / offen) zusätzlich in die Dauer-Zelle kopieren,
-      // damit er mobil rechts oben unter den Nächten steht
       const status = tr.children[3] && tr.children[3].querySelector('.status-booked, .status-open');
       tr.classList.toggle('is-open', !!(status && status.classList.contains('status-open')));
       if (status && tr.children[2]) {
@@ -1112,18 +1247,18 @@ function labelAccTables() {
 }
 
 /* ==========================================================================
-   10. START
+   11. START
    ========================================================================== */
-// Jeder Schritt läuft einzeln abgesichert: Schlägt einer fehl (z. B. weil Leaflet oder
-// Chart.js nicht geladen werden konnte), laufen alle anderen trotzdem weiter.
 const safe = fn => { try { fn(); } catch (err) { console.error('Startfehler in', fn.name || 'Schritt', err); } };
 
 window.addEventListener('DOMContentLoaded', () => {
-  safe(() => { updateCountdown(); setInterval(updateCountdown, 1000); }); // Countdown ZUERST
+  safe(() => { updateCountdown(); setInterval(updateCountdown, 1000); });
   safe(renderStats);
-  safe(labelAccTables);                 // Unterkünfte: Labels für mobile Karten
+  safe(labelAccTables);
   safe(() => switchCountry('thailand'));
   safe(initMap);
+  safe(calculateWorkDays);
+  safe(loadTodos);
   safe(loadPacklist);
 });
 </script>
