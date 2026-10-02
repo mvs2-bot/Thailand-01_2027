@@ -1,4 +1,522 @@
-in Pai: Letzter Tag im Hochland", transport: "🛵 Roller", hotel: "🏨 Bueng Pai Farm", locName: "Pai", lat: 19.3582, lng: 98.4402 },
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><!-- Mobil-Skalierung -->
+<meta name="robots" content="noindex, nofollow"><!-- Nicht in Suchmaschinen -->
+<meta name="theme-color" content="#15803d"><!-- Farbe der Browserleiste am Handy -->
+<title>Thailand & Sri Lanka Reise 2027</title>
+
+<!-- Elefanten-Emoji als Favicon -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐘</text></svg>">
+
+<!-- Schriftart (identisch mit der Südamerika-Seite) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- Leaflet (Karte) und Chart.js (Gewichts-Diagramme) -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+/* ===== 1. Design-Variablen (auf beiden Seiten identisch) ===== */
+:root {
+  --bg: #f4f7f4; --card: #fff; --hover: #f0fdf4; --line: #cbd5e1;
+  --ink: #0f172a; --text: #334155; --mute: #64748b;
+  --p1: #15803d; --p2: #7c3aed; --accent: #0d9488; --danger: #dc2626;
+  --radius: 12px; --shadow: 0 4px 12px rgba(15,23,42,.05);
+}
+
+/* ===== 2. Grundlayout ===== */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; padding: 32px 24px 48px; }
+button, input, select { font: inherit; }
+button { cursor: pointer; }
+.wrap { max-width: 1280px; margin: 0 auto; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+/* ===== 3. Kopfbereich: Titel, Countdown, Personen-Kacheln ===== */
+header { display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: end; gap: 32px; border-bottom: 3px solid var(--p1); padding: 0 2px 20px; margin-bottom: 24px; }
+h1 { font-size: clamp(1.65rem, 2.5vw, 2.2rem); line-height: 1.15; font-weight: 800; letter-spacing: -.025em; color: var(--ink); }
+header p { font-size: .92rem; font-weight: 600; color: var(--mute); margin-top: 6px; }
+#countdown { display: inline-block; margin-top: 10px; background: #dcfce7; border: 1px solid #86efac; color: var(--p1); padding: 5px 14px; border-radius: 999px; font-size: .82rem; font-weight: 800; }
+.stats { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px,1fr)); gap: 10px; width: 680px; max-width: 100%; }
+.stat { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 9px 12px; font-size: .76rem; font-weight: 600; color: var(--ink); box-shadow: var(--shadow); }
+.stat b { display: block; font-weight: 800; margin-top: 2px; font-size: .82rem; }
+
+/* ===== 4. Navigation: Tabs, Länder-Umschalter, Filter ===== */
+.tabs { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-bottom: 24px; }
+.sub-tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+.tab, .ph, .f, .btn-action { background: var(--card); border: 1px solid var(--line); color: var(--text); border-radius: 8px; font-weight: 700; }
+.tab { min-height: 58px; padding: 6px 4px; font-size: .75rem; text-align: center; transition: background .15s, border-color .15s, color .15s, transform .15s; display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1.2; word-break: normal; }
+.tab span { font-size: 1.1rem; margin-bottom: 2px; display: block; }
+.tab.on, .tab:hover, .f.on, .f:hover { background: var(--p1); border-color: var(--p1); color: #fff; }
+.tab:hover { transform: translateY(-1px); }
+.pane { display: none; } .pane.on { display: block; }
+.controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 14px; }
+.q-input { flex: 1 1 300px; min-width: 240px; background: var(--card); border: 1px solid var(--line); border-radius: 7px; padding: 9px 13px; font-size: .84rem; color: var(--ink); }
+.q-input:focus { border-color: #86efac; outline: 3px solid rgba(13,148,136,.15); }
+.f { padding: 7px 12px; font-size: .76rem; }
+
+/* ===== 5. Boxen & Karte ===== */
+.box { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; margin-bottom: 20px; box-shadow: var(--shadow); }
+.box.map { border-top: 4px solid var(--p1); padding-top: 16px; }
+.box.full { position: fixed; inset: 0; z-index: 9999; border-radius: 0; margin: 0; overflow: auto; background: var(--bg); padding: 20px; }
+.mh { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 14px; }
+.mh h2, .box h3, .box h4 { font-size: 1.1rem; line-height: 1.25; font-weight: 800; color: var(--ink); }
+.mh button { flex: 0 0 auto; font-size: .8rem; font-weight: 700; color: var(--p1); background: var(--card); border: 1px solid var(--line); border-radius: 7px; padding: 7px 12px; }
+.mh button:hover { background: var(--hover); border-color: #86efac; }
+.note { font-size: .8rem; color: var(--mute); margin-bottom: 14px; }
+#map { height: 540px; width: 100%; border-radius: 8px; border: 1px solid var(--line); overflow: hidden; position: relative; }
+.box.full #map { height: calc(100vh - 86px); }
+.legend { background: #fff; border: 1px solid var(--line); border-radius: 7px; padding: 8px 12px; font-size: .78rem; color: var(--ink); line-height: 1.6; box-shadow: 0 2px 6px rgba(15,23,42,.1); max-width: 250px; }
+.legend .lh { font: inherit; color: inherit; background: none; border: 0; padding: 0; width: 100%; text-align: left; }
+ 
+/* ===== 6. Tabellen, Badges, mobile Karten ===== */
+.tw { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); overflow-x: auto; box-shadow: var(--shadow); }
+
+table { width: 100%; border-collapse: collapse; font-size: .83rem; text-align: left; }
+th { position: sticky; top: 0; z-index: 1; background: #e2e8f0; color: var(--ink); font-size: .72rem; font-weight: 800; padding: 10px 12px; border-bottom: 2px solid var(--line); white-space: nowrap; }
+td { padding: 10px 12px; border-bottom: 1px solid #e2e8f0; vertical-align: top; color: var(--ink); }
+tr.row { cursor: pointer; } tr.row:hover td { background: var(--hover); } tr.row:last-child td { border-bottom: 0; }
+
+.dn { display: inline-block; background: var(--p1); color: #fff; font-weight: 800; font-size: .72rem; border-radius: 5px; padding: 2px 7px; white-space: nowrap; }
+.dt { font-size: .71rem; color: var(--mute); font-weight: 600; margin-top: 3px; }
+.tt { font-weight: 700; }
+.pill { display: inline-block; font-size: .72rem; font-weight: 600; background: #f8fafc; border: 1px solid var(--line); border-radius: 5px; padding: 3px 6px; margin: 1px 0; }
+.hotel-pill { background: #f0fdf4; border-color: #bbf7d0; color: #166534; }
+
+.group-badge { display: inline-block; font-size: .67rem; font-weight: 700; padding: 2px 6px; border-radius: 4px; margin-top: 4px; white-space: nowrap; }
+.group-ines-stefan { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+.group-ines-alleine { background: #f3e8ff; color: #6b21a8; border: 1px solid #e9d5ff; }
+.group-ines-anna { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+.rg { display: inline-block; font-size: .68rem; font-weight: 700; border-radius: 4px; padding: 2px 6px; white-space: nowrap; margin-bottom: 2px; }
+.tag-norden { background: #dcfce7; color: #15803d; } .tag-bangkok { background: #f3e8ff; color: #6b21a8; }
+.tag-inseln { background: #ccfbf1; color: #0d9488; } .tag-default { background: #f1f5f9; color: var(--mute); }
+.tag-sl-westkueste { background: #d1fae5; color: #059669; } .tag-sl-kulturdreieck { background: #fef3c7; color: #b45309; }
+.tag-sl-hochland { background: #dcfce7; color: #15803d; } .tag-sl-suedkueste { background: #ccfbf1; color: #0d9488; }
+.tag-sl-colombo { background: #f3e8ff; color: #6b21a8; }
+
+/* Mobil-Karten Design */
+.cards { display: none; flex-direction: column; gap: 8px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; cursor: pointer; font-size: .8rem; box-shadow: var(--shadow); transition: background .15s; }
+.card:hover { background: var(--hover); }
+.card-header { display: flex; justify-content: space-between; align-items: center; gap: 6px; margin-bottom: 6px; }
+.card-meta { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.card-date { font-size: .75rem; font-weight: 700; color: var(--mute); }
+.card-title { font-size: .88rem; font-weight: 800; color: var(--ink); line-height: 1.25; margin-bottom: 4px; }
+.card-details { font-size: .78rem; color: var(--text); line-height: 1.35; margin-bottom: 8px; }
+.card-footer { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+
+/* ===== 7. Unterkünfte, Packliste, Charts & Sonstiges ===== */
+.stay-badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: .75rem; font-weight: 800; background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+.travel-time-pill { display: inline-flex; align-items: center; gap: 4px; background: #fef3c7; color: #92400e; border: 1px solid #fde68a; padding: 2px 6px; border-radius: 4px; font-size: .72rem; font-weight: 700; }
+.status-booked, .status-open { padding: 2px 6px; border-radius: 4px; font-size: .7rem; font-weight: 700; }
+.status-booked { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+.status-open { background: #fee2e2; color: #dc2626; border: 1px solid #fca5a5; }
+.pack-summary, .work-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap: 12px; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px 16px; border-radius: 8px; margin-bottom: 16px; }
+.pack-stat-val, .work-stat-val { font-size: 1.15rem; font-weight: 800; color: var(--p1); }
+.pack-stat-lbl, .work-stat-lbl { font-size: .75rem; color: var(--mute); font-weight: 600; }
+.pack-add-form { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; background: #f1f5f9; padding: 10px; border-radius: 8px; border: 1px solid var(--line); }
+.pack-add-form input, .pack-add-form select, .table-select { background: var(--card); border: 1px solid var(--line); color: var(--ink); padding: 6px 10px; border-radius: 6px; font-size: .8rem; }
+.pack-add-form input[type="text"] { flex: 2; min-width: 140px; }
+.pack-add-form select { flex: 1.2; min-width: 130px; }
+.pack-add-form input[type="number"] { width: 85px; }
+.table-select { padding: 2px 5px; font-size: .75rem; font-weight: 600; }
+.table-select.select-am-koerper { background: #fef3c7; color: #92400e; border-color: #fde68a; font-weight: 700; }
+.pack-table-cat { background: #f1f5f9; color: var(--p1); font-weight: 800; font-size: .75rem; text-transform: uppercase; border-left: 3px solid var(--p1); padding: 6px 10px !important; }
+.charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+.chart-card { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 16px; box-shadow: var(--shadow); display: flex; flex-direction: column; align-items: center; }
+.chart-container { position: relative; width: 100%; max-width: 360px; height: 300px; }
+
+/* To-Do Liste Styling */
+.todo-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.todo-item { display: flex; align-items: center; justify-content: space-between; background: #f8fafc; border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; transition: background .15s; }
+.todo-item:hover { background: var(--hover); }
+.todo-item label { display: flex; align-items: center; gap: 10px; cursor: pointer; flex: 1; font-size: .88rem; font-weight: 600; color: var(--ink); }
+.todo-item input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--p1); cursor: pointer; }
+.todo-item.done label { text-decoration: line-through; color: var(--mute); }
+.todo-tag { font-size: .7rem; font-weight: 700; padding: 2px 6px; border-radius: 4px; background: #e2e8f0; color: var(--text); }
+.todo-tag.tag-th { background: #dcfce7; color: #15803d; }
+.todo-tag.tag-sl { background: #fef3c7; color: #b45309; }
+
+#acc .status-mobile { display: none; }
+
+/* ===== 8. Flugliste ===== */
+ul.fl-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+ul.fl-list li { background: #f8fafc; border: 1px solid var(--line); border-left: 4px solid var(--p1); border-radius: 8px; padding: 10px 14px; }
+.fl-date { display: block; font-size: .75rem; font-weight: 800; color: var(--p1); text-transform: uppercase; margin-bottom: 2px; }
+.fl-route { font-size: .9rem; font-weight: 700; color: var(--ink); }
+.fl-details { font-size: .8rem; color: var(--text); }
+.fl-price { display: inline-block; margin-top: 3px; font-size: .75rem; font-weight: 700; background: #dcfce7; color: #15803d; padding: 2px 6px; border-radius: 4px; }
+
+/* ===== 9. Mobilansicht ===== */
+@media (max-width: 860px) {
+  body { padding: 12px 8px 22px; }
+  header { grid-template-columns: 1fr; gap: 9px; padding: 0 1px 11px; margin-bottom: 12px; }
+  h1 { font-size: 1.38rem; }
+  header p { font-size: .74rem; line-height: 1.35; margin-top: 4px; }
+  #countdown { font-size: .7rem; padding: 3px 8px; margin-top: 6px; }
+  
+  .stats { width: 100%; grid-template-columns: repeat(auto-fit, minmax(0,1fr)); gap: 5px; }
+  .stat { padding: 5px 4px; text-align: center; font-size: .65rem; border-radius: 7px; }
+  .stat b { font-size: .72rem; }
+  
+  .tabs { gap: 4px; margin-bottom: 12px; }
+  .tab { min-height: 50px; padding: 4px 2px; font-size: .56rem; line-height: 1.15; }
+  .tab span { font-size: .95rem; margin-bottom: 1px; }
+  
+  .box { padding: 10px; margin-bottom: 10px; border-radius: 8px; }
+  .box.map { padding-top: 8px; }
+  .mh { margin-bottom: 8px; }
+  .mh h2, .box h3 { font-size: .92rem; }
+  .mh button { padding: 5px 7px; font-size: .67rem; }
+  #map { height: 380px; }
+  .controls { gap: 5px; margin-bottom: 8px; }
+  .q-input { flex: 1 1 100%; min-width: 0; padding: 7px 9px; font-size: .75rem; }
+  .f { padding: 5px 7px; font-size: .67rem; }
+  
+  .tw-route { display: none; }
+  .cards { display: flex; }
+
+  #acc .tw { background: none; border: 0; box-shadow: none; overflow: visible; }
+  #acc thead { display: none; }
+  #acc table, #acc tbody { display: block; width: 100%; }
+  #acc tr { display: grid; grid-template-columns: 1fr auto; column-gap: 10px; row-gap: 0; background: var(--card); border: 1px solid var(--line); border-left: 5px solid var(--p1); border-radius: 10px; padding: 12px 12px 10px; margin-bottom: 12px; box-shadow: var(--shadow); }
+  #acc tr.is-open { border-left-color: var(--danger); }
+  #acc td { border: 0; padding: 0; font-size: .8rem; min-width: 0; }
+  #acc td:nth-child(1) { grid-column: 1; grid-row: 1; font-size: 1rem; line-height: 1.25; }
+  #acc td:nth-child(2) { grid-column: 1; grid-row: 2; margin-top: 3px; color: var(--mute); font-weight: 600; font-size: .78rem; }
+  #acc td:nth-child(2)::before { content: "📅 "; }
+  #acc td:nth-child(3) { grid-column: 2; grid-row: 1 / span 2; display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+  #acc td:nth-child(3) .status-mobile { display: inline-block; }
+  #acc td:nth-child(4) .status-booked, #acc td:nth-child(4) .status-open { display: none; }
+  #acc td:nth-child(4) { grid-column: 1 / -1; grid-row: 3; margin-top: 10px; padding-top: 10px; border-top: 1px solid #e2e8f0; font-weight: 600; color: var(--ink); }
+  #acc td:nth-child(5) { grid-column: 1 / -1; grid-row: 4; margin-top: 10px; padding: 8px 10px; background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; line-height: 1.4; }
+  #acc td:nth-child(4)::before, #acc td:nth-child(5)::before { content: attr(data-label); display: block; font-size: .62rem; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; color: var(--mute); margin-bottom: 4px; }
+  #acc td:nth-child(5)::before { color: #92400e; }
+  #acc .travel-time-pill { display: flex; width: fit-content; margin-bottom: 5px; background: #fef3c7; }
+  .charts-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 420px) {
+  body { padding: 9px 6px 18px; }
+  h1 { font-size: 1.22rem; }
+  header p { font-size: .68rem; }
+  #countdown { font-size: .65rem; }
+  .stat { padding: 4px 2px; font-size: .6rem; }
+  .tab { min-height: 46px; font-size: .5rem; padding: 2px 1px; }
+  .tab span { font-size: .8rem; }
+  #map { height: 335px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ===== KOPFBEREICH ===== -->
+  <header>
+    <div>
+      <h1>🌏 Thailand & Sri Lanka 2027</h1>
+      <p>01.01. – 23.02.2027 · Ines & Stefan</p>
+      <div id="countdown">⏳ Countdown wird berechnet...</div>
+    </div>
+    <div class="stats" id="stats"></div><!-- Personen-Kacheln, per JS -->
+  </header>
+
+  <!-- ===== HAUPT-TABS (Einheitliche Breite & Zeilenumbrüche) ===== -->
+  <div class="tabs" role="tablist">
+    <button class="tab on" data-t="mapview"><span>🗺️</span>Karte</button>
+    <button class="tab" data-t="thailand"><span>🇹🇭</span>Tagesplan<br>Thailand</button>
+    <button class="tab" data-t="srilanka"><span>🇱🇰</span>Tagesplan<br>Sri Lanka</button>
+    <button class="tab" data-t="acc"><span>🏨</span>Unter-<br>künfte</button>
+    <button class="tab" data-t="flights"><span>✈️</span>Flüge</button>
+    <button class="tab" data-t="misc"><span>📌</span>Sonstiges</button>
+    <button class="tab" data-t="pack"><span>🎒</span>Packliste<br>& Gewicht</button>
+  </div>
+
+  <!-- ===== TAB 1: KARTE (NUR KARTE) ===== -->
+  <div id="mapview" class="pane on">
+    <div class="box map" id="mapBox" style="margin-bottom:0;">
+      <div class="mh"><h2>Interaktive Reiseroute & Karte</h2><button id="fs">🔍 Vollbild</button></div>
+      <div id="map"></div>
+    </div>
+  </div>
+
+  <!-- ===== TAB 2: TAGESPLAN THAILAND ===== -->
+  <div id="thailand" class="pane">
+    <div class="box">
+      <div class="mh">
+        <h2>🇹🇭 Tagesplan Thailand</h2>
+        <p class="note" style="margin-bottom:0">01.01. – 29.01.2027 · Udon Thani, Chiang Mai, Pai, Krabi, Koh Tao, Bangkok</p>
+      </div>
+      <!-- Suche & Filter Thailand -->
+      <div class="controls" id="filterControlsThailand"></div>
+      <!-- Desktop: Tabelle -->
+      <div class="tw tw-route">
+        <table>
+          <thead><tr><th>Tag / Datum</th><th>Region</th><th>Ort & Aktivität</th><th>Details & Programm</th><th>Transportmittel</th><th>Unterkunft</th></tr></thead>
+          <tbody id="planTableBodyThailand"></tbody>
+        </table>
+      </div>
+      <!-- Mobil: Karten -->
+      <div class="cards" id="mobileCardsThailand"></div>
+    </div>
+  </div>
+
+  <!-- ===== TAB 3: TAGESPLAN SRI LANKA ===== -->
+  <div id="srilanka" class="pane">
+    <div class="box">
+      <div class="mh">
+        <h2>🇱🇰 Tagesplan Sri Lanka</h2>
+        <p class="note" style="margin-bottom:0">29.01. – 23.02.2027 · Kulturdreieck, Hochlandzug, Ella, Südküste, Colombo</p>
+      </div>
+      <!-- Suche & Filter Sri Lanka -->
+      <div class="controls" id="filterControlsSriLanka"></div>
+      <!-- Desktop: Tabelle -->
+      <div class="tw tw-route">
+        <table>
+          <thead><tr><th>Tag / Datum</th><th>Region</th><th>Ort & Aktivität</th><th>Details & Programm</th><th>Transportmittel</th><th>Unterkunft</th></tr></thead>
+          <tbody id="planTableBodySriLanka"></tbody>
+        </table>
+      </div>
+      <!-- Mobil: Karten -->
+      <div class="cards" id="mobileCardsSriLanka"></div>
+    </div>
+  </div>
+
+  <!-- ===== TAB 4: UNTERKÜNFTE & REISEZEITEN ===== -->
+  <div id="acc" class="pane">
+    <div class="box">
+      <h3>🏨 Unterkunfts- & Reisezeitübersicht</h3>
+      <p class="note">Schnellübersicht über Aufenthaltsdauern, Status und Transferzeiten.</p>
+
+      <h4 style="margin:12px 0 8px;color:var(--p1)">🇹🇭 THAILAND (01.01. – 29.01.2027)</h4>
+      <div class="tw" style="margin-bottom:20px">
+        <table>
+          <thead><tr><th>Station / Ort</th><th>Zeitraum</th><th>Dauer</th><th>Unterkunft / Status</th><th>Nächster Transfer / Reisezeit</th></tr></thead>
+          <tbody>
+            <tr><td><strong>1. Udon Thani</strong></td><td>02.01. – 05.01.</td><td><span class="stay-badge">3 Nächte</span></td><td>🏠 Bei OW <span class="status-booked">geplant</span></td><td><span class="travel-time-pill">✈️ ca. 1 Std. 05 Min.</span> Inlandsflug Nok Air DD703 nach Chiang Mai</td></tr>
+            <tr><td><strong>2. Chiang Mai</strong></td><td>05.01. – 08.01.</td><td><span class="stay-badge">3 Nächte</span></td><td>🏨 Sylvis Hostel Chiangmai <span class="status-booked">gebucht</span></td><td><span class="travel-time-pill">🚐 ca. 3 Std. 00 Min.</span> Minivan (AYA) über 762 Kurven nach Pai</td></tr>
+            <tr><td><strong>3. Pai</strong></td><td>08.01. – 13.01.</td><td><span class="stay-badge">5 Nächte</span></td><td>🏨 Bueng Pai Farm <span class="status-booked">gebucht</span></td><td><span class="travel-time-pill">🚐✈ ca. 6–7 Std. Gesamt</span> Minivan via Chiang Mai ➔ Flug/Bus nach Krabi</td></tr>
+            <tr><td><strong>4. Krabi / Railay</strong></td><td>13.01. – 16.01.</td><td><span class="stay-badge">3 Nächte</span></td><td>🏨 EZ auf Krabi <span class="status-open">offen</span></td><td><span class="travel-time-pill">⛴️ ca. 1 Std. 30 Min.</span> Fähre von Krabi nach Ko Phi Phi</td></tr>
+            <tr><td><strong>5. Ko Phi Phi</strong></td><td>16.01. – 19.01.</td><td><span class="stay-badge">3 Nächte</span></td><td>🏨 EZ auf Koh Phi Phi <span class="status-open">offen</span></td><td><span class="travel-time-pill">⛴️🚌⛴️ ca. 7–8 Std. Gesamt</span> Fähre zum Festland + Bus & Fähre nach Koh Tao</td></tr>
+            <tr><td><strong>6. Koh Tao</strong></td><td>19.01. – 25./26.01.</td><td><span class="stay-badge">6–7 Nächte</span></td><td>🏨 EZ auf Koh Tao <span class="status-open">offen</span></td><td><span class="travel-time-pill">⛴️🚌 / ✈️ ca. 8 Std. Gesamt</span> Katamaran + Bus / Flug via Surat Thani/Samui nach Bangkok</td></tr>
+            <tr><td><strong>7. Bangkok Stadt</strong></td><td>25./26.01. – 29.01.</td><td><span class="stay-badge">3–4 Nächte</span></td><td>🏨 EZ in Bangkok <span class="status-open">offen</span></td><td><span class="travel-time-pill">✈️ Rückflug / Weiterflug</span> Transfer BKK Flughafen (ca. 45 Min.)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4 style="margin:16px 0 8px;color:var(--p1)">🇱🇰 SRI LANKA (29.01. – 23.02.2027)</h4>
+      <div class="tw">
+        <table>
+          <thead><tr><th>Station / Ort</th><th>Zeitraum</th><th>Dauer</th><th>Unterkunft / Status</th><th>Nächster Transfer / Reisezeit</th></tr></thead>
+          <tbody>
+            <tr><td><strong>1. Negombo</strong> (Ines & Anna)</td><td>29.01. – 03.02.</td><td><span class="stay-badge">5 Nächte</span></td><td>🏨 Ceylon Glory Hostel <span class="status-booked">gebucht</span></td><td><span class="travel-time-pill">🚆 ca. 3 Std. 30 Min.</span> Direktzug oder Bus nach Anuradhapura</td></tr>
+            <tr><td><strong>2. Anuradhapura</strong></td><td>03.02. – 06.02.</td><td><span class="stay-badge">3 Nächte</span></td><td>🏨 noch offen <span class="status-open">offen</span></td><td><span class="travel-time-pill">🚌 ca. 1 Std. 20 Min.</span> Lokalbus nach Dambulla</td></tr>
+            <tr><td><strong>3. Dambulla / Sigiriya</strong></td><td>06.02. – 09.02.</td><td><span class="stay-badge">3 Nächte</span></td><td>🏨 noch offen <span class="status-open">offen</span></td><td><span class="travel-time-pill">🛺🚌 ca. 2 Std. 30 Min.</span> Bus/TukTuk ins Hochland nach Kandy</td></tr>
+            <tr><td><strong>4. Kandy</strong></td><td>09.02. – 11.02.</td><td><span class="stay-badge">2 Nächte</span></td><td>🏨 noch offen <span class="status-open">offen</span></td><td><span class="travel-time-pill">🚆 ca. 7 Std. 00 Min.</span> Panoramazugfahrt Kandy ➔ Ella durch die Teeberge</td></tr>
+            <tr><td><strong>5. Ella</strong></td><td>11.02. – 15.02.</td><td><span class="stay-badge">4 Nächte</span></td><td>🏨 noch offen <span class="status-open">offen</span></td><td><span class="travel-time-pill">🚌 ca. 3 Std. 30 Min.</span> Bus vom Hochland runter an die Südküste (Tangalle)</td></tr>
+            <tr><td><strong>6. Tangalle</strong></td><td>15.02. – 17.02.</td><td><span class="stay-badge">2 Nächte</span></td><td>🏨 noch offen <span class="status-open">offen</span></td><td><span class="travel-time-pill">🚌 ca. 1 Std. 15 Min.</span> Küstenbus nach Mirissa</td></tr>
+            <tr><td><strong>7. Mirissa</strong></td><td>17.02. – 19.02.</td><td><span class="stay-badge">2 Nächte</span></td><td>🏨 noch offen <span class="status-open">offen</span></td><td><span class="travel-time-pill">🛺 ca. 20 Min.</span> Kurzer TukTuk-Transfer nach Weligama</td></tr>
+            <tr><td><strong>8. Weligama</strong></td><td>19.02. – 21.02.</td><td><span class="stay-badge">2 Nächte</span></td><td>🏨 noch offen <span class="status-open">offen</span></td><td><span class="travel-time-pill">🚆 ca. 2 Std. 30 Min.</span> Küstenzug oder Expressbus nach Colombo Stadt</td></tr>
+            <tr><td><strong>9. Colombo Stadt</strong></td><td>21.02. – 23.02.</td><td><span class="stay-badge">2 Nächte</span></td><td>🏨 Bunkyard <span class="status-open">offen</span></td><td><span class="travel-time-pill">✈️ Rückflug nach VIE</span> Taxi zum Flughafen CMB (ca. 45 Min.)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TAB 5: FLÜGE ===== -->
+  <div id="flights" class="pane">
+    <div class="box">
+      <h3>✈️ Gebuchte Flüge (Übersicht)</h3>
+      <p class="note">Alle gebuchten Flugverbindungen und Zwischenstopps im Detail:</p>
+      <ul class="fl-list">
+        <li><div class="fl-date">01.01.2027 • Hinflug Thailand</div><div class="fl-route">Wien (VIE) ➔ Riad (RUH) ➔ Bangkok (BKK)</div><div class="fl-details">Saudia Airlines (SV152 & SV846) • Abflug VIE: 15:30 Uhr • Stopp Riad • Ankunft BKK: 02.01. um 13:40 Uhr</div><div class="fl-price">349,90 € p.P. (Ines & Stefan)</div></li>
+        <li><div class="fl-date">02.01.2027 • Inlandsflug Thailand</div><div class="fl-route">Bangkok (BKK) ➔ Udon Thani (UTH)</div><div class="fl-details">Thai Airways (TG008) • 18:20 Uhr – 19:30 Uhr</div><div class="fl-price">54,99 € p.P. (Ines & Stefan)</div></li>
+        <li><div class="fl-date">05.01.2027 • Inlandsflug Thailand</div><div class="fl-route">Udon Thani (UTH) ➔ Chiang Mai (CNX)</div><div class="fl-details">Nok Air (DD703) • 16:30 Uhr – 17:35 Uhr</div><div class="fl-price">98,06 € p.P. (Ines & Stefan)</div></li>
+        <li><div class="fl-date">29.01.2027 • Rückflug Deutschland (Stefan)</div><div class="fl-route">Bangkok (BKK) ➔ München (MUC)</div><div class="fl-details">Thai Airways (TG926 Direktflug) • 13:00 Uhr – 18:55 Uhr</div><div class="fl-price">424,13 € (Stefan)</div></li>
+        <li><div class="fl-date">29.01.2027 • Weiterflug Sri Lanka (Ines)</div><div class="fl-route">Bangkok (BKK) ➔ Colombo (CMB)</div><div class="fl-details">SriLankan Airlines (UL405 Direktflug) • 13:50 Uhr – 15:50 Uhr</div><div class="fl-price">175,00 € (Ines)</div></li>
+        <li><div class="fl-date">23.02.2027 • Rückflug Österreich (Ines & Anna)</div><div class="fl-route">Colombo (CMB) ➔ Istanbul (IST) ➔ Wien (VIE)</div><div class="fl-details">Turkish Airlines (TK1131 & TK1887) • Abflug CMB: 09:15 Uhr • Stopp IST: 15:45 - 17:15 Uhr • Ankunft VIE: 17:35 Uhr</div><div class="fl-price">534,56 € (Ines) & ??? € (Anna)</div></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== TAB 6: SONSTIGES ===== -->
+  <div id="misc" class="pane">
+    <!-- 1. Offene Arbeitstage -->
+    <div class="box">
+      <h3>💼 Verbleibende Arbeitstage bis Abflug</h3>
+      <p class="note">Verbleibende Werktage (Mo–Fr) ab heute bis zum Abflug am 01.01.2027. Gesetzliche Feiertage sind bereits abgezogen (ohne persönliche Urlaubstage).</p>
+      
+      <div class="work-summary">
+        <div>
+          <span class="work-stat-val" id="workDaysBayern">0 Tage</span>
+          <div class="work-stat-lbl">Arbeitstage Bayern</div>
+        </div>
+        <div>
+          <span class="work-stat-val" id="workDaysWien">0 Tage</span>
+          <div class="work-stat-lbl">Arbeitstage Wien</div>
+        </div>
+      </div>
+      <small style="font-size:.72rem;color:var(--mute)">* Berücksichtigte Feiertage in diesem Zeitraum: Tag der Dt. Einheit, Allerheiligen, Maria Empfängnis (AT), 1. & 2. Weihnachtsfeiertag, Neujahr.</small>
+    </div>
+
+    <!-- 2. Reise-To-Do-Liste -->
+    <div class="box">
+      <div class="mh">
+        <h3>✅ Reise To-Do & Vorbereitungen</h3>
+        <span id="todoProgress" style="font-size:.8rem;font-weight:700;color:var(--p1)">0/0 erledigt</span>
+      </div>
+      <p class="note">Wichtige Erledigungen für Einreise, Gesundheit & Dokumente.</p>
+
+      <ul class="todo-list" id="todoList"></ul>
+
+      <!-- Formular: Eigene To-Do hinzufügen -->
+      <div class="pack-add-form" style="margin-top:16px">
+        <input type="text" id="newTodoText" placeholder="Neuer To-Do Punkt...">
+        <select id="newTodoTag">
+          <option value="Allgemein">Allgemein</option>
+          <option value="Thailand">Thailand</option>
+          <option value="Sri Lanka">Sri Lanka</option>
+        </select>
+        <button class="f on" onclick="addTodoItem()">+ Hinzufügen</button>
+      </div>
+    </div>
+
+    <!-- 3. Weitere Ideen / Notizen -->
+    <div class="box">
+      <h3>💡 Wichtige Infos & Hinweise</h3>
+      <ul style="padding-left:18px;font-size:.85rem;line-height:1.7">
+        <li><strong>Visum Thailand:</strong> Deutsche & österreichische Staatsbürger benötigen für Aufenthalte bis 60 Tage kein Visum vorab.</li>
+        <li><strong>Arrival Card Thailand (TD-6):</strong> Muss vor der Einreise online/digital ausgefüllt werden.</li>
+        <li><strong>Visum Sri Lanka (ETA):</strong> Vorab online beantragen (ETA – Electronic Travel Authorization).</li>
+        <li><strong>Führerschein:</strong> Für das Mieten von Rollern wird in beiden Ländern zwingend der <i>internationale Führerschein</i> nach dem Abkommen von 1968 benötigt.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== TAB 7: PACKLISTE & GEWICHTSANALYSE ===== -->
+  <div id="pack" class="pane">
+    <div class="box">
+      <!-- Person wählen -->
+      <div class="sub-tabs">
+        <button id="btnPackStefan" class="tab on" onclick="switchPerson('stefan')"><span>🎒</span>Packliste Stefan</button>
+        <button id="btnPackInes" class="tab" onclick="switchPerson('ines')"><span>🎒</span>Packliste Ines</button>
+      </div>
+
+      <div class="mh">
+        <h3 id="packlistTitle">🎒 Interaktive Packliste (Stefan)</h3>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <button class="btn-action" style="color:#15803d;background:#dcfce7" onclick="setAllPacked(true)">✅ Alle einpacken</button>
+          <button class="btn-action" style="color:#dc2626;background:#fee2e2" onclick="setAllPacked(false)">❌ Alle auspacken</button>
+          <button class="btn-action" onclick="exportPacklistCSV()">📊 CSV Export</button>
+          <button class="btn-action" style="color:var(--danger)" onclick="resetPacklist()">🔄 Reset</button>
+        </div>
+      </div>
+
+      <!-- Gewichts-Zusammenfassung -->
+      <div class="pack-summary">
+        <div><span class="pack-stat-val" id="packWeightKg">0.00 kg</span><div class="pack-stat-lbl">Gepäck (Rucksack/Taschen)</div></div>
+        <div><span class="pack-stat-val" id="wornWeightKg">0.00 kg</span><div class="pack-stat-lbl">Am Körper getragen</div></div>
+        <div><span class="pack-stat-val" id="grandTotalKg">0.00 kg</span><div class="pack-stat-lbl">Gesamtgewicht</div></div>
+        <div><span class="pack-stat-val" id="totalPackedItems">0 / 0</span><div class="pack-stat-lbl">Gegenstände ausgewählt</div></div>
+      </div>
+
+      <!-- Formular: neuen Gegenstand hinzufügen -->
+      <div class="pack-add-form">
+        <input type="text" id="newItemName" placeholder="Neuer Gegenstand">
+        <select id="newItemCat">
+          <option value="Dokumente & Wertsachen">Dokumente & Wertsachen</option>
+          <option value="Rucksäcke & Gepäck">Rucksäcke & Gepäck</option>
+          <option value="Elektronik & Ladekabel">Elektronik & Ladekabel</option>
+          <option value="Kleidung">Kleidung</option>
+          <option value="Schuhe">Schuhe</option>
+          <option value="Hygiene & Pflege">Hygiene & Pflege</option>
+          <option value="Gesundheit & Apotheke">Gesundheit & Apotheke</option>
+          <option value="Komfort & Schlafzubehör">Komfort & Schlafzubehör</option>
+          <option value="Accessoires & Alltagshelfer">Accessoires & Alltagshelfer</option>
+          <option value="Organisation & Utensilien">Organisation & Utensilien</option>
+        </select>
+        <input type="number" id="newItemWeight" placeholder="Gramm/Stk" min="1">
+        <select id="newItemType"><option value="Basis">Basis</option><option value="Am Körper">Am Körper</option><option value="Verbrauch">Verbrauch</option></select>
+        <select id="newItemLoc"><option value="Aufgabegepäck">Aufgabegepäck</option><option value="Handgepäck">Handgepäck</option><option value="Umhängetasche">Umhängetasche</option><option value="Am Körper">Am Körper</option></select>
+        <button class="f on" onclick="addPackItem()">+ Hinzufügen</button>
+      </div>
+
+      <!-- Packlisten-Tabelle -->
+      <div class="tw">
+        <table>
+          <thead>
+            <tr><th style="text-align:center">Packen</th><th>Gegenstand</th><th>Gewichtstyp</th><th>Packort</th><th style="text-align:center">Anzahl</th><th style="text-align:right">Stk (g)</th><th style="text-align:right">Gesamt (g)</th><th style="text-align:center">Aktionen</th></tr>
+          </thead>
+          <tbody id="packTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Gewichtsanalyse & Diagramme -->
+    <div class="box" style="margin-top:24px">
+      <h3>📊 Gewichtsanalyse je Kategorie</h3>
+      <p class="note">Vergleich des Gesamtgewichts pro Kategorie für Ines und Stefan.</p>
+      <div class="tw" style="margin-bottom:20px">
+        <table>
+          <thead><tr><th>Kategorie</th><th style="text-align:right">Stefan Gewicht (g)</th><th style="text-align:right">Stefan Anteil</th><th style="text-align:right">Ines Gewicht (g)</th><th style="text-align:right">Ines Anteil</th><th style="text-align:right">Gesamt Paar (g)</th></tr></thead>
+          <tbody id="analysisTableBody"></tbody>
+        </table>
+      </div>
+      <div class="charts-grid">
+        <div class="chart-card"><h4 style="margin-bottom:10px">Gewichtsverteilung Stefan</h4><div class="chart-container"><canvas id="chartStefan"></canvas></div></div>
+        <div class="chart-card"><h4 style="margin-bottom:10px">Gewichtsverteilung Ines</h4><div class="chart-container"><canvas id="chartInes"></canvas></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ==========================================================================
+   1. PERSONEN & DATUMS-HILFSFUNKTIONEN
+   ========================================================================== */
+const P = {
+  S: { n: 'Stefan', c: '#2563eb', s: '01-01', e: '01-29' },
+  I: { n: 'Ines',   c: '#16a34a', s: '01-01', e: '02-23' }
+};
+const D0 = Date.UTC(2027, 0, 1);
+const ts  = md => { const [m, d] = md.split('-'); return Date.UTC(2027, m - 1, d); };
+const dn  = md => Math.round((ts(md) - D0) / 864e5) + 1;
+const fmt = md => md.slice(3) + '.' + md.slice(0, 2) + '.';
+
+let currentRegionThailand = 'all', currentRegionSriLanka = 'all', currentPerson = 'stefan', map;
+const markers = {};
+let chartStefanInstance = null, chartInesInstance = null;
+const $ = s => document.querySelector(s);
+
+function renderStats() {
+  $('#stats').innerHTML = Object.entries(P).map(([k, p]) => {
+    const n = dn(p.e) - dn(p.s) + 1;
+    return `<div class="stat"><span style="color:${p.c}">●</span> ${p.n}<b>${n} Tage</b>${fmt(p.s)} – ${fmt(p.e)}</div>`;
+  }).join('');
+}
+
+/* ==========================================================================
+   2. REISEROUTE-DATEN
+   ========================================================================== */
+const thailandData = [
+  { day: "Tag 1", date: "01.01. (Fr)", groupTag: "Ines & Stefan", region: "Anreise", regTag: "tag-default", title: "Start Reise ab Flughafen Wien (VIE)", details: "Flug nach Bangkok (BKK) um 15:30 Uhr (Saudia SV152 + SV846, Stopp in Flughafen Riad RUH)", transport: "✈️ Saudia SV152", hotel: "✈️ Im Flugzeug", locName: "Flughafen Wien (VIE)", lat: 48.1103, lng: 16.5697 },
+  { day: "Tag 2", date: "02.01. (Sa)", groupTag: "Ines & Stefan", region: "Isan / Udon Thani", regTag: "tag-default", title: "Ankunft Bangkok ➔ Udon Thani", details: "Ankunft 13:40 am Flughafen BKK ➔ Weiterflug TG008 um 18:20 ➔ Ankunft UTH 19:30, Abholung OW", transport: "✈️ Thai TG008", hotel: "🏠 Bei OW", locName: "Udon Thani (UTH)", lat: 17.3861, lng: 102.7881 },
+  { day: "Tag 3", date: "03.01. (So)", groupTag: "Ines & Stefan", region: "Isan / Udon Thani", regTag: "tag-default", title: "Udon Thani", details: "Zeit mit OW – Ganzer Tag (Tipp: Red Lotus Lake)", transport: "🚗 Mietwagen/Taxi", hotel: "🏠 Bei OW", locName: "Udon Thani (UTH)", lat: 17.3861, lng: 102.7881 },
+  { day: "Tag 4", date: "04.01. (Mo)", groupTag: "Ines & Stefan", region: "Isan / Udon Thani", regTag: "tag-default", title: "Udon Thani", details: "Zeit mit OW – Ganzer Tag", transport: "🚗 Mietwagen/Taxi", hotel: "🏠 Bei OW", locName: "Udon Thani (UTH)", lat: 17.3861, lng: 102.7881 },
+  { day: "Tag 5", date: "05.01. (Di)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Udon Thani ➔ Chiang Mai", details: "Abreise Udon Thani (Nok Air DD703 16:30-17:35), Ankunft Chiang Mai, Altstadt & Street Food", transport: "✈️ Nok Air DD703", hotel: "🏨 Sylvis Hostel Chiangmai", locName: "Chiang Mai (CNX)", lat: 18.7677, lng: 98.9640 },
+  { day: "Tag 6", date: "06.01. (Mi)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Chiang Mai / Umland", details: "Tempel-Tour (Wat Chedi Luang, Wat Phra Singh, Wat Phra That Doi Suthep)", transport: "🛵 Grab / Roller", hotel: "🏨 Sylvis Hostel Chiangmai", locName: "Chiang Mai (CNX)", lat: 18.7677, lng: 98.9640 },
+  { day: "Tag 7", date: "07.01. (Do)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Chiang Mai / Umland", details: "Tagestour in den Doi Inthanon Nationalpark (Wandern & Wasserfälle - 2565 m)", transport: "🚐 Tagestour", hotel: "🏨 Sylvis Hostel Chiangmai", locName: "Chiang Mai (CNX)", lat: 18.7677, lng: 98.9640 },
+  { day: "Tag 8", date: "08.01. (Fr)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Chiang Mai ➔ Pai", details: "Reise nach Pai – ca. 3 h Fahrt (762 Kurven)", transport: "🚐 Minivan (AYA)", hotel: "🏨 Bueng Pai Farm", locName: "Pai", lat: 19.3582, lng: 98.4402 },
+  { day: "Tag 9", date: "09.01. (Sa)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Pai / Umland", details: "Wandern Pai Canyon, Land Split & Night Market", transport: "🛵 Roller", hotel: "🏨 Bueng Pai Farm", locName: "Pai", lat: 19.3582, lng: 98.4402 },
+  { day: "Tag 10", date: "10.01. (So)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Pai / Umland", details: "Pai genießen: Lod Cave, Bamboo Bridge & Hot Springs", transport: "🛵 Roller", hotel: "🏨 Bueng Pai Farm", locName: "Pai", lat: 19.3582, lng: 98.4402 },
+  { day: "Tag 11", date: "11.01. (Mo)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Pai / Umland", details: "Erkundung Tag 4 in Pai: Aussichtspunkte, Cafés & entspannen", transport: "🛵 Roller", hotel: "🏨 Bueng Pai Farm", locName: "Pai", lat: 19.3582, lng: 98.4402 },
+  { day: "Tag 12", date: "12.01. (Di)", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Pai / Umland", details: "Erkundung Tag 5 in Pai: Letzter Tag im Hochland", transport: "🛵 Roller", hotel: "🏨 Bueng Pai Farm", locName: "Pai", lat: 19.3582, lng: 98.4402 },
   { day: "Tag 13", date: "13.01. (Mi)", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Pai ➔ Krabi", details: "Direkter Transfer von Pai auf dem besten Weg nach Krabi", transport: "🚐 Minivan / Flug", hotel: "🏨 EZ auf Krabi", locName: "Krabi / Railay", lat: 8.0863, lng: 98.9063 },
   { day: "Tag 14", date: "14.01. (Do)", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Krabi", details: "Railay Beach & Phra Nang Cave Beach", transport: "🚤 Longtail-Boot", hotel: "🏨 EZ auf Krabi", locName: "Krabi / Railay", lat: 8.0863, lng: 98.9063 },
   { day: "Tag 15", date: "15.01. (Fr)", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Krabi", details: "Tagestrip nach Ko Hong (Lagune & Viewpoint)", transport: "🚤 Longtail-Tour", hotel: "🏨 EZ auf Krabi", locName: "Krabi / Railay", lat: 8.0863, lng: 98.9063 },
@@ -221,29 +739,22 @@ const defaultInes = toItems(rawItemsInes);
 let packlists = { stefan: [], ines: [] };
 
 /* ==========================================================================
-   4. REISEROUTE: Land-Umschalter, Filter, Tabelle, mobile Karten
+   4. REISEROUTE: Filter, Tabellen, mobile Karten
    ========================================================================== */
-function switchCountry(country) {
-  currentCountry = country; currentRegion = 'all';
-  $('#btnThailand').classList.toggle('on', country === 'thailand');
-  $('#btnSriLanka').classList.toggle('on', country === 'srilanka');
-  renderFilters(); renderTableAndCards();
-}
-
 function renderFilters() {
-  const search = `<input type="search" id="q" placeholder="Nach Ort, Aktivität, Flug oder Transport suchen..." onkeyup="filterPlan()">`;
-  const btn = (val, label, on) => `<button class="f${on ? ' on' : ''}" onclick="setFilter('${val}', this)">${label}</button>`;
-  $('#filterControls').innerHTML = currentCountry === 'thailand'
-    ? search + btn('all', 'Alle', true) + btn('Udon Thani', 'Udon Thani') + btn('Norden', 'Norden') + btn('Bangkok', 'Bangkok') + btn('Andamanen', 'Andamanensee') + btn('Samui', 'Samui-Archipel')
-    : search + btn('all', 'Alle', true) + btn('Ines alleine', 'Ines alleine') + btn('Ines & Anna', 'Ines & Anna') + btn('Kulturdreieck', 'Kulturdreieck') + btn('Hochland', 'Hochland & Zug') + btn('Südküste', 'Südküste');
+  const searchTH = `<input type="search" id="qTH" class="q-input" placeholder="Nach Ort, Aktivität oder Transport suchen..." onkeyup="filterPlanThailand()">`;
+  const btnTH = (val, label, on) => `<button class="f${on ? ' on' : ''}" onclick="setFilterThailand('${val}', this)">${label}</button>`;
+  $('#filterControlsThailand').innerHTML = searchTH + btnTH('all', 'Alle', true) + btnTH('Udon Thani', 'Udon Thani') + btnTH('Norden', 'Norden') + btnTH('Bangkok', 'Bangkok') + btnTH('Andamanen', 'Andamanensee') + btnTH('Samui', 'Samui-Archipel');
+
+  const searchSL = `<input type="search" id="qSL" class="q-input" placeholder="Nach Ort, Aktivität oder Transport suchen..." onkeyup="filterPlanSriLanka()">`;
+  const btnSL = (val, label, on) => `<button class="f${on ? ' on' : ''}" onclick="setFilterSriLanka('${val}', this)">${label}</button>`;
+  $('#filterControlsSriLanka').innerHTML = searchSL + btnSL('all', 'Alle', true) + btnSL('Ines alleine', 'Ines alleine') + btnSL('Ines & Anna', 'Ines & Anna') + btnSL('Kulturdreieck', 'Kulturdreieck') + btnSL('Hochland', 'Hochland & Zug') + btnSL('Südküste', 'Südküste');
 }
 
 function renderTableAndCards() {
-  const data = currentCountry === 'thailand' ? thailandData : sriLankaData;
-  const tbody = $('#planTableBody');
-  tbody.innerHTML = '';
-
-  data.forEach(item => {
+  const tbodyTH = $('#planTableBodyThailand');
+  tbodyTH.innerHTML = '';
+  thailandData.forEach(item => {
     const tr = document.createElement('tr');
     tr.className = 'row';
     tr.setAttribute('data-region', item.region);
@@ -263,33 +774,75 @@ function renderTableAndCards() {
       <td>${item.details}</td>
       <td><span class="pill">${item.transport}</span></td>
       <td><span class="pill hotel-pill">${item.hotel}</span></td>`;
-    tbody.appendChild(tr);
+    tbodyTH.appendChild(tr);
   });
-  filterPlan();
+  filterPlanThailand();
+
+  const tbodySL = $('#planTableBodySriLanka');
+  tbodySL.innerHTML = '';
+  sriLankaData.forEach(item => {
+    const tr = document.createElement('tr');
+    tr.className = 'row';
+    tr.setAttribute('data-region', item.region);
+    tr.setAttribute('data-group', item.groupTag || '');
+    tr.setAttribute('data-location', item.locName);
+    tr.onclick = () => focusMap(item.locName);
+
+    let groupClass = 'group-ines-stefan';
+    if (item.groupTag === 'Ines alleine') groupClass = 'group-ines-alleine';
+    if (item.groupTag === 'Ines & Anna') groupClass = 'group-ines-anna';
+    const groupBadge = item.groupTag ? `<span class="group-badge ${groupClass}">${item.groupTag}</span>` : '';
+
+    tr.innerHTML = `
+      <td><span class="dn">${item.day}</span><div class="dt">${item.date}</div>${groupBadge}</td>
+      <td><span class="rg ${item.regTag}">${item.region}</span></td>
+      <td><div class="tt">${item.title}</div></td>
+      <td>${item.details}</td>
+      <td><span class="pill">${item.transport}</span></td>
+      <td><span class="pill hotel-pill">${item.hotel}</span></td>`;
+    tbodySL.appendChild(tr);
+  });
+  filterPlanSriLanka();
 }
 
-function setFilter(filterVal, btn) {
-  currentRegion = filterVal;
-  document.querySelectorAll('.controls .f').forEach(b => b.classList.remove('on'));
+function setFilterThailand(filterVal, btn) {
+  currentRegionThailand = filterVal;
+  document.querySelectorAll('#thailand .controls .f').forEach(b => b.classList.remove('on'));
   btn.classList.add('on');
-  filterPlan();
+  filterPlanThailand();
 }
 
-function filterPlan() {
-  const q = $('#q') ? $('#q').value.toLowerCase() : '';
-  document.querySelectorAll('#planTableBody tr').forEach(row => {
+function setFilterSriLanka(filterVal, btn) {
+  currentRegionSriLanka = filterVal;
+  document.querySelectorAll('#srilanka .controls .f').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  filterPlanSriLanka();
+}
+
+function filterPlanThailand() {
+  const q = $('#qTH') ? $('#qTH').value.toLowerCase() : '';
+  document.querySelectorAll('#planTableBodyThailand tr').forEach(row => {
     const okSearch = row.innerText.toLowerCase().includes(q);
-    const okFilter = currentRegion === 'all' || (row.getAttribute('data-region') || '').includes(currentRegion) || (row.getAttribute('data-group') || '').includes(currentRegion);
+    const okFilter = currentRegionThailand === 'all' || (row.getAttribute('data-region') || '').includes(currentRegionThailand) || (row.getAttribute('data-group') || '').includes(currentRegionThailand);
     row.style.display = (okSearch && okFilter) ? '' : 'none';
   });
-  renderMobileCards();
+  renderMobileCardsThailand();
 }
 
-/* Optimiertes Layout für Mobile Tageskarten */
-function renderMobileCards() {
-  const container = $('#mobileCards');
+function filterPlanSriLanka() {
+  const q = $('#qSL') ? $('#qSL').value.toLowerCase() : '';
+  document.querySelectorAll('#planTableBodySriLanka tr').forEach(row => {
+    const okSearch = row.innerText.toLowerCase().includes(q);
+    const okFilter = currentRegionSriLanka === 'all' || (row.getAttribute('data-region') || '').includes(currentRegionSriLanka) || (row.getAttribute('data-group') || '').includes(currentRegionSriLanka);
+    row.style.display = (okSearch && okFilter) ? '' : 'none';
+  });
+  renderMobileCardsSriLanka();
+}
+
+function renderMobileCardsThailand() {
+  const container = $('#mobileCardsThailand');
   container.innerHTML = '';
-  document.querySelectorAll('#planTableBody tr').forEach(row => {
+  document.querySelectorAll('#planTableBodyThailand tr').forEach(row => {
     if (row.style.display === 'none') return;
     const c = row.querySelectorAll('td'), loc = row.getAttribute('data-location');
     const card = document.createElement('div');
@@ -300,9 +853,6 @@ function renderMobileCards() {
     const dateText = c[0].querySelector('.dt') ? c[0].querySelector('.dt').innerText : '';
     const groupBadge = c[0].querySelector('.group-badge') ? c[0].querySelector('.group-badge').outerHTML : '';
     const regionBadge = c[1].querySelector('.rg') ? c[1].querySelector('.rg').outerHTML : '';
-
-
-
 
     card.innerHTML = `
       <div class="card-header">
@@ -320,7 +870,36 @@ function renderMobileCards() {
   });
 }
 
+function renderMobileCardsSriLanka() {
+  const container = $('#mobileCardsSriLanka');
+  container.innerHTML = '';
+  document.querySelectorAll('#planTableBodySriLanka tr').forEach(row => {
+    if (row.style.display === 'none') return;
+    const c = row.querySelectorAll('td'), loc = row.getAttribute('data-location');
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.onclick = () => focusMap(loc);
+    
+    const dayBadge = c[0].querySelector('.dn') ? c[0].querySelector('.dn').outerHTML : '';
+    const dateText = c[0].querySelector('.dt') ? c[0].querySelector('.dt').innerText : '';
+    const groupBadge = c[0].querySelector('.group-badge') ? c[0].querySelector('.group-badge').outerHTML : '';
+    const regionBadge = c[1].querySelector('.rg') ? c[1].querySelector('.rg').outerHTML : '';
 
+    card.innerHTML = `
+      <div class="card-header">
+        <div class="card-meta">
+          ${dayBadge}
+          <span class="card-date">${dateText}</span>
+          ${groupBadge}
+        </div>
+        ${regionBadge}
+      </div>
+      <div class="card-title">${c[2].innerText}</div>
+      <div class="card-details">${c[3].innerHTML}</div>
+      <div class="card-footer">${c[4].innerHTML} ${c[5].innerHTML}</div>`;
+    container.appendChild(card);
+  });
+}
 
 /* ==========================================================================
    5. KARTE (Leaflet)
@@ -332,7 +911,7 @@ function initMap() {
     '🌏 OSM Standard (NUR Landessprache)': layer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', '&copy; OpenStreetMap'),
     '🗺️ Esri Street (Englisch)': layer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', 'Tiles &copy; Esri'),
     '⛰️ Topografisch (CyclOSM)': layer('https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png', '&copy; OpenStreetMap / CyclOSM', 18),
-    '⛰️ OpenTopoMap (Gelände)': layer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', '&copy; OpenTopoMap', 17)
+    '⛰️️ OpenTopoMap (Gelände)': layer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', '&copy; OpenTopoMap', 17)
   };
   map = L.map('map', { layers: [baseLayers['🇩🇪 OSM Deutsch (Deutsch / Landessprache)']] });
   L.control.layers(baseLayers, null, { collapsed: true, position: 'topright' }).addTo(map);
@@ -448,9 +1027,14 @@ function focusMap(name) {
   else if (name.includes("Krabi")) t = markers["Krabi / Railay"];
   else t = markers[name];
   if (t) {
-    map.flyTo([t.lat, t.lng], 10, { duration: 1.2 });
-    t.marker.openPopup();
-    $('#mapBox').scrollIntoView({ behavior: 'smooth' });
+    document.querySelectorAll('.tabs .tab').forEach(x => x.classList.toggle('on', x.dataset.t === 'mapview'));
+    document.querySelectorAll('.pane').forEach(x => x.classList.toggle('on', x.id === 'mapview'));
+    setTimeout(() => {
+      map.invalidateSize();
+      map.flyTo([t.lat, t.lng], 10, { duration: 1.2 });
+      t.marker.openPopup();
+      $('#mapBox').scrollIntoView({ behavior: 'smooth' });
+    }, 100);
   }
 }
 
@@ -465,10 +1049,9 @@ function updateCountdown() {
   el.innerHTML = `⏳ Noch <b>${Math.floor(t / 86400)}</b> Tage, <b>${Math.floor(t / 3600) % 24}</b> Std., <b>${Math.floor(t / 60) % 60}</b> Min. & <b>${t % 60}</b> Sek.`;
 }
 
-// Berechnung Arbeitstage (Mo-Fr) ohne Feiertage
 function calculateWorkDays() {
   const start = new Date(); start.setHours(0,0,0,0);
-  const end = new Date(2027, 0, 1); // 01.01.2027
+  const end = new Date(2027, 0, 1);
 
   if (start >= end) {
     $('#workDaysBayern').innerText = '0 Tage';
@@ -476,7 +1059,6 @@ function calculateWorkDays() {
     return;
   }
 
-  // Feiertage YYYY-MM-DD
   const holidaysBayern = ['2026-10-03', '2026-11-01', '2026-12-25', '2026-12-26', '2027-01-01'];
   const holidaysWien   = ['2026-10-26', '2026-11-01', '2026-12-08', '2026-12-25', '2026-12-26', '2027-01-01'];
 
@@ -484,7 +1066,7 @@ function calculateWorkDays() {
   let cur = new Date(start);
 
   while (cur < end) {
-    const dayOfWeek = cur.getDay(); // 0 = So, 6 = Sa
+    const dayOfWeek = cur.getDay();
     if (dayOfWeek !== 0 && dayOfWeek !== 6) {
       const iso = cur.toISOString().split('T')[0];
       if (!holidaysBayern.includes(iso)) countBayern++;
@@ -749,7 +1331,7 @@ function updateCharts(stefanData, inesData) {
 document.querySelectorAll('.tabs .tab').forEach(b => b.onclick = () => {
   document.querySelectorAll('.tabs .tab').forEach(x => x.classList.toggle('on', x === b));
   document.querySelectorAll('.pane').forEach(x => x.classList.toggle('on', x.id === b.dataset.t));
-  if (b.dataset.t === 'route' && map) setTimeout(() => map.invalidateSize(), 100);
+  if (b.dataset.t === 'mapview' && map) setTimeout(() => map.invalidateSize(), 100);
 });
 
 $('#fs').onclick = () => {
@@ -787,7 +1369,8 @@ window.addEventListener('DOMContentLoaded', () => {
   safe(() => { updateCountdown(); setInterval(updateCountdown, 1000); });
   safe(renderStats);
   safe(labelAccTables);
-  safe(() => switchCountry('thailand'));
+  safe(renderFilters);
+  safe(renderTableAndCards);
   safe(initMap);
   safe(calculateWorkDays);
   safe(loadTodos);
