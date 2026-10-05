@@ -8,7 +8,7 @@
     <title>Thailand & Sri Lanka Reise 2027</title>
     
     <!-- PWA Web App Manifest & Favicon (Inline Data-URIs) -->
-    <link rel="manifest" href="data:application/manifest+json;charset=utf-8,%7B%22name%22%3A%22Thailand%20%26%20Sri%20Lanka%202027%22%2C%22short_name%22%3A%22Reise2027%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23f4f7f4%22%2C%22theme_color%22%3A%22%2315803d%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%20xmlns%3D%2522http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%2522%20viewBox%3D%25220%200%20100%20100%2522%253E%253Ctext%20y%3D%2522.9em%2522%20font-size%3D%252290%2522%253E%25F0%259F%2590%2598%253C%2Ftext%253E%253C%2Fsvg%253E%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%253E%7D%5D%7D">
+    <link rel="manifest" href="data:application/manifest+json;charset=utf-8,%7B%22name%22%3A%22Thailand%20%26%20Sri%20Lanka%202027%22%2C%22short_name%22%3A%22Reise2027%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23f4f7f4%22%2C%22theme_color%22%3A%22%2315803d%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Fxml%2C%253Csvg%20xmlns%3D%2522http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%2522%20viewBox%3D%25220%200%20100%20100%2522%253E%253Ctext%20y%3D%2522.9em%2522%20font-size%3D%252290%2522%253E%25F0%259F%2590%2598%253C%2Ftext%253E%253C%2Fsvg%253E%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fsvg%2Fxml%253E%7D%5D%7D">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐘</text></svg>">
     
     <!-- Google Fonts Preconnect & Stylesheet -->
@@ -266,6 +266,19 @@
             #acc td:nth-child(5)::before { color: #92400e; }
             #acc .travel-time-pill { display: flex; width: fit-content; margin-bottom: 3px; background: #fef3c7; font-size: .68rem; padding: 1px 4px; }
             
+            /* Mobile Packlisten-Vereinfachung */
+            #pack .tw { background: 0 0; border: 0; box-shadow: none; overflow: visible; }
+            #pack thead { display: none; }
+            #pack table, #pack tbody { display: block; width: 100%; }
+            #pack tr { display: flex; align-items: center; justify-content: space-between; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; margin-bottom: 6px; box-shadow: var(--shadow); }
+            #pack tr:has(.pack-table-cat) { display: block; background: #f1f5f9; color: var(--p1); font-weight: 800; font-size: .75rem; text-transform: uppercase; border-left: 3px solid var(--p1); padding: 6px 10px; margin-top: 10px; }
+            #pack td { border: 0; padding: 0; font-size: .8rem; display: flex; align-items: center; }
+            #pack td:nth-child(1) { order: 1; margin-right: 10px; }
+            #pack td:nth-child(2) { order: 2; flex: 1; }
+            #pack td:nth-child(3), #pack td:nth-child(4), #pack td:nth-child(5), #pack td:nth-child(8) { display: none; }
+            #pack td:nth-child(6) { order: 3; font-size: .75rem; color: var(--mute); margin-right: 8px; }
+            #pack td:nth-child(7) { order: 4; font-weight: 700; color: var(--p1); font-size: .82rem; }
+
             .charts-grid { grid-template-columns: 1fr; }
             #climate .tw { display: none; }
             .climate-cards { display: flex; }
@@ -995,7 +1008,6 @@
                 <div style="font-size: .88rem; line-height: 1.6; color: var(--text);">
        
            <br>
-       
         <p><strong>Private Reise-Webseite:</strong><br>
         Private Reisedokumentation und Routenplanung für Thailand und Sri Lanka.</p>
         <br>
@@ -1008,8 +1020,6 @@
     <br>
         <p class="note">Angaben gemäß allgemeiner Informationspflicht.</p>
                 <div style="font-size:.9rem;line-height:1.8;color:var(--text)">
-                 
-
                 </div>
             </div>
         </div>
@@ -1053,7 +1063,7 @@
 
         /* 2. Reiseroute-Daten (Thailand & Sri Lanka) */
         const thailandData = [
-            { day: "Tag 1", date: "01.01. (Fr)", rawDate: "2027-01-01", groupTag: "Ines & Stefan", region: "Anreise", regTag: "tag-default", title: "Start Reise ab Flughafen Wien (VIE)", details: "Flug nach Bangkok (BKK) um 15:30 Uhr (Saudia SV152 + SV846, Stopp in Flughafen Riad RUH)", transport: "✈️️ Saudia SV152", hotel: "✈️ Im Flugzeug", locName: "Flughafen Wien (VIE)", lat: 48.1103, lng: 16.5697 },
+            { day: "Tag 1", date: "01.01. (Fr)", rawDate: "2027-01-01", groupTag: "Ines & Stefan", region: "Anreise", regTag: "tag-default", title: "Start Reise ab Flughafen Wien (VIE)", details: "Flug nach Bangkok (BKK) um 15:30 Uhr (Saudia SV152 + SV846, Stopp in Flughafen Riad RUH)", transport: "✈ Saudia SV152", hotel: "✈️ Im Flugzeug", locName: "Flughafen Wien (VIE)", lat: 48.1103, lng: 16.5697 },
             { day: "Tag 2", date: "02.01. (Sa)", rawDate: "2027-01-02", groupTag: "Ines & Stefan", region: "Isan / Udon Thani", regTag: "tag-default", title: "Ankunft Bangkok ➔ Udon Thani", details: "Ankunft 13:40 am Flughafen BKK ➔ Weiterflug TG008 um 18:20 ➔ Ankunft UTH 19:30, Abholung OW", transport: "✈️ Thai TG008", hotel: "🏠 Bei OW", locName: "Udon Thani (UTH)", lat: 17.3861, lng: 102.7881 },
             { day: "Tag 3", date: "03.01. (So)", rawDate: "2027-01-03", groupTag: "Ines & Stefan", region: "Isan / Udon Thani", regTag: "tag-default", title: "Udon Thani", details: "Zeit mit OW – Ganzer Tag (Tipp: Red Lotus Lake)", transport: "🚗 Mietwagen/Taxi", hotel: "🏠 Bei OW", locName: "Udon Thani (UTH)", lat: 17.3861, lng: 102.7881 },
             { day: "Tag 4", date: "04.01. (Mo)", rawDate: "2027-01-04", groupTag: "Ines & Stefan", region: "Isan / Udon Thani", regTag: "tag-default", title: "Udon Thani", details: "Zeit mit OW – Ganzer Tag", transport: "🚗 Mietwagen/Taxi", hotel: "🏠 Bei OW", locName: "Udon Thani (UTH)", lat: 17.3861, lng: 102.7881 },
@@ -1778,8 +1788,7 @@
                         <td style="text-align:center">
                             <input type="checkbox" ${item.packed ? 'checked' : ''} onchange="togglePacked(${idx})" style="accent-color:var(--p1);width:14px;height:14px;cursor:pointer">
                         </td>
-                        <td><strong style="color:${item.packed ? 'var(--ink)' : 'var(--mute)'};${!item.packed ? 'text-decoration:line-through;' : ''}">${item.name}</strong></td>
-                        <td><select class="table-select ${item.type === 'Am Körper' ? 'select-am-koerper' : ''}" onchange="changeType(${idx}, this.value)">${sel(item.type, ['Basis', 'Am Körper', 'Verbrauch'])}</select></td>
+<td><strong style="color:${item.packed ? 'var(--mute)' : 'var(--ink)'};${item.packed ? 'text-decoration:line-through;' : ''}">${item.name}</strong></td>                        <td><select class="table-select ${item.type === 'Am Körper' ? 'select-am-koerper' : ''}" onchange="changeType(${idx}, this.value)">${sel(item.type, ['Basis', 'Am Körper', 'Verbrauch'])}</select></td>
                         <td><select class="table-select" onchange="changeLoc(${idx}, this.value)">${sel(item.loc, ['Aufgabegepäck', 'Handgepäck', 'Umhängetasche', 'Am Körper'])}</select></td>
                         <td style="text-align:center">
                             <button style="border:none;background:none;font-weight:bold" onclick="changeQty(${idx}, -1)">-</button>
