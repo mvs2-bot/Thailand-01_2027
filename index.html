@@ -25,8 +25,8 @@
     
     <style>
         /* ==========================================================================
-           CSS DESIGN-SYSTEM & VARIABLEN
-           ========================================================================== */
+            CSS DESIGN-SYSTEM & VARIABLEN
+            ========================================================================== */
         :root {
             --bg: #f4f7f4;
             --card: #fff;
@@ -52,8 +52,8 @@
         :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 
         /* ==========================================================================
-           HEADER & NAVIGATION
-           ========================================================================== */
+            HEADER & NAVIGATION
+            ========================================================================== */
         .sticky-header { position: sticky; top: 0; background: var(--bg); z-index: 1000; padding-top: 12px; padding-bottom: 12px; margin-bottom: 24px; border-bottom: 3px solid var(--p1); box-shadow: 0 4px 12px rgba(15,23,42,.04); }
         header { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 0 2px 12px; }
         h1 { font-size: clamp(1.5rem, 2.2vw, 2rem); line-height: 1.15; font-weight: 800; letter-spacing: -.025em; color: var(--ink); margin-bottom: 4px; }
@@ -86,23 +86,23 @@
         .q-input:focus { border-color: #86efac; outline: 3px solid rgba(13,148,136,.15); }
         .f { padding: 7px 12px; font-size: .76rem; }
 
-        /* Mobiles Navigations-Popover (Burger-Menü) */
-        .nav-popover { display: none; position: fixed; inset: 0; z-index: 10000; background: rgba(15,23,42,.4); backdrop-filter: blur(2px); justify-content: flex-end; }
+        /* Bottom Sheet Navigations-Popover */
+        .nav-popover { display: none; position: fixed; inset: 0; z-index: 10000; background: rgba(15,23,42,.4); backdrop-filter: blur(2px); align-items: flex-end; justify-content: center; }
         .nav-popover.open { display: flex; }
-        .popover-content { background: var(--card); border-left: 1px solid var(--line); width: 100%; max-width: 340px; height: 100%; padding: 24px 20px; box-shadow: -5px 0 25px rgba(0,0,0,.1); display: flex; flex-direction: column; overflow-y: auto; animation: slideInRight .25s ease-out; }
-        @keyframes slideInRight { from { transform: translateX(100%); } to { transform: translateX(0); } }
+        .popover-content { background: var(--card); border-top: 1px solid var(--line); width: 100%; max-width: 600px; max-height: 85vh; padding: 24px 20px; border-top-left-radius: 20px; border-top-right-radius: 20px; box-shadow: 0 -10px 30px rgba(0,0,0,.15); display: flex; flex-direction: column; overflow-y: auto; animation: slideUpBottom .25s ease-out; }
+        @keyframes slideUpBottom { from { transform: translateY(100%); } to { transform: translateY(0); } }
         .popover-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--line); padding-bottom: 12px; }
         .popover-header h3 { font-size: 1.15rem; font-weight: 800; color: var(--ink); }
         .popover-header button { background: 0 0; border: none; font-size: 1.25rem; cursor: pointer; color: var(--mute); padding: 4px 8px; border-radius: 6px; }
         .popover-header button:hover { background: var(--hover); color: var(--ink); }
-        .popover-links { display: flex; flex-direction: column; gap: 8px; }
+        .popover-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 8px; }
         .popover-links button { display: flex; align-items: center; gap: 12px; background: var(--card); border: 1px solid var(--line); padding: 10px 12px; border-radius: 8px; font-weight: 700; color: var(--text); text-align: left; width: 100%; font-size: .9rem; transition: background .15s, border-color .15s, color .15s; }
         .popover-links button span { font-size: 1.1rem; }
         .popover-links button.on, .popover-links button:hover { background: var(--p1); border-color: var(--p1); color: #fff; }
 
         /* ==========================================================================
-           CONTAINER, KARTEN & KARTENDARSTELLUNG (LEAFLET)
-           ========================================================================== */
+            CONTAINER, KARTEN & KARTENDARSTELLUNG (LEAFLET)
+            ========================================================================== */
         .box { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; margin-bottom: 20px; box-shadow: var(--shadow); }
         .box.map { border-top: 4px solid var(--p1); padding-top: 16px; }
         .box.full { position: fixed; inset: 0; z-index: 9999; border-radius: 0; margin: 0; overflow: auto; background: var(--bg); padding: 20px; }
@@ -118,8 +118,8 @@
         .legend .lh { font: inherit; color: inherit; background: 0 0; border: 0; padding: 0; width: 100%; text-align: left; }
 
         /* ==========================================================================
-           TABELLEN & ROUTENANSICHT
-           ========================================================================== */
+            TABELLEN & ROUTENANSICHT
+            ========================================================================== */
         .tw { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); overflow-x: auto; box-shadow: var(--shadow); }
         table { width: 100%; border-collapse: collapse; font-size: .83rem; text-align: left; }
         th { position: sticky; top: 0; z-index: 1; background: #e2e8f0; color: var(--ink); font-size: .72rem; font-weight: 800; padding: 10px 12px; border-bottom: 2px solid var(--line); white-space: nowrap; }
@@ -152,8 +152,8 @@
         .tag-sl-colombo { background: #f3e8ff; color: #6b21a8; }
 
         /* ==========================================================================
-           MOBILES KARTEN-LAYOUT FÜR ROUTEN & LISTEN
-           ========================================================================== */
+            MOBILES KARTEN-LAYOUT FÜR ROUTEN & LISTEN
+            ========================================================================== */
         .cards { display: none; flex-direction: column; gap: 8px; }
         .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; cursor: pointer; font-size: .8rem; box-shadow: var(--shadow); transition: background .15s; }
         .card:hover { background: var(--hover); }
@@ -172,8 +172,8 @@
         .status-open { background: #fee2e2; color: #dc2626; border: 1px solid #fca5a5; }
 
         /* ==========================================================================
-           PACKLISTE & ARBEITSTAGE
-           ========================================================================== */
+            PACKLISTE & ARBEITSTAGE
+            ========================================================================== */
         .pack-summary, .work-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px 16px; border-radius: 8px; margin-bottom: 16px; }
         .pack-stat-val, .work-stat-val { font-size: 1.15rem; font-weight: 800; color: var(--p1); }
         .pack-stat-lbl, .work-stat-lbl { font-size: .75rem; color: var(--mute); font-weight: 600; }
@@ -219,8 +219,8 @@
         .climate-card-desc { font-size: .78rem; color: var(--text); border-top: 1px solid #e2e8f0; padding-top: 6px; }
 
         /* ==========================================================================
-           RESPONSIVE BREAKPOINTS (MEDIA QUERIES)
-           ========================================================================== */
+            RESPONSIVE BREAKPOINTS (MEDIA QUERIES)
+            ========================================================================== */
         @media (max-width: 860px) {
             body { padding: 10px 8px 22px; }
             .sticky-header { padding-top: 8px; margin-bottom: 12px; }
@@ -306,7 +306,7 @@
             </div>
         </div>
 
-        <!-- Mobiles Off-Canvas Navigations-Popover -->
+        <!-- Bottom Sheet Navigations-Popover -->
         <div id="navPopover" class="nav-popover">
             <div class="popover-content">
                 <div class="popover-header">
@@ -1004,8 +1004,8 @@
     </div>
 
     <!-- ==========================================================================
-       JAVASCRIPT LOGIK & STAMMDATEN
-       ========================================================================== -->
+        JAVASCRIPT LOGIK & STAMMDATEN
+        ========================================================================== -->
     <script>
         /* 1. Personen & Datums-Hilfsfunktionen */
         const P = {
@@ -1041,7 +1041,7 @@
 
         /* 2. Reiseroute-Daten (Thailand & Sri Lanka) */
         const thailandData = [
-            { day: "Tag 1", date: "01.01. (Fr)", rawDate: "2027-01-01", groupTag: "Ines & Stefan", region: "Anreise", regTag: "tag-default", title: "Start Reise ab Flughafen Wien (VIE)", details: "Flug nach Bangkok (BKK) um 15:30 Uhr (Saudia SV152 + SV846, Stopp in Flughafen Riad RUH)", transport: "✈️ Saudia SV152", hotel: "✈️ Im Flugzeug", locName: "Flughafen Wien (VIE)", lat: 48.1103, lng: 16.5697 },
+            { day: "Tag 1", date: "01.01. (Fr)", rawDate: "2027-01-01", groupTag: "Ines & Stefan", region: "Anreise", regTag: "tag-default", title: "Start Reise ab Flughafen Wien (VIE)", details: "Flug nach Bangkok (BKK) um 15:30 Uhr (Saudia SV152 + SV846, Stopp in Flughafen Riad RUH)", transport: "✈️️ Saudia SV152", hotel: "✈️ Im Flugzeug", locName: "Flughafen Wien (VIE)", lat: 48.1103, lng: 16.5697 },
             { day: "Tag 2", date: "02.01. (Sa)", rawDate: "2027-01-02", groupTag: "Ines & Stefan", region: "Isan / Udon Thani", regTag: "tag-default", title: "Ankunft Bangkok ➔ Udon Thani", details: "Ankunft 13:40 am Flughafen BKK ➔ Weiterflug TG008 um 18:20 ➔ Ankunft UTH 19:30, Abholung OW", transport: "✈️ Thai TG008", hotel: "🏠 Bei OW", locName: "Udon Thani (UTH)", lat: 17.3861, lng: 102.7881 },
             { day: "Tag 3", date: "03.01. (So)", rawDate: "2027-01-03", groupTag: "Ines & Stefan", region: "Isan / Udon Thani", regTag: "tag-default", title: "Udon Thani", details: "Zeit mit OW – Ganzer Tag (Tipp: Red Lotus Lake)", transport: "🚗 Mietwagen/Taxi", hotel: "🏠 Bei OW", locName: "Udon Thani (UTH)", lat: 17.3861, lng: 102.7881 },
             { day: "Tag 4", date: "04.01. (Mo)", rawDate: "2027-01-04", groupTag: "Ines & Stefan", region: "Isan / Udon Thani", regTag: "tag-default", title: "Udon Thani", details: "Zeit mit OW – Ganzer Tag", transport: "🚗 Mietwagen/Taxi", hotel: "🏠 Bei OW", locName: "Udon Thani (UTH)", lat: 17.3861, lng: 102.7881 },
