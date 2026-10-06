@@ -335,6 +335,7 @@
                     <button data-t="flights" class="pop-btn"><span>✈️</span>Gebuchte Flüge</button>
                     <button data-t="pack" class="pop-btn"><span>🎒</span>Packliste & Gewicht</button>
                     <button data-t="emergency" class="pop-btn"><span>🚨</span>Infos & Notfall</button>
+                    <button data-t="currency" class="pop-btn"><span>💰</span>Geld & Währung</button>
                     <button data-t="climate" class="pop-btn"><span>🌤️</span>Klima & Wetter</button>
                     <button data-t="imprint" class="pop-btn"><span>📄</span>Impressum</button>
                 </div>
@@ -775,7 +776,7 @@
         <div id="emergency" class="pane">
             <div class="box">
                 <h3>🚨 Infos & Notfall</h3>
-                <p class="note">Wichtige Notrufnummern, Botschaften, Währungen, SIM-Karten und nützliche Apps.</p>
+                <p class="note">Wichtige Notrufnummern, Botschaften, SIM-Karten und nützliche Apps.</p>
                 <div style="font-size:.9rem;line-height:1.8;color:var(--text)">
                     <h4 style="color:var(--p1);margin-top:12px">🇹🇭 Thailand: Notrufe & Botschaft</h4>
                     <ul style="padding-left:18px;margin-bottom:12px">
@@ -789,11 +790,7 @@
                         <li><strong>Deutsche Botschaft Colombo:</strong> 40 Tennyson Road, Cinnamon Gardens, Colombo 7 | Tel.: +94 11 267 4411 | Bereitschaftsdienst (Notfälle): +94 77 748 8888</li>
                     </ul>
                     
-                    <h4 style="color:var(--p1);margin-top:12px">💰 Geld & Währung</h4>
-                    <ul style="padding-left:18px;margin-bottom:12px">
-                        <li><strong>Thailand:</strong> Thailändischer Baht (THB). Bargeld ist in kleineren Shops/Märkten wichtig; Kreditkarte (gebührenfrei) fast überall in Hotels/7-Eleven.</li>
-                        <li><strong>Sri Lanka:</strong> Sri-Lanka-Rupie (LKR). Am besten mit Kreditkarte Geld an Automaten abheben oder USD/EUR tauschen.</li>
-                    </ul>
+
                     
                     <h4 style="color:var(--p1);margin-top:12px">📱 SIM-Karten & Internet</h4>
                     <ul style="padding-left:18px;margin-bottom:12px">
@@ -811,7 +808,62 @@
             </div>
         </div>
 
-        <!-- Popover-Ansichten: Klima & Wetter -->
+        <!-- Popover-Ansichten: Geld & Währung -->
+        <div id="currency" class="pane">
+            <div class="box">
+                <div class="mh">
+                    <h3>💰 Geld & Währung</h3>
+                    <button onclick="loadRates()">🔄 Aktualisieren</button>
+                </div>
+                <p class="note">Aktuelle Wechselkurse (Basis Euro).</p>
+                <div class="pack-summary">
+                    <div>
+                        <span class="pack-stat-val" id="rateTHB">–</span>
+                        <div class="pack-stat-lbl">1 € in Thailändischen Baht (THB)</div>
+                    </div>
+                    <div>
+                        <span class="pack-stat-val" id="rateLKR">–</span>
+                        <div class="pack-stat-lbl">1 € in Sri-Lanka-Rupien (LKR)</div>
+                    </div>
+                </div>
+                <p class="note" id="rateStatus" style="margin-bottom:0">Kurse werden geladen...</p>
+            </div>
+
+            <div class="box">
+                <h3>🧮 Wechselkurs-Rechner</h3>
+                <div class="pack-add-form" style="margin-top:12px">
+                    <input type="number" id="fxAmount" value="100" min="0" step="any" oninput="calcFx()" style="width:120px">
+                    <select id="fxFrom" onchange="calcFx()">
+                        <option value="EUR">EUR (€)</option>
+                        <option value="THB">THB (฿)</option>
+                        <option value="LKR">LKR (Rs)</option>
+                    </select>
+                    <button class="f" onclick="swapFx()" aria-label="Währungen tauschen">⇄</button>
+                    <select id="fxTo" onchange="calcFx()">
+                        <option value="EUR">EUR (€)</option>
+                        <option value="THB" selected>THB (฿)</option>
+                        <option value="LKR">LKR (Rs)</option>
+                    </select>
+                </div>
+                <div class="pack-summary" style="margin-bottom:0">
+                    <div>
+                        <span class="pack-stat-val" id="fxResult">–</span>
+                        <div class="pack-stat-lbl" id="fxResultLbl">Ergebnis</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box">
+                <h3>💵 Bargeld & Zahlung</h3>
+                <ul style="padding-left:18px;margin-top:8px;font-size:.9rem;line-height:1.8;color:var(--text)">
+                    <li><strong>Thailand:</strong> Thailändischer Baht (THB). Bargeld ist in kleineren Shops/Märkten wichtig; Kreditkarte (gebührenfrei) fast überall in Hotels/7-Eleven.</li>
+                    <li><strong>Sri Lanka:</strong> Sri-Lanka-Rupie (LKR). Am besten mit Kreditkarte Geld an Automaten abheben oder USD/EUR tauschen.</li>
+                </ul>
+            </div>
+        </div>
+
+        
+<!-- Popover-Ansichten: Klima & Wetter -->
         <div id="climate" class="pane">
             <div class="box">
                 <h3>🌤️ Klima & Wetter (Januar & Februar)</h3>
@@ -969,7 +1021,7 @@
                         <div class="climate-card-title">Anuradhapura & Kulturdreieck <span style="font-weight:normal;color:var(--mute);font-size:.75rem">· Februar</span></div>
                         <div class="climate-card-grid">
                             <div class="climate-card-item"><b>Temperatur</b>30°C / 22°C</div>
-                            <div class="climate-card-item"><b>Sonnenstunden</b>8 Std. / Tag</div>
+<div class="climate-card-item"><b>Sonnenstunden</b>8 Std. / Tag</div>
                             <div class="climate-card-item"><b>Niederschlag</b>3 Tage (ca. 40 mm)</div>
                             <div class="climate-card-item"><b>Wassertemperatur</b>– (Binnenland)</div>
                         </div>
@@ -1972,7 +2024,65 @@
             });
         }
 
-        /* 11. Offline-Unterstützung (Service Worker) */
+        /* 10c. Geld & Währung: Live-Kurse & Rechner */
+        let fxRates = null;
+
+        async function loadRates() {
+            const status = $('#rateStatus');
+            if (status) status.textContent = 'Kurse werden geladen...';
+            try {
+                const r = await fetch('https://open.er-api.com/v6/latest/EUR');
+                const d = await r.json();
+                if (d.result !== 'success') throw new Error('API-Fehler');
+                fxRates = { EUR: 1, THB: d.rates.THB, LKR: d.rates.LKR, unix: d.time_last_update_unix, live: true };
+                localStorage.setItem('thailand_fx_v1', JSON.stringify(fxRates));
+            } catch (err) {
+                const cached = localStorage.getItem('thailand_fx_v1');
+                if (cached) {
+                    fxRates = JSON.parse(cached);
+                    fxRates.live = false;
+                }
+            }
+            renderRates();
+        }
+
+        function renderRates() {
+            const status = $('#rateStatus');
+            if (!fxRates) {
+                if (status) status.textContent = '⚠️ Kurse konnten nicht geladen werden (keine Verbindung).';
+                return;
+            }
+            const f = (v, dec) => v.toLocaleString('de-DE', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+            $('#rateTHB').innerText = `${f(fxRates.THB, 2)} ฿`;
+            $('#rateLKR').innerText = `${f(fxRates.LKR, 2)} Rs`;
+            const when = new Date(fxRates.unix * 1000).toLocaleString('de-DE', { dateStyle: 'medium', timeStyle: 'short' });
+            status.textContent = fxRates.live
+                ? `✅ Live-Kurs, Stand: ${when} · Quelle: open.er-api.com`
+                : `📴 Offline – zuletzt gespeicherter Kurs vom ${when}`;
+            calcFx();
+        }
+
+        function calcFx() {
+            const out = $('#fxResult'), lbl = $('#fxResultLbl');
+            if (!out) return;
+            if (!fxRates) { out.innerText = '–'; lbl.innerText = 'Keine Kurse verfügbar'; return; }
+            const amount = parseFloat($('#fxAmount').value);
+            const from = $('#fxFrom').value, to = $('#fxTo').value;
+            if (isNaN(amount)) { out.innerText = '–'; lbl.innerText = 'Bitte Betrag eingeben'; return; }
+            const result = amount * fxRates[to] / fxRates[from];
+            const fmt = v => v.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            out.innerText = `${fmt(result)} ${to}`;
+            lbl.innerText = `${fmt(amount)} ${from} = ${fmt(result)} ${to}`;
+        }
+
+        function swapFx() {
+            const a = $('#fxFrom'), b = $('#fxTo');
+            [a.value, b.value] = [b.value, a.value];
+            calcFx();
+        }
+
+        
+/* 11. Offline-Unterstützung (Service Worker) */
         if ('serviceWorker' in navigator) {
             const swCode = `self.addEventListener('fetch', function(e) { /* Cache-Fallback offline */ });`;
             const swBlob = new Blob([swCode], { type: 'text/javascript' });
@@ -1997,6 +2107,7 @@
             safe(calculateWorkDays);
             safe(loadTodos);
             safe(loadPacklist);
+            safe(loadRates);
         });
     </script>
 </body>
