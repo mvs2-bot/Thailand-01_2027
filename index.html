@@ -8,8 +8,7 @@
     <title>Thailand & Sri Lanka Reise 2027</title>
     
     <!-- PWA Web App Favicon -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐘</text></svg>">
-    
+	<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%F0%9F%90%98%3C/text%3E%3C/svg%3E">    
     <!-- Google Fonts Preconnect & Stylesheet -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -88,7 +87,7 @@
         .popover-content { background: var(--card); border-top: 1px solid var(--line); width: 100%; max-width: 600px; max-height: 85vh; padding: 24px 20px; border-top-left-radius: 20px; border-top-right-radius: 20px; box-shadow: 0 -10px 30px rgba(0,0,0,.15); display: flex; flex-direction: column; overflow-y: auto; animation: slideUpBottom .25s ease-out; }
         @keyframes slideUpBottom { from { transform: translateY(100%); } to { transform: translateY(0); } }
         .popover-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--line); padding-bottom: 12px; }
-        .popover-header h3 { font-size: 1.15rem; font-weight: 800; color: var(--ink); }
+        .popover-header h2 { font-size: 1.15rem; font-weight: 800; color: var(--ink); }
         .popover-header button { background: 0 0; border: none; font-size: 1.25rem; cursor: pointer; color: var(--mute); padding: 4px 8px; border-radius: 6px; }
         .popover-header button:hover { background: var(--hover); color: var(--ink); }
         .popover-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 8px; }
@@ -103,7 +102,7 @@
         .box.map { border-top: 4px solid var(--p1); padding-top: 16px; }
         .box.full { position: fixed; inset: 0; z-index: 9999; border-radius: 0; margin: 0; overflow: auto; background: var(--bg); padding: 20px; }
         .mh { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 14px; }
-        .box h3, .box h4, .mh h2 { font-size: 1.1rem; line-height: 1.25; font-weight: 800; color: var(--ink); }
+        .box h2, .box h3, .mh h2 { font-size: 1.1rem; line-height: 1.25; font-weight: 800; color: var(--ink); }
         .mh button { flex: 0 0 auto; font-size: .8rem; font-weight: 700; color: var(--p1); background: var(--card); border: 1px solid var(--line); border-radius: 7px; padding: 7px 12px; }
         .mh button:hover { background: var(--hover); border-color: #86efac; }
         .note { font-size: .8rem; color: var(--mute); margin-bottom: 14px; }
@@ -235,7 +234,7 @@
             .box { padding: 10px; margin-bottom: 10px; border-radius: 8px; }
             .box.map { padding-top: 8px; }
             .mh { margin-bottom: 8px; }
-            .box h3, .mh h2 { font-size: .92rem; }
+			.box h2, .mh h2 { font-size: .92rem; }
             .mh button { padding: 5px 7px; font-size: .67rem; }
             #map { height: 600px; }
             .controls { gap: 5px; margin-bottom: 8px; }
@@ -320,7 +319,7 @@
         <div id="navPopover" class="nav-popover">
             <div class="popover-content">
                 <div class="popover-header">
-                    <h3>🧭 Navigation</h3>
+                    <h2>🧭 Navigation</h2>
                     <button id="closePopover">✕</button>
                 </div>
                 <div class="popover-links">
@@ -407,10 +406,10 @@
         <!-- Sektion 4: Unterkünfte -->
         <div id="acc" class="pane">
             <div class="box">
-                <h3>🏨 Unterkunfts- & Reisezeitübersicht</h3>
+                <h2>🏨 Unterkunfts- & Reisezeitübersicht</h2>
                 <p class="note">Schnellübersicht über Aufenthaltsdauern, Status und Transferzeiten. (Klicke auf eine Zeile, um den Ort auf der Karte anzuzeigen)</p>
                 
-                <h4 style="margin:12px 0 8px;color:var(--p1)">🇹🇭 THAILAND (01.01. – 29.01.2027)</h4>
+                <h3 style="margin:12px 0 8px;color:var(--p1)">🇹🇭 THAILAND (01.01. – 29.01.2027)</h3>
                 <div class="tw" style="margin-bottom:20px">
                     <table>
                         <thead>
@@ -476,7 +475,7 @@
                     </table>
                 </div>
 
-                <h4 style="margin:16px 0 8px;color:var(--p1)">🇱🇰 SRI LANKA (29.01. – 23.02.2027)</h4>
+                <h3 style="margin:16px 0 8px;color:var(--p1)">🇱🇰 SRI LANKA (29.01. – 23.02.2027)</h3>
                 <div class="tw">
                     <table>
                         <thead>
@@ -561,13 +560,13 @@
         <!-- Sektion 5: Sonstiges, To-Dos & Statistiken -->
         <div id="misc" class="pane">
             <div class="box">
-                <h3>👥 Reisezeiträume & Dauer</h3>
+                <h2>👥 Reisezeiträume & Dauer</h2>
                 <p class="note">Übersicht der Reisedauer pro Person.</p>
                 <div class="stats" id="stats"></div>
             </div>
             
             <div class="box">
-                <h3>💼 Verbleibende Arbeitstage bis Abflug</h3>
+                <h2>💼 Verbleibende Arbeitstage bis Abflug</h2>
                 <p class="note">Verbleibende Werktage (Mo–Fr) ab heute bis zum Abflug am 01.01.2027. Gesetzliche Feiertage sind bereits abgezogen (ohne persönliche Urlaubstage).</p>
                 <div class="work-summary">
                     <div>
@@ -584,7 +583,7 @@
             
             <div class="box">
                 <div class="mh">
-                    <h3>✅ Reise To-Do & Vorbereitungen</h3>
+                    <h2>✅ Reise To-Do & Vorbereitungen</h2>
                     <span id="todoProgress" style="font-size:.8rem;font-weight:700;color:var(--p1)">0/0 erledigt</span>
                 </div>
                 <p class="note">Wichtige Erledigungen für Einreise, Gesundheit & Dokumente.</p>
@@ -601,7 +600,7 @@
             </div>
             
             <div class="box">
-                <h3>💡 Wichtige Infos & Hinweise</h3>
+                <h2>💡 Wichtige Infos & Hinweise</h2>
                 <ul style="padding-left:18px;font-size:.85rem;line-height:1.7">
                     <li><strong>Visum Thailand:</strong> Deutsche & österreichische Staatsbürger benötigen für Aufenthalte bis 60 Tage kein Visum vorab.</li>
                     <li><strong>Arrival Card Thailand (TD-6):</strong> Muss vor der Einreise online/digital ausgefüllt werden.</li>
@@ -614,7 +613,7 @@
         <!-- Popover-Ansichten: Gebuchte Flüge -->
         <div id="flights" class="pane">
             <div class="box">
-                <h3>✈️ Gebuchte Flüge (Übersicht)</h3>
+                <h2>✈️ Gebuchte Flüge (Übersicht)</h2>
                 <p class="note">Alle gebuchten Flugverbindungen und Zwischenstopps im Detail (inkl. direktem Link zur Flugstatusprüfung der Airline):</p>
                 <ul class="fl-list">
                     <li>
@@ -665,7 +664,7 @@
                     <button id="btnPackInes" class="tab" onclick='switchPerson("ines")'><span>🎒</span>Packliste Ines</button>
                 </div>
                 <div class="mh">
-                    <h3 id="packlistTitle">🎒 Interaktive Packliste (Stefan)</h3>
+                    <h2 id="packlistTitle">🎒 Interaktive Packliste (Stefan)</h2>
                     <div style="display:flex;gap:6px;flex-wrap:wrap">
                         <button class="btn-action" style="color:#15803d;background:#dcfce7" onclick="setAllPacked(!0)">✅ Alle einpacken</button>
                         <button class="btn-action" style="color:#dc2626;background:#fee2e2" onclick="setAllPacked(!1)">❌ Alle auspacken</button>
@@ -739,7 +738,7 @@
             </div>
             
             <div class="box" style="margin-top:24px">
-                <h3>📊 Gewichtsanalyse je Kategorie</h3>
+                <h2>📊 Gewichtsanalyse je Kategorie</h2>
                 <p class="note">Vergleich des Gesamtgewichts pro Kategorie für Ines und Stefan.</p>
                 <div class="tw" style="margin-bottom:20px">
                     <table>
@@ -758,11 +757,11 @@
                 </div>
                 <div class="charts-grid">
                     <div class="chart-card">
-                        <h4 style="margin-bottom:10px">Gewichtsverteilung Stefan</h4>
+                        <h3 style="margin-bottom:10px">Gewichtsverteilung Stefan</h3>
                         <div class="chart-container"><canvas id="chartStefan"></canvas></div>
                     </div>
                     <div class="chart-card">
-                        <h4 style="margin-bottom:10px">Gewichtsverteilung Ines</h4>
+                        <h3 style="margin-bottom:10px">Gewichtsverteilung Ines</h3>
                         <div class="chart-container"><canvas id="chartInes"></canvas></div>
                     </div>
                 </div>
@@ -772,16 +771,16 @@
         <!-- Popover-Ansichten: Infos & Notfall -->
         <div id="emergency" class="pane">
             <div class="box">
-                <h3>🚨 Infos & Notfall</h3>
+                <h2>🚨 Infos & Notfall</h2>
                 <p class="note">Wichtige Notrufnummern, Botschaften, SIM-Karten und nützliche Apps.</p>
                 <div style="font-size:.9rem;line-height:1.8;color:var(--text)">
-                    <h4 style="color:var(--p1);margin-top:12px">🇹🇭 Thailand: Notrufe & Botschaft</h4>
+                    <h3 style="color:var(--p1);margin-top:12px">🇹🇭 Thailand: Notrufe & Botschaft</h3>
                     <ul style="padding-left:18px;margin-bottom:12px">
                         <li><strong>Polizei:</strong> 191 | <strong>Touristenpolizei:</strong> 1155 | <strong>Ambulanz/Notarzt:</strong> 1669</li>
                         <li><strong>Deutsche Botschaft Bangkok:</strong> 9 Sathorn Tai Rd., Bangkok 10120 | Tel.: +66 2 287 9000 | Bereitschaftsdienst (Notfälle): +66 81 845 6216</li>
                     </ul>
                     
-                    <h4 style="color:var(--p1);margin-top:12px">🇱🇰 Sri Lanka: Notrufe & Botschaft</h4>
+                    <h3 style="color:var(--p1);margin-top:12px">🇱🇰 Sri Lanka: Notrufe & Botschaft</h3>
                     <ul style="padding-left:18px;margin-bottom:12px">
                         <li><strong>Polizei:</strong> 119 | <strong>Touristenpolizei:</strong> +94 11 242 1052 | <strong>Ambulanz/Notruf:</strong> 110</li>
                         <li><strong>Deutsche Botschaft Colombo:</strong> 40 Tennyson Road, Cinnamon Gardens, Colombo 7 | Tel.: +94 11 267 4411 | Bereitschaftsdienst (Notfälle): +94 77 748 8888</li>
@@ -789,12 +788,12 @@
                     
 
                     
-                    <h4 style="color:var(--p1);margin-top:12px">📱 SIM-Karten & Internet</h4>
+                    <h3 style="color:var(--p1);margin-top:12px">📱 SIM-Karten & Internet</h3>
                     <ul style="padding-left:18px;margin-bottom:12px">
                         <li><strong>Einfachste Lösung:</strong> Vorab eSim über Airalo / Dt. Anbieter buchen oder direkt am Flughafen (AIS/TrueMove in Thailand, Dialog/Mobitel in Sri Lanka) physische SIM/eSIM holen.</li>
                     </ul>
                     
-                    <h4 style="color:var(--p1);margin-top:12px">📲 Nützliche Apps</h4>
+                    <h3 style="color:var(--p1);margin-top:12px">📲 Nützliche Apps</h3>
                     <ul style="padding-left:18px">
                         <li><strong>Grab & Bolt:</strong> Für günstige Taxis & Essen in Thailand.</li>
                         <li><strong>PickMe:</strong> Die ultimative TukTuk- und Taxi-App für Sri Lanka (Preise fair, kein Verhandeln nötig).</li>
@@ -809,7 +808,7 @@
         <div id="currency" class="pane">
             <div class="box">
                 <div class="mh">
-                    <h3>💰 Geld & Währung</h3>
+                    <h2>💰 Geld & Währung</h2>
                     <button onclick="loadRates()">🔄 Aktualisieren</button>
                 </div>
                 <p class="note">Aktuelle Wechselkurse (Basis Euro).</p>
@@ -827,7 +826,7 @@
             </div>
 
             <div class="box">
-                <h3>🧮 Wechselkurs-Rechner</h3>
+                <h2>🧮 Wechselkurs-Rechner</h2>
                 <div class="pack-add-form" style="margin-top:12px">
                     <input type="number" id="fxAmount" value="100" min="0" step="any" oninput="calcFx()" style="width:120px">
                     <select id="fxFrom" onchange="calcFx()">
@@ -851,7 +850,7 @@
             </div>
 
             <div class="box">
-                <h3>💵 Bargeld & Zahlung</h3>
+                <h2>💵 Bargeld & Zahlung</h2>
                 <ul style="padding-left:18px;margin-top:8px;font-size:.9rem;line-height:1.8;color:var(--text)">
                     <li><strong>Thailand:</strong> Thailändischer Baht (THB). Bargeld ist in kleineren Shops/Märkten wichtig; Kreditkarte (gebührenfrei) fast überall in Hotels/7-Eleven.</li>
                     <li><strong>Sri Lanka:</strong> Sri-Lanka-Rupie (LKR). Am besten mit Kreditkarte Geld an Automaten abheben oder USD/EUR tauschen.</li>
@@ -863,7 +862,7 @@
 <!-- Popover-Ansichten: Klima & Wetter -->
         <div id="climate" class="pane">
             <div class="box">
-                <h3>🌤️ Klima & Wetter (Januar & Februar)</h3>
+                <h2>🌤️ Klima & Wetter (Januar & Februar)</h2>
                 <p class="note">Detaillierte klimatische Bedingungen, Temperaturen, Sonnenstunden und Niederschläge an den Reiseorten.</p>
                 
                 <!-- Desktop Tabellenansicht -->
@@ -892,7 +891,7 @@
         <!-- Popover-Ansichten: Impressum -->
         <div id="imprint" class="pane">
             <div class="box">
-                <h3>📄 Impressum</h3>
+                <h2>📄 Impressum</h2>
                 <div style="font-size: .88rem; line-height: 1.6; color: var(--text);">
        
            <br>
@@ -906,12 +905,15 @@
         <p><strong>Kartenmaterial & Lizenzen:</strong><br>
         Kartenansicht erstellt mit Leaflet.js und OpenStreetMap-Daten (© OpenStreetMap-Mitwirkende).</p>
     <br>
-        <p class="note">Angaben gemäß allgemeiner Informationspflicht.</p>
-                <div style="font-size:.9rem;line-height:1.8;color:var(--text)">
+	
+	
+	        <p class="note">Angaben gemäß allgemeiner Informationspflicht.</p>
                 </div>
             </div>
         </div>
     </div>
+
+
 
     <!-- ==========================================================================
         JAVASCRIPT LOGIK & STAMMDATEN
@@ -1364,7 +1366,7 @@
             line(['surat', 'bkk'], flightStyle);
             drawRoadRoute(points.cnx, points.pai, thStyle);
             drawRoadRoute(points.kbv, points.krabi, thStyle);
-		line(['tao', 'surat'], thStyle);
+			line(['tao', 'surat'], thStyle);
             drawRoadRoute(points.bkk, points.bkk_city, thStyle);
             drawRoadRoute(points.cmb, points.negombo, slStyle);
             drawRoadRoute(points.negombo, points.anuradhapura, slStyle);
