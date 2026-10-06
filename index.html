@@ -1926,6 +1926,7 @@
             document.querySelectorAll('.tabs .tab').forEach(x => x.classList.toggle('on', x.dataset.t === targetId));
             document.querySelectorAll('.pane').forEach(x => x.classList.toggle('on', x.id === targetId));
             document.querySelectorAll('.pop-btn').forEach(x => x.classList.toggle('on', x.dataset.t === targetId));
+            window.scrollTo(0, 0);
             if (targetId === 'mapview' && map) setTimeout(() => map.invalidateSize(), 100);
         }
         document.querySelectorAll('.tabs .tab').forEach(b => {
