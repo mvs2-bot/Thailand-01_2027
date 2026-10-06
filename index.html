@@ -1978,6 +1978,12 @@
             document.querySelectorAll('.tabs .tab').forEach(x => x.classList.toggle('on', x.dataset.t === targetId));
             document.querySelectorAll('.pane').forEach(x => x.classList.toggle('on', x.id === targetId));
             document.querySelectorAll('.pop-btn').forEach(x => x.classList.toggle('on', x.dataset.t === targetId));
+			
+			// NEU: URL-Hash setzen, ohne die Seite neu zu laden
+    if (window.location.hash !== '#' + targetId) {
+        history.replaceState(null, null, '#' + targetId);
+    }
+			
             window.scrollTo(0, 0);
             if (targetId === 'mapview' && map) setTimeout(() => map.invalidateSize(), 100);
         }
@@ -2109,6 +2115,28 @@
             safe(loadPacklist);
             safe(loadRates);
         });
+		
+		
+		// NEU: Hash beim Laden auslesen und entsprechendes Tab öffnen
+function loadTabFromHash() {
+    const hash = window.location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) {
+        switchTab(hash);
+    }
+}
+
+// Beim Neuladen den Tab aus dem Hash laden
+window.addEventListener('DOMContentLoaded', () => {
+    // ... deine bisherigen safe()-Aufrufe bleiben unverändert ...
+    
+    // NEU: Hash-Check ganz am Ende aufrufen
+    safe(loadTabFromHash);
+});
+
+// NEU: Reagieren, wenn der Nutzer im Browser "Zurück" oder "Vor" klickt
+window.addEventListener('hashchange', loadTabFromHash);
+
+
     </script>
 </body>
 </html>
