@@ -7,8 +7,7 @@
     <meta name="theme-color" content="#15803d">
     <title>Thailand & Sri Lanka Reise 2027</title>
     
-    <!-- PWA Web App Manifest & Favicon (Inline Data-URIs) -->
-    <link rel="manifest" href="data:application/manifest+json;charset=utf-8,%7B%22name%22%3A%22Thailand%20%26%20Sri%20Lanka%202027%22%2C%22short_name%22%3A%22Reise2027%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23f4f7f4%22%2C%22theme_color%22%3A%22%2315803d%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Fxml%2C%253Csvg%20xmlns%3D%2522http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%2522%20viewBox%3D%25220%200%20100%20100%2522%253E%253Ctext%20y%3D%2522.9em%2522%20font-size%3D%252290%2522%253E%25F0%259F%2590%2598%253C%2Ftext%253E%253C%2Fsvg%253E%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fsvg%2Fxml%253E%7D%5D%7D">
+    <!-- PWA Web App Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐘</text></svg>">
     
     <!-- Google Fonts Preconnect & Stylesheet -->
@@ -20,10 +19,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     
-    <!-- Chart.js für Gewichtsdiagramme -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
-    <style>
+<style>
         /* ==========================================================================
             CSS DESIGN-SYSTEM & VARIABLEN
             ========================================================================== */
@@ -36,7 +32,7 @@
             --text: #334155;
             --mute: #64748b;
             --p1: #15803d;
-            --p2: #7c3aed;
+
             --accent: #0d9488;
             --danger: #dc2626;
             --radius: 12px;
@@ -72,7 +68,7 @@
         /* Tabs & Sub-Tabs */
         .tabs { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
         .sub-tabs { display: flex; gap: 8px; margin-bottom: 16px; }
-        .btn-action, .f, .ph, .tab { background: var(--card); border: 1px solid var(--line); color: var(--text); border-radius: 8px; font-weight: 700; }
+        .btn-action, .f, .tab { background: var(--card); border: 1px solid var(--line); color: var(--text); border-radius: 8px; font-weight: 700; }
         .tab { min-height: 52px; padding: 6px 4px; font-size: .75rem; text-align: center; transition: background .15s, border-color .15s, color .15s, transform .15s; display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1.2; }
         .tab span { font-size: 1.05rem; margin-bottom: 2px; display: block; }
         .f.on, .f:hover, .tab.on, .tab:hover { background: var(--p1); border-color: var(--p1); color: #fff; }
@@ -211,6 +207,7 @@
         .fl-details { font-size: .8rem; color: var(--text); }
         .fl-price { display: inline-block; margin-top: 3px; font-size: .75rem; font-weight: 700; background: #dcfce7; color: var(--p1); padding: 2px 6px; border-radius: 4px; }
         
+        .fl-link { color: var(--p1); font-weight: 700; }
         .climate-cards { display: none; flex-direction: column; gap: 10px; }
         .climate-card { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--p1); border-radius: 8px; padding: 12px 14px; box-shadow: var(--shadow); }
         .climate-card-title { font-size: .92rem; font-weight: 800; color: var(--ink); margin-bottom: 4px; }
@@ -623,37 +620,37 @@
                     <li>
                         <div class="fl-date">01.01.2027 • Hinflug Thailand</div>
                         <div class="fl-route">Wien (VIE) ➔ Riad (RUH) ➔ Bangkok (BKK)</div>
-                        <div class="fl-details">Saudia Airlines (SV152 & SV846) • Abflug VIE: 15:30 Uhr • Stopp Riad • Ankunft BKK: 02.01. um 13:40 Uhr (<a href="https://www.saudia.com/en-SA/flightstatus" target="_blank" style="color:var(--p1);font-weight:700;">Flugstatus prüfen ↗</a>)</div>
+                        <div class="fl-details">Saudia Airlines (SV152 & SV846) • Abflug VIE: 15:30 Uhr • Stopp Riad • Ankunft BKK: 02.01. um 13:40 Uhr (<a href="https://www.saudia.com/en-SA/flightstatus" target="_blank" class="fl-link">Flugstatus prüfen ↗</a>)</div>
                         <div class="fl-price">349,90 € p.P. (Ines & Stefan)</div>
                     </li>
                     <li>
                         <div class="fl-date">02.01.2027 • Inlandsflug Thailand</div>
                         <div class="fl-route">Bangkok (BKK) ➔ Udon Thani (UTH)</div>
-                        <div class="fl-details">Thai Airways (TG008) • 18:20 Uhr – 19:30 Uhr (<a href="https://www.thaiairways.com/de-de/fluge-buchen/flugstatus/" target="_blank" style="color:var(--p1);font-weight:700;">Flugstatus prüfen ↗</a>)</div>
+                        <div class="fl-details">Thai Airways (TG008) • 18:20 Uhr – 19:30 Uhr (<a href="https://www.thaiairways.com/de-de/fluge-buchen/flugstatus/" target="_blank" class="fl-link">Flugstatus prüfen ↗</a>)</div>
                         <div class="fl-price">54,99 € p.P. (Ines & Stefan)</div>
                     </li>
                     <li>
                         <div class="fl-date">05.01.2027 • Inlandsflug Thailand</div>
                         <div class="fl-route">Udon Thani (UTH) ➔ Chiang Mai (CNX)</div>
-                        <div class="fl-details">Nok Air (DD703) • 16:30 Uhr – 17:35 Uhr (<a href="https://booking.nokair.com/en/flight-status" target="_blank" style="color:var(--p1);font-weight:700;">Flugstatus prüfen ↗</a>)</div>
+                        <div class="fl-details">Nok Air (DD703) • 16:30 Uhr – 17:35 Uhr (<a href="https://booking.nokair.com/en/flight-status" target="_blank" class="fl-link">Flugstatus prüfen ↗</a>)</div>
                         <div class="fl-price">98,06 € p.P. (Ines & Stefan)</div>
                     </li>
                     <li>
                         <div class="fl-date">29.01.2027 • Rückflug Deutschland (Stefan)</div>
                         <div class="fl-route">Bangkok (BKK) ➔ München (MUC)</div>
-                        <div class="fl-details">Thai Airways (TG926 Direktflug) • 13:00 Uhr – 18:55 Uhr (<a href="https://www.thaiairways.com/de-de/fluge-buchen/flugstatus/" target="_blank" style="color:var(--p1);font-weight:700;">Flugstatus prüfen ↗</a>)</div>
+                        <div class="fl-details">Thai Airways (TG926 Direktflug) • 13:00 Uhr – 18:55 Uhr (<a href="https://www.thaiairways.com/de-de/fluge-buchen/flugstatus/" target="_blank" class="fl-link">Flugstatus prüfen ↗</a>)</div>
                         <div class="fl-price">424,13 € (Stefan)</div>
                     </li>
                     <li>
                         <div class="fl-date">29.01.2027 • Weiterflug Sri Lanka (Ines)</div>
                         <div class="fl-route">Bangkok (BKK) ➔ Colombo (CMB)</div>
-                        <div class="fl-details">SriLankan Airlines (UL405 Direktflug) • 13:50 Uhr – 15:50 Uhr (<a href="https://www.srilankan.com/en_uk/plan-and-book/flight-status" target="_blank" style="color:var(--p1);font-weight:700;">Flugstatus prüfen ↗</a>)</div>
+                        <div class="fl-details">SriLankan Airlines (UL405 Direktflug) • 13:50 Uhr – 15:50 Uhr (<a href="https://www.srilankan.com/en_uk/plan-and-book/flight-status" target="_blank" class="fl-link">Flugstatus prüfen ↗</a>)</div>
                         <div class="fl-price">175,00 € (Ines)</div>
                     </li>
                     <li>
                         <div class="fl-date">23.02.2027 • Rückflug Österreich (Ines & Anna)</div>
                         <div class="fl-route">Colombo (CMB) ➔ Istanbul (IST) ➔ Wien (VIE)</div>
-                        <div class="fl-details">Turkish Airlines (TK1131 & TK1887) • Abflug CMB: 09:15 Uhr • Stopp IST: 15:45 - 17:15 Uhr • Ankunft VIE: 17:35 Uhr (<a href="https://www.turkishairlines.com/en-int/flights/flight-status/" target="_blank" style="color:var(--p1);font-weight:700;">Flugstatus prüfen ↗</a>)</div>
+                        <div class="fl-details">Turkish Airlines (TK1131 & TK1887) • Abflug CMB: 09:15 Uhr • Stopp IST: 15:45 - 17:15 Uhr • Ankunft VIE: 17:35 Uhr (<a href="https://www.turkishairlines.com/en-int/flights/flight-status/" target="_blank" class="fl-link">Flugstatus prüfen ↗</a>)</div>
                         <div class="fl-price">534,56 € (Ines) & ??? € (Anna)</div>
                     </li>
                 </ul>
@@ -883,173 +880,12 @@
                                 <th>Wetter / Bedingungen</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>Udon Thani & Isan</strong></td>
-                                <td>Januar</td>
-                                <td>30°C / 19°C</td>
-                                <td>8 Std. / Tag</td>
-                                <td>1 Tag (ca. 5 mm)</td>
-                                <td>– (Binnenland)</td>
-                                <td>Sehr trocken, angenehm warm tagsüber, nachts kühler. Optimales Reisewetter.</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Chiang Mai & Pai (Norden)</strong></td>
-                                <td>Januar</td>
-                                <td>29°C / 15°C</td>
-                                <td>8–9 Std. / Tag</td>
-                                <td>1 Tag (ca. 3 mm)</td>
-                                <td>– (Binnenland)</td>
-                                <td>Trocken & sonnig. Nachts im Hochland/Pai recht frisch (Pullover einpacken!).</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Krabi & Andamanen-Inseln</strong></td>
-                                <td>Januar</td>
-                                <td>32°C / 24°C</td>
-                                <td>9 Std. / Tag</td>
-                                <td>3 Tage (ca. 45 mm)</td>
-                                <td>28°C</td>
-                                <td>Trockenzeit, viel Sonnenschein, ruhige See, ideal zum Inselhüpfen.</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Koh Tao (Golf von Thailand)</strong></td>
-                                <td>Jan./Feb.</td>
-                                <td>29°C / 25°C</td>
-                                <td>7 Std. / Tag</td>
-                                <td>6 Tage (ca. 90 mm)</td>
-                                <td>27°C</td>
-                                <td>Leicht erhöhte Schauerwahrscheinlichkeit (Monsunausläufer klingen ab), aber meist tolle Tauchbedingungen.</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Bangkok</strong></td>
-                                <td>Januar</td>
-                                <td>33°C / 23°C</td>
-                                <td>9 Std. / Tag</td>
-                                <td>1 Tag (ca. 10 mm)</td>
-                                <td>– (Flusslage)</td>
-                                <td>Heiß, trocken und sonnig. Perfekt für Sightseeing.</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Anuradhapura & Kulturdreieck</strong></td>
-                                <td>Februar</td>
-                                <td>30°C / 22°C</td>
-                                <td>8 Std. / Tag</td>
-                                <td>3 Tage (ca. 40 mm)</td>
-                                <td>– (Binnenland)</td>
-                                <td>Angenehm warm, selten Regen, ideal für Kultur & Radtouren.</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Kandy & Ella (Hochland)</strong></td>
-                                <td>Februar</td>
-                                <td>25°C / 16°C</td>
-                                <td>7–8 Std. / Tag</td>
-                                <td>5 Tage (ca. 60 mm)</td>
-                                <td>– (Bergland)</td>
-                                <td>Sonnig am Tag, nachts im Hochland spürbar frisch. Gelegentliche kurze Regenschauer möglich.</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Südküste Sri Lanka (Mirissa/Weligama)</strong></td>
-                                <td>Februar</td>
-                                <td>31°C / 24°C</td>
-                                <td>9 Std. / Tag</td>
-                                <td>4 Tage (ca. 55 mm)</td>
-                                <td>28°C</td>
-                                <td>Beste Reisezeit! Viel Sonne, warme Wassertemperaturen, exzellent zum Surfen & Whales watching.</td>
-                            </tr>
-                        </tbody>
+                        <tbody id="climateBody"></tbody>
                     </table>
                 </div>
 
                 <!-- Mobile Kartenansicht -->
-                <div class="climate-cards">
-                    <div class="climate-card">
-                        <div class="climate-card-title">Udon Thani & Isan <span style="font-weight:normal;color:var(--mute);font-size:.75rem">· Januar</span></div>
-                        <div class="climate-card-grid">
-                            <div class="climate-card-item"><b>Temperatur</b>30°C / 19°C</div>
-                            <div class="climate-card-item"><b>Sonnenstunden</b>8 Std. / Tag</div>
-                            <div class="climate-card-item"><b>Niederschlag</b>1 Tag (ca. 5 mm)</div>
-                            <div class="climate-card-item"><b>Wassertemperatur</b>– (Binnenland)</div>
-                        </div>
-                        <div class="climate-card-desc">Sehr trocken, angenehm warm tagsüber, nachts kühler. Optimales Reisewetter.</div>
-                    </div>
-
-                    <div class="climate-card">
-                        <div class="climate-card-title">Chiang Mai & Pai (Norden) <span style="font-weight:normal;color:var(--mute);font-size:.75rem">· Januar</span></div>
-                        <div class="climate-card-grid">
-                            <div class="climate-card-item"><b>Temperatur</b>29°C / 15°C</div>
-                            <div class="climate-card-item"><b>Sonnenstunden</b>8–9 Std. / Tag</div>
-                            <div class="climate-card-item"><b>Niederschlag</b>1 Tag (ca. 3 mm)</div>
-                            <div class="climate-card-item"><b>Wassertemperatur</b>– (Binnenland)</div>
-                        </div>
-                        <div class="climate-card-desc">Trocken & sonnig. Nachts im Hochland/Pai recht frisch (Pullover einpacken!).</div>
-                    </div>
-
-                    <div class="climate-card">
-                        <div class="climate-card-title">Krabi & Andamanen-Inseln <span style="font-weight:normal;color:var(--mute);font-size:.75rem">· Januar</span></div>
-                        <div class="climate-card-grid">
-                            <div class="climate-card-item"><b>Temperatur</b>32°C / 24°C</div>
-                            <div class="climate-card-item"><b>Sonnenstunden</b>9 Std. / Tag</div>
-                            <div class="climate-card-item"><b>Niederschlag</b>3 Tage (ca. 45 mm)</div>
-                            <div class="climate-card-item"><b>Wassertemperatur</b>28°C</div>
-                        </div>
-                        <div class="climate-card-desc">Trockenzeit, viel Sonnenschein, ruhige See, ideal zum Inselhüpfen.</div>
-                    </div>
-
-                    <div class="climate-card">
-                        <div class="climate-card-title">Koh Tao (Golf von Thailand) <span style="font-weight:normal;color:var(--mute);font-size:.75rem">· Jan./Feb.</span></div>
-                        <div class="climate-card-grid">
-                            <div class="climate-card-item"><b>Temperatur</b>29°C / 25°C</div>
-                            <div class="climate-card-item"><b>Sonnenstunden</b>7 Std. / Tag</div>
-                            <div class="climate-card-item"><b>Niederschlag</b>6 Tage (ca. 90 mm)</div>
-                            <div class="climate-card-item"><b>Wassertemperatur</b>27°C</div>
-                        </div>
-                        <div class="climate-card-desc">Leicht erhöhte Schauerwahrscheinlichkeit (Monsunausläufer klingen ab), aber meist tolle Tauchbedingungen.</div>
-                    </div>
-
-                    <div class="climate-card">
-                        <div class="climate-card-title">Bangkok <span style="font-weight:normal;color:var(--mute);font-size:.75rem">· Januar</span></div>
-                        <div class="climate-card-grid">
-                            <div class="climate-card-item"><b>Temperatur</b>33°C / 23°C</div>
-                            <div class="climate-card-item"><b>Sonnenstunden</b>9 Std. / Tag</div>
-                            <div class="climate-card-item"><b>Niederschlag</b>1 Tag (ca. 10 mm)</div>
-                            <div class="climate-card-item"><b>Wassertemperatur</b>– (Flusslage)</div>
-                        </div>
-                        <div class="climate-card-desc">Heiß, trocken und sonnig. Perfekt für Sightseeing.</div>
-                    </div>
-
-                    <div class="climate-card">
-                        <div class="climate-card-title">Anuradhapura & Kulturdreieck <span style="font-weight:normal;color:var(--mute);font-size:.75rem">· Februar</span></div>
-                        <div class="climate-card-grid">
-                            <div class="climate-card-item"><b>Temperatur</b>30°C / 22°C</div>
-<div class="climate-card-item"><b>Sonnenstunden</b>8 Std. / Tag</div>
-                            <div class="climate-card-item"><b>Niederschlag</b>3 Tage (ca. 40 mm)</div>
-                            <div class="climate-card-item"><b>Wassertemperatur</b>– (Binnenland)</div>
-                        </div>
-                        <div class="climate-card-desc">Angenehm warm, selten Regen, ideal für Kultur & Radtouren.</div>
-                    </div>
-
-                    <div class="climate-card">
-                        <div class="climate-card-title">Kandy & Ella (Hochland) <span style="font-weight:normal;color:var(--mute);font-size:.75rem">· Februar</span></div>
-                        <div class="climate-card-grid">
-                            <div class="climate-card-item"><b>Temperatur</b>25°C / 16°C</div>
-                            <div class="climate-card-item"><b>Sonnenstunden</b>7–8 Std. / Tag</div>
-                            <div class="climate-card-item"><b>Niederschlag</b>5 Tage (ca. 60 mm)</div>
-                            <div class="climate-card-item"><b>Wassertemperatur</b>– (Bergland)</div>
-                        </div>
-                        <div class="climate-card-desc">Sonnig am Tag, nachts im Hochland spürbar frisch. Gelegentliche kurze Regenschauer möglich.</div>
-                    </div>
-
-                    <div class="climate-card">
-                        <div class="climate-card-title">Südküste Sri Lanka (Mirissa/Weligama) <span style="font-weight:normal;color:var(--mute);font-size:.75rem">· Februar</span></div>
-                        <div class="climate-card-grid">
-                            <div class="climate-card-item"><b>Temperatur</b>31°C / 24°C</div>
-                            <div class="climate-card-item"><b>Sonnenstunden</b>9 Std. / Tag</div>
-                            <div class="climate-card-item"><b>Niederschlag</b>4 Tage (ca. 55 mm)</div>
-                            <div class="climate-card-item"><b>Wassertemperatur</b>28°C</div>
-                        </div>
-                        <div class="climate-card-desc">Beste Reisezeit! Viel Sonne, warme Wassertemperaturen, exzellent zum Surfen & Whales watching.</div>
-                    </div>
-                </div>
+                <div class="climate-cards" id="climateCards"></div>
             </div>
         </div>
 
@@ -1115,63 +951,63 @@
 
         /* 2. Reiseroute-Daten (Thailand & Sri Lanka) */
         const thailandData = [
-            { day: "Tag 1", date: "01.01. (Fr)", rawDate: "2027-01-01", groupTag: "Ines & Stefan", region: "Anreise", regTag: "tag-default", title: "Start Reise ab Flughafen Wien (VIE)", details: "Flug nach Bangkok (BKK) um 15:30 Uhr (Saudia SV152 + SV846, Stopp in Flughafen Riad RUH)", transport: "✈ Saudia SV152", hotel: "✈️ Im Flugzeug", locName: "Flughafen Wien (VIE)", lat: 48.1103, lng: 16.5697 },
-            { day: "Tag 2", date: "02.01. (Sa)", rawDate: "2027-01-02", groupTag: "Ines & Stefan", region: "Isan / Udon Thani", regTag: "tag-default", title: "Ankunft Bangkok ➔ Udon Thani", details: "Ankunft 13:40 am Flughafen BKK ➔ Weiterflug TG008 um 18:20 ➔ Ankunft UTH 19:30, Abholung OW", transport: "✈️ Thai TG008", hotel: "🏠 Bei OW", locName: "Udon Thani (UTH)", lat: 17.3861, lng: 102.7881 },
-            { day: "Tag 3", date: "03.01. (So)", rawDate: "2027-01-03", groupTag: "Ines & Stefan", region: "Isan / Udon Thani", regTag: "tag-default", title: "Udon Thani", details: "Zeit mit OW – Ganzer Tag (Tipp: Red Lotus Lake)", transport: "🚗 Mietwagen/Taxi", hotel: "🏠 Bei OW", locName: "Udon Thani (UTH)", lat: 17.3861, lng: 102.7881 },
-            { day: "Tag 4", date: "04.01. (Mo)", rawDate: "2027-01-04", groupTag: "Ines & Stefan", region: "Isan / Udon Thani", regTag: "tag-default", title: "Udon Thani", details: "Zeit mit OW – Ganzer Tag", transport: "🚗 Mietwagen/Taxi", hotel: "🏠 Bei OW", locName: "Udon Thani (UTH)", lat: 17.3861, lng: 102.7881 },
-            { day: "Tag 5", date: "05.01. (Di)", rawDate: "2027-01-05", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Udon Thani ➔ Chiang Mai", details: "Abreise Udon Thani (Nok Air DD703 16:30-17:35), Ankunft Chiang Mai, Altstadt & Street Food", transport: "✈️ Nok Air DD703", hotel: "🏨 Sylvis Hostel Chiangmai", locName: "Chiang Mai (CNX)", lat: 18.7677, lng: 98.9640 },
-            { day: "Tag 6", date: "06.01. (Mi)", rawDate: "2027-01-06", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Chiang Mai / Umland", details: "Tempel-Tour (Wat Chedi Luang, Wat Phra Singh, Wat Phra That Doi Suthep)", transport: "🛵 Grab / Roller", hotel: "🏨 Sylvis Hostel Chiangmai", locName: "Chiang Mai (CNX)", lat: 18.7677, lng: 98.9640 },
-            { day: "Tag 7", date: "07.01. (Do)", rawDate: "2027-01-07", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Chiang Mai / Umland", details: "Tagestour in den Doi Inthanon Nationalpark (Wandern & Wasserfälle - 2565 m)", transport: "🚐 Tagestour", hotel: "🏨 Sylvis Hostel Chiangmai", locName: "Chiang Mai (CNX)", lat: 18.7677, lng: 98.9640 },
-            { day: "Tag 8", date: "08.01. (Fr)", rawDate: "2027-01-08", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Chiang Mai ➔ Pai", details: "Reise nach Pai – ca. 3 h Fahrt (762 Kurven)", transport: "🚐 Minivan (AYA)", hotel: "🏨 Bueng Pai Farm", locName: "Pai", lat: 19.3582, lng: 98.4402 },
-            { day: "Tag 9", date: "09.01. (Sa)", rawDate: "2027-01-09", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Pai / Umland", details: "Wandern Pai Canyon, Land Split & Night Market", transport: "🛵 Roller", hotel: "🏨 Bueng Pai Farm", locName: "Pai", lat: 19.3582, lng: 98.4402 },
-            { day: "Tag 10", date: "10.01. (So)", rawDate: "2027-01-10", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Pai / Umland", details: "Pai genießen: Lod Cave, Bamboo Bridge & Hot Springs", transport: "🛵 Roller", hotel: "🏨 Bueng Pai Farm", locName: "Pai", lat: 19.3582, lng: 98.4402 },
-            { day: "Tag 11", date: "11.01. (Mo)", rawDate: "2027-01-11", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Pai / Umland", details: "Erkundung Tag 4 in Pai: Aussichtspunkte, Cafés & entspannen", transport: "🛵 Roller", hotel: "🏨 Bueng Pai Farm", locName: "Pai", lat: 19.3582, lng: 98.4402 },
-            { day: "Tag 12", date: "12.01. (Di)", rawDate: "2027-01-12", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Pai / Umland", details: "Erkundung Tag 5 in Pai: Letzter Tag im Hochland", transport: "🛵 Roller", hotel: "🏨 Bueng Pai Farm", locName: "Pai", lat: 19.3582, lng: 98.4402 },
-            { day: "Tag 13", date: "13.01. (Mi)", rawDate: "2027-01-13", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Pai ➔ Krabi", details: "Direkter Transfer von Pai auf dem besten Weg nach Krabi", transport: "🚐 Minivan / Flug", hotel: "🏨 EZ auf Krabi", locName: "Krabi / Railay", lat: 8.0863, lng: 98.9063 },
-            { day: "Tag 14", date: "14.01. (Do)", rawDate: "2027-01-14", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Krabi", details: "Railay Beach & Phra Nang Cave Beach", transport: "🚤 Longtail-Boot", hotel: "🏨 EZ auf Krabi", locName: "Krabi / Railay", lat: 8.0863, lng: 98.9063 },
-            { day: "Tag 15", date: "15.01. (Fr)", rawDate: "2027-01-15", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Krabi", details: "Tagestrip nach Ko Hong (Lagune & Viewpoint)", transport: "🚤 Longtail-Tour", hotel: "🏨 EZ auf Krabi", locName: "Krabi / Railay", lat: 8.0863, lng: 98.9063 },
-            { day: "Tag 16", date: "16.01. (Sa)", rawDate: "2027-01-16", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Krabi ➔ Ko Phi Phi", details: "Überfahrt nach Ko Phi Phi, Sunset Viewpoint", transport: "⛴️ Fähre (1.5 - 2 h)", hotel: "🏨 EZ auf Koh Phi Phi", locName: "Ko Phi Phi", lat: 7.7407, lng: 98.7784 },
-            { day: "Tag 17", date: "17.01. (So)", rawDate: "2027-01-17", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Ko Phi Phi", details: "Ausflug Maya Bay, Pileh Lagoon & Bamboo Island", transport: "🚤 Longtail-Boot", hotel: "🏨 EZ auf Koh Phi Phi", locName: "Ko Phi Phi", lat: 7.7407, lng: 98.7784 },
-            { day: "Tag 18", date: "18.01. (Mo)", rawDate: "2027-01-18", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Ko Phi Phi", details: "Schnorcheln, Entspannen am Long Beach", transport: "🚤 Wassertaxi", hotel: "🏨 EZ auf Koh Phi Phi", locName: "Ko Phi Phi", lat: 7.7407, lng: 98.7784 },
-            { day: "Tag 19", date: "19.01. (Di)", rawDate: "2027-01-19", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Ko Phi Phi ➔ Koh Tao", details: "Überfahrt nach Koh Tao, Ankunft & Einchecken", transport: "⛴️ Fähre + Bus", hotel: "🏨 EZ auf Koh Tao", locName: "Koh Tao", lat: 10.1018, lng: 99.8383 },
-            { day: "Tag 20", date: "20.01. (Mi)", rawDate: "2027-01-20", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Koh Tao • Tauchkurs Tag 1", details: "Start Open Water Diver Kurs bei Rainbow Fish Divers (Theorie & Pool)", transport: "🛵 Roller / Zu Fuß", hotel: "🏨 EZ auf Koh Tao", locName: "Koh Tao", lat: 10.1018, lng: 99.8383 },
-            { day: "Tag 21", date: "21.01. (Do)", rawDate: "2027-01-21", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Koh Tao • Tauchkurs Tag 2", details: "Open Water Diver Kurs (Erste Tauchgänge im Freiwasser)", transport: "🤿 Tauchboot", hotel: "🏨 EZ auf Koh Tao", locName: "Koh Tao", lat: 10.1018, lng: 99.8383 },
-            { day: "Tag 22", date: "22.01. (Fr)", rawDate: "2027-01-22", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Koh Tao • Tauchkurs Tag 3", details: "Open Water Diver Kurs (Freiwassertauchgänge & Vertiefung)", transport: "🤿 Tauchboot", hotel: "🏨 EZ auf Koh Tao", locName: "Koh Tao", lat: 10.1018, lng: 99.8383 },
-            { day: "Tag 23", date: "23.01. (Sa)", rawDate: "2027-01-23", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Koh Tao • Kursabschluss & Option Advanced", details: "Abschluss Open Water Kurs (mittags fertig). Spontane Entscheidung: Start Advanced Kurs (Tag 1/2) oder Insel genießen", transport: "🛵 Roller / Boot", hotel: "🏨 EZ auf Koh Tao", locName: "Koh Tao", lat: 10.1018, lng: 99.8383 },
-            { day: "Tag 24", date: "24.01. (So)", rawDate: "2027-01-24", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Koh Tao • Advanced Kurs / Inseltag", details: "Option Advanced Kurs Tag 2 ODER entspannter Inseltag (Sausage Beach, Viewpoints, Schnorcheln)", transport: "🛵 Roller / Boot", hotel: "🏨 EZ auf Koh Tao", locName: "Koh Tao", lat: 10.1018, lng: 99.8383 },
-            { day: "Tag 25", date: "25.01. (Mo)", rawDate: "2027-01-25", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Koh Tao ➔ Bangkok (oder Advanced Abschluss)", details: "Abschluss Advanced Kurs (mittags) & Abreise ODER bereits Tagesreise von Koh Tao nach Bangkok", transport: "⛴️ Fähre + Bus / Flug", hotel: "🏨 EZ in Bangkok", locName: "Bangkok Stadtzentrum", lat: 13.7563, lng: 100.5018 },
-            { day: "Tag 26", date: "26.01. (Di)", rawDate: "2027-01-26", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Bangkok (Späteste Anreise / Erkundung)", details: "Späteste Ankunft in BKK / Erkundung Culture & Tempel (Grand Palace, Wat Pho, Wat Arun)", transport: "🚤 MRT / Boot", hotel: "🏨 EZ in Bangkok", locName: "Bangkok Stadtzentrum", lat: 13.7563, lng: 100.5018 },
-            { day: "Tag 27", date: "27.01. (Mi)", rawDate: "2027-01-27", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Bangkok", details: "Chinatown (Yaowarat), Sukhumvit, Rooftop-Bar", transport: "🚆 Skytrain / Grab", hotel: "🏨 EZ in Bangkok", locName: "Bangkok Stadtzentrum", lat: 13.7563, lng: 100.5018 },
-            { day: "Tag 28", date: "28.01. (Do)", rawDate: "2027-01-28", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Bangkok", details: "Entspannter Tag: Souvenirs, Thai-Massage & Lieblingsspots", transport: "🚆 Skytrain / Grab", hotel: "🏨 EZ in Bangkok", locName: "Bangkok Stadtzentrum", lat: 13.7563, lng: 100.5018 },
-            { day: "Tag 29", date: "29.01. (Fr)", rawDate: "2027-01-29", groupTag: "Ines & Stefan", region: "Abschluss", regTag: "tag-default", title: "Bangkok Stadt ➔ Flughafen / Heim- & Weiterflug", details: "Stefan ➔ MUC (TG926 13:00 Direkt) | Ines ➔ CMB (UL405 13:50 Direkt)", transport: "✈️ Flugzeug", hotel: "✈ Flug / Ceylon Glory", locName: "Flughafen Bangkok (BKK)", lat: 13.6900, lng: 100.7501 }
+            { day: "Tag 1", date: "01.01. (Fr)", rawDate: "2027-01-01", groupTag: "Ines & Stefan", region: "Anreise", regTag: "tag-default", title: "Start Reise ab Flughafen Wien (VIE)", details: "Flug nach Bangkok (BKK) um 15:30 Uhr (Saudia SV152 + SV846, Stopp in Flughafen Riad RUH)", transport: "✈ Saudia SV152", hotel: "✈️ Im Flugzeug", locName: "Flughafen Wien (VIE)" },
+            { day: "Tag 2", date: "02.01. (Sa)", rawDate: "2027-01-02", groupTag: "Ines & Stefan", region: "Isan / Udon Thani", regTag: "tag-default", title: "Ankunft Bangkok ➔ Udon Thani", details: "Ankunft 13:40 am Flughafen BKK ➔ Weiterflug TG008 um 18:20 ➔ Ankunft UTH 19:30, Abholung OW", transport: "✈️ Thai TG008", hotel: "🏠 Bei OW", locName: "Udon Thani (UTH)" },
+            { day: "Tag 3", date: "03.01. (So)", rawDate: "2027-01-03", groupTag: "Ines & Stefan", region: "Isan / Udon Thani", regTag: "tag-default", title: "Udon Thani", details: "Zeit mit OW – Ganzer Tag (Tipp: Red Lotus Lake)", transport: "🚗 Mietwagen/Taxi", hotel: "🏠 Bei OW", locName: "Udon Thani (UTH)" },
+            { day: "Tag 4", date: "04.01. (Mo)", rawDate: "2027-01-04", groupTag: "Ines & Stefan", region: "Isan / Udon Thani", regTag: "tag-default", title: "Udon Thani", details: "Zeit mit OW – Ganzer Tag", transport: "🚗 Mietwagen/Taxi", hotel: "🏠 Bei OW", locName: "Udon Thani (UTH)" },
+            { day: "Tag 5", date: "05.01. (Di)", rawDate: "2027-01-05", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Udon Thani ➔ Chiang Mai", details: "Abreise Udon Thani (Nok Air DD703 16:30-17:35), Ankunft Chiang Mai, Altstadt & Street Food", transport: "✈️ Nok Air DD703", hotel: "🏨 Sylvis Hostel Chiangmai", locName: "Chiang Mai (CNX)" },
+            { day: "Tag 6", date: "06.01. (Mi)", rawDate: "2027-01-06", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Chiang Mai / Umland", details: "Tempel-Tour (Wat Chedi Luang, Wat Phra Singh, Wat Phra That Doi Suthep)", transport: "🛵 Grab / Roller", hotel: "🏨 Sylvis Hostel Chiangmai", locName: "Chiang Mai (CNX)" },
+            { day: "Tag 7", date: "07.01. (Do)", rawDate: "2027-01-07", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Chiang Mai / Umland", details: "Tagestour in den Doi Inthanon Nationalpark (Wandern & Wasserfälle - 2565 m)", transport: "🚐 Tagestour", hotel: "🏨 Sylvis Hostel Chiangmai", locName: "Chiang Mai (CNX)" },
+            { day: "Tag 8", date: "08.01. (Fr)", rawDate: "2027-01-08", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Chiang Mai ➔ Pai", details: "Reise nach Pai – ca. 3 h Fahrt (762 Kurven)", transport: "🚐 Minivan (AYA)", hotel: "🏨 Bueng Pai Farm", locName: "Pai" },
+            { day: "Tag 9", date: "09.01. (Sa)", rawDate: "2027-01-09", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Pai / Umland", details: "Wandern Pai Canyon, Land Split & Night Market", transport: "🛵 Roller", hotel: "🏨 Bueng Pai Farm", locName: "Pai" },
+            { day: "Tag 10", date: "10.01. (So)", rawDate: "2027-01-10", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Pai / Umland", details: "Pai genießen: Lod Cave, Bamboo Bridge & Hot Springs", transport: "🛵 Roller", hotel: "🏨 Bueng Pai Farm", locName: "Pai" },
+            { day: "Tag 11", date: "11.01. (Mo)", rawDate: "2027-01-11", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Pai / Umland", details: "Erkundung Tag 4 in Pai: Aussichtspunkte, Cafés & entspannen", transport: "🛵 Roller", hotel: "🏨 Bueng Pai Farm", locName: "Pai" },
+            { day: "Tag 12", date: "12.01. (Di)", rawDate: "2027-01-12", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Pai / Umland", details: "Erkundung Tag 5 in Pai: Letzter Tag im Hochland", transport: "🛵 Roller", hotel: "🏨 Bueng Pai Farm", locName: "Pai" },
+            { day: "Tag 13", date: "13.01. (Mi)", rawDate: "2027-01-13", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Pai ➔ Krabi", details: "Direkter Transfer von Pai auf dem besten Weg nach Krabi", transport: "🚐 Minivan / Flug", hotel: "🏨 EZ auf Krabi", locName: "Krabi / Railay" },
+            { day: "Tag 14", date: "14.01. (Do)", rawDate: "2027-01-14", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Krabi", details: "Railay Beach & Phra Nang Cave Beach", transport: "🚤 Longtail-Boot", hotel: "🏨 EZ auf Krabi", locName: "Krabi / Railay" },
+            { day: "Tag 15", date: "15.01. (Fr)", rawDate: "2027-01-15", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Krabi", details: "Tagestrip nach Ko Hong (Lagune & Viewpoint)", transport: "🚤 Longtail-Tour", hotel: "🏨 EZ auf Krabi", locName: "Krabi / Railay" },
+            { day: "Tag 16", date: "16.01. (Sa)", rawDate: "2027-01-16", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Krabi ➔ Ko Phi Phi", details: "Überfahrt nach Ko Phi Phi, Sunset Viewpoint", transport: "⛴️ Fähre (1.5 - 2 h)", hotel: "🏨 EZ auf Koh Phi Phi", locName: "Ko Phi Phi" },
+            { day: "Tag 17", date: "17.01. (So)", rawDate: "2027-01-17", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Ko Phi Phi", details: "Ausflug Maya Bay, Pileh Lagoon & Bamboo Island", transport: "🚤 Longtail-Boot", hotel: "🏨 EZ auf Koh Phi Phi", locName: "Ko Phi Phi" },
+            { day: "Tag 18", date: "18.01. (Mo)", rawDate: "2027-01-18", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Ko Phi Phi", details: "Schnorcheln, Entspannen am Long Beach", transport: "🚤 Wassertaxi", hotel: "🏨 EZ auf Koh Phi Phi", locName: "Ko Phi Phi" },
+            { day: "Tag 19", date: "19.01. (Di)", rawDate: "2027-01-19", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Ko Phi Phi ➔ Koh Tao", details: "Überfahrt nach Koh Tao, Ankunft & Einchecken", transport: "⛴️ Fähre + Bus", hotel: "🏨 EZ auf Koh Tao", locName: "Koh Tao" },
+            { day: "Tag 20", date: "20.01. (Mi)", rawDate: "2027-01-20", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Koh Tao • Tauchkurs Tag 1", details: "Start Open Water Diver Kurs bei Rainbow Fish Divers (Theorie & Pool)", transport: "🛵 Roller / Zu Fuß", hotel: "🏨 EZ auf Koh Tao", locName: "Koh Tao" },
+            { day: "Tag 21", date: "21.01. (Do)", rawDate: "2027-01-21", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Koh Tao • Tauchkurs Tag 2", details: "Open Water Diver Kurs (Erste Tauchgänge im Freiwasser)", transport: "🤿 Tauchboot", hotel: "🏨 EZ auf Koh Tao", locName: "Koh Tao" },
+            { day: "Tag 22", date: "22.01. (Fr)", rawDate: "2027-01-22", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Koh Tao • Tauchkurs Tag 3", details: "Open Water Diver Kurs (Freiwassertauchgänge & Vertiefung)", transport: "🤿 Tauchboot", hotel: "🏨 EZ auf Koh Tao", locName: "Koh Tao" },
+            { day: "Tag 23", date: "23.01. (Sa)", rawDate: "2027-01-23", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Koh Tao • Kursabschluss & Option Advanced", details: "Abschluss Open Water Kurs (mittags fertig). Spontane Entscheidung: Start Advanced Kurs (Tag 1/2) oder Insel genießen", transport: "🛵 Roller / Boot", hotel: "🏨 EZ auf Koh Tao", locName: "Koh Tao" },
+            { day: "Tag 24", date: "24.01. (So)", rawDate: "2027-01-24", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Koh Tao • Advanced Kurs / Inseltag", details: "Option Advanced Kurs Tag 2 ODER entspannter Inseltag (Sausage Beach, Viewpoints, Schnorcheln)", transport: "🛵 Roller / Boot", hotel: "🏨 EZ auf Koh Tao", locName: "Koh Tao" },
+            { day: "Tag 25", date: "25.01. (Mo)", rawDate: "2027-01-25", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Koh Tao ➔ Bangkok (oder Advanced Abschluss)", details: "Abschluss Advanced Kurs (mittags) & Abreise ODER bereits Tagesreise von Koh Tao nach Bangkok", transport: "⛴️ Fähre + Bus / Flug", hotel: "🏨 EZ in Bangkok", locName: "Bangkok Stadtzentrum" },
+            { day: "Tag 26", date: "26.01. (Di)", rawDate: "2027-01-26", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Bangkok (Späteste Anreise / Erkundung)", details: "Späteste Ankunft in BKK / Erkundung Culture & Tempel (Grand Palace, Wat Pho, Wat Arun)", transport: "🚤 MRT / Boot", hotel: "🏨 EZ in Bangkok", locName: "Bangkok Stadtzentrum" },
+            { day: "Tag 27", date: "27.01. (Mi)", rawDate: "2027-01-27", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Bangkok", details: "Chinatown (Yaowarat), Sukhumvit, Rooftop-Bar", transport: "🚆 Skytrain / Grab", hotel: "🏨 EZ in Bangkok", locName: "Bangkok Stadtzentrum" },
+            { day: "Tag 28", date: "28.01. (Do)", rawDate: "2027-01-28", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Bangkok", details: "Entspannter Tag: Souvenirs, Thai-Massage & Lieblingsspots", transport: "🚆 Skytrain / Grab", hotel: "🏨 EZ in Bangkok", locName: "Bangkok Stadtzentrum" },
+            { day: "Tag 29", date: "29.01. (Fr)", rawDate: "2027-01-29", groupTag: "Ines & Stefan", region: "Abschluss", regTag: "tag-default", title: "Bangkok Stadt ➔ Flughafen / Heim- & Weiterflug", details: "Stefan ➔ MUC (TG926 13:00 Direkt) | Ines ➔ CMB (UL405 13:50 Direkt)", transport: "✈️ Flugzeug", hotel: "✈ Flug / Ceylon Glory", locName: "Flughafen Bangkok (BKK)" }
         ];
 
         const sriLankaData = [
-            { day: "Tag 1", date: "30.01. (Sa)", rawDate: "2027-01-30", groupTag: "Ines alleine", region: "Westküste", regTag: "tag-sl-westkueste", title: "Negombo (Ines alleine)", details: "Akklimatisieren in Negombo, mögliche Aktivitäten auschecken, Strand.", transport: "🛵 TukTuk / Zu Fuß", hotel: "🏨 Ceylon Glory Hostel (gebucht)", locName: "Negombo", lat: 7.2092, lng: 79.8385 },
-            { day: "Tag 2", date: "31.01. (So)", rawDate: "2027-01-31", groupTag: "Ines alleine", region: "Westküste", regTag: "tag-sl-westkueste", title: "Negombo (Ines alleine)", details: "Aktivität & Entspannen am Strand.", transport: "🛵 TukTuk", hotel: "🏨 Ceylon Glory Hostel (gebucht)", locName: "Negombo", lat: 7.2092, lng: 79.8385 },
-            { day: "Tag 3", date: "01.02. (Mo)", rawDate: "2027-02-01", groupTag: "Ines alleine", region: "Westküste", regTag: "tag-sl-westkueste", title: "Negombo (Ines alleine)", details: "Zugfahrt Kandy ➔ Ella zwingend online buchen!", transport: "🛵 TukTuk", hotel: "🏨 Ceylon Glory Hostel (gebucht)", locName: "Negombo", lat: 7.2092, lng: 79.8385 },
-            { day: "Tag 1", date: "02.02. (Di)", rawDate: "2027-02-02", groupTag: "Ines & Anna", region: "Westküste", regTag: "tag-sl-westkueste", title: "Negombo / Colombo (Ankunft Anna)", details: "Ankunft Anna (05:00-06:00). Gemütlicher Tag, Kaffee trinken, Planung.", transport: "🚕 Taxi / TukTuk", hotel: "🏨 Ceylon Glory Hostel (gebucht)", locName: "Negombo", lat: 7.2092, lng: 79.8385 },
-            { day: "Tag 2", date: "03.02. (Mi)", rawDate: "2027-02-03", groupTag: "Ines & Anna", region: "Kulturdreieck", regTag: "tag-sl-kulturdreieck", title: "Negombo/Colombo ➔ Anuradhapura", details: "Einchecken, Akklimatisieren, TukTuk nach Mihintale organisieren.", transport: "🚆 Zug (Direkt) / Bus", hotel: "🏨 noch offen", locName: "Anuradhapura", lat: 8.3114, lng: 80.4037 },
-            { day: "Tag 3", date: "04.02. (Do)", rawDate: "2027-02-04", groupTag: "Ines & Anna", region: "Kulturdreieck", regTag: "tag-sl-kulturdreieck", title: "Anuradhapura", details: "Ancient Anuradhapura mit dem Fahrrad erkunden (UNESCO World Heritage).", transport: "🚲 Fahrrad", hotel: "🏨 noch offen", locName: "Anuradhapura", lat: 8.3114, lng: 80.4037 },
-            { day: "Tag 4", date: "05.02. (Fr)", rawDate: "2027-02-05", groupTag: "Ines & Anna", region: "Kulturdreieck", regTag: "tag-sl-kulturdreieck", title: "Anuradhapura", details: "Vormittag Mihintale, Weiterreise planen.", transport: "🛺 TukTuk", hotel: "🏨 noch offen", locName: "Anuradhapura", lat: 8.3114, lng: 80.4037 },
-            { day: "Tag 5", date: "06.02. (Sa)", rawDate: "2027-02-06", groupTag: "Ines & Anna", region: "Kulturdreieck", regTag: "tag-sl-kulturdreieck", title: "Anuradhapura ➔ Dambulla", details: "Sigiriya Rock (33€ p.P., Alternativ: Pidurangala Felsen ca. 3€).", transport: "🚌 Bus (ca. 1h 20m)", hotel: "🏨 noch offen", locName: "Dambulla", lat: 7.8731, lng: 80.6517 },
-            { day: "Tag 6", date: "07.02. (So)", rawDate: "2027-02-07", groupTag: "Ines & Anna", region: "Kulturdreieck", regTag: "tag-sl-kulturdreieck", title: "Dambulla", details: "Elefantensafari z.B. im Hurulu Eco Park oder Minneriya NP.", transport: "🛺 Jeep Safari", hotel: "🏨 noch offen", locName: "Dambulla", lat: 7.8731, lng: 80.6517 },
-            { day: "Tag 7", date: "08.02. (Mo)", rawDate: "2027-02-08", groupTag: "Ines & Anna", region: "Kulturdreieck", regTag: "tag-sl-kulturdreieck", title: "Dambulla", details: "Höhlentempel von Dambulla erkunden.", transport: "🛺 TukTuk", hotel: "🏨 noch offen", locName: "Dambulla", lat: 7.8731, lng: 80.6517 },
-            { day: "Tag 8", date: "09.02. (Di)", rawDate: "2027-02-09", groupTag: "Ines & Anna", region: "Zentrales Hochland", regTag: "tag-sl-hochland", title: "Dambulla ➔ Kandy", details: "Weiterfahrt ins Hochland nach Kandy.", transport: "🛺 TukTuk / Bus (3h)", hotel: "🏨 noch offen", locName: "Kandy", lat: 7.2906, lng: 80.6337 },
-            { day: "Tag 9", date: "10.02. (Mi)", rawDate: "2027-02-10", groupTag: "Ines & Anna", region: "Zentrales Hochland", regTag: "tag-sl-hochland", title: "Kandy", details: "Zahntempel (Sri Dalada Maligawa), Buddha Statue, Kandy Dance Show.", transport: "🛺 TukTuk", hotel: "🏨 noch offen", locName: "Kandy", lat: 7.2906, lng: 80.6337 },
-            { day: "Tag 10", date: "11.02. (Do)", rawDate: "2027-02-11", groupTag: "Ines & Anna", region: "Zentrales Hochland", regTag: "tag-sl-hochland", title: "Kandy ➔ Ella", details: "Berühmte ZUGFAHRT Kandy ➔ Ella (ca. 7h durch die Teeplantagen)!", transport: "🚆 ZUGFAHRT (7h)", hotel: "🏨 noch offen", locName: "Ella", lat: 6.8667, lng: 81.0466 },
-            { day: "Tag 11", date: "12.02. (Fr)", rawDate: "2027-02-12", groupTag: "Ines & Anna", region: "Zentrales Hochland", regTag: "tag-sl-hochland", title: "Ella", details: "Nine Arch Bridge mit dem Roller entdecken.", transport: "🛵 Scooter", hotel: "🏨 noch offen", locName: "Ella", lat: 6.8667, lng: 81.0466 },
-            { day: "Tag 12", date: "13.02. (Sa)", rawDate: "2027-02-13", groupTag: "Ines & Anna", region: "Zentrales Hochland", regTag: "tag-sl-hochland", title: "Ella", details: "Little Adam's Peak zum Sonnenuntergang.", transport: "🛵 Scooter", hotel: "🏨 noch offen", locName: "Ella", lat: 6.8667, lng: 81.0466 },
-            { day: "Tag 13", date: "14.02. (So)", rawDate: "2027-02-14", groupTag: "Ines & Anna", region: "Zentrales Hochland", regTag: "tag-sl-hochland", title: "Ella", details: "Ella Rock Wanderung, Ravana Wasserfall oder Diyaluma Falls.", transport: "🛵 Scooter", hotel: "🏨 noch offen", locName: "Ella", lat: 6.8667, lng: 81.0466 },
-            { day: "Tag 14", date: "15.02. (Mo)", rawDate: "2027-02-15", groupTag: "Ines & Anna", region: "Südküste", regTag: "tag-sl-suedkueste", title: "Ella ➔ Tangalle", details: "Pekoe Trail Etappe 16 - Tageswanderung vor Fahrt an die Küste.", transport: "🚌 Bus (ca. 3.5h)", hotel: "🏨 noch offen", locName: "Tangalle", lat: 6.0243, lng: 80.7941 },
-            { day: "Tag 15", date: "16.02. (Di)", rawDate: "2027-02-16", groupTag: "Ines & Anna", region: "Südküste", regTag: "tag-sl-suedkueste", title: "Tangalle", details: "Traumstrände an der Südküste mit dem Scooter erkunden.", transport: "🛵 Scooter", hotel: "🏨 noch offen", locName: "Tangalle", lat: 6.0243, lng: 80.7941 },
-            { day: "Tag 16", date: "17.02. (Mi)", rawDate: "2027-02-17", groupTag: "Ines & Anna", region: "Südküste", regTag: "tag-sl-suedkueste", title: "Tangalle ➔ Mirissa", details: "Weiterfahrt entlang der Küste nach Mirissa.", transport: "🚌 Bus (ca. 3h)", hotel: "🏨 noch offen", locName: "Mirissa", lat: 5.9483, lng: 80.4716 },
-            { day: "Tag 17", date: "18.02. (Do)", rawDate: "2027-02-18", groupTag: "Ines & Anna", region: "Südküste", regTag: "tag-sl-suedkueste", title: "Mirissa", details: "Whale Watching Ausflug, Coconut Tree Hill Fotospot.", transport: "🛺 TukTuk", hotel: "🏨 noch offen", locName: "Mirissa", lat: 5.9483, lng: 80.4716 },
-            { day: "Tag 18", date: "19.02. (Fr)", rawDate: "2027-02-19", groupTag: "Ines & Anna", region: "Südküste", regTag: "tag-sl-suedkueste", title: "Mirissa ➔ Weligama", details: "Surfen für Anfängerinnen in Weligama Bay.", transport: "🛺 TukTuk (20 min)", hotel: "🏨 noch offen", locName: "Weligama", lat: 5.9722, lng: 80.4289 },
-            { day: "Tag 19", date: "20.02. (Sa)", rawDate: "2027-02-20", groupTag: "Ines & Anna", region: "Südküste", regTag: "tag-sl-suedkueste", title: "Weligama", details: "Strand- & Surftage im Süden ausklingen lassen.", transport: "🛵 Scooter", hotel: "🏨 noch offen", locName: "Weligama", lat: 5.9722, lng: 80.4289 },
-            { day: "Tag 20", date: "21.02. (So)", rawDate: "2027-02-21", groupTag: "Ines & Anna", region: "Colombo", regTag: "tag-sl-colombo", title: "Weligama ➔ Colombo Stadt", details: "Fahrt ins Zentrum: Vibe der Hauptstadt spüren, Rooftop Bars, Galle Face Promenade.", transport: "🚆 Zug (2.5h) / Bus", hotel: "🏨 Bunkyard", locName: "Colombo Stadtzentrum", lat: 6.9344, lng: 79.8428 },
-            { day: "Tag 21", date: "22.02. (Mo)", rawDate: "2027-02-22", groupTag: "Ines & Anna", region: "Colombo", regTag: "tag-sl-colombo", title: "Colombo Stadt", details: "Entspannter Tag in Colombo, Souvenirs & Café.", transport: "🛺 TukTuk", hotel: "🏨 Bunkyard", locName: "Colombo Stadtzentrum", lat: 6.9344, lng: 79.8428 },
-            { day: "Tag 22", date: "23.02. (Di)", rawDate: "2027-02-23", groupTag: "Ines & Anna", region: "Abreise", regTag: "tag-default", title: "Colombo ➔ Flughafen CMB ➔ Wien", details: "Fahrt zum Flughafen, Abflug CMB 09:15 ➔ IST 15:45 ➔ Ankunft Wien 17:35 Uhr (TK1131 & TK1887).", transport: "✈️ Turkish Airlines", hotel: "✈️ Im Flugzeug", locName: "Flughafen Colombo (CMB)", lat: 7.1808, lng: 79.8841 }
+            { day: "Tag 1", date: "30.01. (Sa)", rawDate: "2027-01-30", groupTag: "Ines alleine", region: "Westküste", regTag: "tag-sl-westkueste", title: "Negombo (Ines alleine)", details: "Akklimatisieren in Negombo, mögliche Aktivitäten auschecken, Strand.", transport: "🛵 TukTuk / Zu Fuß", hotel: "🏨 Ceylon Glory Hostel (gebucht)", locName: "Negombo" },
+            { day: "Tag 2", date: "31.01. (So)", rawDate: "2027-01-31", groupTag: "Ines alleine", region: "Westküste", regTag: "tag-sl-westkueste", title: "Negombo (Ines alleine)", details: "Aktivität & Entspannen am Strand.", transport: "🛵 TukTuk", hotel: "🏨 Ceylon Glory Hostel (gebucht)", locName: "Negombo" },
+            { day: "Tag 3", date: "01.02. (Mo)", rawDate: "2027-02-01", groupTag: "Ines alleine", region: "Westküste", regTag: "tag-sl-westkueste", title: "Negombo (Ines alleine)", details: "Zugfahrt Kandy ➔ Ella zwingend online buchen!", transport: "🛵 TukTuk", hotel: "🏨 Ceylon Glory Hostel (gebucht)", locName: "Negombo" },
+            { day: "Tag 1", date: "02.02. (Di)", rawDate: "2027-02-02", groupTag: "Ines & Anna", region: "Westküste", regTag: "tag-sl-westkueste", title: "Negombo / Colombo (Ankunft Anna)", details: "Ankunft Anna (05:00-06:00). Gemütlicher Tag, Kaffee trinken, Planung.", transport: "🚕 Taxi / TukTuk", hotel: "🏨 Ceylon Glory Hostel (gebucht)", locName: "Negombo" },
+            { day: "Tag 2", date: "03.02. (Mi)", rawDate: "2027-02-03", groupTag: "Ines & Anna", region: "Kulturdreieck", regTag: "tag-sl-kulturdreieck", title: "Negombo/Colombo ➔ Anuradhapura", details: "Einchecken, Akklimatisieren, TukTuk nach Mihintale organisieren.", transport: "🚆 Zug (Direkt) / Bus", hotel: "🏨 noch offen", locName: "Anuradhapura" },
+            { day: "Tag 3", date: "04.02. (Do)", rawDate: "2027-02-04", groupTag: "Ines & Anna", region: "Kulturdreieck", regTag: "tag-sl-kulturdreieck", title: "Anuradhapura", details: "Ancient Anuradhapura mit dem Fahrrad erkunden (UNESCO World Heritage).", transport: "🚲 Fahrrad", hotel: "🏨 noch offen", locName: "Anuradhapura" },
+            { day: "Tag 4", date: "05.02. (Fr)", rawDate: "2027-02-05", groupTag: "Ines & Anna", region: "Kulturdreieck", regTag: "tag-sl-kulturdreieck", title: "Anuradhapura", details: "Vormittag Mihintale, Weiterreise planen.", transport: "🛺 TukTuk", hotel: "🏨 noch offen", locName: "Anuradhapura" },
+            { day: "Tag 5", date: "06.02. (Sa)", rawDate: "2027-02-06", groupTag: "Ines & Anna", region: "Kulturdreieck", regTag: "tag-sl-kulturdreieck", title: "Anuradhapura ➔ Dambulla", details: "Sigiriya Rock (33€ p.P., Alternativ: Pidurangala Felsen ca. 3€).", transport: "🚌 Bus (ca. 1h 20m)", hotel: "🏨 noch offen", locName: "Dambulla" },
+            { day: "Tag 6", date: "07.02. (So)", rawDate: "2027-02-07", groupTag: "Ines & Anna", region: "Kulturdreieck", regTag: "tag-sl-kulturdreieck", title: "Dambulla", details: "Elefantensafari z.B. im Hurulu Eco Park oder Minneriya NP.", transport: "🛺 Jeep Safari", hotel: "🏨 noch offen", locName: "Dambulla" },
+            { day: "Tag 7", date: "08.02. (Mo)", rawDate: "2027-02-08", groupTag: "Ines & Anna", region: "Kulturdreieck", regTag: "tag-sl-kulturdreieck", title: "Dambulla", details: "Höhlentempel von Dambulla erkunden.", transport: "🛺 TukTuk", hotel: "🏨 noch offen", locName: "Dambulla" },
+            { day: "Tag 8", date: "09.02. (Di)", rawDate: "2027-02-09", groupTag: "Ines & Anna", region: "Zentrales Hochland", regTag: "tag-sl-hochland", title: "Dambulla ➔ Kandy", details: "Weiterfahrt ins Hochland nach Kandy.", transport: "🛺 TukTuk / Bus (3h)", hotel: "🏨 noch offen", locName: "Kandy" },
+            { day: "Tag 9", date: "10.02. (Mi)", rawDate: "2027-02-10", groupTag: "Ines & Anna", region: "Zentrales Hochland", regTag: "tag-sl-hochland", title: "Kandy", details: "Zahntempel (Sri Dalada Maligawa), Buddha Statue, Kandy Dance Show.", transport: "🛺 TukTuk", hotel: "🏨 noch offen", locName: "Kandy" },
+            { day: "Tag 10", date: "11.02. (Do)", rawDate: "2027-02-11", groupTag: "Ines & Anna", region: "Zentrales Hochland", regTag: "tag-sl-hochland", title: "Kandy ➔ Ella", details: "Berühmte ZUGFAHRT Kandy ➔ Ella (ca. 7h durch die Teeplantagen)!", transport: "🚆 ZUGFAHRT (7h)", hotel: "🏨 noch offen", locName: "Ella" },
+            { day: "Tag 11", date: "12.02. (Fr)", rawDate: "2027-02-12", groupTag: "Ines & Anna", region: "Zentrales Hochland", regTag: "tag-sl-hochland", title: "Ella", details: "Nine Arch Bridge mit dem Roller entdecken.", transport: "🛵 Scooter", hotel: "🏨 noch offen", locName: "Ella" },
+            { day: "Tag 12", date: "13.02. (Sa)", rawDate: "2027-02-13", groupTag: "Ines & Anna", region: "Zentrales Hochland", regTag: "tag-sl-hochland", title: "Ella", details: "Little Adam's Peak zum Sonnenuntergang.", transport: "🛵 Scooter", hotel: "🏨 noch offen", locName: "Ella" },
+            { day: "Tag 13", date: "14.02. (So)", rawDate: "2027-02-14", groupTag: "Ines & Anna", region: "Zentrales Hochland", regTag: "tag-sl-hochland", title: "Ella", details: "Ella Rock Wanderung, Ravana Wasserfall oder Diyaluma Falls.", transport: "🛵 Scooter", hotel: "🏨 noch offen", locName: "Ella" },
+            { day: "Tag 14", date: "15.02. (Mo)", rawDate: "2027-02-15", groupTag: "Ines & Anna", region: "Südküste", regTag: "tag-sl-suedkueste", title: "Ella ➔ Tangalle", details: "Pekoe Trail Etappe 16 - Tageswanderung vor Fahrt an die Küste.", transport: "🚌 Bus (ca. 3.5h)", hotel: "🏨 noch offen", locName: "Tangalle" },
+            { day: "Tag 15", date: "16.02. (Di)", rawDate: "2027-02-16", groupTag: "Ines & Anna", region: "Südküste", regTag: "tag-sl-suedkueste", title: "Tangalle", details: "Traumstrände an der Südküste mit dem Scooter erkunden.", transport: "🛵 Scooter", hotel: "🏨 noch offen", locName: "Tangalle" },
+            { day: "Tag 16", date: "17.02. (Mi)", rawDate: "2027-02-17", groupTag: "Ines & Anna", region: "Südküste", regTag: "tag-sl-suedkueste", title: "Tangalle ➔ Mirissa", details: "Weiterfahrt entlang der Küste nach Mirissa.", transport: "🚌 Bus (ca. 3h)", hotel: "🏨 noch offen", locName: "Mirissa" },
+            { day: "Tag 17", date: "18.02. (Do)", rawDate: "2027-02-18", groupTag: "Ines & Anna", region: "Südküste", regTag: "tag-sl-suedkueste", title: "Mirissa", details: "Whale Watching Ausflug, Coconut Tree Hill Fotospot.", transport: "🛺 TukTuk", hotel: "🏨 noch offen", locName: "Mirissa" },
+            { day: "Tag 18", date: "19.02. (Fr)", rawDate: "2027-02-19", groupTag: "Ines & Anna", region: "Südküste", regTag: "tag-sl-suedkueste", title: "Mirissa ➔ Weligama", details: "Surfen für Anfängerinnen in Weligama Bay.", transport: "🛺 TukTuk (20 min)", hotel: "🏨 noch offen", locName: "Weligama" },
+            { day: "Tag 19", date: "20.02. (Sa)", rawDate: "2027-02-20", groupTag: "Ines & Anna", region: "Südküste", regTag: "tag-sl-suedkueste", title: "Weligama", details: "Strand- & Surftage im Süden ausklingen lassen.", transport: "🛵 Scooter", hotel: "🏨 noch offen", locName: "Weligama" },
+            { day: "Tag 20", date: "21.02. (So)", rawDate: "2027-02-21", groupTag: "Ines & Anna", region: "Colombo", regTag: "tag-sl-colombo", title: "Weligama ➔ Colombo Stadt", details: "Fahrt ins Zentrum: Vibe der Hauptstadt spüren, Rooftop Bars, Galle Face Promenade.", transport: "🚆 Zug (2.5h) / Bus", hotel: "🏨 Bunkyard", locName: "Colombo Stadtzentrum" },
+            { day: "Tag 21", date: "22.02. (Mo)", rawDate: "2027-02-22", groupTag: "Ines & Anna", region: "Colombo", regTag: "tag-sl-colombo", title: "Colombo Stadt", details: "Entspannter Tag in Colombo, Souvenirs & Café.", transport: "🛺 TukTuk", hotel: "🏨 Bunkyard", locName: "Colombo Stadtzentrum" },
+            { day: "Tag 22", date: "23.02. (Di)", rawDate: "2027-02-23", groupTag: "Ines & Anna", region: "Abreise", regTag: "tag-default", title: "Colombo ➔ Flughafen CMB ➔ Wien", details: "Fahrt zum Flughafen, Abflug CMB 09:15 ➔ IST 15:45 ➔ Ankunft Wien 17:35 Uhr (TK1131 & TK1887).", transport: "✈️ Turkish Airlines", hotel: "✈️ Im Flugzeug", locName: "Flughafen Colombo (CMB)" }
         ];
 
         /* 3. Packlisten-Stammdaten (Stefan & Ines) */
@@ -1366,39 +1202,20 @@
         }
 
         function renderTableAndCards() {
-            const todayStr = getTodayISO();
-            const tbodyTH = $('#planTableBodyThailand');
-            tbodyTH.innerHTML = '';
-            thailandData.forEach(item => {
-                const tr = document.createElement('tr');
-                const isToday = item.rawDate === todayStr;
-                tr.className = 'row' + (isToday ? ' today-row' : '');
-                tr.setAttribute('data-region', item.region);
-                tr.setAttribute('data-group', item.groupTag || '');
-                tr.setAttribute('data-location', item.locName);
-                tr.setAttribute('data-rawdate', item.rawDate || '');
-                tr.onclick = () => focusMap(item.locName);
-                let groupClass = 'group-ines-stefan';
-                if (item.groupTag === 'Ines alleine') groupClass = 'group-ines-alleine';
-                if (item.groupTag === 'Ines & Anna') groupClass = 'group-ines-anna';
-                const groupBadge = item.groupTag ? `<span class="group-badge ${groupClass}">${item.groupTag}</span>` : '';
-                tr.innerHTML = `
-                    <td>
-                        <span class="dn">${item.day}</span>
-                        <div class="dt">${item.date}</div>${groupBadge}
-                    </td>
-                    <td><span class="rg ${item.regTag}">${item.region}</span></td>
-                    <td><div class="tt">${item.title} ${isToday ? '⭐ (HEUTE)' : ''}</div></td>
-                    <td>${item.details}</td>
-                    <td><span class="pill">${item.transport}</span></td>
-                    <td><span class="pill hotel-pill">${item.hotel}</span></td>`;
-                tbodyTH.appendChild(tr);
-            });
-            filterPlanThailand();
+            renderPlanTable('th');
+            renderPlanTable('sl');
+        }
 
-            const tbodySL = $('#planTableBodySriLanka');
-            tbodySL.innerHTML = '';
-            sriLankaData.forEach(item => {
+        /* Gemeinsame Logik für Tagesplan Thailand (th) und Sri Lanka (sl) */
+        const planCfg = {
+            th: { data: () => thailandData, body: '#planTableBodyThailand', cards: '#mobileCardsThailand', search: '#qTH', region: () => currentRegionThailand },
+            sl: { data: () => sriLankaData, body: '#planTableBodySriLanka', cards: '#mobileCardsSriLanka', search: '#qSL', region: () => currentRegionSriLanka }
+        };
+
+        function renderPlanTable(k) {
+            const cfg = planCfg[k], todayStr = getTodayISO(), tbody = $(cfg.body);
+            tbody.innerHTML = '';
+            cfg.data().forEach(item => {
                 const tr = document.createElement('tr');
                 const isToday = item.rawDate === todayStr;
                 tr.className = 'row' + (isToday ? ' today-row' : '');
@@ -1421,102 +1238,66 @@
                     <td>${item.details}</td>
                     <td><span class="pill">${item.transport}</span></td>
                     <td><span class="pill hotel-pill">${item.hotel}</span></td>`;
-                tbodySL.appendChild(tr);
+                tbody.appendChild(tr);
             });
-            filterPlanSriLanka();
+            filterPlan(k);
+        }
+
+        function filterPlan(k) {
+            const cfg = planCfg[k], reg = cfg.region();
+            const q = $(cfg.search) ? $(cfg.search).value.toLowerCase() : '';
+            document.querySelectorAll(cfg.body + ' tr').forEach(row => {
+                const okSearch = row.innerText.toLowerCase().includes(q);
+                const okFilter = reg === 'all' || (row.getAttribute('data-region') || '').includes(reg) || (row.getAttribute('data-group') || '').includes(reg);
+                row.style.display = (okSearch && okFilter) ? '' : 'none';
+            });
+            renderMobileCards(k);
+        }
+
+        function renderMobileCards(k) {
+            const cfg = planCfg[k], container = $(cfg.cards), todayStr = getTodayISO();
+            container.innerHTML = '';
+            document.querySelectorAll(cfg.body + ' tr').forEach(row => {
+                if (row.style.display === 'none') return;
+                const c = row.querySelectorAll('td'),
+                    loc = row.getAttribute('data-location'),
+                    rawDate = row.getAttribute('data-rawdate');
+                const isToday = rawDate === todayStr;
+                const card = document.createElement('div');
+                card.className = 'card' + (isToday ? ' today-card' : '');
+                card.onclick = () => focusMap(loc);
+                const dayBadge = c[0].querySelector('.dn') ? c[0].querySelector('.dn').outerHTML : '';
+                const dateText = c[0].querySelector('.dt') ? c[0].querySelector('.dt').innerText : '';
+                const groupBadge = c[0].querySelector('.group-badge') ? c[0].querySelector('.group-badge').outerHTML : '';
+                const regionBadge = c[1].querySelector('.rg') ? c[1].querySelector('.rg').outerHTML : '';
+                card.innerHTML = `
+                    <div class="card-header">
+                        <div class="card-meta">${dayBadge} <span class="card-date">${dateText}</span> ${groupBadge}</div>
+                        ${regionBadge}
+                    </div>
+                    <div class="card-title">${c[2].innerText}</div>
+                    <div class="card-details">${c[3].innerHTML}</div>
+                    <div class="card-footer">${c[4].innerHTML} ${c[5].innerHTML}</div>`;
+                container.appendChild(card);
+            });
         }
 
         function setFilterThailand(filterVal, btn) {
             currentRegionThailand = filterVal;
             document.querySelectorAll('#thailand .controls .f').forEach(b => b.classList.remove('on'));
             btn.classList.add('on');
-            filterPlanThailand();
+            filterPlan('th');
         }
 
         function setFilterSriLanka(filterVal, btn) {
             currentRegionSriLanka = filterVal;
             document.querySelectorAll('#srilanka .controls .f').forEach(b => b.classList.remove('on'));
             btn.classList.add('on');
-            filterPlanSriLanka();
+            filterPlan('sl');
         }
 
-        function filterPlanThailand() {
-            const q = $('#qTH') ? $('#qTH').value.toLowerCase() : '';
-            document.querySelectorAll('#planTableBodyThailand tr').forEach(row => {
-                const okSearch = row.innerText.toLowerCase().includes(q);
-                const okFilter = currentRegionThailand === 'all' || (row.getAttribute('data-region') || '').includes(currentRegionThailand) || (row.getAttribute('data-group') || '').includes(currentRegionThailand);
-                row.style.display = (okSearch && okFilter) ? '' : 'none';
-            });
-            renderMobileCardsThailand();
-        }
-
-        function filterPlanSriLanka() {
-            const q = $('#qSL') ? $('#qSL').value.toLowerCase() : '';
-            document.querySelectorAll('#planTableBodySriLanka tr').forEach(row => {
-                const okSearch = row.innerText.toLowerCase().includes(q);
-                const okFilter = currentRegionSriLanka === 'all' || (row.getAttribute('data-region') || '').includes(currentRegionSriLanka) || (row.getAttribute('data-group') || '').includes(currentRegionSriLanka);
-                row.style.display = (okSearch && okFilter) ? '' : 'none';
-            });
-            renderMobileCardsSriLanka();
-        }
-
-        function renderMobileCardsThailand() {
-            const container = $('#mobileCardsThailand');
-            container.innerHTML = '';
-            const todayStr = getTodayISO();
-            document.querySelectorAll('#planTableBodyThailand tr').forEach(row => {
-                if (row.style.display === 'none') return;
-                const c = row.querySelectorAll('td'),
-                    loc = row.getAttribute('data-location'),
-                    rawDate = row.getAttribute('data-rawdate');
-                const isToday = rawDate === todayStr;
-                const card = document.createElement('div');
-                card.className = 'card' + (isToday ? ' today-card' : '');
-                card.onclick = () => focusMap(loc);
-                const dayBadge = c[0].querySelector('.dn') ? c[0].querySelector('.dn').outerHTML : '';
-                const dateText = c[0].querySelector('.dt') ? c[0].querySelector('.dt').innerText : '';
-                const groupBadge = c[0].querySelector('.group-badge') ? c[0].querySelector('.group-badge').outerHTML : '';
-                const regionBadge = c[1].querySelector('.rg') ? c[1].querySelector('.rg').outerHTML : '';
-                card.innerHTML = `
-                    <div class="card-header">
-                        <div class="card-meta">${dayBadge} <span class="card-date">${dateText}</span> ${groupBadge}</div>
-                        ${regionBadge}
-                    </div>
-                    <div class="card-title">${c[2].innerText}</div>
-                    <div class="card-details">${c[3].innerHTML}</div>
-                    <div class="card-footer">${c[4].innerHTML} ${c[5].innerHTML}</div>`;
-                container.appendChild(card);
-            });
-        }
-
-        function renderMobileCardsSriLanka() {
-            const container = $('#mobileCardsSriLanka');
-            container.innerHTML = '';
-            const todayStr = getTodayISO();
-            document.querySelectorAll('#planTableBodySriLanka tr').forEach(row => {
-                if (row.style.display === 'none') return;
-                const c = row.querySelectorAll('td'),
-                    loc = row.getAttribute('data-location'),
-                    rawDate = row.getAttribute('data-rawdate');
-                const isToday = rawDate === todayStr;
-                const card = document.createElement('div');
-                card.className = 'card' + (isToday ? ' today-card' : '');
-                card.onclick = () => focusMap(loc);
-                const dayBadge = c[0].querySelector('.dn') ? c[0].querySelector('.dn').outerHTML : '';
-                const dateText = c[0].querySelector('.dt') ? c[0].querySelector('.dt').innerText : '';
-                const groupBadge = c[0].querySelector('.group-badge') ? c[0].querySelector('.group-badge').outerHTML : '';
-                const regionBadge = c[1].querySelector('.rg') ? c[1].querySelector('.rg').outerHTML : '';
-                card.innerHTML = `
-                    <div class="card-header">
-                        <div class="card-meta">${dayBadge} <span class="card-date">${dateText}</span> ${groupBadge}</div>
-                        ${regionBadge}
-                    </div>
-                    <div class="card-title">${c[2].innerText}</div>
-                    <div class="card-details">${c[3].innerHTML}</div>
-                    <div class="card-footer">${c[4].innerHTML} ${c[5].innerHTML}</div>`;
-                container.appendChild(card);
-            });
-        }
+        function filterPlanThailand() { filterPlan('th'); }
+        function filterPlanSriLanka() { filterPlan('sl'); }
 
         /* 5. Interaktive Karte (Leaflet) */
         function initMap() {
@@ -1583,7 +1364,7 @@
             line(['surat', 'bkk'], flightStyle);
             drawRoadRoute(points.cnx, points.pai, thStyle);
             drawRoadRoute(points.kbv, points.krabi, thStyle);
-            drawRoadRoute(points.tao, points.surat, thStyle);
+		line(['tao', 'surat'], thStyle);
             drawRoadRoute(points.bkk, points.bkk_city, thStyle);
             drawRoadRoute(points.cmb, points.negombo, slStyle);
             drawRoadRoute(points.negombo, points.anuradhapura, slStyle);
@@ -1951,7 +1732,17 @@
         }
 
         function updateCharts(stefanData, inesData) {
-            if (typeof Chart === 'undefined') return;
+            if (!$('#pack').classList.contains('on')) return;
+            if (typeof Chart === 'undefined') {
+                if (!window._chartLoading) {
+                    window._chartLoading = true;
+                    const s = document.createElement('script');
+                    s.src = 'https://cdn.jsdelivr.net/npm/chart.js';
+                    s.onload = () => renderAnalysis();
+                    document.head.appendChild(s);
+                }
+                return;
+            }
             const make = (canvasId, old, data) => {
                 const ctx = $(canvasId);
                 if (!ctx) return old;
@@ -1985,6 +1776,7 @@
     }
 			
             window.scrollTo(0, 0);
+            if (targetId === 'pack') renderAnalysis();
             if (targetId === 'mapview' && map) setTimeout(() => map.invalidateSize(), 100);
         }
         document.querySelectorAll('.tabs .tab').forEach(b => {
@@ -2088,15 +1880,37 @@
         }
 
         
-/* 11. Offline-Unterstützung (Service Worker) */
-        if ('serviceWorker' in navigator) {
-            const swCode = `self.addEventListener('fetch', function(e) { /* Cache-Fallback offline */ });`;
-            const swBlob = new Blob([swCode], { type: 'text/javascript' });
-            const swUrl = URL.createObjectURL(swBlob);
-            navigator.serviceWorker.register(swUrl).catch(() => {});
+/* 10d. Klima & Wetter: Daten einmal pflegen, Tabelle und Karten daraus erzeugen */
+        const climateData = [
+            ["Udon Thani & Isan", "Januar", "30°C / 19°C", "8 Std. / Tag", "1 Tag (ca. 5 mm)", "– (Binnenland)", "Sehr trocken, angenehm warm tagsüber, nachts kühler. Optimales Reisewetter."],
+            ["Chiang Mai & Pai (Norden)", "Januar", "29°C / 15°C", "8–9 Std. / Tag", "1 Tag (ca. 3 mm)", "– (Binnenland)", "Trocken & sonnig. Nachts im Hochland/Pai recht frisch (Pullover einpacken!)."],
+            ["Krabi & Andamanen-Inseln", "Januar", "32°C / 24°C", "9 Std. / Tag", "3 Tage (ca. 45 mm)", "28°C", "Trockenzeit, viel Sonnenschein, ruhige See, ideal zum Inselhüpfen."],
+            ["Koh Tao (Golf von Thailand)", "Jan./Feb.", "29°C / 25°C", "7 Std. / Tag", "6 Tage (ca. 90 mm)", "27°C", "Leicht erhöhte Schauerwahrscheinlichkeit (Monsunausläufer klingen ab), aber meist tolle Tauchbedingungen."],
+            ["Bangkok", "Januar", "33°C / 23°C", "9 Std. / Tag", "1 Tag (ca. 10 mm)", "– (Flusslage)", "Heiß, trocken und sonnig. Perfekt für Sightseeing."],
+            ["Anuradhapura & Kulturdreieck", "Februar", "30°C / 22°C", "8 Std. / Tag", "3 Tage (ca. 40 mm)", "– (Binnenland)", "Angenehm warm, selten Regen, ideal für Kultur & Radtouren."],
+            ["Kandy & Ella (Hochland)", "Februar", "25°C / 16°C", "7–8 Std. / Tag", "5 Tage (ca. 60 mm)", "– (Bergland)", "Sonnig am Tag, nachts im Hochland spürbar frisch. Gelegentliche kurze Regenschauer möglich."],
+            ["Südküste Sri Lanka (Mirissa/Weligama)", "Februar", "31°C / 24°C", "9 Std. / Tag", "4 Tage (ca. 55 mm)", "28°C", "Beste Reisezeit! Viel Sonne, warme Wassertemperaturen, exzellent zum Surfen & Whales watching."]
+        ];
+
+        function renderClimate() {
+            $('#climateBody').innerHTML = climateData.map(r =>
+                `<tr><td><strong>${r[0]}</strong></td>` + r.slice(1).map(v => `<td>${v}</td>`).join('') + `</tr>`
+            ).join('');
+            $('#climateCards').innerHTML = climateData.map(r => `
+                    <div class="climate-card">
+                        <div class="climate-card-title">${r[0]} <span style="font-weight:normal;color:var(--mute);font-size:.75rem">· ${r[1]}</span></div>
+                        <div class="climate-card-grid">
+                            <div class="climate-card-item"><b>Temperatur</b>${r[2]}</div>
+                            <div class="climate-card-item"><b>Sonnenstunden</b>${r[3]}</div>
+                            <div class="climate-card-item"><b>Niederschlag</b>${r[4]}</div>
+                            <div class="climate-card-item"><b>Wassertemperatur</b>${r[5]}</div>
+                        </div>
+                        <div class="climate-card-desc">${r[6]}</div>
+                    </div>`).join('');
         }
 
-        /* 12. App-Initialisierung beim Laden */
+        
+/* 12. App-Initialisierung beim Laden */
         const safe = fn => {
             try { fn(); } catch (err) { console.error('Startfehler in', fn.name || 'Schritt', err); }
         };
@@ -2114,6 +1928,7 @@
             safe(loadTodos);
             safe(loadPacklist);
             safe(loadRates);
+            safe(renderClimate);
         });
 		
 		
