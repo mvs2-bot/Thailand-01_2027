@@ -134,7 +134,7 @@
         .group-badge { display: inline-block; font-size: .67rem; font-weight: 700; padding: 2px 6px; border-radius: 4px; margin-top: 4px; white-space: nowrap; }
         .group-ines-stefan { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
         .group-ines-alleine { background: #f3e8ff; color: #6b21a8; border: 1px solid #e9d5ff; }
-        .group-ines-anna { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+        .group-ines-anna { background: #ccfbf1; color: #0d9488; border: 1px solid #c7d2fe; }
         .rg { display: inline-block; font-size: .68rem; font-weight: 700; border-radius: 4px; padding: 2px 6px; white-space: nowrap; margin-bottom: 2px; }
         .tag-norden { background: #dcfce7; color: #15803d; }
         .tag-bangkok { background: #f3e8ff; color: #6b21a8; }
@@ -302,6 +302,21 @@
         @media (max-width: 860px) {
             .box:has(> .stats) { padding: 10px; margin-bottom: 10px; }
         }
+    
+        /* PATCH: Unterkunft "noch offen" gelblich */
+        .hotel-pill.hotel-open { background: #fef9c3; border-color: #fde047; color: #854d0e; }
+        @media (prefers-color-scheme: dark) { .hotel-pill.hotel-open { background: #fef9c3; color: #854d0e; } }
+    
+        /* PATCH: fx-mobile */
+        @media (max-width: 860px) {
+            #currency .pack-add-form { display: grid; grid-template-columns: 1fr auto 1fr; gap: 8px; padding: 12px; }
+            #currency .pack-add-form #fxAmount { grid-column: 1 / -1; width: 100% !important; font-size: 1.25rem; font-weight: 700; padding: 12px; }
+            #currency .pack-add-form select { min-width: 0; width: 100%; font-size: 16px; min-height: 46px; padding: 8px; }
+            #currency .pack-add-form .f { min-height: 46px; min-width: 46px; font-size: 1.2rem; }
+            #currency .pack-summary { grid-template-columns: 1fr; }
+            #fxResult { font-size: 1.6rem; word-break: break-word; }
+            #currency .mh { flex-wrap: wrap; }
+        }
     </style>
 </head>
 <body>
@@ -324,8 +339,8 @@
                 <button class="tab on" data-t="mapview"><span>🗺️</span>Karte</button>
                 <button class="tab" data-t="thailand"><span>🇹🇭</span>Tagesplan<br>Thailand</button>
                 <button class="tab" data-t="srilanka"><span>🇱🇰</span>Tagesplan<br>Sri Lanka</button>
-                <button class="tab" data-t="acc"><span>🏨</span>Unter-<br>künfte</button>
-                <button class="tab" data-t="misc"><span>📌</span>Sonstiges</button>
+                <button class="tab" data-t="acc"><span>🏨</span>Unterkünfte</button>
+                <button class="tab" data-t="misc"><span>📌</span>Infos &amp; mehr</button>
             </div>
         </div>
 
@@ -341,10 +356,9 @@
                     <button data-t="thailand" class="pop-btn"><span>🇹🇭</span>Tagesplan Thailand</button>
                     <button data-t="srilanka" class="pop-btn"><span>🇱🇰</span>Tagesplan Sri Lanka</button>
                     <button data-t="acc" class="pop-btn"><span>🏨</span>Unterkünfte</button>
-                    <button data-t="misc" class="pop-btn"><span>📌</span>Sonstiges</button>
+                    <button data-t="misc" class="pop-btn"><span>📌</span>Infos &amp; mehr</button>
                     <button data-t="flights" class="pop-btn"><span>✈️</span>Gebuchte Flüge</button>
                     <button data-t="pack" class="pop-btn"><span>🎒</span>Packliste & Gewicht</button>
-                    <button data-t="emergency" class="pop-btn"><span>🚨</span>Infos & Notfall</button>
                     <button data-t="currency" class="pop-btn"><span>💰</span>Geld & Währung</button>
                     <button data-t="climate" class="pop-btn"><span>🌤️</span>Klima & Wetter</button>
                     <button data-t="imprint" class="pop-btn"><span>📄</span>Impressum</button>
@@ -629,6 +643,39 @@
                     <li><strong>Führerschein:</strong> Für das Mieten von Rollern wird in beiden Ländern zwingend der <i>internationale Führerschein</i> nach dem Abkommen von 1968 benötigt.</li>
                 </ul>
             </div>
+        
+            <div class="box">
+                <h2>🚨 Infos & Notfall</h2>
+                <p class="note">Wichtige Notrufnummern, Botschaften, SIM-Karten und nützliche Apps.</p>
+                <div style="font-size:.9rem;line-height:1.8;color:var(--text)">
+                    <h3 style="color:var(--p1);margin-top:12px">🇹🇭 Thailand: Notrufe & Botschaft</h3>
+                    <ul style="padding-left:18px;margin-bottom:12px">
+                        <li><strong>Polizei:</strong> 191 | <strong>Touristenpolizei:</strong> 1155 | <strong>Ambulanz/Notarzt:</strong> 1669</li>
+                        <li><strong>Deutsche Botschaft Bangkok:</strong> 9 Sathorn Tai Rd., Bangkok 10120 | Tel.: +66 2 287 9000 | Bereitschaftsdienst (Notfälle): +66 81 845 6216</li>
+                    </ul>
+                    
+                    <h3 style="color:var(--p1);margin-top:12px">🇱🇰 Sri Lanka: Notrufe & Botschaft</h3>
+                    <ul style="padding-left:18px;margin-bottom:12px">
+                        <li><strong>Polizei:</strong> 119 | <strong>Touristenpolizei:</strong> +94 11 242 1052 | <strong>Ambulanz/Notruf:</strong> 110</li>
+                        <li><strong>Deutsche Botschaft Colombo:</strong> 40 Tennyson Road, Cinnamon Gardens, Colombo 7 | Tel.: +94 11 267 4411 | Bereitschaftsdienst (Notfälle): +94 77 748 8888</li>
+                    </ul>
+                    
+
+                    
+                    <h3 style="color:var(--p1);margin-top:12px">📱 SIM-Karten & Internet</h3>
+                    <ul style="padding-left:18px;margin-bottom:12px">
+                        <li><strong>Einfachste Lösung:</strong> Vorab eSim über Airalo / Dt. Anbieter buchen oder direkt am Flughafen (AIS/TrueMove in Thailand, Dialog/Mobitel in Sri Lanka) physische SIM/eSIM holen.</li>
+                    </ul>
+                    
+                    <h3 style="color:var(--p1);margin-top:12px">📲 Nützliche Apps</h3>
+                    <ul style="padding-left:18px">
+                        <li><strong>Grab & Bolt:</strong> Für günstige Taxis & Essen in Thailand.</li>
+                        <li><strong>PickMe:</strong> Die ultimative TukTuk- und Taxi-App für Sri Lanka (Preise fair, kein Verhandeln nötig).</li>
+                        <li><strong>12Go Asia:</strong> Perfekt zum Buchen von Zügen, Bussen & Fähren in ganz Südostasien.</li>
+                        <li><strong>Google Maps & Translate:</strong> Offline-Karten herunterladen und Übersetzer parat haben.</li>
+                    </ul>
+                </div>
+            </div>
         </div>
 
         <!-- Popover-Ansichten: Gebuchte Flüge -->
@@ -789,48 +836,12 @@
             </div>
         </div>
 
-        <!-- Popover-Ansichten: Infos & Notfall -->
-        <div id="emergency" class="pane">
-            <div class="box">
-                <h2>🚨 Infos & Notfall</h2>
-                <p class="note">Wichtige Notrufnummern, Botschaften, SIM-Karten und nützliche Apps.</p>
-                <div style="font-size:.9rem;line-height:1.8;color:var(--text)">
-                    <h3 style="color:var(--p1);margin-top:12px">🇹🇭 Thailand: Notrufe & Botschaft</h3>
-                    <ul style="padding-left:18px;margin-bottom:12px">
-                        <li><strong>Polizei:</strong> 191 | <strong>Touristenpolizei:</strong> 1155 | <strong>Ambulanz/Notarzt:</strong> 1669</li>
-                        <li><strong>Deutsche Botschaft Bangkok:</strong> 9 Sathorn Tai Rd., Bangkok 10120 | Tel.: +66 2 287 9000 | Bereitschaftsdienst (Notfälle): +66 81 845 6216</li>
-                    </ul>
-                    
-                    <h3 style="color:var(--p1);margin-top:12px">🇱🇰 Sri Lanka: Notrufe & Botschaft</h3>
-                    <ul style="padding-left:18px;margin-bottom:12px">
-                        <li><strong>Polizei:</strong> 119 | <strong>Touristenpolizei:</strong> +94 11 242 1052 | <strong>Ambulanz/Notruf:</strong> 110</li>
-                        <li><strong>Deutsche Botschaft Colombo:</strong> 40 Tennyson Road, Cinnamon Gardens, Colombo 7 | Tel.: +94 11 267 4411 | Bereitschaftsdienst (Notfälle): +94 77 748 8888</li>
-                    </ul>
-                    
-
-                    
-                    <h3 style="color:var(--p1);margin-top:12px">📱 SIM-Karten & Internet</h3>
-                    <ul style="padding-left:18px;margin-bottom:12px">
-                        <li><strong>Einfachste Lösung:</strong> Vorab eSim über Airalo / Dt. Anbieter buchen oder direkt am Flughafen (AIS/TrueMove in Thailand, Dialog/Mobitel in Sri Lanka) physische SIM/eSIM holen.</li>
-                    </ul>
-                    
-                    <h3 style="color:var(--p1);margin-top:12px">📲 Nützliche Apps</h3>
-                    <ul style="padding-left:18px">
-                        <li><strong>Grab & Bolt:</strong> Für günstige Taxis & Essen in Thailand.</li>
-                        <li><strong>PickMe:</strong> Die ultimative TukTuk- und Taxi-App für Sri Lanka (Preise fair, kein Verhandeln nötig).</li>
-                        <li><strong>12Go Asia:</strong> Perfekt zum Buchen von Zügen, Bussen & Fähren in ganz Südostasien.</li>
-                        <li><strong>Google Maps & Translate:</strong> Offline-Karten herunterladen und Übersetzer parat haben.</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
         <!-- Popover-Ansichten: Geld & Währung -->
         <div id="currency" class="pane">
             <div class="box">
                 <h2>🧮 Wechselkurs-Rechner</h2>
                 <div class="pack-add-form" style="margin-top:12px">
-                    <input type="number" id="fxAmount" value="100" min="0" step="any" oninput="calcFx()" style="width:120px">
+                    <input type="number" inputmode="decimal" id="fxAmount" value="100" min="0" step="any" oninput="calcFx()" style="width:120px">
                     <select id="fxFrom" onchange="calcFx()">
                         <option value="EUR">EUR (€)</option>
                         <option value="THB">THB (฿)</option>
@@ -1006,10 +1017,10 @@
         ];
 
         const sriLankaData = [
-            { day: "Tag 1", date: "30.01. (Sa)", rawDate: "2027-01-30", groupTag: "Ines alleine", region: "Westküste", regTag: "tag-sl-westkueste", title: "Negombo (Ines alleine)", details: "Akklimatisieren in Negombo, mögliche Aktivitäten auschecken, Strand.", transport: "🛵 TukTuk / Zu Fuß", hotel: "🏨 Ceylon Glory Hostel (gebucht)", locName: "Negombo" },
-            { day: "Tag 2", date: "31.01. (So)", rawDate: "2027-01-31", groupTag: "Ines alleine", region: "Westküste", regTag: "tag-sl-westkueste", title: "Negombo (Ines alleine)", details: "Aktivität & Entspannen am Strand.", transport: "🛵 TukTuk", hotel: "🏨 Ceylon Glory Hostel (gebucht)", locName: "Negombo" },
-            { day: "Tag 3", date: "01.02. (Mo)", rawDate: "2027-02-01", groupTag: "Ines alleine", region: "Westküste", regTag: "tag-sl-westkueste", title: "Negombo (Ines alleine)", details: "Zugfahrt Kandy ➔ Ella zwingend online buchen!", transport: "🛵 TukTuk", hotel: "🏨 Ceylon Glory Hostel (gebucht)", locName: "Negombo" },
-            { day: "Tag 1", date: "02.02. (Di)", rawDate: "2027-02-02", groupTag: "Ines & Anna", region: "Westküste", regTag: "tag-sl-westkueste", title: "Negombo / Colombo (Ankunft Anna)", details: "Ankunft Anna (05:00-06:00). Gemütlicher Tag, Kaffee trinken, Planung.", transport: "🚕 Taxi / TukTuk", hotel: "🏨 Ceylon Glory Hostel (gebucht)", locName: "Negombo" },
+            { day: "Tag 1", date: "30.01. (Sa)", rawDate: "2027-01-30", groupTag: "Ines alleine", region: "Westküste", regTag: "tag-sl-westkueste", title: "Negombo (Ines alleine)", details: "Akklimatisieren in Negombo, mögliche Aktivitäten auschecken, Strand.", transport: "🛵 TukTuk / Zu Fuß", hotel: "🏨 Ceylon Glory Hostel", locName: "Negombo" },
+            { day: "Tag 2", date: "31.01. (So)", rawDate: "2027-01-31", groupTag: "Ines alleine", region: "Westküste", regTag: "tag-sl-westkueste", title: "Negombo (Ines alleine)", details: "Aktivität & Entspannen am Strand.", transport: "🛵 TukTuk", hotel: "🏨 Ceylon Glory Hostel", locName: "Negombo" },
+            { day: "Tag 3", date: "01.02. (Mo)", rawDate: "2027-02-01", groupTag: "Ines alleine", region: "Westküste", regTag: "tag-sl-westkueste", title: "Negombo (Ines alleine)", details: "Zugfahrt Kandy ➔ Ella zwingend online buchen!", transport: "🛵 TukTuk", hotel: "🏨 Ceylon Glory Hostel", locName: "Negombo" },
+            { day: "Tag 1", date: "02.02. (Di)", rawDate: "2027-02-02", groupTag: "Ines & Anna", region: "Westküste", regTag: "tag-sl-westkueste", title: "Negombo / Colombo (Ankunft Anna)", details: "Ankunft Anna (05:00-06:00). Gemütlicher Tag, Kaffee trinken, Planung.", transport: "🚕 Taxi / TukTuk", hotel: "🏨 Ceylon Glory Hostel", locName: "Negombo" },
             { day: "Tag 2", date: "03.02. (Mi)", rawDate: "2027-02-03", groupTag: "Ines & Anna", region: "Kulturdreieck", regTag: "tag-sl-kulturdreieck", title: "Negombo/Colombo ➔ Anuradhapura", details: "Einchecken, Akklimatisieren, TukTuk nach Mihintale organisieren.", transport: "🚆 Zug (Direkt) / Bus", hotel: "🏨 noch offen", locName: "Anuradhapura" },
             { day: "Tag 3", date: "04.02. (Do)", rawDate: "2027-02-04", groupTag: "Ines & Anna", region: "Kulturdreieck", regTag: "tag-sl-kulturdreieck", title: "Anuradhapura", details: "Ancient Anuradhapura mit dem Fahrrad erkunden (UNESCO World Heritage).", transport: "🚲 Fahrrad", hotel: "🏨 noch offen", locName: "Anuradhapura" },
             { day: "Tag 4", date: "05.02. (Fr)", rawDate: "2027-02-05", groupTag: "Ines & Anna", region: "Kulturdreieck", regTag: "tag-sl-kulturdreieck", title: "Anuradhapura", details: "Vormittag Mihintale, Weiterreise planen.", transport: "🛺 TukTuk", hotel: "🏨 noch offen", locName: "Anuradhapura" },
@@ -1260,7 +1271,7 @@
                     <td><div class="tt">${item.title} ${isToday ? '⭐ (HEUTE)' : ''}</div></td>
                     <td>${item.details}</td>
                     <td><span class="pill">${item.transport}</span></td>
-                    <td><span class="pill hotel-pill">${item.hotel}</span></td>`;
+                    <td><span class="pill hotel-pill${/noch offen/i.test(item.hotel) ? ' hotel-open' : ''}">${item.hotel}</span></td>`;
                 tbody.appendChild(tr);
             });
             filterPlan(k);
