@@ -288,6 +288,20 @@
             .tab span { font-size: .75rem; }
             #map { height: 500px; }
         }
+    
+        /* Buchungsinfos in der Unterkunftsübersicht */
+        .booking-info { display: block; margin-top: 4px; font-size: .72rem; font-weight: 600; color: var(--mute); line-height: 1.5; }
+        .booking-info b { color: var(--ink); }
+        .booking-info + .booking-info { margin-top: 8px; }
+    
+        /* Sonstiges: kompaktere Boxen für Zeiträume & Arbeitstage */
+        .box:has(> .stats) { padding: 14px 16px; margin-bottom: 12px; }
+        .box:has(> .stats) .note { margin-bottom: 8px; }
+        .box:has(> .stats) .stats { margin-bottom: 6px; }
+        .box:has(> .stats) small { display: block; line-height: 1.35; }
+        @media (max-width: 860px) {
+            .box:has(> .stats) { padding: 10px; margin-bottom: 10px; }
+        }
     </style>
 </head>
 <body>
@@ -354,7 +368,7 @@
             <div class="box">
                 <div class="mh">
                     <h2>🇹🇭 Tagesplan Thailand</h2>
-                    <p class="note" style="margin-bottom:0">01.01. – 29.01.2027 · Udon Thani, Chiang Mai, Pai, Krabi, Koh Tao, Bangkok</p>
+                    <p class="note" style="margin-bottom:0">01.01. – 29.01.2027 · Udon Thani, Chiang Mai, Pai, Ko Phi Phi, Krabi, Koh Tao, Bangkok</p>
                 </div>
                 <div class="controls" id="filterControlsThailand"></div>
                 <div class="tw tw-route">
@@ -433,42 +447,49 @@
                                 <td><strong>2. Chiang Mai</strong></td>
                                 <td>05.01. – 08.01.</td>
                                 <td><span class="stay-badge">3 Nächte</span></td>
-                                <td>🏨 Sylvis Hostel Chiangmai<span class="status-booked">gebucht</span></td>
+                                <td>🏨 Sylvis Hostel Chiangmai<span class="status-booked">gebucht</span><div class="booking-info">🛏️ Kleines Doppelzimmer<br>📲 Gebucht durch Stefan auf Booking<br>⏳ Stornierbar bis 01.01.2027</div></td>
                                 <td><span class="travel-time-pill">🚐 ca. 3 Std. 00 Min.</span>Minivan (AYA) über 762 Kurven nach Pai</td>
                             </tr>
                             <tr style="cursor:pointer;" onclick="focusMap('Pai')">
                                 <td><strong>3. Pai</strong></td>
                                 <td>08.01. – 13.01.</td>
                                 <td><span class="stay-badge">5 Nächte</span></td>
-                                <td>🏨 Bueng Pai Farm<span class="status-booked">gebucht</span></td>
-                                <td><span class="travel-time-pill">🚐✈ ca. 6–7 Std. Gesamt</span>Minivan via Chiang Mai ➔ Flug/Bus nach Krabi</td>
-                            </tr>
-                            <tr style="cursor:pointer;" onclick="focusMap('Krabi / Railay')">
-                                <td><strong>4. Krabi / Railay</strong></td>
-                                <td>13.01. – 16.01.</td>
-                                <td><span class="stay-badge">3 Nächte</span></td>
-                                <td>🏨 EZ auf Krabi<span class="status-open">offen</span></td>
-                                <td><span class="travel-time-pill">⛴ ca. 1 Std. 30 Min.</span>Fähre von Krabi nach Ko Phi Phi</td>
+                                <td>🏨 Bueng Pai Farm<span class="status-booked">gebucht</span><div class="booking-info">🛏️ Bungalow am Wasser<br>📲 Gebucht durch Stefan auf Booking<br>⏳ Stornierbar bis 03.01.2027</div></td>
+                                <td><span class="travel-time-pill">🚐✈⛴️ ca. 8–10 Std. Gesamt</span>Minivan via Chiang Mai ➔ Flug nach Krabi ➔ Fähre nach Ko Phi Phi</td>
                             </tr>
                             <tr style="cursor:pointer;" onclick="focusMap('Ko Phi Phi')">
-                                <td><strong>5. Ko Phi Phi</strong></td>
-                                <td>16.01. – 19.01.</td>
+                                <td><strong>4. Ko Phi Phi</strong></td>
+                                <td>13.01. – 16.01.</td>
                                 <td><span class="stay-badge">3 Nächte</span></td>
                                 <td>🏨 EZ auf Koh Phi Phi<span class="status-open">offen</span></td>
-                                <td><span class="travel-time-pill">⛴️🚌⛴️ ca. 7–8 Std. Gesamt</span>Fähre zum Festland + Bus & Fähre nach Koh Tao</td>
+                                <td><span class="travel-time-pill">⛴ ca. 1 Std. 30 Min.</span>Fähre von Ko Phi Phi nach Krabi</td>
+                            </tr>
+                            <tr style="cursor:pointer;" onclick="focusMap('Krabi / Railay')">
+                                <td><strong>5. Krabi / Railay</strong></td>
+                                <td>16.01. – 19.01.</td>
+                                <td><span class="stay-badge">3 Nächte</span></td>
+                                <td>🏨 EZ auf Krabi<span class="status-open">offen</span></td>
+                                <td><span class="travel-time-pill">🚌⛴️ ca. 7–8 Std. Gesamt</span>Bus/Minivan + Fähre von Krabi nach Koh Tao</td>
                             </tr>
                             <tr style="cursor:pointer;" onclick="focusMap('Koh Tao')">
                                 <td><strong>6. Koh Tao</strong></td>
-                                <td>19.01. – 25./26.01.</td>
-                                <td><span class="stay-badge">6–7 Nächte</span></td>
-                                <td>🏨 EZ auf Koh Tao<span class="status-open">offen</span></td>
+                                <td>19.01. – 25.01.</td>
+                                <td><span class="stay-badge">6 Nächte</span></td>
+                                <td>🏨 Koh Tao Heights Studio Apartments<span class="status-booked">gebucht</span><div class="booking-info">🛏️ Studio Apartment<br>📲 Gebucht durch Stefan auf Booking<br>⏳ Stornierbar bis 19.12.2026</div></td>
                                 <td><span class="travel-time-pill">⛴🚌 / ✈️ ca. 8 Std. Gesamt</span>Katamaran + Bus / Flug via Surat Thani/Samui nach Bangkok</td>
+                            </tr>
+                            <tr style="cursor:pointer;" onclick="focusMap('Koh Tao')">
+                                <td><strong>Nacht 25.→26.01. (Koh Tao oder Bangkok)</strong></td>
+                                <td>25.01. – 26.01.</td>
+                                <td><span class="stay-badge">1 Nacht</span></td>
+                                <td>🏨 Sunrise Koh Tao (falls Koh Tao) oder Jam Hostel Bangkok (falls Bangkok)<span class="status-booked">gebucht</span><div class="booking-info"><b>Sunrise Koh Tao</b><br>🛏️ Doppelzimmer mit Meerblick<br>📲 Gebucht durch Stefan auf Booking<br>⏳ Stornierbar bis 23.01.2027</div><div class="booking-info"><b>Jam Hostel Bangkok</b><br>🛏️ Doppelzimmer mit Balkon<br>📲 Gebucht durch Stefan auf Booking<br>⏳ Stornierbar bis 21.01.2027</div></td>
+                                <td><span class="travel-time-pill">⛴🚌 / ✈️ ca. 8 Std. Gesamt</span>Bei Bangkok: Katamaran + Bus / Flug via Surat Thani/Samui</td>
                             </tr>
                             <tr style="cursor:pointer;" onclick="focusMap('Bangkok Stadtzentrum')">
                                 <td><strong>7. Bangkok Stadt</strong></td>
-                                <td>25./26.01. – 29.01.</td>
-                                <td><span class="stay-badge">3–4 Nächte</span></td>
-                                <td>🏨 EZ in Bangkok<span class="status-open">offen</span></td>
+                                <td>26.01. – 29.01.</td>
+                                <td><span class="stay-badge">3 Nächte</span></td>
+                                <td>🏨 Jam Hostel Bangkok oder The Yard Hostel Bangkok<span class="status-booked">gebucht</span><div class="booking-info"><b>Jam Hostel Bangkok</b><br>🛏️ Doppelzimmer mit Balkon<br>📲 Gebucht durch Stefan auf Booking<br>⏳ Stornierbar bis 21.01.2027</div><div class="booking-info"><b>The Yard Hostel Bangkok</b><br>🛏️ Doppelzimmer mit eigenem Bad<br>📲 Gebucht durch Ines auf Booking<br>⏳ Stornierbar bis 20.01.2027</div></td>
                                 <td><span class="travel-time-pill">✈️ Rückflug / Weiterflug</span>Transfer BKK Flughafen (ca. 45 Min.)</td>
                             </tr>
                         </tbody>
@@ -492,7 +513,7 @@
                                 <td><strong>1. Negombo</strong> (Ines & Anna)</td>
                                 <td>29.01. – 03.02.</td>
                                 <td><span class="stay-badge">5 Nächte</span></td>
-                                <td>🏨 Ceylon Glory Hostel<span class="status-booked">gebucht</span></td>
+                                <td>🏨 Ceylon Glory Hostel<span class="status-booked">gebucht</span><div class="booking-info">🛏️ Bett im Frauen-Mehrbettzimmer<br>📲 Gebucht durch Ines bei Hostelworld<br>⏳ Stornierbar bis ??? (noch unbekannt)</div></td>
                                 <td><span class="travel-time-pill">🚆 ca. 3 Std. 30 Min.</span>Direktzug oder Bus nach Anuradhapura</td>
                             </tr>
                             <tr style="cursor:pointer;" onclick="focusMap('Anuradhapura')">
@@ -568,14 +589,14 @@
             <div class="box">
                 <h2>💼 Verbleibende Arbeitstage bis Abflug</h2>
                 <p class="note">Verbleibende Werktage (Mo–Fr) ab heute bis zum Abflug am 01.01.2027. Gesetzliche Feiertage sind bereits abgezogen (ohne persönliche Urlaubstage).</p>
-                <div class="work-summary">
-                    <div>
-                        <span class="work-stat-val" id="workDaysBayern">0 Tage</span>
-                        <div class="work-stat-lbl">Arbeitstage Bayern</div>
+                <div class="stats" id="workStats">
+                    <div class="stat">
+                        <span style="color:#2563eb">●</span> Arbeitstage Bayern
+                        <b id="workDaysBayern">0 Tage</b>bis Abflug 01.01.
                     </div>
-                    <div>
-                        <span class="work-stat-val" id="workDaysWien">0 Tage</span>
-                        <div class="work-stat-lbl">Arbeitstage Wien</div>
+                    <div class="stat">
+                        <span style="color:#dc2626">●</span> Arbeitstage Wien
+                        <b id="workDaysWien">0 Tage</b>bis Abflug 01.01.
                     </div>
                 </div>
                 <small style="font-size:.72rem;color:var(--mute)">* Berücksichtigte Feiertage in diesem Zeitraum: Tag der Dt. Einheit, Allerheiligen, Maria Empfängnis (AT), 1. & 2. Weihnachtsfeiertag, Neujahr.</small>
@@ -807,25 +828,6 @@
         <!-- Popover-Ansichten: Geld & Währung -->
         <div id="currency" class="pane">
             <div class="box">
-                <div class="mh">
-                    <h2>💰 Geld & Währung</h2>
-                    <button onclick="loadRates()">🔄 Aktualisieren</button>
-                </div>
-                <p class="note">Aktuelle Wechselkurse (Basis Euro).</p>
-                <div class="pack-summary">
-                    <div>
-                        <span class="pack-stat-val" id="rateTHB">–</span>
-                        <div class="pack-stat-lbl">1 € in Thailändischen Baht (THB)</div>
-                    </div>
-                    <div>
-                        <span class="pack-stat-val" id="rateLKR">–</span>
-                        <div class="pack-stat-lbl">1 € in Sri-Lanka-Rupien (LKR)</div>
-                    </div>
-                </div>
-                <p class="note" id="rateStatus" style="margin-bottom:0">Kurse werden geladen...</p>
-            </div>
-
-            <div class="box">
                 <h2>🧮 Wechselkurs-Rechner</h2>
                 <div class="pack-add-form" style="margin-top:12px">
                     <input type="number" id="fxAmount" value="100" min="0" step="any" oninput="calcFx()" style="width:120px">
@@ -847,6 +849,25 @@
                         <div class="pack-stat-lbl" id="fxResultLbl">Ergebnis</div>
                     </div>
                 </div>
+            </div>
+
+            <div class="box">
+                <div class="mh">
+                    <h2>💰 Geld & Währung</h2>
+                    <button onclick="loadRates()">🔄 Aktualisieren</button>
+                </div>
+                <p class="note">Aktuelle Wechselkurse (Basis Euro).</p>
+                <div class="pack-summary">
+                    <div>
+                        <span class="pack-stat-val" id="rateTHB">–</span>
+                        <div class="pack-stat-lbl">1 € in Thailändischen Baht (THB)</div>
+                    </div>
+                    <div>
+                        <span class="pack-stat-val" id="rateLKR">–</span>
+                        <div class="pack-stat-lbl">1 € in Sri-Lanka-Rupien (LKR)</div>
+                    </div>
+                </div>
+                <p class="note" id="rateStatus" style="margin-bottom:0">Kurse werden geladen...</p>
             </div>
 
             <div class="box">
@@ -965,22 +986,22 @@
             { day: "Tag 10", date: "10.01. (So)", rawDate: "2027-01-10", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Pai / Umland", details: "Pai genießen: Lod Cave, Bamboo Bridge & Hot Springs", transport: "🛵 Roller", hotel: "🏨 Bueng Pai Farm", locName: "Pai" },
             { day: "Tag 11", date: "11.01. (Mo)", rawDate: "2027-01-11", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Pai / Umland", details: "Erkundung Tag 4 in Pai: Aussichtspunkte, Cafés & entspannen", transport: "🛵 Roller", hotel: "🏨 Bueng Pai Farm", locName: "Pai" },
             { day: "Tag 12", date: "12.01. (Di)", rawDate: "2027-01-12", groupTag: "Ines & Stefan", region: "Norden", regTag: "tag-norden", title: "Pai / Umland", details: "Erkundung Tag 5 in Pai: Letzter Tag im Hochland", transport: "🛵 Roller", hotel: "🏨 Bueng Pai Farm", locName: "Pai" },
-            { day: "Tag 13", date: "13.01. (Mi)", rawDate: "2027-01-13", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Pai ➔ Krabi", details: "Direkter Transfer von Pai auf dem besten Weg nach Krabi", transport: "🚐 Minivan / Flug", hotel: "🏨 EZ auf Krabi", locName: "Krabi / Railay" },
-            { day: "Tag 14", date: "14.01. (Do)", rawDate: "2027-01-14", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Krabi", details: "Railay Beach & Phra Nang Cave Beach", transport: "🚤 Longtail-Boot", hotel: "🏨 EZ auf Krabi", locName: "Krabi / Railay" },
-            { day: "Tag 15", date: "15.01. (Fr)", rawDate: "2027-01-15", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Krabi", details: "Tagestrip nach Ko Hong (Lagune & Viewpoint)", transport: "🚤 Longtail-Tour", hotel: "🏨 EZ auf Krabi", locName: "Krabi / Railay" },
-            { day: "Tag 16", date: "16.01. (Sa)", rawDate: "2027-01-16", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Krabi ➔ Ko Phi Phi", details: "Überfahrt nach Ko Phi Phi, Sunset Viewpoint", transport: "⛴️ Fähre (1.5 - 2 h)", hotel: "🏨 EZ auf Koh Phi Phi", locName: "Ko Phi Phi" },
-            { day: "Tag 17", date: "17.01. (So)", rawDate: "2027-01-17", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Ko Phi Phi", details: "Ausflug Maya Bay, Pileh Lagoon & Bamboo Island", transport: "🚤 Longtail-Boot", hotel: "🏨 EZ auf Koh Phi Phi", locName: "Ko Phi Phi" },
-            { day: "Tag 18", date: "18.01. (Mo)", rawDate: "2027-01-18", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Ko Phi Phi", details: "Schnorcheln, Entspannen am Long Beach", transport: "🚤 Wassertaxi", hotel: "🏨 EZ auf Koh Phi Phi", locName: "Ko Phi Phi" },
-            { day: "Tag 19", date: "19.01. (Di)", rawDate: "2027-01-19", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Ko Phi Phi ➔ Koh Tao", details: "Überfahrt nach Koh Tao, Ankunft & Einchecken", transport: "⛴️ Fähre + Bus", hotel: "🏨 EZ auf Koh Tao", locName: "Koh Tao" },
-            { day: "Tag 20", date: "20.01. (Mi)", rawDate: "2027-01-20", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Koh Tao • Tauchkurs Tag 1", details: "Start Open Water Diver Kurs bei Rainbow Fish Divers (Theorie & Pool)", transport: "🛵 Roller / Zu Fuß", hotel: "🏨 EZ auf Koh Tao", locName: "Koh Tao" },
-            { day: "Tag 21", date: "21.01. (Do)", rawDate: "2027-01-21", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Koh Tao • Tauchkurs Tag 2", details: "Open Water Diver Kurs (Erste Tauchgänge im Freiwasser)", transport: "🤿 Tauchboot", hotel: "🏨 EZ auf Koh Tao", locName: "Koh Tao" },
-            { day: "Tag 22", date: "22.01. (Fr)", rawDate: "2027-01-22", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Koh Tao • Tauchkurs Tag 3", details: "Open Water Diver Kurs (Freiwassertauchgänge & Vertiefung)", transport: "🤿 Tauchboot", hotel: "🏨 EZ auf Koh Tao", locName: "Koh Tao" },
-            { day: "Tag 23", date: "23.01. (Sa)", rawDate: "2027-01-23", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Koh Tao • Kursabschluss & Option Advanced", details: "Abschluss Open Water Kurs (mittags fertig). Spontane Entscheidung: Start Advanced Kurs (Tag 1/2) oder Insel genießen", transport: "🛵 Roller / Boot", hotel: "🏨 EZ auf Koh Tao", locName: "Koh Tao" },
-            { day: "Tag 24", date: "24.01. (So)", rawDate: "2027-01-24", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Koh Tao • Advanced Kurs / Inseltag", details: "Option Advanced Kurs Tag 2 ODER entspannter Inseltag (Sausage Beach, Viewpoints, Schnorcheln)", transport: "🛵 Roller / Boot", hotel: "🏨 EZ auf Koh Tao", locName: "Koh Tao" },
-            { day: "Tag 25", date: "25.01. (Mo)", rawDate: "2027-01-25", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Koh Tao ➔ Bangkok (oder Advanced Abschluss)", details: "Abschluss Advanced Kurs (mittags) & Abreise ODER bereits Tagesreise von Koh Tao nach Bangkok", transport: "⛴️ Fähre + Bus / Flug", hotel: "🏨 EZ in Bangkok", locName: "Bangkok Stadtzentrum" },
-            { day: "Tag 26", date: "26.01. (Di)", rawDate: "2027-01-26", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Bangkok (Späteste Anreise / Erkundung)", details: "Späteste Ankunft in BKK / Erkundung Culture & Tempel (Grand Palace, Wat Pho, Wat Arun)", transport: "🚤 MRT / Boot", hotel: "🏨 EZ in Bangkok", locName: "Bangkok Stadtzentrum" },
-            { day: "Tag 27", date: "27.01. (Mi)", rawDate: "2027-01-27", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Bangkok", details: "Chinatown (Yaowarat), Sukhumvit, Rooftop-Bar", transport: "🚆 Skytrain / Grab", hotel: "🏨 EZ in Bangkok", locName: "Bangkok Stadtzentrum" },
-            { day: "Tag 28", date: "28.01. (Do)", rawDate: "2027-01-28", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Bangkok", details: "Entspannter Tag: Souvenirs, Thai-Massage & Lieblingsspots", transport: "🚆 Skytrain / Grab", hotel: "🏨 EZ in Bangkok", locName: "Bangkok Stadtzentrum" },
+            { day: "Tag 13", date: "13.01. (Mi)", rawDate: "2027-01-13", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Pai ➔ Ko Phi Phi", details: "Anreise von Pai über Chiang Mai nach Krabi, weiter per Fähre nach Ko Phi Phi, Sunset Viewpoint", transport: "🚐 Minivan + ✈️ Flug + ⛴️ Fähre", hotel: "🏨 EZ auf Koh Phi Phi", locName: "Ko Phi Phi" },
+            { day: "Tag 14", date: "14.01. (Do)", rawDate: "2027-01-14", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Ko Phi Phi", details: "Ausflug Maya Bay, Pileh Lagoon & Bamboo Island", transport: "🚤 Longtail-Boot", hotel: "🏨 EZ auf Koh Phi Phi", locName: "Ko Phi Phi" },
+            { day: "Tag 15", date: "15.01. (Fr)", rawDate: "2027-01-15", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Ko Phi Phi", details: "Schnorcheln, Entspannen am Long Beach", transport: "🚤 Wassertaxi", hotel: "🏨 EZ auf Koh Phi Phi", locName: "Ko Phi Phi" },
+            { day: "Tag 16", date: "16.01. (Sa)", rawDate: "2027-01-16", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Ko Phi Phi ➔ Krabi", details: "Überfahrt nach Krabi, Einchecken & Entspannen", transport: "⛴️ Fähre (1.5 - 2 h)", hotel: "🏨 EZ auf Krabi", locName: "Krabi / Railay" },
+            { day: "Tag 17", date: "17.01. (So)", rawDate: "2027-01-17", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Krabi", details: "Railay Beach & Phra Nang Cave Beach", transport: "🚤 Longtail-Boot", hotel: "🏨 EZ auf Krabi", locName: "Krabi / Railay" },
+            { day: "Tag 18", date: "18.01. (Mo)", rawDate: "2027-01-18", groupTag: "Ines & Stefan", region: "Inseln (Andamanen)", regTag: "tag-inseln", title: "Krabi", details: "Tagestrip nach Ko Hong (Lagune & Viewpoint)", transport: "🚤 Longtail-Tour", hotel: "🏨 EZ auf Krabi", locName: "Krabi / Railay" },
+            { day: "Tag 19", date: "19.01. (Di)", rawDate: "2027-01-19", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Krabi ➔ Koh Tao", details: "Überfahrt nach Koh Tao, Ankunft & Einchecken", transport: "⛴️ Bus + Fähre", hotel: "🏨 Koh Tao Heights Studio Apartments", locName: "Koh Tao" },
+            { day: "Tag 20", date: "20.01. (Mi)", rawDate: "2027-01-20", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Koh Tao • Tauchkurs Tag 1", details: "Start Open Water Diver Kurs bei Rainbow Fish Divers (Theorie & Pool)", transport: "🛵 Roller / Zu Fuß", hotel: "🏨 Koh Tao Heights Studio Apartments", locName: "Koh Tao" },
+            { day: "Tag 21", date: "21.01. (Do)", rawDate: "2027-01-21", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Koh Tao • Tauchkurs Tag 2", details: "Open Water Diver Kurs (Erste Tauchgänge im Freiwasser)", transport: "🤿 Tauchboot", hotel: "🏨 Koh Tao Heights Studio Apartments", locName: "Koh Tao" },
+            { day: "Tag 22", date: "22.01. (Fr)", rawDate: "2027-01-22", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Koh Tao • Tauchkurs Tag 3", details: "Open Water Diver Kurs (Freiwassertauchgänge & Vertiefung)", transport: "🤿 Tauchboot", hotel: "🏨 Koh Tao Heights Studio Apartments", locName: "Koh Tao" },
+            { day: "Tag 23", date: "23.01. (Sa)", rawDate: "2027-01-23", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Koh Tao • Kursabschluss & Option Advanced", details: "Abschluss Open Water Kurs (mittags fertig). Spontane Entscheidung: Start Advanced Kurs (Tag 1/2) oder Insel genießen", transport: "🛵 Roller / Boot", hotel: "🏨 Koh Tao Heights Studio Apartments", locName: "Koh Tao" },
+            { day: "Tag 24", date: "24.01. (So)", rawDate: "2027-01-24", groupTag: "Ines & Stefan", region: "Inseln (Samui-Archipel)", regTag: "tag-inseln", title: "Koh Tao • Advanced Kurs / Inseltag", details: "Option Advanced Kurs Tag 2 oder entspannter Inseltag (Sausage Beach, Viewpoints, Schnorcheln)", transport: "🛵 Roller / Boot", hotel: "🏨 Koh Tao Heights Studio Apartments", locName: "Koh Tao" },
+            { day: "Tag 25", date: "25.01. (Mo)", rawDate: "2027-01-25", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Koh Tao ➔ Bangkok (oder Advanced Abschluss)", details: "Abschluss Advanced Kurs (mittags) & Abreise oder bereits Tagesreise von Koh Tao nach Bangkok", transport: "⛴️ Fähre + Bus / Flug", hotel: "🏨 Sunrise Koh Tao oder Jam Hostel Bangkok", locName: "Bangkok Stadtzentrum" },
+            { day: "Tag 26", date: "26.01. (Di)", rawDate: "2027-01-26", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Bangkok (Späteste Anreise / Erkundung)", details: "Späteste Ankunft in BKK / Erkundung Culture & Tempel (Grand Palace, Wat Pho, Wat Arun)", transport: "🚤 MRT / Boot", hotel: "🏨 Jam Hostel oder The Yard Hostel Bangkok", locName: "Bangkok Stadtzentrum" },
+            { day: "Tag 27", date: "27.01. (Mi)", rawDate: "2027-01-27", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Bangkok", details: "Chinatown (Yaowarat), Sukhumvit, Rooftop-Bar", transport: "🚆 Skytrain / Grab", hotel: "🏨 Jam Hostel oder The Yard Hostel Bangkok", locName: "Bangkok Stadtzentrum" },
+            { day: "Tag 28", date: "28.01. (Do)", rawDate: "2027-01-28", groupTag: "Ines & Stefan", region: "Bangkok", regTag: "tag-bangkok", title: "Bangkok", details: "Entspannter Tag: Souvenirs, Thai-Massage & Lieblingsspots", transport: "🚆 Skytrain / Grab", hotel: "🏨 Jam Hostel oder The Yard Hostel Bangkok", locName: "Bangkok Stadtzentrum" },
             { day: "Tag 29", date: "29.01. (Fr)", rawDate: "2027-01-29", groupTag: "Ines & Stefan", region: "Abschluss", regTag: "tag-default", title: "Bangkok Stadt ➔ Flughafen / Heim- & Weiterflug", details: "Stefan ➔ MUC (TG926 13:00 Direkt) | Ines ➔ CMB (UL405 13:50 Direkt)", transport: "✈️ Flugzeug", hotel: "✈ Flug / Ceylon Glory", locName: "Flughafen Bangkok (BKK)" }
         ];
 
@@ -1325,10 +1346,10 @@
                 cnx: { name: "Chiang Mai (CNX)", date: "05.01. – 08.01.2027", lat: 18.7677, lng: 98.9640, desc: "Norden & Flughafen CNX", color: "#15803d" },
                 pai: { name: "Pai", date: "08.01. – 13.01.2027", lat: 19.3582, lng: 98.4402, desc: "Canyon, Hot Springs & Night Market", color: "#15803d" },
                 kbv: { name: "Flughafen Krabi (KBV)", date: "13.01.2027", lat: 8.0988, lng: 98.9862, desc: "Flughafen Krabi", color: "#0d9488" },
-                krabi: { name: "Krabi / Railay", date: "13.01. – 16.01.2027", lat: 8.0863, lng: 98.9063, desc: "Railay Beach & Hong Island", color: "#0d9488" },
-                phiphi: { name: "Ko Phi Phi", date: "16.01. – 19.01.2027", lat: 7.7407, lng: 98.7784, desc: "Maya Bay & Long Beach", color: "#0d9488" },
+                krabi: { name: "Krabi / Railay", date: "16.01. – 19.01.2027", lat: 8.0863, lng: 98.9063, desc: "Railay Beach & Hong Island", color: "#0d9488" },
+                phiphi: { name: "Ko Phi Phi", date: "13.01. – 16.01.2027", lat: 7.7407, lng: 98.7784, desc: "Maya Bay & Long Beach", color: "#0d9488" },
                 surat: { name: "Flughafen Surat Thani (URT)", date: "25.01.2027", lat: 9.1326, lng: 99.1356, desc: "Flughafen Festland Samui-Region", color: "#0d9488" },
-                tao: { name: "Koh Tao", date: "19.01. – 25./26.01.2027", lat: 10.1018, lng: 99.8383, desc: "Tauchkurs Rainbow Fish Divers", color: "#0d9488" },
+                tao: { name: "Koh Tao", date: "19.01. – 25.01.2027", lat: 10.1018, lng: 99.8383, desc: "Tauchkurs Rainbow Fish Divers", color: "#0d9488" },
                 cmb: { name: "Flughafen Colombo (CMB)", date: "29.01. | 02.02. | 23.02.2027", lat: 7.1808, lng: 79.8841, desc: "Bandaranaike Airport", color: "#059669" },
                 negombo: { name: "Negombo", date: "29.01. – 03.02.2027", lat: 7.2092, lng: 79.8385, desc: "Ceylon Glory Hostel", color: "#059669" },
                 cmb_city: { name: "Colombo Stadtzentrum", date: "21.02. – 23.02.2027", lat: 6.9344, lng: 79.8428, desc: "Hauptstadt Vibe & Galle Face Promenade", color: "#6b21a8" },
@@ -1379,7 +1400,7 @@
             drawRoadRoute(points.weligama, points.cmb_city, slStyle);
             drawRoadRoute(points.cmb_city, points.cmb, slStyle);
             line(['krabi', 'phiphi'], thStyle);
-            line(['phiphi', 'tao'], thStyle);
+            line(['krabi', 'tao'], thStyle);
 
             Object.keys(points).forEach(key => {
                 const p = points[key];
@@ -1487,9 +1508,28 @@
         ];
         let todoList = [];
 
+        const extraTodos = [
+            { text: "Nacht 25.→26.01.: Sunrise Koh Tao oder Jam Hostel Bangkok – nicht benötigte Buchung stornieren (Sunrise bis 23.01.2027, Jam Hostel bis 21.01.2027)", tag: "Thailand", done: false },
+            { text: "Bangkok 26.–29.01.: Jam Hostel oder The Yard Hostel – eine Buchung stornieren (Jam Hostel bis 21.01.2027, The Yard bis 20.01.2027)", tag: "Thailand", done: false }
+        ];
+
         function loadTodos() {
             const s = localStorage.getItem('thailand_todos_v1');
             todoList = s ? JSON.parse(s) : defaultTodos;
+            // Neue Standard-To-Dos einmalig ergänzen (auch wenn bereits Daten gespeichert sind)
+            let added = [];
+            try { added = JSON.parse(localStorage.getItem('thailand_todos_added_v1') || '[]'); } catch (e) {}
+            let changed = false;
+            extraTodos.forEach(td => {
+                if (added.includes(td.text)) return;
+                if (!todoList.some(x => x.text === td.text)) todoList.push({ ...td });
+                added.push(td.text);
+                changed = true;
+            });
+            if (changed) {
+                localStorage.setItem('thailand_todos_added_v1', JSON.stringify(added));
+                localStorage.setItem('thailand_todos_v1', JSON.stringify(todoList));
+            }
             renderTodos();
         }
 
