@@ -317,6 +317,30 @@
             #fxResult { font-size: 1.6rem; word-break: break-word; }
             #currency .mh { flex-wrap: wrap; }
         }
+        
+        
+        /* PATCH: Unterkünfte Desktop-Darstellung */
+@media (min-width: 861px) {
+    #acc table { table-layout: fixed; }
+    #acc th:nth-child(1) { width: 17%; }
+    #acc th:nth-child(2) { width: 12%; }
+    #acc th:nth-child(3) { width: 10%; }
+    #acc th:nth-child(4) { width: 36%; }
+    #acc th:nth-child(5) { width: 25%; }
+
+    /* Zeitraum und Dauer nicht umbrechen */
+    #acc td:nth-child(2),
+    #acc td:nth-child(3) { white-space: nowrap; }
+
+    /* Abstand zwischen Hotelname und Status-Badge */
+    #acc td:nth-child(4) .status-booked,
+    #acc td:nth-child(4) .status-open { margin-left: 8px; vertical-align: middle; }
+
+    /* Abstand zwischen Reisezeit-Pille und Transfer-Text */
+  #acc td:nth-child(5) .travel-time-pill { display: flex; width: fit-content; margin-bottom: 4px; }}
+        
+        
+        
     </style>
 </head>
 <body>
